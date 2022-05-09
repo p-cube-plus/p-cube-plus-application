@@ -1,5 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.p_cube_plus_application">
+
+    <!-- 예약 알림과 진동을 통한 알림을 이용-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
    <application
         android:label="p_cube_plus_application"
         android:icon="@mipmap/ic_launcher">
@@ -32,6 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- 재부팅시 예약된 알림이 예약된 상태 그대로 유지될 수 있도록 해주는 설정 -->
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+	        <intent-filter>
+		        <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+        	</intent-filter>
+        </receiver>
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
