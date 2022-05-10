@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/notice_page.dart';
 import 'screens/login_page.dart';
@@ -6,7 +7,6 @@ import 'screens/login_page.dart';
 // futter 에서 최상위에 위치하는 widget 인 runApp()은
 // 항상 Widget tree의 root가 되는 widget을 가져와야 함
 void main() => runApp(MyApp());
-
 
 // 최상위 root Widget
 class MyApp extends StatelessWidget {

@@ -17,38 +17,56 @@ class LoginPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Container(
-          child: Image(image: AssetImage('../../assets/images/symbol.png')),
-        ),
-        ButtonBar(
-          alignment: MainAxisAlignment.center,
-          buttonHeight: 70,
-          buttonMinWidth: 250,
-          children: [
-            RaisedButton(
-              child: Text(
-                "네이버 아이디로 로그인",
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              color: Colors.green,
-              onPressed: () {
-                _GoNaverPage(context);
-              },
-            ),
-          ],
-        ),
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: const TextStyle(fontSize: 14),
-          ),
-          child: const Text('동아리 가입 신청서 작성'),
-          onPressed: () {
-            _GoApplicationPage(context);
-          },
-        )
+        _ShowLogo(context),
+        _ShowButton(context),
+        _ShowTextButton(context),
       ],
+    );
+  }
+
+  Container _ShowLogo(BuildContext context) {
+    return Container(
+      child: Image(image: AssetImage('../../assets/images/symbol.png')),
+      height: MediaQuery.of(context).size.height * 0.60,
+      width: MediaQuery.of(context).size.width * 0.60,
+    );
+  }
+
+  ButtonBar _ShowButton(BuildContext context) {
+    return ButtonBar(
+      alignment: MainAxisAlignment.center,
+      buttonHeight: MediaQuery.of(context).size.height * 0.12,
+      buttonMinWidth: MediaQuery.of(context).size.width * 0.50,
+      children: [
+        RaisedButton(
+          child: Text(
+            "네이버 아이디로 로그인",
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          color: Colors.green,
+          onPressed: () {
+            _GoNaverPage(context);
+          },
+        ),
+      ],
+    );
+  }
+
+  Container _ShowTextButton(BuildContext context) {
+    return Container(
+      child: TextButton(
+        style: TextButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 14),
+        ),
+        child: const Text('동아리 가입 신청서 작성'),
+        onPressed: () {
+          _GoApplicationPage(context);
+        },
+      ),
+      height: MediaQuery.of(context).size.height * 0.07,
+      width: MediaQuery.of(context).size.width * 0.35,
     );
   }
 
