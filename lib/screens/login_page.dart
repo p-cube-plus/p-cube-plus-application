@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 // 임시
-import 'notice_page.dart';
+import 'current_notice_page.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _MainLogin(context),
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
+        child: Center(
+          child: _MainLogin(context),
+        ),
       ),
     );
   }
@@ -35,7 +38,7 @@ class LoginPage extends StatelessWidget {
   ButtonBar _ShowButton(BuildContext context) {
     return ButtonBar(
       alignment: MainAxisAlignment.center,
-      buttonHeight: MediaQuery.of(context).size.height * 0.12,
+      buttonHeight: MediaQuery.of(context).size.height * 0.09,
       buttonMinWidth: MediaQuery.of(context).size.width * 0.50,
       children: [
         RaisedButton(
@@ -73,14 +76,14 @@ class LoginPage extends StatelessWidget {
   void _GoApplicationPage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NoticePage()),
+      MaterialPageRoute(builder: (context) => CurNoticePage()),
     );
   }
 
   void _GoNaverPage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NoticePage()),
+      MaterialPageRoute(builder: (context) => CurNoticePage()),
     );
   }
 }

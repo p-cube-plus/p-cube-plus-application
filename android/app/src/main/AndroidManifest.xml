@@ -7,7 +7,7 @@
     
    <application
         android:label="p_cube_plus_application"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
