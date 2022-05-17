@@ -10,54 +10,84 @@ class LoginPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Center(
-          child: _MainLogin(context),
+          child: const _MainLogin(),
         ),
       ),
     );
   }
+}
 
-  Widget _MainLogin(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        _ShowLogo(context),
-        _ShowButton(context),
-        _ShowTextButton(context),
-      ],
+class _MainLogin extends StatelessWidget {
+  const _MainLogin();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const _ShowLogo(),
+          const _ShowButton(),
+          const _ShowTextButton(),
+        ],
+      ),
     );
   }
+}
 
-  Container _ShowLogo(BuildContext context) {
+class _ShowLogo extends StatelessWidget {
+  const _ShowLogo();
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: Image(image: AssetImage('../../assets/images/symbol.png')),
       height: MediaQuery.of(context).size.height * 0.60,
       width: MediaQuery.of(context).size.width * 0.60,
     );
   }
+}
 
-  ButtonBar _ShowButton(BuildContext context) {
-    return ButtonBar(
+class _ShowButton extends StatelessWidget {
+  const _ShowButton();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: ButtonBar(
       alignment: MainAxisAlignment.center,
       buttonHeight: MediaQuery.of(context).size.height * 0.09,
       buttonMinWidth: MediaQuery.of(context).size.width * 0.50,
       children: [
-        RaisedButton(
+        ElevatedButton(
           child: Text(
             "네이버 아이디로 로그인",
             style: const TextStyle(
               fontSize: 18,
             ),
           ),
-          color: Colors.green,
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green, // background
+            onPrimary: Colors.white, // foreground
+          ),
           onPressed: () {
-            _GoNaverPage(context);
+            _goNaverPage(context);
           },
         ),
       ],
-    );
+    ));
   }
 
-  Container _ShowTextButton(BuildContext context) {
+  void _goNaverPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CurNoticePage()),
+    );
+  }
+}
+
+class _ShowTextButton extends StatelessWidget {
+  const _ShowTextButton();
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: TextButton(
         style: TextButton.styleFrom(
@@ -65,7 +95,7 @@ class LoginPage extends StatelessWidget {
         ),
         child: const Text('동아리 가입 신청서 작성'),
         onPressed: () {
-          _GoApplicationPage(context);
+          _goApplicationPage(context);
         },
       ),
       height: MediaQuery.of(context).size.height * 0.07,
@@ -73,14 +103,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _GoApplicationPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CurNoticePage()),
-    );
-  }
-
-  void _GoNaverPage(BuildContext context) {
+  void _goApplicationPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CurNoticePage()),

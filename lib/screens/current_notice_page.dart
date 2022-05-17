@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/notice_box.dart';
+import '../widgets/notice_box_widget.dart';
 import '../providers/notice_list.dart';
+import '../models/notice_box.dart';
 
 import 'prevent_notice_page.dart';
 
@@ -38,7 +39,7 @@ class _CurNoticePageState extends State<CurNoticePage> {
           ),
         ],
       ),
-      body: _buildNotice(),
+      body: _CurrnetNotice(Provider.of<NoticeList>(context)),
     );
   }
 
@@ -49,29 +50,30 @@ class _CurNoticePageState extends State<CurNoticePage> {
       MaterialPageRoute(builder: (context) => PrevNoticePage()),
     ).then((value) => setState(() {}));
   }
+}
 
-  // 현재 알림 리스트
-  Widget _buildNotice() {
-    final product = Provider.of<NoticeList>(context);
-    final cl = product.curList;
-
+// 현재 알림 리스트
+class _CurrnetNotice extends StatelessWidget {
+  _CurrnetNotice(this.product) {
     if (product.isFirst) {
-      product.getNotice('11청소 알림', '세종관 318호로', '2022/04/05');
-      product.getNotice('33청소 알림', '세종관 318호로', '2022/06/05');
-      product.getNotice('22청소 알림', '세종관 318호로', '2022/05/05');
-      product.getNotice('55청소 알림', '세종관 318호로', '2022/08/05');
-      product.getNotice('44청소 알림', '세종관 318호로', '2022/07/05');
-      product.getNotice('66청소 알림', '세종관 318호로', '2022/09/05');
+      product.getNotice(new NoticeBox('11청소 알림', '세종관 318호로', '2022/04/05'));
+      product.getNotice(new NoticeBox('33청소 알림', '세종관 318호로', '2022/06/05'));
+      product.getNotice(new NoticeBox('22청소 알림', '세종관 318호로', '2022/05/05'));
+      product.getNotice(new NoticeBox('55청소 알림', '세종관 318호로', '2022/08/05'));
+      product.getNotice(new NoticeBox('44청소 알림', '세종관 318호로', '2022/07/05'));
+      product.getNotice(new NoticeBox('66청소 알림', '세종관 318호로', '2022/09/05'));
     }
+  }
 
-    return ListView.builder(
-        itemCount: product.curList.length,
-        itemBuilder: (context, i) {
-          return makeNoticeBox(
-            cl[i][product.title],
-            cl[i][product.description],
-            cl[i][product.date],
-          );
-        });
+  final NoticeList product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: ListView.builder(
+            itemCount: product.curList.length,
+            itemBuilder: (context, i) {
+              return NoticeBoxWidget(product.curList[i]);
+            }));
   }
 }
