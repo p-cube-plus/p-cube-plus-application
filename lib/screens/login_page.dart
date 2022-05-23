@@ -7,7 +7,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF4F4F4),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Center(
@@ -103,7 +102,7 @@ class _ShowTextButton extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
           splashFactory: NoSplash.splashFactory,
-          primary: Color.fromARGB(153, 75, 75, 75),
+          //primary: Color.fromARGB(153, 75, 75, 75),
           textStyle: const TextStyle(
             fontSize: 14,
           ),
