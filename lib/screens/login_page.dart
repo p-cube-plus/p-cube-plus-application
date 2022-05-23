@@ -7,6 +7,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffF4F4F4),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Center(
@@ -40,8 +41,9 @@ class _ShowLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Image(image: AssetImage('../../assets/images/symbol.png')),
-      height: MediaQuery.of(context).size.height * 0.60,
-      width: MediaQuery.of(context).size.width * 0.60,
+      height: 500,
+      width: 500,
+      margin: EdgeInsets.only(bottom: 60),
     );
   }
 }
@@ -53,23 +55,32 @@ class _ShowButton extends StatelessWidget {
     return Container(
         child: ButtonBar(
       alignment: MainAxisAlignment.center,
-      buttonHeight: MediaQuery.of(context).size.height * 0.09,
-      buttonMinWidth: MediaQuery.of(context).size.width * 0.50,
+      //buttonMinWidth: MediaQuery.of(context).size.width * 0.35,
       children: [
-        ElevatedButton(
-          child: Text(
-            "네이버 아이디로 로그인",
-            style: const TextStyle(
-              fontSize: 18,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: ElevatedButton(
+            child: Row(
+              children: [
+                const Text(
+                  "네이버 아이디로 로그인",
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
             ),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(
+                  vertical: 25,
+                  horizontal: MediaQuery.of(context).size.width * 0.2),
+              primary: Color(0xff2DB400), // background
+              onPrimary: Colors.white, // foreground
+            ),
+            onPressed: () {
+              _goNaverPage(context);
+            },
           ),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.green, // background
-            onPrimary: Colors.white, // foreground
-          ),
-          onPressed: () {
-            _goNaverPage(context);
-          },
         ),
       ],
     ));
@@ -91,15 +102,20 @@ class _ShowTextButton extends StatelessWidget {
     return Container(
       child: TextButton(
         style: TextButton.styleFrom(
-          textStyle: const TextStyle(fontSize: 14),
+          splashFactory: NoSplash.splashFactory,
+          primary: Color.fromARGB(153, 75, 75, 75),
+          textStyle: const TextStyle(
+            fontSize: 14,
+          ),
         ),
-        child: const Text('동아리 가입 신청서 작성'),
+        child: const Text('동아리 가입 신청서 작성하기'),
         onPressed: () {
           _goApplicationPage(context);
         },
       ),
-      height: MediaQuery.of(context).size.height * 0.07,
-      width: MediaQuery.of(context).size.width * 0.35,
+      margin: EdgeInsets.only(top: 5),
+      height: 40,
+      width: MediaQuery.of(context).size.width * 0.5,
     );
   }
 

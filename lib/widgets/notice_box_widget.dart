@@ -10,20 +10,23 @@ class NoticeBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: Card(
-            margin: EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 0),
-            elevation: 8,
+            margin: EdgeInsets.only(left: 0, top: 12, right: 0, bottom: 0),
+            elevation: 1,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(
-                  height: 25.0,
-                ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   leading: Icon(
                     Icons.lock_clock,
                     size: 32,
                   ),
+                  trailing: Text(_box.date,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        height: 0,
+                      )),
                   title: Text(
                     _box.title,
                     style: const TextStyle(
@@ -40,21 +43,6 @@ class NoticeBoxWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      Text(_box.date,
-                          style: TextStyle(
-                            fontSize: 13,
-                            height: 0,
-                          )),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                    ])
               ],
             )));
   }
