@@ -71,7 +71,7 @@ class NoticeListWidget extends StatelessWidget {
               background: Container(
                 margin: EdgeInsets.only(left: 0, top: 12, right: 0, bottom: 0),
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                color: Colors.red,
+                color: Color(0xFFDE2B13),
                 alignment: Alignment.centerRight,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

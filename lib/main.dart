@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ValueChangeObserver<bool>(
-      cacheKey: DarkMode.keyDarkMode,
+      cacheKey: DarkModeSetting.keyDarkMode,
       defaultValue: true,
       builder: (_, isDarkMode, __) => MaterialApp(
         debugShowCheckedModeBanner: false,
