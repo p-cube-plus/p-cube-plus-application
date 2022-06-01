@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/providers/naver_login.dart';
+import 'package:provider/provider.dart';
 
 // 임시
 import 'main_page.dart';
@@ -51,45 +53,53 @@ class _ShowButton extends StatelessWidget {
   const _ShowButton();
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: ButtonBar(
-      alignment: MainAxisAlignment.center,
-      //buttonMinWidth: MediaQuery.of(context).size.width * 0.35,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: ElevatedButton(
-            child: Row(
-              children: [
-                const Text(
-                  "네이버 아이디로 로그인",
-                  style: const TextStyle(
-                    fontSize: 18,
+    return ChangeNotifierProvider<NaverLoginProvider>(
+      create: (_) => NaverLoginProvider(),
+      builder: (context, child) {
+        return Container(
+          child: ButtonBar(
+            alignment: MainAxisAlignment.center,
+            //buttonMinWidth: MediaQuery.of(context).size.width * 0.35,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: ElevatedButton(
+                  child: Row(
+                    children: [
+                      const Text(
+                        "네이버 아이디로 로그인",
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 25,
+                        horizontal: MediaQuery.of(context).size.width * 0.2),
+                    primary: Color(0xff2DB400), // background
+                    onPrimary: Colors.white, // foreground
+                  ),
+                  onPressed: () {
+                    _goNaverPage(context);
+                    //context.read<NaverLoginProvider>().naverLogin();
+                  },
                 ),
-              ],
-            ),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(
-                  vertical: 25,
-                  horizontal: MediaQuery.of(context).size.width * 0.2),
-              primary: Color(0xff2DB400), // background
-              onPrimary: Colors.white, // foreground
-            ),
-            onPressed: () {
-              _goNaverPage(context);
-            },
+              ),
+            ],
           ),
-        ),
-      ],
-    ));
+        );
+      },
+    );
   }
 
   void _goNaverPage(BuildContext context) {
-    Navigator.push(
+    context.read<NaverLoginProvider>().naverLogin();
+    /*Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => MainPage()),
-    );
+    );*/
   }
 }
 
