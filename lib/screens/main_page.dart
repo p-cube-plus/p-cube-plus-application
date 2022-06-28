@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/home_widget.dart';
 import '../widgets/notice_list_widget.dart';
 import '../widgets/setting_list_widget.dart';
+import 'user_information_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -25,7 +26,8 @@ class _MainPageState extends State<MainPage> {
         children: [
           HomeWidget(),
           NoticeListWidget(),
-          SettingListWidget(),
+          UserInformationPage(),
+          //SettingListWidget(),
         ],
         physics: NeverScrollableScrollPhysics(),
       ),

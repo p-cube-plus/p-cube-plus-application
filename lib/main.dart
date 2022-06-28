@@ -69,6 +69,8 @@ class _MyAppState extends State<MyApp> {
                   bodyColor: Colors.black,
                   displayColor: Colors.blue,
                 ),
+                primaryColor: const Color.fromARGB(255, 222, 43, 19),
+                backgroundColor: const Color.fromARGB(255, 245, 245, 245),
               ),
         home: LoginPage(),
       ),
