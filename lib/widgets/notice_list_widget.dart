@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/notice_box.dart';
-import '../providers/notice_list.dart';
+import '../providers/notice_provider.dart';
 import '../widgets/notice_box_widget.dart';
 
 //class NoticeListWidget extends StatefulWidget {
@@ -17,7 +17,7 @@ class NoticeListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var product = Provider.of<NoticeList>(context);
+    var product = Provider.of<NoticeProvider>(context);
 
     if (product.isFirst) {
       product
