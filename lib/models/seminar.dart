@@ -1,28 +1,24 @@
-class Caution {
-  final int type;
-  final int count;
+class Seminar {
+  final int type; // 0 수습, 1 정회원, 2 졸업생?
   final String description;
-  final DateTime date;
+  final DateTime date; // 시작 시간
 
-  Caution({
+  Seminar({
     required this.type,
     required this.description,
     required this.date,
-    required this.count,
   });
 
-  factory Caution.fromJson(Map<String, dynamic> json) {
-    return Caution(
+  factory Seminar.fromJson(Map<String, dynamic> json) {
+    return Seminar(
       type: json['type'],
       description: json['description'],
       date: DateTime.parse(json['date']),
-      count: json['count'],
     );
   }
 
   Map<String, dynamic> toJson() => {
         'type': type,
-        'count': count,
         'description': description,
         'date': date.toString(),
       };
