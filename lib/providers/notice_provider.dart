@@ -6,7 +6,7 @@ enum SortType {
   Descending,
 }
 
-class NoticeList with ChangeNotifier {
+class NoticeProvider with ChangeNotifier {
   // DUMMY
   bool isFirst = true;
 

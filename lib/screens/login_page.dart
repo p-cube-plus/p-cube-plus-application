@@ -117,7 +117,10 @@ class _ShowTextButton extends StatelessWidget {
             fontSize: 14,
           ),
         ),
-        child: const Text('동아리 가입 신청서 작성하기'),
+        child: const Text(
+          '동아리 가입 신청서 작성하기',
+          style: const TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           _goApplicationPage(context);
         },
