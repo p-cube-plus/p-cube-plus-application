@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Center(
-          child: const _MainLogin(),
+          child: _MainLogin(),
         ),
       ),
     );
@@ -25,9 +25,9 @@ class _MainLogin extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const _ShowLogo(),
-          const _ShowButton(),
-          const _ShowTextButton(),
+          _ShowLogo(),
+          _ShowButton(),
+          _ShowTextButton(),
         ],
       ),
     );
@@ -61,12 +61,7 @@ class _ShowButton extends StatelessWidget {
           child: ElevatedButton(
             child: Row(
               children: [
-                const Text(
-                  "네이버 아이디로 로그인",
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                Text("네이버 아이디로 로그인", style: TextStyle(fontSize: 18)),
               ],
             ),
             style: ElevatedButton.styleFrom(
@@ -102,15 +97,9 @@ class _ShowTextButton extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
           splashFactory: NoSplash.splashFactory,
-          //primary: Color.fromARGB(153, 75, 75, 75),
-          textStyle: const TextStyle(
-            fontSize: 14,
-          ),
+          textStyle: TextStyle(fontSize: 14),
         ),
-        child: const Text(
-          '동아리 가입 신청서 작성하기',
-          style: const TextStyle(color: Colors.white),
-        ),
+        child: Text('동아리 가입 신청서 작성하기', style: TextStyle(color: Colors.white)),
         onPressed: () {
           _goApplicationPage(context);
         },

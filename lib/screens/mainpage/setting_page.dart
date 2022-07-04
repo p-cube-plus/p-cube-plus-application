@@ -4,7 +4,7 @@ import 'package:p_cube_plus_application/widgets/setting/divider_widget.dart';
 import 'package:p_cube_plus_application/widgets/setting/new_page_tile.dart';
 import 'package:p_cube_plus_application/widgets/setting/switch_tile.dart';
 
-import '../../widgets/setting/alert_frame.dart';
+import '../../widgets/alert_frame.dart';
 import '../../widgets/setting/alert_tile.dart';
 import '../../widgets/setting/maintitle_tile.dart';
 import '../../widgets/setting/version_tile.dart';
@@ -18,7 +18,7 @@ class SettingPage extends StatelessWidget {
       appBar: AppBar(
         //automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           tooltip: '뒤로 가기',
           onPressed: () {
             Navigator.pop(context);
@@ -85,15 +85,10 @@ class SettingPage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 15),
-            Text(
-              '피드백이 제출되었습니다!',
-              style: TextStyle(fontSize: 18),
-            ),
+            Text('피드백이 제출되었습니다!', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
-            Text(
-              '소중한 의견 감사합니다.',
-              style: TextStyle(fontSize: 15, color: Colors.white54),
-            ),
+            Text('소중한 의견 감사합니다.',
+                style: TextStyle(fontSize: 15, color: Colors.white54)),
           ],
         ),
         alignment: Alignment.center,
@@ -125,22 +120,10 @@ class SettingPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Text(
-              '오창한',
-              style: const TextStyle(fontSize: 14, color: Colors.white70),
-            ),
-            const Text(
-              '권오민',
-              style: const TextStyle(fontSize: 14, color: Colors.white70),
-            ),
-            const Text(
-              '조승빈',
-              style: const TextStyle(fontSize: 14, color: Colors.white70),
-            ),
-            const Text(
-              '신혜민',
-              style: const TextStyle(fontSize: 14, color: Colors.white70),
-            ),
+            Text('오창한', style: TextStyle(fontSize: 14, color: Colors.white70)),
+            Text('권오민', style: TextStyle(fontSize: 14, color: Colors.white70)),
+            Text('조승빈', style: TextStyle(fontSize: 14, color: Colors.white70)),
+            Text('신혜민', style: TextStyle(fontSize: 14, color: Colors.white70)),
           ],
         ),
         SizedBox(height: 20),
@@ -154,10 +137,7 @@ class SettingPage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 15),
-            Text(
-              '로그아웃',
-              style: TextStyle(fontSize: 18),
-            ),
+            Text('로그아웃', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             Text('정말 로그아웃 하시겠습니까?',
                 style: TextStyle(fontSize: 14, color: Colors.white54)),

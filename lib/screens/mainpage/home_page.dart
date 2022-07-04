@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('홈'),
+          title: Text('홈'),
           automaticallyImplyLeading: false,
           //leading: IconButton(
           //  icon: const Icon(Icons.arrow_back),

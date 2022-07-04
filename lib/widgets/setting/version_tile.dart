@@ -21,7 +21,6 @@ class VersionTile extends SettingTile {
           return Container(
             height: super.height,
             child: Container(
-              //color: Colors.white70, //배경색
               child: Row(
                 children: [
                   SizedBox(width: super.blank),

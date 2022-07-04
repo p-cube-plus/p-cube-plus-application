@@ -8,7 +8,7 @@ import '../../models/notice_box.dart';
 class NoticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var product = Provider.of<NoticeProvider>(context);
+    final product = Provider.of<NoticeProvider>(context);
 
     if (product.isFirst) {
       product.getNotice(new NoticeBox('청소 알림', '당일 hh시에 청소가 시작됩니다.', '1:00'));
@@ -19,7 +19,7 @@ class NoticePage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('알림'), automaticallyImplyLeading: false,
+      appBar: AppBar(title: Text('알림'), automaticallyImplyLeading: false,
           //leading: IconButton(
           //  icon: const Icon(Icons.arrow_back),
           //  color: Color.fromARGB(255, 0, 0, 0),
@@ -31,7 +31,7 @@ class NoticePage extends StatelessWidget {
           actions: [
             PopupMenuButton(
                 tooltip: "정렬기준",
-                icon: Icon(
+                icon: const Icon(
                   Icons.more_vert,
                 ),
                 elevation: 30,
@@ -39,13 +39,13 @@ class NoticePage extends StatelessWidget {
                   product.changeSortType(value);
                 },
                 itemBuilder: (context) => [
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         child: Text(
                           "오름차순",
                         ),
                         value: SortType.Ascending,
                       ),
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         child: Text(
                           "내림차순",
                         ),

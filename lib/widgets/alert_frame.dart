@@ -27,8 +27,6 @@ class AlertFrame extends StatelessWidget {
         //final height = MediaQuery.of(context).size.height;
         //final width = MediaQuery.of(context).size.width;
         return Container(
-          //height: height,
-          //width: width,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: children,
