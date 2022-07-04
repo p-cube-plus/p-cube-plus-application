@@ -2,11 +2,12 @@ import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:p_cube_plus_application/providers/setting_provider.dart';
+import 'package:p_cube_plus_application/widgets/setting/divider_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/theme_provider.dart';
+import '../login_page.dart';
 
 class SettingListWidget extends StatelessWidget {
   @override
@@ -32,12 +33,12 @@ class SettingListWidget extends StatelessWidget {
             //addAutomaticKeepAlives: false,
             children: [
               NewPageSetting("알림", Text('a')),
-              ThemeSetting("테마"),
-              getDivider(),
+              SwitchWidget("테마"),
+              SettingDivider(),
               VersionSetting(),
               DialogSetting("피드백 보내기"),
               DevSetting("개발진 목록"),
-              getDivider(),
+              SettingDivider(),
               LogoutSetting(),
             ],
           ),
@@ -45,13 +46,6 @@ class SettingListWidget extends StatelessWidget {
       ),
     );
   }
-
-  getDivider() => const Divider(
-        height: 40,
-        indent: 20,
-        endIndent: 20,
-        thickness: 0.7,
-      );
 }
 
 class NewPageSetting extends StatelessWidget {
@@ -88,20 +82,21 @@ class NewPageSetting extends StatelessWidget {
   }
 }
 
-class ThemeSetting extends StatelessWidget {
+class SwitchWidget extends StatelessWidget {
   final _title;
-  ThemeSetting(this._title);
+  SwitchWidget(this._title);
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool _value = themeProvider.isLightMode;
+    final themeProvider = Provider.of<SettingProvider>(context);
+    themeProvider.changeState(SettingType.Theme);
+    bool _value = themeProvider.isOn;
     return Container(
       height: 50,
       child: InkWell(
         onTap: () {
           _value = !_value;
-          themeProvider.toggleTgeme(_value);
+          themeProvider.toggle(_value);
         },
         child: Container(
           //color: Colors.white70, //배경색
@@ -126,10 +121,10 @@ class ThemeSetting extends StatelessWidget {
                     //inactiveThumbColor: Colors.blue,
                     //inactiveTrackColor: Colors.blue.withOpacity(0.4),
                     //splashRadius: 30, // 클릭 시 색 크기
-                    value: themeProvider.isLightMode,
+                    value: themeProvider.isOn,
                     onChanged: (value) {
                       _value = value;
-                      themeProvider.toggleTgeme(value);
+                      themeProvider.toggle(value);
                     },
                   ),
                 ),
@@ -189,7 +184,11 @@ class LogoutSetting extends StatelessWidget {
     return Container(
       height: 50,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext ctx) => checkLogout(ctx));
+        },
         child: Container(
           //color: Colors.white70, //배경색
           child: Row(
@@ -198,6 +197,101 @@ class LogoutSetting extends StatelessWidget {
               const Text('로그아웃'),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  checkLogout(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+      content: Builder(builder: (context) {
+        //final height = MediaQuery.of(context).size.height;
+        //final width = MediaQuery.of(context).size.width;
+        return Container(
+          height: 80,
+          width: 348,
+          child: Column(
+            children: [
+              Align(
+                child: const Text('로그아웃'),
+                alignment: Alignment.center,
+              ),
+              SizedBox(height: 17),
+              Align(
+                child: const Text(
+                  '정말 로그아웃 하시겠습니까?',
+                  style: TextStyle(fontSize: 12, color: Colors.white54),
+                ),
+                alignment: Alignment.center,
+              ),
+              SizedBox(height: 15),
+            ],
+          ),
+        );
+      }),
+      actions: [
+        Row(
+          children: [
+            SizedBox(width: 16),
+            OutlinedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('취소'),
+              style: OutlinedButton.styleFrom(minimumSize: Size(174, 50)),
+            ),
+            SizedBox(width: 15),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => LogoutScreen(),
+                  ),
+                );
+              },
+              child: Text('로그아웃'),
+              style: ElevatedButton.styleFrom(minimumSize: Size(174, 50)),
+            ),
+          ],
+        ),
+        SizedBox(height: 15),
+      ],
+    );
+  }
+}
+
+class LogoutScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        heightFactor: 100,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('로그아웃 되었습니다.'),
+            SizedBox(height: 15),
+            Text(
+              '다시 로그인 하시려면',
+              style: TextStyle(color: Colors.white54),
+            ),
+            Text(
+              '홈으로 돌아가기를 눌러주세요.',
+              style: TextStyle(color: Colors.white54),
+            ),
+            SizedBox(height: 200),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              },
+              child: Text('홈으로 돌아가기'),
+              style: ElevatedButton.styleFrom(minimumSize: Size(400, 50)),
+            ),
+          ],
         ),
       ),
     );
@@ -294,6 +388,7 @@ class DialogSetting extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(height: 15),
       ],
     );
   }
@@ -338,6 +433,7 @@ class DialogSetting extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(height: 15),
       ],
     );
   }
@@ -417,9 +513,42 @@ class DevSetting extends StatelessWidget {
               child: Text('닫기'),
               style: OutlinedButton.styleFrom(minimumSize: Size(363, 50)),
             ),
+            SizedBox(height: 15),
           ],
         ),
+        SizedBox(height: 15),
       ],
+    );
+  }
+}
+
+class NoticeSetting extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('설정'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Container(
+        child: SafeArea(
+          child: ListView(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+            physics: NeverScrollableScrollPhysics(),
+            //addAutomaticKeepAlives: false,
+            children: [
+              NewPageSetting("알림", Text('a')),
+              SwitchWidget("테마"),
+              SettingDivider(),
+              VersionSetting(),
+              DialogSetting("피드백 보내기"),
+              DevSetting("개발진 목록"),
+              SettingDivider(),
+              LogoutSetting(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

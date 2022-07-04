@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // 임시
-import 'main_page.dart';
+import 'mainpage/main_page_controller.dart';
 
 class LoginPage extends StatelessWidget {
   @override

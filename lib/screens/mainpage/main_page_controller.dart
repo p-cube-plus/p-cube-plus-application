@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/home_widget.dart';
-import '../widgets/notice_list_widget.dart';
-import '../widgets/setting_list_widget.dart';
+
+import 'home_screen.dart';
+import 'notice_list_screen.dart';
+import 'setting_screen.dart';
 
 class MainPage extends StatefulWidget {
   @override

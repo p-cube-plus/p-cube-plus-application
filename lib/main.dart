@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:p_cube_plus_application/providers/theme_provider.dart';
-import 'package:p_cube_plus_application/widgets/setting_list_widget.dart';
+import 'package:p_cube_plus_application/providers/setting_provider.dart';
+import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/notice_provider.dart';
@@ -21,7 +19,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NoticeProvider()),
-      ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ChangeNotifierProvider(create: (_) => SettingProvider()),
     ],
     child: MyApp(),
   ));
@@ -30,11 +28,12 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<SettingProvider>(context);
+    themeProvider.changeState(SettingType.Theme);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PCube+', // 탭 이름
-      themeMode: themeProvider.themeMode,
+      themeMode: themeProvider.item,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
       home: LoginPage(),
