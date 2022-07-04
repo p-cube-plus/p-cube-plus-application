@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
-import 'notice_list_screen.dart';
-import 'setting_screen.dart';
+import 'home_page.dart';
+import 'notice_page.dart';
+import 'setting_page.dart';
 
-class MainPage extends StatefulWidget {
+class PageControll extends StatefulWidget {
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<PageControll> createState() => _PageControllState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _PageControllState extends State<PageControll> {
   int _idx = 0;
   final pageController = PageController();
 
@@ -24,9 +24,9 @@ class _MainPageState extends State<MainPage> {
           });
         },
         children: [
-          HomeWidget(),
-          NoticeListWidget(),
-          SettingListWidget(),
+          HomePage(),
+          NoticePage(),
+          SettingPage(),
         ],
         physics: NeverScrollableScrollPhysics(),
       ),

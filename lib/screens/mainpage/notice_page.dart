@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/notice_box.dart';
 
-class NoticeListWidget extends StatelessWidget {
+class NoticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var product = Provider.of<NoticeProvider>(context);

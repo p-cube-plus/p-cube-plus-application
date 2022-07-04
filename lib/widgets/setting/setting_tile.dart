@@ -1,50 +1,13 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/diagnostics.dart';
 
-enum SettingType {
-  None,
-  Default,
-  Text,
-  Switch,
-}
+// NewPageTile: 클릭 시 새 페이지로 넘어가는 설정
+// SwitchTile: 스위치 기능의 설정
 
 abstract class SettingTile extends StatelessWidget {
   final height = 50.0;
+  final blank = 20.0;
   final background = Colors.white70;
   final title;
-  tapFunc(context);
 
   SettingTile({required String this.title});
-}
-
-class NewPageTile extends SettingTile {
-  NewPageTile({required String title}) : super(title: title);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: super.height,
-      child: InkWell(
-        onTap: () => tapFunc(context),
-        child: Container(
-          color: super.background,
-          child: Row(
-            children: [
-              const SizedBox(width: 20),
-              Text(title),
-              const Spacer(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  tapFunc(context) {
-    // TODO: implement tapFunc
-    throw UnimplementedError();
-  }
 }

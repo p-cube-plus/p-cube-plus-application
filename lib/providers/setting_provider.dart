@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 
 enum SettingType {
   Theme,
+  AllNotice,
+  AllMeetingNotice,
+  PartMeetingNotice,
+  DuesNotice,
+  CleanNotice,
+  BookNotice,
 }
 
 abstract class ISetting {
@@ -14,31 +20,79 @@ class ThemeSetting implements ISetting {
   ThemeMode themeMode = ThemeMode.system;
 
   @override
-  void toggle(bool isOn) => themeMode = isOn ? ThemeMode.light : ThemeMode.dark;
+  void toggle(bool isOn) => themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
 
   @override
-  bool get isOn => themeMode == ThemeMode.light;
+  bool get isOn => themeMode == ThemeMode.dark;
 
   @override
   get item => themeMode;
 }
 
+class NoticeSetting implements ISetting {
+  bool flag = true;
+
+  @override
+  bool get isOn => flag;
+
+  @override
+  void toggle(bool isOn) => flag = isOn;
+
+  @override
+  get item => flag;
+}
+
 class SettingProvider with ChangeNotifier {
   late ISetting curState;
   final theme = ThemeSetting();
+  final allNotice = NoticeSetting();
+  final notices = List<NoticeSetting>.generate(5, (index) => NoticeSetting());
 
   void changeState(SettingType type) {
     switch (type) {
       case SettingType.Theme:
         curState = theme;
         break;
+      case SettingType.AllNotice:
+        curState = allNotice;
+        break;
+      case SettingType.AllMeetingNotice:
+        curState = notices[0];
+        break;
+      case SettingType.PartMeetingNotice:
+        curState = notices[1];
+        break;
+      case SettingType.DuesNotice:
+        curState = notices[2];
+        break;
+      case SettingType.CleanNotice:
+        curState = notices[3];
+        break;
+      case SettingType.BookNotice:
+        curState = notices[4];
+        break;
       default:
     }
-    notifyListeners();
   }
 
   void toggle(bool isOn) {
     curState.toggle(isOn);
+
+    if (curState == allNotice) {
+      notices.forEach((element) {
+        element.toggle(isOn);
+      });
+    } else if (curState != theme) {
+      bool isAll = true;
+      for (var element in notices) {
+        if (element.item != isOn) {
+          isAll = false;
+          break;
+        }
+      }
+      if (isAll) allNotice.toggle(isOn);
+    }
+
     notifyListeners();
   }
 

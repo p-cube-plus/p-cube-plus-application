@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // 임시
-import 'mainpage/main_page_controller.dart';
+import 'mainpage/page_controller.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -88,7 +88,7 @@ class _ShowButton extends StatelessWidget {
   void _goNaverPage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MainPage()),
+      MaterialPageRoute(builder: (context) => PageControll()),
     );
   }
 }
@@ -124,7 +124,7 @@ class _ShowTextButton extends StatelessWidget {
   void _goApplicationPage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MainPage()),
+      MaterialPageRoute(builder: (context) => PageControll()),
     );
   }
 }
