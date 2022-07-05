@@ -9,8 +9,10 @@ class CustomAppBar extends StatelessWidget {
     this.height,
     this.actions,
     this.hasPrevious,
+    this.padding,
   }) : super(key: key);
 
+  final EdgeInsetsGeometry? padding;
   final String title;
   final double? height;
   final List<Widget>? actions;
@@ -26,8 +28,8 @@ class CustomAppBar extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  color: Colors.black,
-                  fontSize: 16.0,
+                  color: Color(0xFF2E2E2E),
+                  fontSize: 24.0,
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -44,11 +46,11 @@ class CustomAppBar extends StatelessWidget {
       _widgets.insert(
         0,
         Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+          padding: const EdgeInsets.only(bottom: 24.0),
           child: GestureDetector(
             onTap: () => Navigator.of(context).pop(),
             child: Icon(
-              Icons.arrow_back,
+              Icons.arrow_back_ios_new,
               size: 20.0,
             ),
           ),
@@ -56,7 +58,7 @@ class CustomAppBar extends StatelessWidget {
       );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: padding ?? EdgeInsets.only(top: 40.0, bottom: 24.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,8 +66,6 @@ class CustomAppBar extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).padding.top),
         ]..add(
             Container(
-              //color: Colors.red,
-              height: height ?? 84.0,
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

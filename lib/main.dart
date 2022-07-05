@@ -68,9 +68,10 @@ class _MyAppState extends State<MyApp> {
                 ).apply(
                   bodyColor: Colors.black,
                   displayColor: Colors.blue,
+                  fontFamily: "SpoqaHanSansNeo",
                 ),
                 primaryColor: const Color.fromARGB(255, 222, 43, 19),
-                backgroundColor: const Color(0xFFF5F5f5),
+                backgroundColor: const Color(0xFFFBFBFB),
               ),
         home: LoginPage(),
       ),

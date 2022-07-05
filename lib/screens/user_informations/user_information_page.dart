@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import '../../widgets/curriculum_progress.dart';
+import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
+import '../../models/project.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data.dart';
 import '../../models/user.dart';
 import '../../widgets/setting_list_widget.dart';
-import '../../widgets/list_divider.dart';
+import '../../widgets/list_divider_widget.dart';
 import '../../widgets/custom_appbar_widget.dart';
-import '../../widgets/rounded_border.dart';
+import '../../widgets/rounded_border_widget.dart';
 
 import 'caution_list_page.dart';
 import 'seminar_list_page.dart';
@@ -32,41 +33,25 @@ class UserInformationPage extends StatelessWidget {
           create: (_) => UserDataProvider(),
         ),
       ],
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomAppBar(
-              title: "내 정보",
-              actions: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SettingListWidget()),
-                    );
-                  }, // 설정 화면으로 이동
-                  child: Text(
-                    "설정",
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.black,
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
+      child: DefaultPage(
+        appBarTitle: "내 정보",
+        appBarActions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingListWidget(),
                 ),
-              ],
+              );
+            },
+            child: Icon(
+              Icons.settings,
+              color: Color(0xFF818181),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: InformationList(),
-              ),
-            ),
-          ],
-        ),
-        resizeToAvoidBottomInset: false,
+          ),
+        ],
+        content: InformationList(),
       ),
     );
   }
@@ -84,68 +69,158 @@ class InformationList extends StatelessWidget {
 
     // 필요한 위젯들을 추가하는 과정? build에 이걸 다 넣어도 괜찮은지 모르겠음
     // 코드 마음에 안들어요
-    List<Widget> widgets = <Widget>[const ProfileView()];
-    widgets
-      ..add(const ListDivider()) // Divider랑 SummaryView 합칠지 고민중
-      ..add(
-        ContentSummaryView(
-          title: "경고 현황",
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CautionListPage(
-                  userProvider: userProvider,
-                ),
-              ),
-            );
-          },
-          descript: Align(
-            alignment: Alignment.centerRight,
+    List<Widget> widgets = <Widget>[
+      const ProfileView(),
+      ListDivider(),
+    ];
+
+    widgets.add(
+      ContentSummaryView(
+        title: "승급 진행률",
+        onTap: () {},
+        descript: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              "내역 보기",
+              "${(userProvider.user!.curriculum.progress * 100).round()}%", // debug
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Colors.black,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 12.0,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w700,
                   ),
             ),
           ),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Stack(
+              children: [
+                RoundedBorder(
+                  radius: 8.0,
+                  height: 16.0,
+                  color: const Color(0xFFF9D4CF),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: (userProvider.user!.curriculum.progress * 100)
+                          .toInt(),
+                      child: RoundedBorder(
+                        radius: 8.0,
+                        height: 16.0,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    Expanded(
+                        flex:
+                            ((1 - userProvider.user!.curriculum.progress) * 100)
+                                .toInt(),
+                        child: Container()),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    widgets
+      ..add(const SizedBox(height: 40.0))
+      ..add(
+        ContentSummaryView(
+          title: "경고 현황",
+          onTap: () {},
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: RoundedBorder(
+                radius: 10.0,
+                height: 48.0,
+                hasShadow: true,
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "누적 경고 횟수", // debug
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: const Color(0xFF2E2E2E),
+                                  fontSize: 11.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                      ),
+                      Text(
+                        "총 ${userProvider.totalCaution(0)}회", // debug
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+    widgets
+      ..add(const SizedBox(height: 40.0))
+      ..add(
+        ContentSummaryView(
+          title: "참여 중인 프로젝트",
+          onTap: () {},
           children: List.generate(
-            3,
+            userProvider.user!.projects.length,
             (index) {
-              double _count = userProvider.totalCaution(2 - index);
-              String _value = _count == _count.round()
-                  ? _count.toInt().toString()
-                  : _count.toString();
+              Project project = userProvider.user!.projects[index];
 
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      ["경고", "주의", "총"][index],
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: Colors.black,
-                                fontSize: 11.0,
-                                fontWeight: FontWeight.w300,
+                child: RoundedBorder(
+                  radius: 10.0,
+                  height: 48.0,
+                  hasShadow: true,
+                  onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          project.name, // debug
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: const Color(0xFF2E2E2E),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500,
                               ),
+                        ),
+                        Text(
+                          "${["메인", "꼬꼬마"][project.type]} 프로젝트", // debug
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: const Color(0xFFABABAB),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "${_value}회",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(
-                            color: Colors.black,
-                            fontSize: 11.0,
-                            fontWeight:
-                                index == 2 ? FontWeight.w500 : FontWeight.w300,
-                          ),
-                    ),
-                  ],
+                  ),
                 ),
               );
             },
@@ -154,74 +229,10 @@ class InformationList extends StatelessWidget {
       );
 
     widgets
-      ..add(const ListDivider())
+      ..add(const SizedBox(height: 40.0))
       ..add(
         ContentSummaryView(
-          title: "참여 중인 프로젝트",
-          onTap: () {},
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Column(
-                children: [
-                  RoundedBorder(
-                    radius: 16.0,
-                    height: 46.0,
-                    child: InformationSummaryBar(
-                      title: "PCube+",
-                      description: ["메인 프로젝트", "꼬꼬마 프로젝트"][0],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-    widgets
-      ..add(const ListDivider())
-      ..add(
-        ContentSummaryView(
-          title: "승급 진행률",
-          onTap: () {},
-          descript: Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                "${(userProvider.user!.curriculum.progress * 100).round()}%", // debug
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-              ),
-            ),
-          ),
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Stack(
-                children: [
-                  RoundedBorder(
-                    radius: 8.0,
-                    height: 16.0,
-                    color: Color(0xFFF9D4CF),
-                  ),
-                ],
-              ),
-            ),
-            CurriculumProgressView(userProvider: userProvider),
-          ],
-        ),
-      );
-
-    widgets
-      ..add(const ListDivider()) // Divider랑 SummaryView 합칠지 고민중
-      ..add(
-        ContentSummaryView(
-          title: "세미나 참여 정보",
+          title: "최근 세미나",
           onTap: () {
             Navigator.push(
               context,
@@ -232,114 +243,65 @@ class InformationList extends StatelessWidget {
               ),
             );
           },
-          children: List.generate(userProvider.user!.seminars.length, (index) {
-            Seminar seminar = userProvider.user!.seminars[index];
+          children: List.generate(
+            userProvider.user!.seminars.length,
+            (index) {
+              Seminar seminar = userProvider.user!.seminars[index];
 
-            return Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Column(
-                //mainAxisSize: MainAxisSize.min,
-                children: [
-                  InformationSummaryBar(
-                    title: DateFormat("MM/dd").format(seminar.date),
-                    description: "${["수습회원", "정회원", "졸업생"][seminar.type]} 세미나",
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: RoundedBorder(
+                  radius: 10.0,
+                  height: 48.0,
+                  hasShadow: true,
+                  onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${[
+                            "수습회원",
+                            "정회원",
+                            "졸업생"
+                          ][seminar.type]} 세미나", // debug
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: const Color(0xFF2E2E2E),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                        ),
+                        Text(
+                          "${DateFormat("MM/dd").format(seminar.date)}", // debug
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: const Color(0xFFABABAB),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            );
-          }),
+                ),
+              );
+            },
+          ),
         ),
       );
 
-    widgets.add(SizedBox(height: 20.0)); // 하단 공백
-
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       color: Theme.of(context).backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: widgets,
       ),
-    );
-  }
-}
-
-class InformationSummaryBar extends StatelessWidget {
-  const InformationSummaryBar({
-    Key? key,
-    required this.title,
-    this.description,
-    this.height,
-  }) : super(key: key);
-  final String title;
-  final String? description;
-  final double? height;
-
-  @override
-  Widget build(BuildContext context) {
-    return RoundedBorder(
-      radius: 16.0,
-      height: height ?? 46.0,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          children: [
-            Text(
-              title, // debug
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Colors.black,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  description ?? "", // debug
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: Color(0xFF2E2E2E),
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                ),
-              ),
-            ),
-            ViewDetailButton(
-                //onTap: () {},
-                ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ViewDetailButton extends StatelessWidget {
-  const ViewDetailButton({
-    Key? key,
-    this.text,
-    this.color,
-    this.fontSize,
-    this.fontWeight,
-    //this.onTap,
-  }) : super(key: key);
-
-  final String? text;
-  final Color? color;
-  final double? fontSize;
-  final FontWeight? fontWeight;
-  //final Function()? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text ?? "자세히 보기",
-      style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-            color: color ?? Color(0xFF2E2E2E),
-            fontSize: fontSize ?? 12.0,
-            fontWeight: fontWeight ?? FontWeight.w400,
-          ),
     );
   }
 }
@@ -360,19 +322,34 @@ class ContentSummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 여기 코드 마음에 안들어요
     List<Widget> _barContents = <Widget>[
       Text(
         title,
         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               color: Colors.black,
               fontSize: 14.0,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
             ),
       ),
       GestureDetector(
         onTap: onTap,
-        child: const Icon(Icons.chevron_right),
+        child: Row(
+          children: [
+            Text(
+              "자세히 보기",
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    color: Color(0xFF818181),
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+            const Icon(
+              Icons.chevron_right,
+              color: Color(0xFF818181),
+              size: 20.0,
+            ),
+          ],
+        ),
       ),
     ];
     if (descript != null) _barContents.insert(1, Expanded(child: descript!));
@@ -407,23 +384,23 @@ class ProfileView extends StatelessWidget {
         GestureDetector(
           onTap: () {},
           child: SizedBox(
-            width: 58.0,
-            height: 58.0,
+            width: 72.0,
+            height: 72.0,
             child: _hasProfile
                 ? Container(
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Color.fromARGB(255, 209, 209, 209),
+                      color: Color(0xFFE9E9E9),
                     ),
                     child: const Icon(
-                      Icons.person_outline,
-                      color: Color.fromARGB(230, 163, 163, 163),
+                      Icons.person,
+                      color: Color(0xFFD5D5D5),
+                      size: 36.0,
                     ),
                   )
                 : Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: const Color.fromARGB(255, 209, 209, 209),
                       image: DecorationImage(
                         image: NetworkImage(user!.profile!),
                         fit: BoxFit.fill,
@@ -439,37 +416,22 @@ class ProfileView extends StatelessWidget {
             Text(
               user?.name ?? "Unknown",
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Colors.black,
+                    color: Color(0xFF2E2E2E),
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
                   ),
             ),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {}, // 파트 회원 목록 보기?
-                  child: Text(
-                    "${["디자인", "프로그래밍", "아트"][user?.partIndex ?? 0]} 파트",
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                ),
-                const SizedBox(width: 8.0),
-                GestureDetector(
-                  onTap: () {}, // 회원 목록 보기?
-                  child: Text(
-                    "정회원",
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                  ),
-                ),
-              ],
+            const SizedBox(height: 2.0),
+            GestureDetector(
+              onTap: () {}, // 회원 목록 보기?
+              child: Text(
+                "수습회원",
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Color(0xFF818181),
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
             )
           ],
         )

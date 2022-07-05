@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../providers/user_data.dart';
 import '../../widgets/custom_appbar_widget.dart';
-import '../../widgets/list_divider.dart';
+import '../../widgets/list_divider_widget.dart';
 
 class CautionListPage extends StatelessWidget {
   const CautionListPage({
@@ -38,8 +38,8 @@ class CautionListPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    CautionSummaryView(userProvider: userProvider),
-                    ListDivider(),
+                    //CautionSummaryView(userProvider: userProvider),
+                    //ListDivider(),
                     CautionListView(
                       title: "경고 내역",
                       userProvider: userProvider,

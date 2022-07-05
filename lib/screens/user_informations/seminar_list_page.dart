@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import '../../models/seminar.dart';
 import '../../providers/user_data.dart';
 import '../../widgets/custom_appbar_widget.dart';
-import '../../widgets/list_divider.dart';
+import '../../widgets/list_divider_widget.dart';
+import '../../widgets/default_page_widget.dart';
+import '../../widgets/rounded_border_widget.dart';
 import 'user_information_page.dart';
 
 class SeminarListPage extends StatelessWidget {
@@ -24,51 +26,22 @@ class SeminarListPage extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomAppBar(
-            title: "세미나 참여 정보",
-            hasPrevious: true,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: userProvider.user!.seminars.length == 0
-                      ? [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              "세미나 참여 내역이 존재하지 않습니다.",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                    color: Color(0xFF818181),
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                            ),
-                          ),
-                        ]
-                      : [
-                          SeminarSummaryView(userProvider: userProvider),
-                          ListDivider(),
-                          SeminarListView(userProvider: userProvider),
-                        ],
-                ),
+    return DefaultPage(
+      appBarTitle: "세미나 내역",
+      appBarHasPrevious: true,
+      content: (userProvider.user!.seminars.length == 0)
+          ? Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                "세미나 참여 내역이 존재하지 않습니다.",
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Color(0xFF818181),
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                    ),
               ),
-            ),
-          ),
-        ],
-      ),
-      resizeToAvoidBottomInset: false,
+            )
+          : SeminarListView(userProvider: userProvider),
     );
   }
 }
@@ -85,38 +58,48 @@ class SeminarListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "세미나 참여 내역",
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Colors.black,
-                fontSize: 14.0,
-                fontWeight: FontWeight.w500,
-              ),
-        ),
-        SizedBox(height: 6.0),
-      ]..addAll(
-          List.generate(
-            userProvider.user!.seminars.length,
-            (index) {
-              Seminar seminar = userProvider.user!.seminars[index];
+      children: List.generate(
+        userProvider.user!.seminars.length,
+        (index) {
+          Seminar seminar = userProvider.user!.seminars[index];
 
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Column(
-                  //mainAxisSize: MainAxisSize.min,
+          return Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: RoundedBorder(
+              radius: 10.0,
+              height: 48.0,
+              hasShadow: true,
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InformationSummaryBar(
-                      title: DateFormat("MM/dd").format(seminar.date),
-                      description:
-                          "${["수습회원", "정회원", "졸업생"][seminar.type]} 세미나",
+                    Text(
+                      "${["수습회원", "정회원", "졸업생"][seminar.type]} 세미나", // debug
+                      style:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                color: const Color(0xFF2E2E2E),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                    ),
+                    Text(
+                      "${DateFormat("yyyy/MM/dd").format(seminar.date)}", // debug
+                      style:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                color: const Color(0xFFABABAB),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w400,
+                              ),
                     ),
                   ],
                 ),
-              );
-            },
-          ),
-        ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
