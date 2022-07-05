@@ -36,7 +36,6 @@ dependencies:
   provider: ^6.0.2
   lint: ^1.8.2
   flutter_native_splash: ^2.1.6
-  flutter_settings_screens: ^0.3.2-null-safety
   flutter_naver_login: ^1.6.0
   intl: ^0.17.0
 
