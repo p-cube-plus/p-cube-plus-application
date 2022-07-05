@@ -295,7 +295,6 @@ class InformationList extends StatelessWidget {
       );
 
     return Container(
-      color: Color(0xFFFBFBFB),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: widgets,

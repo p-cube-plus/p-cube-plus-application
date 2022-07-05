@@ -10,14 +10,14 @@ class SubTextTile extends SettingTile {
       children: [
         Row(
           children: [
-            SizedBox(width: super.blank),
+            //SizedBox(width: super.blank),
             Text(
               title,
               style: TextStyle(fontSize: 12, color: Colors.white70),
             ),
           ],
         ),
-        SizedBox(height: super.blank / 2),
+        //SizedBox(height: super.blank / 2),
       ],
     );
   }

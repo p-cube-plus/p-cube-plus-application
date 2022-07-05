@@ -23,11 +23,11 @@ class VersionTile extends SettingTile {
             child: Container(
               child: Row(
                 children: [
-                  SizedBox(width: super.blank),
+                  //SizedBox(width: super.blank),
                   const Text('버전'),
                   const Spacer(),
                   Text(data.version),
-                  SizedBox(width: super.blank),
+                  //SizedBox(width: super.blank),
                 ],
               ),
             ),

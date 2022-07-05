@@ -27,7 +27,7 @@ class SwitchTile extends SettingTile {
           //color: Colors.white70, //배경색
           child: Row(
             children: [
-              SizedBox(width: super.blank),
+              //SizedBox(width: super.blank),
               Text(super.title),
               const Spacer(),
               Transform.scale(
@@ -52,7 +52,7 @@ class SwitchTile extends SettingTile {
                   ),
                 ),
               ),
-              SizedBox(width: super.blank / 2),
+              //SizedBox(width: super.blank / 2),
             ],
           ),
         ),

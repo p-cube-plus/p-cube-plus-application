@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('홈'),
-        automaticallyImplyLeading: false,
-        //leading: IconButton(
-        //  icon: const Icon(Icons.arrow_back),
-        //  tooltip: '뒤로 가기',
-        //  onPressed: () {
-        //    Navigator.pop(context);
-        //  },
-        //),
-      ),
-      //body: ,
-    );
+    return DefaultPage(appBarTitle: "홈");
   }
 }

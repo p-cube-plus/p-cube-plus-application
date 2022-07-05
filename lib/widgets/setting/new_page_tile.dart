@@ -16,11 +16,11 @@ class NewPageTile extends SettingTile {
           //color: super.background,
           child: Row(
             children: [
-              SizedBox(width: super.blank),
+              //SizedBox(width: super.blank),
               Text(title),
               const Spacer(),
               const Icon(Icons.arrow_forward_ios, size: 15),
-              SizedBox(width: super.blank),
+              //SizedBox(width: super.blank),
             ],
           ),
         ),

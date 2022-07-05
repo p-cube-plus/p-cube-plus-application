@@ -21,12 +21,12 @@ class DefaultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Color(0xFFFBFBFB),
+        statusBarColor: Theme.of(context).backgroundColor,
       ),
     );
 
     return Scaffold(
-      backgroundColor: Color(0xFFFBFBFB),
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(

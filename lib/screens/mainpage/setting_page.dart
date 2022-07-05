@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
+import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
 import 'package:p_cube_plus_application/widgets/setting/divider_widget.dart';
 import 'package:p_cube_plus_application/widgets/setting/new_page_tile.dart';
 import 'package:p_cube_plus_application/widgets/setting/switch_tile.dart';
 
 import '../../widgets/alert_frame.dart';
+import '../../widgets/list_divider_widget.dart';
 import '../../widgets/setting/alert_tile.dart';
 import '../../widgets/setting/maintitle_tile.dart';
 import '../../widgets/setting/version_tile.dart';
@@ -14,38 +16,22 @@ import 'setting_notice_page.dart';
 class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
-          tooltip: '뒤로 가기',
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Container(
-        child: SafeArea(
-          child: ListView(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
-            physics: NeverScrollableScrollPhysics(),
-            //addAutomaticKeepAlives: false,
-            children: [
-              MainTitleTile(title: '설정'),
-              NewPageTile(title: '알림 설정', newPage: SettingNoticePage()),
-              SwitchTile(title: '다크 모드', type: SettingType.Theme),
-              SettingDivider(),
-              VersionTile(title: '버전'),
-              AlertTile(
-                  title: '피드백 보내기', hasIcon: true, alertWidget: _getFeedback()),
-              AlertTile(title: '개발진 목록', hasIcon: true, alertWidget: _getDev()),
-              SettingDivider(),
-              AlertTile(
-                  title: '로그아웃', hasIcon: false, alertWidget: _getLogout()),
-            ],
-          ),
-        ),
+    return DefaultPage(
+      appBarTitle: "설정",
+      appBarHasPrevious: true,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          NewPageTile(title: '알림 설정', newPage: SettingNoticePage()),
+          SwitchTile(title: '다크 모드', type: SettingType.Theme),
+          ListDivider(),
+          VersionTile(title: '버전'),
+          AlertTile(
+              title: '피드백 보내기', hasIcon: true, alertWidget: _getFeedback()),
+          AlertTile(title: '개발진 목록', hasIcon: true, alertWidget: _getDev()),
+          ListDivider(),
+          AlertTile(title: '로그아웃', hasIcon: false, alertWidget: _getLogout()),
+        ],
       ),
     );
   }

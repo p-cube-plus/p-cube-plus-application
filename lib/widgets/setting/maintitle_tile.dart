@@ -11,7 +11,7 @@ class MainTitleTile extends SettingTile {
         children: [
           Row(
             children: [
-              SizedBox(width: super.blank),
+              //SizedBox(width: super.blank),
               Text(
                 title,
                 style:
@@ -19,7 +19,7 @@ class MainTitleTile extends SettingTile {
               ),
             ],
           ),
-          SizedBox(height: super.blank),
+          //SizedBox(height: super.blank),
         ],
       ),
       alignment: Alignment.centerLeft,

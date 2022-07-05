@@ -29,12 +29,12 @@ class AlertTile extends SettingTile {
 
   List<Widget> _getChildren() {
     final result = <Widget>[];
-    result.add(SizedBox(width: super.blank));
+    //result.add(SizedBox(width: super.blank));
     result.add(Text(super.title));
     if (hasIcon) {
       result.add(const Spacer());
       result.add(Icon(Icons.arrow_forward_ios, size: 15));
-      result.add(SizedBox(width: super.blank));
+      //result.add(SizedBox(width: super.blank));
     }
     return result;
   }
