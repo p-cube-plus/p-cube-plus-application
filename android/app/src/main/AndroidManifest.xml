@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.p_cube_plus_application">
+    package="com.pandora_cube.p_cube_plus">
 
     <!-- 예약 알림과 진동을 통한 알림을 이용-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -8,6 +8,16 @@
    <application
         android:label="p_cube_plus_application"
         android:icon="@mipmap/launcher_icon">
+        <!-- naver login을 위한 meta-data -->
+        <meta-data
+            android:name="com.naver.sdk.clientId"
+            android:value="@string/client_id" />
+        <meta-data
+            android:name="com.naver.sdk.clientSecret"
+            android:value="@string/client_secret" />
+         <meta-data
+            android:name="com.naver.sdk.clientName"
+            android:value="@string/client_name" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
