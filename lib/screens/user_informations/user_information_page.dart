@@ -8,12 +8,10 @@ import 'package:provider/provider.dart';
 import '../../models/seminar.dart';
 import '../../providers/user_data.dart';
 import '../../models/user.dart';
-import '../../widgets/setting_list_widget.dart';
 import '../../widgets/list_divider_widget.dart';
-import '../../widgets/custom_appbar_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
 
-import 'caution_list_page.dart';
+import '../mainpage/setting_page.dart';
 import 'seminar_list_page.dart';
 
 class UserInformationPage extends StatelessWidget {
@@ -41,7 +39,7 @@ class UserInformationPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SettingListWidget(),
+                  builder: (context) => SettingPage(),
                 ),
               );
             },
