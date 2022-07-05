@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'providers/notice_provider.dart';
 
 import 'screens/login_page.dart';
+import 'utilities/notification.dart';
 
 void main() {
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<SettingProvider>(context);
     themeProvider.changeState(SettingType.Theme);
+    Alarm alarm = Alarm();
+    alarm.initState();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PCube+', // 탭 이름

@@ -1,18 +1,166 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 // 임시
 import 'mainpage/page_controller.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+// Init Badge
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+    _init();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      FlutterAppBadger.removeBadge();
+    }
+  }
+
+// Init flutter_local_notification
+  Future<void> _init() async {
+    await _configureLocalTimeZone();
+    await _initializeNotification();
+  }
+
+  // 현재 시간 등록
+  Future<void> _configureLocalTimeZone() async {
+    tz.initializeTimeZones();
+    final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName!));
+  }
+
+  Future<void> _initializeNotification() async {
+    const IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('ic_launcher');
+
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+    await _flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: _onSelectNotification);
+  }
+
+  //알림을 눌렀을때 어떤 행동을 할지 정해주는 부분
+  Future _onSelectNotification(String? payload) async {
+    print("payload : $payload");
+  }
+
+// 메시지 등록 취소
+  Future<void> cancelNotification() async {
+    await _flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+// 알림 권한 요청
+  Future<void> requestPermissions() async {
+    await _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+  }
+
+// 메시지 등록
+  Future<void> registerMessage({
+    required int hour,
+    required int minutes,
+    required message,
+  }) async {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minutes,
+    );
+
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      'flutter_local_notifications',
+      message,
+      scheduledDate,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'channel id',
+          'channel name',
+          importance: Importance.max,
+          priority: Priority.high,
+          ongoing: true,
+          styleInformation: BigTextStyleInformation(message),
+          icon: 'ic_notification',
+        ),
+        iOS: const IOSNotificationDetails(
+          badgeNumber: 1,
+        ),
+      ),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Center(
-          child: _MainLogin(),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () async {
+            await cancelNotification();
+            await requestPermissions();
+
+            final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+            await registerMessage(
+              hour: now.hour,
+              minutes: now.minute + 1,
+              message: 'Hello, world!',
+            );
+          },
+          child: const Text('Show Notification'),
         ),
       ),
+      //body: const SingleChildScrollView(
+      //  child: Center(
+      //    child:
+      //  ),
+      //),
     );
   }
 }
