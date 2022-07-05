@@ -53,7 +53,7 @@ class UserDataProvider with ChangeNotifier {
   }
 
   User tempUser() => User(
-        name: "조승빈",
+        name: "오창한",
         profile:
             null, //"https://cdn.discordapp.com/avatars/264788350227972097/ba95f75e90872ba95c65f1d89f7f0148.webp",
         partIndex: 1,

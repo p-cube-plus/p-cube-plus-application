@@ -422,7 +422,7 @@ class ProfileView extends StatelessWidget {
             GestureDetector(
               onTap: () {}, // 회원 목록 보기?
               child: Text(
-                "수습회원",
+                "정회원",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       color: Color(0xFF818181),
                       fontSize: 14.0,
