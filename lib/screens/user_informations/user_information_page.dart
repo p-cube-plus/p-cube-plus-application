@@ -23,7 +23,7 @@ class UserInformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Theme.of(context).backgroundColor,
+        statusBarColor: Color(0xFFFBFBFB),
       ),
     );
 
@@ -85,7 +85,7 @@ class InformationList extends StatelessWidget {
             child: Text(
               "${(userProvider.user!.curriculum.progress * 100).round()}%", // debug
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Theme.of(context).primaryColor,
+                    color: Color(0xCCDE2B13),
                     fontSize: 12.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -110,7 +110,7 @@ class InformationList extends StatelessWidget {
                       child: RoundedBorder(
                         radius: 8.0,
                         height: 16.0,
-                        color: Theme.of(context).primaryColor,
+                        color: Color(0xCCDE2B13),
                       ),
                     ),
                     Expanded(
@@ -159,7 +159,7 @@ class InformationList extends StatelessWidget {
                         "총 ${userProvider.totalCaution(0)}회", // debug
                         style:
                             Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Color(0xCCDE2B13),
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -297,7 +297,7 @@ class InformationList extends StatelessWidget {
       );
 
     return Container(
-      color: Theme.of(context).backgroundColor,
+      color: Color(0xFFFBFBFB),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: widgets,
