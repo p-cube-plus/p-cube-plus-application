@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:p_cube_plus_application/widgets/setting_list_widget.dart';
+import 'package:p_cube_plus_application/providers/setting_provider.dart';
+import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 
-import 'providers/notice_list.dart';
+import 'providers/notice_provider.dart';
 
 import 'screens/login_page.dart';
+import 'utilities/notification.dart';
 
 void main() async {
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -15,63 +15,31 @@ void main() async {
   // 이후, 앱 시작 시 필요한 정보나 요청을 다 받고
   // FlutterNativeSplash.remove();
 
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Settings.init(cacheProvider: SharePreferenceCache());
+  //WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => NoticeList()),
+      ChangeNotifierProvider(create: (_) => NoticeProvider()),
+      ChangeNotifierProvider(create: (_) => SettingProvider()),
     ],
-    child: const MyApp(),
+    child: MyApp(),
   ));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ValueChangeObserver<bool>(
-      cacheKey: DarkMode.keyDarkMode,
-      defaultValue: true,
-      builder: (_, isDarkMode, __) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'PCube+', // 탭 이름
-        themeMode: ThemeMode.system, // 시스템에 따라 모드 변경
-        theme: isDarkMode
-            ? ThemeData.dark().copyWith(
-                brightness: Brightness.dark,
-                //colorScheme: ColorScheme.dark()
-                //    .copyWith(primary: const Color(0xFF242424)),
-                backgroundColor: Color(0xFF242424),
-                scaffoldBackgroundColor: Color(0xFF242424),
-                canvasColor: Color(0xFF242424),
-                //primaryTextTheme:
-                //    Typography(platform: TargetPlatform.iOS).white,
-                //textTheme: Typography(platform: TargetPlatform.iOS).white,
-              )
-            : ThemeData.light().copyWith(
-                colorScheme: ColorScheme.light().copyWith(
-                  primary: Color.fromARGB(255, 107, 107, 107),
-                ), // 상단
-                scaffoldBackgroundColor: Color(0xFFF4F4F4), // 배경
-                canvasColor: Color(0xFFFFFFFF), // 하단
-                textTheme: TextTheme(
-                  bodyText1: TextStyle(),
-                  bodyText2: TextStyle(),
-                ).apply(
-                  bodyColor: Colors.black,
-                  displayColor: Colors.blue,
-                ),
-              ),
-        home: LoginPage(),
-      ),
+    final themeProvider = Provider.of<SettingProvider>(context);
+    themeProvider.changeState(SettingType.Theme);
+    Alarm alarm = Alarm();
+    alarm.initState();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'PCube+', // 탭 이름
+      themeMode: themeProvider.item,
+      theme: MyThemes.lightTheme,
+      darkTheme: MyThemes.darkTheme,
+      home: LoginPage(),
     );
   }
 }
