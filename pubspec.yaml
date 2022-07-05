@@ -36,6 +36,10 @@ dependencies:
   provider: ^6.0.2
   lint: ^1.8.2
   flutter_native_splash: ^2.1.6
+  flutter_settings_screens: ^0.3.2-null-safety
+  package_info_plus: ^1.4.2
+  flutter_native_timezone: ^2.0.0
+  flutter_app_badger: ^1.4.0
   flutter_naver_login: ^1.6.0
   intl: ^0.17.0
 

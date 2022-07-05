@@ -4,11 +4,8 @@ import 'package:intl/intl.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data.dart';
-import '../../widgets/custom_appbar_widget.dart';
-import '../../widgets/list_divider_widget.dart';
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
-import 'user_information_page.dart';
 
 class SeminarListPage extends StatelessWidget {
   const SeminarListPage({

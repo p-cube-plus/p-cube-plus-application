@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/providers/notice_provider.dart';
+import 'package:p_cube_plus_application/widgets/notice_box_widget.dart';
 import 'package:provider/provider.dart';
-import '../models/notice_box.dart';
-import '../providers/notice_list.dart';
-import '../widgets/notice_box_widget.dart';
 
-//class NoticeListWidget extends StatefulWidget {
-//  const NoticeListWidget({Key? key}) : super(key: key);
-//
-//  @override
-//  State<NoticeListWidget> createState() => _NoticeListWidgetState();
-//}
+import '../../models/notice_box.dart';
 
-class NoticeListWidget extends StatelessWidget {
-  //@override
-  //bool get wantKeepAlive => true;
-
+class NoticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var product = Provider.of<NoticeList>(context);
+    var product = Provider.of<NoticeProvider>(context);
 
     if (product.isFirst) {
-      product
-          .getNotice(new NoticeBox('청소 알림', '당일 hh시에 동아리방 청소가 시작됩니다.', '1:00'));
+      product.getNotice(new NoticeBox('청소 알림', '당일 hh시에 청소가 시작됩니다.', '1:00'));
       product.getNotice(new NoticeBox('회비 알림', '당일 hh시에 어쩌구저쩌구', '2:00'));
       product.getNotice(new NoticeBox('도서 반납 알림', '당일 hh시에 어쩌구저쩌구', '4:00'));
       product.getNotice(new NoticeBox('회의 알림', '당일 hh시에 어쩌구저쩌구', '3:00'));
@@ -29,7 +19,7 @@ class NoticeListWidget extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('알림'), automaticallyImplyLeading: false,
+      appBar: AppBar(title: Text('알림'), automaticallyImplyLeading: false,
           //leading: IconButton(
           //  icon: const Icon(Icons.arrow_back),
           //  color: Color.fromARGB(255, 0, 0, 0),
@@ -41,7 +31,7 @@ class NoticeListWidget extends StatelessWidget {
           actions: [
             PopupMenuButton(
                 tooltip: "정렬기준",
-                icon: Icon(
+                icon: const Icon(
                   Icons.more_vert,
                 ),
                 elevation: 30,
@@ -49,13 +39,13 @@ class NoticeListWidget extends StatelessWidget {
                   product.changeSortType(value);
                 },
                 itemBuilder: (context) => [
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         child: Text(
                           "오름차순",
                         ),
                         value: SortType.Ascending,
                       ),
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         child: Text(
                           "내림차순",
                         ),

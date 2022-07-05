@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import '../widgets/home_widget.dart';
-import '../widgets/notice_list_widget.dart';
-import '../widgets/setting_list_widget.dart';
-import 'user_informations/user_information_page.dart';
+import 'package:p_cube_plus_application/screens/user_informations/user_information_page.dart';
 
-class MainPage extends StatefulWidget {
+import 'home_page.dart';
+import 'notice_page.dart';
+
+class PageControll extends StatefulWidget {
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<PageControll> createState() => _PageControllState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _PageControllState extends State<PageControll> {
   int _idx = 0;
   final pageController = PageController();
 
@@ -24,10 +24,9 @@ class _MainPageState extends State<MainPage> {
           });
         },
         children: [
-          HomeWidget(),
-          NoticeListWidget(),
+          HomePage(),
+          NoticePage(),
           UserInformationPage(),
-          //SettingListWidget(),
         ],
         physics: NeverScrollableScrollPhysics(),
       ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:p_cube_plus_application/widgets/setting_list_widget.dart';
+import 'package:p_cube_plus_application/providers/setting_provider.dart';
+import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 
-import 'providers/notice_list.dart';
+import 'providers/notice_provider.dart';
 
 import 'screens/login_page.dart';
+import 'utilities/notification.dart';
 
 void main() async {
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,8 @@ void main() async {
 
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => NoticeList()),
+      ChangeNotifierProvider(create: (_) => NoticeProvider()),
+      ChangeNotifierProvider(create: (_) => SettingProvider()),
     ],
     child: MyApp(),
   ));
@@ -27,10 +29,16 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<SettingProvider>(context);
+    themeProvider.changeState(SettingType.Theme);
+    Alarm alarm = Alarm();
+    alarm.initState();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PCube+', // 탭 이름
-      themeMode: ThemeMode.system, // 시스템에 따라 모드 변경
+      themeMode: themeProvider.item,
+      theme: MyThemes.lightTheme,
+      darkTheme: MyThemes.darkTheme,
       home: LoginPage(),
     );
   }
