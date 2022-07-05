@@ -8,7 +8,7 @@ import '../../models/notice_box.dart';
 class NoticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<NoticeProvider>(context);
+    var product = Provider.of<NoticeProvider>(context);
 
     if (product.isFirst) {
       product.getNotice(new NoticeBox('청소 알림', '당일 hh시에 청소가 시작됩니다.', '1:00'));
@@ -61,7 +61,7 @@ class NoticePage extends StatelessWidget {
               background: Container(
                 margin: EdgeInsets.only(left: 0, top: 12, right: 0, bottom: 0),
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                color: Color(0xFFDE2B13),
+                color: Colors.red,
                 alignment: Alignment.centerRight,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

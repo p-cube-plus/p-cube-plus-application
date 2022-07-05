@@ -8,7 +8,7 @@ import 'providers/notice_provider.dart';
 import 'screens/login_page.dart';
 import 'utilities/notification.dart';
 
-void main() {
+void main() async {
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 

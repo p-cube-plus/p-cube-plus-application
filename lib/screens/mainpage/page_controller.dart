@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/screens/user_informations/user_information_page.dart';
 
 import 'home_page.dart';
 import 'notice_page.dart';
-import 'setting_page.dart';
 
 class PageControll extends StatefulWidget {
   @override
@@ -26,7 +26,7 @@ class _PageControllState extends State<PageControll> {
         children: [
           HomePage(),
           NoticePage(),
-          SettingPage(),
+          UserInformationPage(),
         ],
         physics: NeverScrollableScrollPhysics(),
       ),
