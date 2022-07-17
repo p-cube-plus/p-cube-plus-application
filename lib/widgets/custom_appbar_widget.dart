@@ -25,8 +25,7 @@ class CustomAppBar extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  color: Color(0xFF2E2E2E),
+            style: Theme.of(context).textTheme.headline1!.copyWith(
                   fontSize: 24.0,
                   fontWeight: FontWeight.w700,
                 ),

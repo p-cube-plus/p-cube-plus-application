@@ -12,6 +12,9 @@ class MyThemes {
       unselectedItemColor: Colors.white,
       selectedItemColor: const Color(0xFFDE2B13),
     ),
+    textTheme: TextTheme(
+      headline1: TextStyle(color: const Color(0xFFFFFFFF)),
+    ),
     fontFamily: "SpoqaHanSansNeo",
   );
 
@@ -25,6 +28,11 @@ class MyThemes {
       backgroundColor: Colors.white,
       unselectedItemColor: Color(0xFF2E2E2E),
       selectedItemColor: const Color(0xCCDE2B13),
+    ),
+    textTheme: TextTheme(
+      headline1: TextStyle(color: const Color(0xFF2E2E2E)),
+      headline2: TextStyle(color: const Color(0xFF818181)),
+      headline3: TextStyle(color: const Color(0xFFABABAB)),
     ),
     fontFamily: "SpoqaHanSansNeo",
   );

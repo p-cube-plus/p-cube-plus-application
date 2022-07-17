@@ -31,8 +31,7 @@ class SeminarListPage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
                 "세미나 참여 내역이 존재하지 않습니다.",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Color(0xFF818181),
+                style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
@@ -74,21 +73,17 @@ class SeminarListView extends StatelessWidget {
                   children: [
                     Text(
                       "${["수습회원", "정회원", "졸업생"][seminar.type]} 세미나", // debug
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: const Color(0xFF2E2E2E),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500,
-                              ),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                     Text(
                       "${DateFormat("yyyy/MM/dd").format(seminar.date)}", // debug
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: const Color(0xFFABABAB),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400,
-                              ),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                          ),
                     ),
                   ],
                 ),
@@ -97,56 +92,6 @@ class SeminarListView extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class SeminarSummaryView extends StatelessWidget {
-  const SeminarSummaryView({
-    Key? key,
-    required this.userProvider,
-  }) : super(key: key);
-
-  final UserDataProvider userProvider;
-
-  @override
-  Widget build(BuildContext context) {
-    Map<int, int> _count = {};
-    for (var seminar in userProvider.user!.seminars) {
-      _count[seminar.date.year] = (_count[seminar.date.year] ?? 0) + 1;
-    }
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(_count.length, (index) {
-        List<int> years = _count.keys.toList();
-        years.sort();
-
-        return Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Row(
-            children: [
-              Text(
-                "${years[index]}년 세미나 참여",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black.withAlpha(0xDE),
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w300,
-                    ),
-              ),
-              SizedBox(width: 16.0),
-              Text(
-                "${_count[years[index]]}회",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black.withAlpha(0xDE),
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ],
-          ),
-        );
-      }),
     );
   }
 }

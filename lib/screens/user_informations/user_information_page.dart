@@ -147,12 +147,10 @@ class InformationList extends StatelessWidget {
                     children: [
                       Text(
                         "누적 경고 횟수", // debug
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: const Color(0xFF2E2E2E),
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                       Text(
                         "총 ${userProvider.totalCaution(0)}회", // debug
@@ -197,25 +195,19 @@ class InformationList extends StatelessWidget {
                       children: [
                         Text(
                           project.name, // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFF2E2E2E),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                         ),
                         Text(
                           "${["메인", "꼬꼬마"][project.type]} 프로젝트", // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFFABABAB),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline3!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                         ),
                       ],
                     ),
@@ -265,25 +257,19 @@ class InformationList extends StatelessWidget {
                             "정회원",
                             "졸업생"
                           ][seminar.type]} 세미나", // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFF2E2E2E),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                         ),
                         Text(
                           "${DateFormat("MM/dd").format(seminar.date)}", // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFFABABAB),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline3!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                         ),
                       ],
                     ),
@@ -323,8 +309,7 @@ class ContentSummaryView extends StatelessWidget {
     List<Widget> _barContents = <Widget>[
       Text(
         title,
-        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              color: Colors.black,
+        style: Theme.of(context).textTheme.headline1!.copyWith(
               fontSize: 14.0,
               fontWeight: FontWeight.w700,
             ),
@@ -335,15 +320,14 @@ class ContentSummaryView extends StatelessWidget {
           children: [
             Text(
               "자세히 보기",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Color(0xFF818181),
+              style: Theme.of(context).textTheme.headline2!.copyWith(
                     fontSize: 11.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Color(0xFF818181),
+              color: Theme.of(context).textTheme.headline2!.color,
               size: 20.0,
             ),
           ],
@@ -412,8 +396,7 @@ class ProfileView extends StatelessWidget {
           children: [
             Text(
               user?.name ?? "Unknown",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Color(0xFF2E2E2E),
+              style: Theme.of(context).textTheme.headline1!.copyWith(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -423,8 +406,7 @@ class ProfileView extends StatelessWidget {
               onTap: () {}, // 회원 목록 보기?
               child: Text(
                 "수습회원",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Color(0xFF818181),
+                style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w700,
                     ),
