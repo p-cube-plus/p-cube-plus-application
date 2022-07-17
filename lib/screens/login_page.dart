@@ -189,7 +189,7 @@ class _ShowLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Image(image: AssetImage('../../assets/images/symbol.png')),
+      child: Image(image: AssetImage('assets/images/symbol.png')),
       height: 500,
       width: 500,
       margin: EdgeInsets.only(bottom: 60),
