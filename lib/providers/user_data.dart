@@ -1,21 +1,18 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../models/curriculum.dart';
+import 'package:p_cube_plus_application/models/curriculum.dart';
+import 'package:p_cube_plus_application/models/member.dart';
+import '../models/promotion_progress.dart';
 import '../models/project.dart';
 import '../models/seminar.dart';
 import '../models/user.dart';
 import '../models/caution.dart';
-
-/*
-의문점
-
-User 정보 프로바이더 이대로 모든 데이터를 한 Provider가 관리하는게 나을까
-아니면 정보마다 다른 Provider를 사용하는게 나을까
- ex) 경고 Provider, 커리큘럼 Provider 등등..
-*/
+import '../services/pcube_api.dart';
 
 class UserDataProvider with ChangeNotifier {
+  late RestClient _client;
   bool isLoaded = false;
 
   User? _user;
@@ -26,7 +23,7 @@ class UserDataProvider with ChangeNotifier {
     double ret = 0;
     for (int i = 0; i < (_user?.cautions.length ?? 0); i++) {
       if (mode != 0 && _user!.cautions[i].type.abs() != mode) continue;
-      ret += _user!.cautions[i].type * _user!.cautions[i].count;
+      ret += _user!.cautions[i].type * _user!.cautions[i].amount;
     }
 
     if (mode == 0) return ret / 2.0;
@@ -45,71 +42,92 @@ class UserDataProvider with ChangeNotifier {
   }
 
   Future<User> _getData() async {
-    String js = jsonEncode(tempUser().toJson());
-    Map<String, dynamic> json = jsonDecode(js);
-    print(js);
+    Dio dio = Dio();
+    _client = RestClient(dio);
+    User user = await _client.getUser();
 
-    return User.fromJson(json);
+    //String js = jsonEncode(tempUser().toJson());
+    //Map<String, dynamic> json = jsonDecode(js);
+
+    return user; //User.fromJson(json);
   }
 
   User tempUser() => User(
+        id: 3,
+        level: "정회원",
         name: "조승빈",
-        profile:
+        profileImage:
             null, //"https://cdn.discordapp.com/avatars/264788350227972097/ba95f75e90872ba95c65f1d89f7f0148.webp",
         partIndex: 1,
         projects: <Project>[
           Project(
+            id: 0,
             type: 0,
             name: "PCube+",
             isEnd: false,
-            begin: DateTime(2022, 05, 27),
-            members: <String>[
-              "오창한",
-              "조승빈",
-              "권오민",
-              "신혜민",
+            startDate: DateTime(2022, 05, 27),
+            endDate: DateTime(2023, 01, 31),
+            members: <Member>[
+              Member(id: 0, name: "오창한", partIndex: 1),
+              Member(id: 1, name: "권오민", partIndex: 1),
+              Member(id: 2, name: "신혜민", partIndex: 0),
+              Member(id: 3, name: "조승빈", partIndex: 1),
             ],
+            pm: Member(id: 0, name: "오창한", partIndex: 1),
+            platforms: <String>[],
+            tags: <String>[],
           ),
         ],
         cautions: <Caution>[
           Caution(
+            id: 0,
             type: 2,
-            count: 1,
+            amount: 1,
             description: "경고 부여 사유~~~~",
             date: DateTime(2022, 05, 27),
           ),
           Caution(
+            id: 1,
             type: 1,
-            count: 1,
+            amount: 1,
             description: "주의 부여 사유~~",
             date: DateTime(2022, 05, 27),
           )
         ],
         seminars: <Seminar>[
           Seminar(
+            id: 3,
             type: 0,
             description: "",
             date: DateTime(2020, 05, 27),
           ),
           Seminar(
+            id: 4,
             type: 1,
             description: "",
             date: DateTime(2021, 05, 28),
           ),
           Seminar(
+            id: 5,
             type: 2,
             description: "",
             date: DateTime(2022, 05, 29),
           ),
         ],
-        curriculum: Curriculum(
-          curriculumComplete: false,
-          curriculumDescription: "커리큘럼 이름",
-          period: 1,
-          progress: 0.5,
-          projectCount: 1,
-          vote: false,
+        promotionProgress: PromotionProgress(
+          semester: false,
+          curriculum: Curriculum(
+            completed: false,
+            name: "유니티 커리큘럼",
+            startDate: DateTime(2022, 07, 16),
+            endDate: DateTime(2022, 08, 05),
+          ),
+          progress: 0.6,
+          projectAttended: false,
+          projectType: 1,
+          workshopComplete: true,
           workshopCount: 2,
+          vote: false,
         ),
       );
 

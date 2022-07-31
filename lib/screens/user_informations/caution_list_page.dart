@@ -126,7 +126,7 @@ class CautionListView extends StatelessWidget {
                 "${[
                   "주의",
                   "경고"
-                ][caution.type.abs() - 1]} ${caution.type.sign == 1 ? "" : "차감"} ${caution.count}회",
+                ][caution.type.abs() - 1]} ${caution.type.sign == 1 ? "" : "차감"} ${caution.amount}회",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       color: Colors.black,
                       fontSize: 10.0,

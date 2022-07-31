@@ -82,7 +82,7 @@ class InformationList extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              "${(userProvider.user!.curriculum.progress * 100).round()}%", // debug
+              "${(userProvider.user!.promotionProgress.progress * 100).round()}%", // debug
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: Color(0xCCDE2B13),
                     fontSize: 12.0,
@@ -104,8 +104,9 @@ class InformationList extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      flex: (userProvider.user!.curriculum.progress * 100)
-                          .toInt(),
+                      flex:
+                          (userProvider.user!.promotionProgress.progress * 100)
+                              .toInt(),
                       child: RoundedBorder(
                         radius: 8.0,
                         height: 16.0,
@@ -113,9 +114,11 @@ class InformationList extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                        flex:
-                            ((1 - userProvider.user!.curriculum.progress) * 100)
-                                .toInt(),
+                        flex: ((1 -
+                                    userProvider
+                                        .user!.promotionProgress.progress) *
+                                100)
+                            .toInt(),
                         child: Container()),
                   ],
                 ),
@@ -359,7 +362,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<UserDataProvider>().user;
-    bool _hasProfile = user?.profile == null;
+    bool _hasProfile = user?.profileImage == null;
 
     return Row(
       children: [
@@ -383,7 +386,7 @@ class ProfileView extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: NetworkImage(user!.profile!),
+                        image: NetworkImage(user!.profileImage!),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -405,7 +408,7 @@ class ProfileView extends StatelessWidget {
             GestureDetector(
               onTap: () {}, // 회원 목록 보기?
               child: Text(
-                "수습회원",
+                user?.level ?? "Unknown",
                 style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w700,

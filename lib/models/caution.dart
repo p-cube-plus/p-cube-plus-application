@@ -1,28 +1,35 @@
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonSerializable()
 class Caution {
+  final int id;
   final int type;
-  final int count;
+  final double amount;
   final String description;
   final DateTime date;
 
   Caution({
+    required this.id,
     required this.type,
     required this.description,
     required this.date,
-    required this.count,
+    required this.amount,
   });
 
   factory Caution.fromJson(Map<String, dynamic> json) {
     return Caution(
+      id: json['id'],
       type: json['type'],
       description: json['description'],
       date: DateTime.parse(json['date']),
-      count: json['count'],
+      amount: json['warning_amount'],
     );
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'type': type,
-        'count': count,
+        'warning_amount': amount,
         'description': description,
         'date': date.toString(),
       };
