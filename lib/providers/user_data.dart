@@ -10,9 +10,10 @@ import '../models/seminar.dart';
 import '../models/user.dart';
 import '../models/caution.dart';
 import '../services/pcube_api.dart';
+import '../services/user_profile_api.dart';
 
 class UserDataProvider with ChangeNotifier {
-  late RestClient _client;
+  late UserProfileApi _client;
   bool isLoaded = false;
 
   User? _user;
@@ -42,14 +43,16 @@ class UserDataProvider with ChangeNotifier {
   }
 
   Future<User> _getData() async {
-    Dio dio = Dio();
-    _client = RestClient(dio);
-    User user = await _client.getUser();
+    _client = UserProfileApi();
+    User? user = await _client.getUser();
 
-    //String js = jsonEncode(tempUser().toJson());
-    //Map<String, dynamic> json = jsonDecode(js);
+    if (user == null) {
+      String js = jsonEncode(tempUser().toJson());
+      Map<String, dynamic> json = jsonDecode(js);
+      user = User.fromJson(json);
+    }
 
-    return user; //User.fromJson(json);
+    return user;
   }
 
   User tempUser() => User(
