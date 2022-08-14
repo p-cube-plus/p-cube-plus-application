@@ -115,23 +115,23 @@ class SettingPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16.0, left: 8),
                 child: Text(
                   '개발진 목록',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).backgroundColor),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
               ),
               alignment: Alignment.centerLeft,
             ),
             Align(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                 child: Text(
                   'PCube+의 개발진 목록입니다.',
-                  style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).backgroundColor),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
               ),
               alignment: Alignment.centerLeft,
@@ -139,14 +139,38 @@ class SettingPage extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 26),
+          padding: const EdgeInsets.only(top: 22.0, bottom: 26),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text('오창한', style: Theme.of(context).textTheme.headline2),
-              Text('권오민', style: Theme.of(context).textTheme.headline2),
-              Text('조승빈', style: Theme.of(context).textTheme.headline2),
-              Text('신혜민', style: Theme.of(context).textTheme.headline2),
+              Text(
+                '오창한',
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+              Text(
+                '권오민',
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+              Text(
+                '조승빈',
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+              Text(
+                '신혜민',
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
             ],
           ),
         ),
@@ -163,10 +187,21 @@ class SettingPage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 28, bottom: 24),
             child: Column(
               children: [
-                Text('로그아웃', style: TextStyle(fontSize: 18)),
+                Text(
+                  '로그아웃',
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
                 SizedBox(height: 8),
-                Text('정말 로그아웃 하시겠습니까?',
-                    style: TextStyle(fontSize: 14, color: Colors.white54)),
+                Text(
+                  '정말 로그아웃 하시겠습니까?',
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                ),
               ],
             ),
           ),
