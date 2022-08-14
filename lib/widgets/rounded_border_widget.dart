@@ -10,6 +10,7 @@ class RoundedBorder extends StatelessWidget {
     this.color,
     this.hasShadow,
     this.onTap,
+    this.padding,
   }) : super(key: key);
 
   final double? height;
@@ -18,6 +19,7 @@ class RoundedBorder extends StatelessWidget {
   final Widget? child;
   final Color? color;
   final bool? hasShadow;
+  final EdgeInsetsGeometry? padding;
   final Function()? onTap;
 
   @override
@@ -48,7 +50,10 @@ class RoundedBorder extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius),
             ),
             onTap: onTap,
-            child: child,
+            child: Container(
+              padding: padding,
+              child: child,
+            ),
           ),
         ),
       ),

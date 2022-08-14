@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
-import '../../models/project.dart';
 import 'package:provider/provider.dart';
+
+import '../../widgets/default_profile.dart';
+import '../user_informations/project_list_page.dart';
+import '../../widgets/default_page_widget.dart';
+import '../../models/project.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data.dart';
@@ -13,7 +16,6 @@ import '../../widgets/rounded_border_widget.dart';
 
 import '../mainpage/setting_page.dart';
 import 'seminar_list_page.dart';
-import '../../utilities/contants.dart' as Constants;
 
 class UserInformationPage extends StatelessWidget {
   const UserInformationPage({Key? key}) : super(key: key);
@@ -64,10 +66,10 @@ class InformationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userProvider = context.watch<UserDataProvider>();
-    if (!userProvider.isLoaded) return Container();
 
-    // 필요한 위젯들을 추가하는 과정? build에 이걸 다 넣어도 괜찮은지 모르겠음
-    // 코드 마음에 안들어요
+    if (!userProvider.loaded) return Container(); // 로딩 중
+    if (!userProvider.fail) return Container(); // 정보 불러오기 실패
+
     List<Widget> widgets = <Widget>[
       const ProfileView(),
       ListDivider(),
@@ -178,7 +180,16 @@ class InformationList extends StatelessWidget {
       ..add(
         ContentSummaryView(
           title: "참여 중인 프로젝트",
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProjectListPage(
+                  userProvider: userProvider,
+                ),
+              ),
+            );
+          },
           children: List.generate(
             userProvider.user!.projects.length,
             (index) {
@@ -362,7 +373,17 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<UserDataProvider>().user;
-    bool _hasProfile = user?.profileImage == null;
+    bool _hasProfile = false;
+    Widget profile = Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          onError: (exception, stackTrace) => _hasProfile = false,
+          image: Image.network(user!.profileImage ?? "").image,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
 
     return Row(
       children: [
@@ -371,26 +392,7 @@ class ProfileView extends StatelessWidget {
           child: SizedBox(
             width: 72.0,
             height: 72.0,
-            child: _hasProfile
-                ? Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE9E9E9),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Constants.Icons.GetIcon(Constants.Icons.profile),
-                    ),
-                  )
-                : Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(user!.profileImage!),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+            child: _hasProfile ? profile : const DefaultProfile(),
           ),
         ),
         const SizedBox(width: 16.0),
@@ -398,7 +400,7 @@ class ProfileView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              user?.name ?? "Unknown",
+              user.name,
               style: Theme.of(context).textTheme.headline1!.copyWith(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
@@ -408,7 +410,7 @@ class ProfileView extends StatelessWidget {
             GestureDetector(
               onTap: () {}, // 회원 목록 보기?
               child: Text(
-                user?.level ?? "Unknown",
+                user.level,
                 style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w700,

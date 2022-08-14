@@ -60,7 +60,7 @@ class SeminarListView extends StatelessWidget {
           Seminar seminar = userProvider.user!.seminars[index];
 
           return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: EdgeInsets.only(top: index == 0 ? 0.0 : 8.0),
             child: RoundedBorder(
               radius: 10.0,
               height: 48.0,

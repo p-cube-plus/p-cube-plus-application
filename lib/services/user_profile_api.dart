@@ -7,7 +7,8 @@ class UserProfileApi extends PCubeApi {
   UserProfileApi() : super(endPoint: "/user/profile");
 
   Future<User?> getUser() async {
-    var response = await send();
+    Map<String, String>? headers = null;
+    var response = await get(headers: headers);
 
     switch (response.statusCode) {
       case 200:

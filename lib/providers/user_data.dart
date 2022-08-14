@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/models/curriculum.dart';
 import 'package:p_cube_plus_application/models/member.dart';
@@ -9,12 +6,11 @@ import '../models/project.dart';
 import '../models/seminar.dart';
 import '../models/user.dart';
 import '../models/caution.dart';
-import '../services/pcube_api.dart';
 import '../services/user_profile_api.dart';
 
 class UserDataProvider with ChangeNotifier {
   late UserProfileApi _client;
-  bool isLoaded = false;
+  bool loaded = false, fail = false;
 
   User? _user;
   User? get user => _user;
@@ -37,20 +33,24 @@ class UserDataProvider with ChangeNotifier {
 
   Future initialize() async {
     _user = await _getData();
-    isLoaded = true;
+
+    loaded = true;
+    fail = _user != null;
 
     notifyListeners();
   }
 
-  Future<User> _getData() async {
+  Future<User?> _getData() async {
     _client = UserProfileApi();
     User? user = await _client.getUser();
 
+    /*
     if (user == null) {
       String js = jsonEncode(tempUser().toJson());
       Map<String, dynamic> json = jsonDecode(js);
       user = User.fromJson(json);
     }
+    */
 
     return user;
   }
@@ -135,7 +135,7 @@ class UserDataProvider with ChangeNotifier {
       );
 
   void update() async {
-    if (!isLoaded) return;
+    if (!loaded) return;
 
     // 데이터 갱신
     _user = await _getData();

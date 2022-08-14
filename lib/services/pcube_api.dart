@@ -7,7 +7,7 @@ abstract class PCubeApi {
 
   PCubeApi({required this.endPoint});
 
-  Future<http.Response> send({Map<String, String>? headers}) async {
+  Future<http.Response> get({Map<String, String>? headers}) async {
     var response = await http.get(
       Uri.parse(_baseUrl + endPoint),
       headers: headers,
