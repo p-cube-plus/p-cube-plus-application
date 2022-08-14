@@ -29,8 +29,7 @@ class RoundedBorder extends StatelessWidget {
       height: height,
       child: Container(
         decoration: BoxDecoration(
-          color: color ??
-              Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+          color: color ?? Colors.white,
           borderRadius: BorderRadius.circular(radius),
           boxShadow: (hasShadow ?? true)
               ? [

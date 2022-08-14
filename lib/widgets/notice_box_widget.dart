@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/notice_box.dart';
+import '../models/notification_node.dart';
 
 class NoticeBoxWidget extends StatelessWidget {
   const NoticeBoxWidget(this._box);
 
-  final NoticeBox _box;
+  final NotificationNode _box;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class NoticeBoxWidget extends StatelessWidget {
                         height: 0,
                       )),
                   title: Text(
-                    _box.title,
+                    _box.name,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
