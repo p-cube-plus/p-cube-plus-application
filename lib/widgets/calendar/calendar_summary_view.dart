@@ -64,28 +64,31 @@ class CalendarDailySummaryView extends StatelessWidget {
     );
 
     if (!_hasSchedule) return Container();
-    return RoundedBorder(
-      width: double.infinity,
-      radius: 10,
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            DateFormat("yyyy.MM.dd").format(selectedDate),
-            style: Theme.of(context).textTheme.headline2!.copyWith(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-          SizedBox(height: 16.0),
-          Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              Column(children: _widgets),
-            ],
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: RoundedBorder(
+        width: double.infinity,
+        radius: 10,
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateFormat("yyyy.MM.dd").format(selectedDate),
+              style: Theme.of(context).textTheme.headline2!.copyWith(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+            ),
+            SizedBox(height: 16.0),
+            Stack(
+              alignment: Alignment.topLeft,
+              children: [
+                Column(children: _widgets),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
