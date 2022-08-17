@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:p_cube_plus_application/models/curriculum.dart';
 

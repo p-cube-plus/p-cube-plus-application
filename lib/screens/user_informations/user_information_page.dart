@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/default_profile.dart';
@@ -9,7 +10,7 @@ import '../../widgets/default_page_widget.dart';
 import '../../models/project.dart';
 
 import '../../models/seminar.dart';
-import '../../providers/user_data.dart';
+import '../../providers/user_data_provider.dart';
 import '../../models/user.dart';
 import '../../widgets/list_divider_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
@@ -136,7 +137,16 @@ class InformationList extends StatelessWidget {
       ..add(
         ContentSummaryView(
           title: "경고 현황",
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CautionListPage(
+                  userProvider: userProvider,
+                ),
+              ),
+            );
+          },
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
@@ -278,7 +288,7 @@ class InformationList extends StatelessWidget {
                                   ),
                         ),
                         Text(
-                          "${DateFormat("MM/dd").format(seminar.date)}", // debug
+                          "${DateFormat("MM.dd").format(seminar.date)}", // debug
                           style:
                               Theme.of(context).textTheme.headline3!.copyWith(
                                     fontSize: 12.0,

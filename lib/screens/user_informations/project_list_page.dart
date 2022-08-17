@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../../widgets/default_profile.dart';
 import '../../models/project.dart';
-import '../../providers/user_data.dart';
+import '../../providers/user_data_provider.dart';
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
 
@@ -130,8 +130,8 @@ class ProjectListView extends StatelessWidget {
                     const SizedBox(width: 8.0),
                     Text(
                       project.startDate != null
-                          ? "${DateFormat("yyyy/MM/dd").format(project.startDate!)} ~ " +
-                              "${project.isEnd && project.endDate != null ? DateFormat("yyyy/MM/dd").format(project.startDate!) : ""}"
+                          ? "${DateFormat("yyyy.MM.dd").format(project.startDate!)} ~ " +
+                              "${project.isEnd && project.endDate != null ? DateFormat("yyyy.MM.dd").format(project.startDate!) : ""}"
                           : "", // debug
                       style: Theme.of(context).textTheme.headline3!.copyWith(
                             fontSize: 12.0,

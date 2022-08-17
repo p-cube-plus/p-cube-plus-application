@@ -6,9 +6,12 @@ class Icons {
   static String bell = "assets/images/icons/bell.svg";
   static String user = "assets/images/icons/user.svg";
 
-  static String selected_home = "assets/images/icons/home.svg";
+  static String selected_home = "assets/images/icons/home_selected.svg";
   static String selected_bell = "assets/images/icons/bell_selected.svg";
   static String selected_user = "assets/images/icons/user_selected.svg";
+
+  static String left_arrow = "assets/images/icons/arrow_left.svg";
+  static String right_arrow = "assets/images/icons/arrow_right.svg";
 
   static String profile = "assets/images/icons/profile.svg";
 

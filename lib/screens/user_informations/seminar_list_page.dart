@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/seminar.dart';
-import '../../providers/user_data.dart';
+import '../../providers/user_data_provider.dart';
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
 
