@@ -29,6 +29,28 @@ class MyThemes {
       unselectedItemColor: Color(0xFF2E2E2E),
       selectedItemColor: const Color(0xCCDE2B13),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+        primary: const Color(0xFFDE2B13),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        minimumSize: Size(0, 35),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        textStyle: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 12,
+            color: const Color(0xFF000000)),
+        side: BorderSide(
+            width: 1, style: BorderStyle.solid, color: const Color(0xFFA9A9A9)),
+        //backgroundColor: const Color(0xFFE9E9E9),
+        primary: const Color(0xFFA9A9A9),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        minimumSize: Size(0, 35),
+      ),
+    ),
     textTheme: TextTheme(
       headline1: TextStyle(color: const Color(0xFF2E2E2E)),
       headline2: TextStyle(color: const Color(0xFF818181)),

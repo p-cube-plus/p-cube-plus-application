@@ -46,33 +46,23 @@ class AlertFrame extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
             child: Text('확인'),
-            style: ElevatedButton.styleFrom(
-                minimumSize: Size(0, 35),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(circular))),
+            style: Theme.of(context).elevatedButtonTheme.style,
           ),
         ));
         break;
       case MessageType.OKCancel:
         buttons.add(Expanded(
-          child: OutlinedButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('취소'),
-            style: OutlinedButton.styleFrom(
-                minimumSize: Size(0, 35),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(circular))),
-          ),
-        ));
+            child: OutlinedButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('취소'),
+          style: Theme.of(context).outlinedButtonTheme.style,
+        )));
         buttons.add(const SizedBox(width: 16.0));
         buttons.add(Expanded(
           child: ElevatedButton(
             onPressed: () => _backFunc(context, okWidget),
             child: Text('확인'),
-            style: ElevatedButton.styleFrom(
-                minimumSize: Size(0, 35),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(circular))),
+            style: Theme.of(context).elevatedButtonTheme.style,
           ),
         ));
         break;

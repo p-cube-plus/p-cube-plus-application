@@ -21,11 +21,11 @@ class DefaultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Theme.of(context).backgroundColor,
-      ),
-    );
+    //SystemChrome.setSystemUIOverlayStyle(
+    //  SystemUiOverlayStyle.dark.copyWith(
+    //    statusBarColor: Theme.of(context).backgroundColor,
+    //  ),
+    //);
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,

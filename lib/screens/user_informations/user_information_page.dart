@@ -22,11 +22,11 @@ class UserInformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Color(0xFFFBFBFB),
-      ),
-    );
+    //SystemChrome.setSystemUIOverlayStyle(
+    //  SystemUiOverlayStyle.dark.copyWith(
+    //    statusBarColor: Color(0xFFFBFBFB),
+    //  ),
+    //);
 
     return MultiProvider(
       providers: [

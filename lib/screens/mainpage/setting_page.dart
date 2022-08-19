@@ -47,13 +47,19 @@ class SettingPage extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8, top: 16, bottom: 8),
           child: Text(
             '피드백 보내기',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.headline1!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+            style: Theme.of(context).textTheme.headline3!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10,
+                ),
             decoration: InputDecoration(
               labelText: '이름을 입력하세요',
               border: OutlineInputBorder(),
@@ -63,7 +69,10 @@ class SettingPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+            style: Theme.of(context).textTheme.headline3!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10,
+                ),
             maxLines: 8,
             maxLength: 500,
             decoration: InputDecoration(
@@ -89,12 +98,18 @@ class SettingPage extends StatelessWidget {
                   vertical: 8,
                 ),
                 child: Text('피드백이 제출되었습니다!',
-                    style: Theme.of(context).textTheme.headline1),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        )),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text('소중한 의견 감사합니다.',
-                    style: Theme.of(context).textTheme.headline2),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                        )),
               ),
             ],
           ),
