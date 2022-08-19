@@ -19,6 +19,7 @@ class AlertFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).backgroundColor,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(circular))),
       contentPadding: EdgeInsets.all(0),
@@ -54,7 +55,11 @@ class AlertFrame extends StatelessWidget {
         buttons.add(Expanded(
             child: OutlinedButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('취소'),
+          child: Text("취소",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3!
+                  .copyWith(fontSize: 12, fontWeight: FontWeight.w700)),
           style: Theme.of(context).outlinedButtonTheme.style,
         )));
         buttons.add(const SizedBox(width: 16.0));

@@ -34,7 +34,7 @@ class RoundedBorder extends StatelessWidget {
           boxShadow: (hasShadow ?? true)
               ? [
                   BoxShadow(
-                    color: Color(0x05000000),
+                    color: Color(0x0A000000),
                     blurRadius: 10.0,
                     spreadRadius: 0.0,
                     offset: Offset.fromDirection(0, 2.0),

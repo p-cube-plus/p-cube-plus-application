@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 // mainTitleTile: AppBar 역할의 설정 텍스트
 // subTextTile: 설정 구분을 위한 텍스트
 
+// botttomsheetTile: bottomsheet를 띄우는 설정
+
 abstract class SettingTile extends StatelessWidget {
   static const double vertical = 10.0;
   static const double horizontal = 20.0;

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
+import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/setting/bottomsheet_tile.dart';
 import 'package:p_cube_plus_application/widgets/setting/new_page_tile.dart';
-import 'package:p_cube_plus_application/widgets/setting/switch_tile.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/theme_provider.dart';
 import '../../widgets/setting/alert_frame.dart';
 import '../../widgets/list_divider_widget.dart';
 import '../../widgets/setting/alert_tile.dart';
@@ -14,6 +16,7 @@ import 'setting_notice_page.dart';
 class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return DefaultPage(
       appBarTitle: "설정",
       appBarHasPrevious: true,
@@ -22,8 +25,25 @@ class SettingPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           NewPageTile(title: '알림 설정', newPage: SettingNoticePage()),
-          SwitchTile(title: '다크 모드', type: SettingType.Theme),
-          ListDivider(),
+          BottomSheetTile(
+            title: '테마 설정',
+            bottomTitle: '테마 설정',
+            bottomWidgets: [
+              RadioBox(
+                  themeProvider: themeProvider,
+                  type: ThemeMode.system,
+                  text: "시스템 설정 사용"),
+              RadioBox(
+                  themeProvider: themeProvider,
+                  type: ThemeMode.light,
+                  text: "라이트 모드"),
+              RadioBox(
+                  themeProvider: themeProvider,
+                  type: ThemeMode.dark,
+                  text: "다크 모드")
+            ],
+          ),
+          ListDivider(padding: 20),
           VersionTile(title: '버전'),
           AlertTile(
               title: '피드백 보내기',
@@ -31,7 +51,7 @@ class SettingPage extends StatelessWidget {
               alertWidget: _getFeedback(context)),
           AlertTile(
               title: '개발진 목록', hasIcon: true, alertWidget: _getDev(context)),
-          ListDivider(),
+          ListDivider(padding: 20),
           AlertTile(
               title: '로그아웃', hasIcon: false, alertWidget: _getLogout(context)),
         ],
@@ -55,29 +75,62 @@ class SettingPage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            style: Theme.of(context).textTheme.headline3!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 10,
+          child: RoundedBorder(
+            radius: 4,
+            child: SizedBox(
+              height: 30,
+              child: TextField(
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                    ),
+                textAlign: TextAlign.start,
+                cursorColor: Theme.of(context).textTheme.headline1!.color,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  labelText: '이름을 입력하세요',
+                  labelStyle: Theme.of(context).textTheme.headline3!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10,
+                      ),
+                  border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 0, style: BorderStyle.none)),
                 ),
-            decoration: InputDecoration(
-              labelText: '이름을 입력하세요',
-              border: OutlineInputBorder(),
+              ),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            style: Theme.of(context).textTheme.headline3!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 10,
+          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+          child: RoundedBorder(
+            radius: 4,
+            child: SizedBox(
+              height: 160,
+              child: TextField(
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                    ),
+                maxLines: 100,
+                cursorColor: Theme.of(context).textTheme.headline1!.color,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  alignLabelWithHint: true,
+                  labelText: '내용을 입력하세요',
+                  labelStyle: Theme.of(context).textTheme.headline3!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10,
+                      ),
+                  border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 0, style: BorderStyle.none)),
                 ),
-            maxLines: 8,
-            maxLength: 500,
-            decoration: InputDecoration(
-              labelText: '내용을 입력하세요',
-              border: OutlineInputBorder(),
+              ),
             ),
           ),
         ),
@@ -224,6 +277,36 @@ class SettingPage extends StatelessWidget {
         ),
       ],
       okWidget: LogoutPage(),
+    );
+  }
+}
+
+class RadioBox extends StatelessWidget {
+  final ThemeProvider themeProvider;
+  final ThemeMode type;
+  final String text;
+  RadioBox(
+      {required this.themeProvider, required this.type, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontWeight: FontWeight.w400, fontSize: 12)),
+          Radio(
+              activeColor: const Color(0xFFDE2B13),
+              value: type,
+              groupValue: themeProvider.type,
+              onChanged: (value) => themeProvider.changeType(type))
+        ],
+      ),
     );
   }
 }

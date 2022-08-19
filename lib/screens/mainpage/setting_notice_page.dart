@@ -25,16 +25,16 @@ class SettingNoticePage extends StatelessWidget {
 
   _getChildren(noticeProvider) {
     final result = <Widget>[
-      SwitchTile(title: '전체 알림', type: SettingType.AllNotice),
+      SwitchTile(title: '알림 활성화', type: SettingType.AllNotice),
     ];
     if (noticeProvider.isOn) {
-      result.add(ListDivider());
+      result.add(ListDivider(padding: 20));
       result.add(SubTextTile(title: '회비 알림'));
       result.add(
           SwitchTile(title: '정기회의 알림', type: SettingType.AllMeetingNotice));
       result.add(
           SwitchTile(title: '파트회의 알림', type: SettingType.PartMeetingNotice));
-      result.add(ListDivider());
+      result.add(ListDivider(padding: 20));
       result.add(SubTextTile(title: '기타 알림'));
       result.add(SwitchTile(title: '회비 알림', type: SettingType.DuesNotice));
       result.add(SwitchTile(title: '청소 알림', type: SettingType.CleanNotice));

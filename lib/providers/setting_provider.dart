@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 enum SettingType {
-  Theme,
   AllNotice,
   AllMeetingNotice,
   PartMeetingNotice,
@@ -14,19 +13,6 @@ abstract class ISetting {
   void toggle(bool isOn);
   bool get isOn;
   dynamic get item;
-}
-
-class ThemeSetting implements ISetting {
-  ThemeMode themeMode = ThemeMode.system;
-
-  @override
-  void toggle(bool isOn) => themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
-
-  @override
-  bool get isOn => themeMode == ThemeMode.dark;
-
-  @override
-  get item => themeMode;
 }
 
 class NoticeAllSetting implements ISetting {
@@ -57,15 +43,11 @@ class NoticeSetting implements ISetting {
 
 class SettingProvider with ChangeNotifier {
   late ISetting curState;
-  final theme = ThemeSetting();
   final allNotice = NoticeAllSetting();
   final notices = List<NoticeSetting>.generate(5, (index) => NoticeSetting());
 
   void changeState(SettingType type) {
     switch (type) {
-      case SettingType.Theme:
-        curState = theme;
-        break;
       case SettingType.AllNotice:
         curState = allNotice;
         break;
