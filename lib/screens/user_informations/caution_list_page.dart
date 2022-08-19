@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 
-import '../../providers/user_data.dart';
-import '../../widgets/custom_appbar_widget.dart';
+import '../../providers/user_data_provider.dart';
+import '../../widgets/default_page_widget.dart';
 import '../../widgets/list_divider_widget.dart';
+
+String _autoFix(double d) {
+  if (d.toInt() == d)
+    return d.toInt().toString();
+  else
+    return d.toString();
+}
 
 class CautionListPage extends StatelessWidget {
   const CautionListPage({
@@ -22,43 +30,26 @@ class CautionListPage extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return DefaultPage(
+      appBarTitle: "경고 현황",
+      appBarHasPrevious: true,
+      content: Column(
         children: [
-          CustomAppBar(
-            title: "경고 현황",
-            hasPrevious: true,
+          CautionSummaryView(userProvider: userProvider),
+          ListDivider(),
+          CautionListView(
+            title: "경고 및 주의 내역",
+            userProvider: userProvider,
+            mode: 1,
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    //CautionSummaryView(userProvider: userProvider),
-                    //ListDivider(),
-                    CautionListView(
-                      title: "경고 내역",
-                      userProvider: userProvider,
-                      mode: 1,
-                    ),
-                    ListDivider(),
-                    CautionListView(
-                      title: "차감 내역",
-                      userProvider: userProvider,
-                      mode: -1,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          SizedBox(height: 32.0),
+          CautionListView(
+            title: "경고 차감 내역",
+            userProvider: userProvider,
+            mode: -1,
           ),
         ],
       ),
-      resizeToAvoidBottomInset: false,
     );
   }
 }
@@ -77,59 +68,46 @@ class CautionListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _dates = <Widget>[];
-    List<Widget> _descriptions = <Widget>[];
-    List<Widget> _results = <Widget>[];
+    List<Widget> _cautions = <Widget>[];
 
     for (var caution in userProvider.user!.cautions) {
-      if (mode.sign != caution.type.sign) continue;
-      _dates.add(
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+      if (mode != caution.amount.sign) continue;
+      String type = ["경고", "주의"][1 - caution.type];
+
+      _cautions.add(SizedBox(height: 8.0));
+      _cautions.add(
+        RoundedBorder(
+          radius: 10.0,
+          padding: const EdgeInsets.all(16.0),
+          onTap: () {},
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                DateFormat('yyyy/MM/dd').format(caution.date),
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black,
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.w400,
-                    ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${type} ${mode == 1 ? "" : "차감"}",
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  Text(
+                    "${caution.description}(으)로 인해 " +
+                        "$type ${_autoFix(caution.amount.abs())}회" +
+                        "${mode == 1 ? "" : "차감"}",
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      );
-      _descriptions.add(
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Row(
-            children: [
               Text(
-                caution.description,
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black,
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      );
-      _results.add(
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Row(
-            children: [
-              Text(
-                "${[
-                  "주의",
-                  "경고"
-                ][caution.type.abs() - 1]} ${caution.type.sign == 1 ? "" : "차감"} ${caution.count}회",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black,
-                      fontSize: 10.0,
+                DateFormat('yyyy.MM.dd').format(caution.date),
+                style: Theme.of(context).textTheme.headline3!.copyWith(
+                      fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
               ),
@@ -139,54 +117,19 @@ class CautionListView extends StatelessWidget {
       );
     }
 
+    if (_cautions.length == 0) return Container();
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Colors.black,
-                fontSize: 14.0,
-                fontWeight: FontWeight.w500,
+          style: Theme.of(context).textTheme.headline2!.copyWith(
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
               ),
         ),
-        SizedBox(height: 6.0),
-        Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _dates,
-            ),
-            SizedBox(width: 16.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _descriptions,
-            ),
-            SizedBox(width: 16.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _results,
-            ),
-          ],
-        ),
-      ]..addAll(
-          _dates.length == 0
-              ? [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(
-                      "${title}이 존재하지 않습니다.",
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: Color(0xFF818181),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400,
-                              ),
-                    ),
-                  ),
-                ]
-              : [],
-        ),
+      ]..addAll(_cautions),
     );
   }
 }
@@ -201,78 +144,66 @@ class CautionSummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Text(
-                "합계",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                "주의",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black,
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ),
             Text(
-              "경고",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Colors.black,
-                    fontSize: 10.0,
+              "주의 및 경고",
+              style: Theme.of(context).textTheme.headline2!.copyWith(
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
             ),
+            Text(
+              "${_autoFix(userProvider.totalCaution(2))}회",
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+            )
           ],
         ),
-        SizedBox(width: 16.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        SizedBox(height: 16.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Text(
-                "${userProvider.totalCaution(0)}회",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                "${userProvider.totalCaution(1).toInt()}회",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Colors.black,
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ),
             Text(
-              "${userProvider.totalCaution(2).toInt()}회",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Colors.black,
-                    fontSize: 10.0,
+              "경고 차감",
+              style: Theme.of(context).textTheme.headline2!.copyWith(
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
             ),
+            Text(
+              "${_autoFix(userProvider.totalCaution(2, sign: -1))}회",
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+            )
+          ],
+        ),
+        SizedBox(height: 16.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "총",
+              style: Theme.of(context).textTheme.headline2!.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+            Text(
+              "${_autoFix(userProvider.totalCaution(2) - userProvider.totalCaution(2, sign: -1))}회",
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+            )
           ],
         ),
       ],

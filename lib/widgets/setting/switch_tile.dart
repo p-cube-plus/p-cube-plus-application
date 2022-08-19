@@ -16,7 +16,7 @@ class SwitchTile extends SettingTile {
     bool _value = themeProvider.isOn;
     print(_value);
     return Container(
-      height: super.height,
+      //padding: super.verticalPadding,
       child: InkWell(
         onTap: () {
           themeProvider.changeState(type);
@@ -24,19 +24,22 @@ class SwitchTile extends SettingTile {
           themeProvider.toggle(_value);
         },
         child: Container(
-          //color: Colors.white70, //배경색
+          padding: super.horizontalPadding,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //SizedBox(width: super.blank),
-              Text(super.title),
-              const Spacer(),
-              Transform.scale(
-                scale: 0.7,
-                child: SizedBox(
-                  width: 40,
-                  // Switch.adaptive
-                  // CupertinoSwitch
-                  // Switch
+              Padding(
+                padding: super.verticalPadding,
+                child: Text(super.title, style: getTextStyle(context)),
+              ),
+
+              // Switch.adaptive
+              // CupertinoSwitch
+              // Switch
+              Container(
+                width: 32,
+                height: 16,
+                child: FittedBox(
                   child: CupertinoSwitch(
                     activeColor: Colors.red,
                     //activeTrackColor: Colors.red.withOpacity(0.4),
@@ -52,7 +55,6 @@ class SwitchTile extends SettingTile {
                   ),
                 ),
               ),
-              //SizedBox(width: super.blank / 2),
             ],
           ),
         ),

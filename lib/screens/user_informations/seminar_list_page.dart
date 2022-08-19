@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/seminar.dart';
-import '../../providers/user_data.dart';
+import '../../providers/user_data_provider.dart';
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
 
@@ -61,7 +61,7 @@ class SeminarListView extends StatelessWidget {
           Seminar seminar = userProvider.user!.seminars[index];
 
           return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: EdgeInsets.only(top: index == 0 ? 0.0 : 8.0),
             child: RoundedBorder(
               radius: 10.0,
               height: 48.0,

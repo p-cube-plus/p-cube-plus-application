@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import '../models/notice_box.dart';
+import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import '../models/notification_node.dart';
 
 class NoticeBoxWidget extends StatelessWidget {
   const NoticeBoxWidget(this._box);
 
-  final NoticeBox _box;
+  final NotificationNode _box;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Card(
             margin: EdgeInsets.only(left: 0, top: 12, right: 0, bottom: 0),
-            elevation: 1,
+            elevation: 10,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   leading: Icon(
                     Icons.lock_clock,
                     size: 32,
@@ -28,7 +29,7 @@ class NoticeBoxWidget extends StatelessWidget {
                         height: 0,
                       )),
                   title: Text(
-                    _box.title,
+                    _box.name,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

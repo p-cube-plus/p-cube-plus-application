@@ -25,13 +25,13 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     _init();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -52,7 +52,15 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
     final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZoneName!));
+
+    try {
+      print(timeZoneName);
+      tz.setLocalLocation(tz.getLocation(timeZoneName!));
+    } catch (e) {
+      const String fallback = 'Asia/Seoul';
+      tz.setLocalLocation(tz.getLocation(fallback));
+      print("이거 오류야!!");
+    }
   }
 
   Future<void> _initializeNotification() async {
@@ -63,7 +71,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       requestSoundPermission: false,
     );
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_launcher');
+        AndroidInitializationSettings('ic_notification');
 
     const InitializationSettings initializationSettings =
         InitializationSettings(
@@ -147,7 +155,6 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       //    onPressed: () async {
       //      await cancelNotification();
       //      await requestPermissions();
-//
       //      final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
       //      await registerMessage(
       //        hour: now.hour,

@@ -6,19 +6,12 @@ class SubTextTile extends SettingTile {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            //SizedBox(width: super.blank),
-            Text(
-              title,
-              style: TextStyle(fontSize: 12, color: Colors.white70),
-            ),
-          ],
-        ),
-        //SizedBox(height: super.blank / 2),
-      ],
+    return Padding(
+      padding: super.allPadding,
+      child: Text(
+        title,
+        style: getTextStyle(context),
+      ),
     );
   }
 }

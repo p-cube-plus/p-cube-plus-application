@@ -3,21 +3,43 @@ import 'package:p_cube_plus_application/providers/notice_provider.dart';
 import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
 import 'package:p_cube_plus_application/widgets/notice_box_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
-import '../../models/notice_box.dart';
+import '../../models/notification_node.dart';
 
-class NoticePage extends StatelessWidget {
+Future<List<NotificationNode>> fetchNotification() async {
+  final url = Uri.parse('http://p-cube-plus.com/user/notification');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    print(json.decode(response.body).runtimeType);
+    return (json.decode(response.body)['notification_list'] as List)
+        .map((data) => NotificationNode.fromJson(data))
+        .toList();
+  } else {
+    throw Exception('Failed to load post');
+  }
+}
+
+class NoticePage extends StatefulWidget {
+  @override
+  State<NoticePage> createState() => _NoticePageState();
+}
+
+class _NoticePageState extends State<NoticePage> {
+  Future<List<NotificationNode>>? notificationAPI;
+
+  @override
+  void initState() {
+    super.initState();
+    notificationAPI = fetchNotification();
+  }
+
   @override
   Widget build(BuildContext context) {
     var product = Provider.of<NoticeProvider>(context);
-
-    if (product.isFirst) {
-      product.getNotice(new NoticeBox('청소 알림', '당일 hh시에 청소가 시작됩니다.', '1:00'));
-      product.getNotice(new NoticeBox('회비 알림', '당일 hh시에 어쩌구저쩌구', '2:00'));
-      product.getNotice(new NoticeBox('도서 반납 알림', '당일 hh시에 어쩌구저쩌구', '4:00'));
-      product.getNotice(new NoticeBox('회의 알림', '당일 hh시에 어쩌구저쩌구', '3:00'));
-      product.isFirst = false;
-    }
 
     return DefaultPage(
       appBarTitle: "알림",
@@ -47,35 +69,49 @@ class NoticePage extends StatelessWidget {
           ],
         ),
       ],
-      content: Column(
-        children: List.generate(
-          product.curList.length,
-          (index) {
-            return Dismissible(
-              key: UniqueKey(),
-              background: Container(
-                margin: EdgeInsets.only(left: 0, top: 12, right: 0, bottom: 0),
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "삭제 ",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+      content: FutureBuilder<List<NotificationNode>>(
+        future: notificationAPI,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              children: List.generate(
+                snapshot.data!.length,
+                (index) {
+                  return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(
+                      margin: EdgeInsets.only(
+                          left: 0, top: 12, right: 0, bottom: 0),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "삭제 ",
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
+                          Icon(Icons.delete_outlined,
+                              size: 32, color: Colors.white),
+                        ],
+                      ),
                     ),
-                    Icon(Icons.delete_outlined, size: 32, color: Colors.white),
-                  ],
-                ),
+                    child: NoticeBoxWidget(snapshot.data![index]),
+                    onDismissed: (direction) {
+                      product.deleteNotice(index);
+                    },
+                  );
+                },
               ),
-              child: NoticeBoxWidget(product.curList[index]),
-              onDismissed: (direction) {
-                product.deleteNotice(index);
-              },
             );
-          },
-        ),
+          } else if (snapshot.hasError) {
+            return Text("메롱");
+          }
+
+          // 기본적으로 로딩 Spinner를 보여줍니다.
+          return CircularProgressIndicator();
+        },
       ),
     );
   }

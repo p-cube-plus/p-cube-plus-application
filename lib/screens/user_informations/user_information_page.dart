@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
-import '../../models/project.dart';
+import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/default_profile.dart';
+import '../user_informations/project_list_page.dart';
+import '../../widgets/default_page_widget.dart';
+import '../../models/project.dart';
+
 import '../../models/seminar.dart';
-import '../../providers/user_data.dart';
+import '../../providers/user_data_provider.dart';
 import '../../models/user.dart';
 import '../../widgets/list_divider_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
@@ -19,11 +23,11 @@ class UserInformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Color(0xFFFBFBFB),
-      ),
-    );
+    //SystemChrome.setSystemUIOverlayStyle(
+    //  SystemUiOverlayStyle.dark.copyWith(
+    //    statusBarColor: Color(0xFFFBFBFB),
+    //  ),
+    //);
 
     return MultiProvider(
       providers: [
@@ -63,10 +67,10 @@ class InformationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userProvider = context.watch<UserDataProvider>();
-    if (!userProvider.isLoaded) return Container();
 
-    // 필요한 위젯들을 추가하는 과정? build에 이걸 다 넣어도 괜찮은지 모르겠음
-    // 코드 마음에 안들어요
+    if (!userProvider.loaded) return Container(); // 로딩 중
+    if (!userProvider.fail) return Container(); // 정보 불러오기 실패
+
     List<Widget> widgets = <Widget>[
       const ProfileView(),
       ListDivider(),
@@ -81,7 +85,7 @@ class InformationList extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              "${(userProvider.user!.curriculum.progress * 100).round()}%", // debug
+              "${(userProvider.user!.promotionProgress.progress * 100).round()}%", // debug
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: Color(0xCCDE2B13),
                     fontSize: 12.0,
@@ -103,8 +107,9 @@ class InformationList extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      flex: (userProvider.user!.curriculum.progress * 100)
-                          .toInt(),
+                      flex:
+                          (userProvider.user!.promotionProgress.progress * 100)
+                              .toInt(),
                       child: RoundedBorder(
                         radius: 8.0,
                         height: 16.0,
@@ -112,9 +117,11 @@ class InformationList extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                        flex:
-                            ((1 - userProvider.user!.curriculum.progress) * 100)
-                                .toInt(),
+                        flex: ((1 -
+                                    userProvider
+                                        .user!.promotionProgress.progress) *
+                                100)
+                            .toInt(),
                         child: Container()),
                   ],
                 ),
@@ -130,7 +137,16 @@ class InformationList extends StatelessWidget {
       ..add(
         ContentSummaryView(
           title: "경고 현황",
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CautionListPage(
+                  userProvider: userProvider,
+                ),
+              ),
+            );
+          },
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
@@ -146,12 +162,10 @@ class InformationList extends StatelessWidget {
                     children: [
                       Text(
                         "누적 경고 횟수", // debug
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: const Color(0xFF2E2E2E),
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                       Text(
                         "총 ${userProvider.totalCaution(0)}회", // debug
@@ -176,7 +190,16 @@ class InformationList extends StatelessWidget {
       ..add(
         ContentSummaryView(
           title: "참여 중인 프로젝트",
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProjectListPage(
+                  userProvider: userProvider,
+                ),
+              ),
+            );
+          },
           children: List.generate(
             userProvider.user!.projects.length,
             (index) {
@@ -196,25 +219,19 @@ class InformationList extends StatelessWidget {
                       children: [
                         Text(
                           project.name, // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFF2E2E2E),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                         ),
                         Text(
                           "${["메인", "꼬꼬마"][project.type]} 프로젝트", // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFFABABAB),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline3!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                         ),
                       ],
                     ),
@@ -264,25 +281,19 @@ class InformationList extends StatelessWidget {
                             "정회원",
                             "졸업생"
                           ][seminar.type]} 세미나", // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFF2E2E2E),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                         ),
                         Text(
-                          "${DateFormat("MM/dd").format(seminar.date)}", // debug
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: const Color(0xFFABABAB),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          "${DateFormat("MM.dd").format(seminar.date)}", // debug
+                          style:
+                              Theme.of(context).textTheme.headline3!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                         ),
                       ],
                     ),
@@ -322,8 +333,7 @@ class ContentSummaryView extends StatelessWidget {
     List<Widget> _barContents = <Widget>[
       Text(
         title,
-        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              color: Colors.black,
+        style: Theme.of(context).textTheme.headline1!.copyWith(
               fontSize: 14.0,
               fontWeight: FontWeight.w700,
             ),
@@ -334,15 +344,14 @@ class ContentSummaryView extends StatelessWidget {
           children: [
             Text(
               "자세히 보기",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Color(0xFF818181),
+              style: Theme.of(context).textTheme.headline2!.copyWith(
                     fontSize: 11.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Color(0xFF818181),
+              color: Theme.of(context).textTheme.headline2!.color,
               size: 20.0,
             ),
           ],
@@ -374,7 +383,17 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<UserDataProvider>().user;
-    bool _hasProfile = user?.profile == null;
+    bool _hasProfile = false;
+    Widget profile = Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          onError: (exception, stackTrace) => _hasProfile = false,
+          image: Image.network(user!.profileImage ?? "").image,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
 
     return Row(
       children: [
@@ -383,27 +402,7 @@ class ProfileView extends StatelessWidget {
           child: SizedBox(
             width: 72.0,
             height: 72.0,
-            child: _hasProfile
-                ? Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE9E9E9),
-                    ),
-                    child: const Icon(
-                      Icons.person,
-                      color: Color(0xFFD5D5D5),
-                      size: 36.0,
-                    ),
-                  )
-                : Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(user!.profile!),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+            child: _hasProfile ? profile : const DefaultProfile(),
           ),
         ),
         const SizedBox(width: 16.0),
@@ -411,9 +410,8 @@ class ProfileView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              user?.name ?? "Unknown",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Color(0xFF2E2E2E),
+              user.name,
+              style: Theme.of(context).textTheme.headline1!.copyWith(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -422,9 +420,8 @@ class ProfileView extends StatelessWidget {
             GestureDetector(
               onTap: () {}, // 회원 목록 보기?
               child: Text(
-                "정회원",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Color(0xFF818181),
+                user.level,
+                style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w700,
                     ),
