@@ -12,19 +12,22 @@ class UserDataProvider with ChangeNotifier {
   late UserProfileApi _client;
   bool loaded = false, fail = false;
 
-  User? _user;
+  User? _user = null;
   User? get user => _user;
 
-  // mode = 0(전체), 1(주의), 2(경고)
-  double totalCaution(int mode) {
+  // mode = 0(경고), 1(주의)
+  double totalCaution(int type, {int sign = 1}) {
     double ret = 0;
+
     for (int i = 0; i < (_user?.cautions.length ?? 0); i++) {
-      if (mode != 0 && _user!.cautions[i].type.abs() != mode) continue;
-      ret += _user!.cautions[i].type * _user!.cautions[i].amount;
+      Caution caution = _user!.cautions[i];
+      if (type != 2 && type != caution.type) continue;
+      if (sign != caution.amount.sign) continue;
+
+      ret += (2 - caution.type) / 2 * caution.amount;
     }
 
-    if (mode == 0) return ret / 2.0;
-    return ret / mode;
+    return ret.abs();
   }
 
   UserDataProvider() {
