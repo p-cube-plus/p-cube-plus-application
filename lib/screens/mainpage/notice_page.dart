@@ -127,13 +127,11 @@ class _NoticeTabBarState extends State<NoticeTabBar> {
                             ),
                             child: Text(
                               widget.tabs[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1!
-                                  .copyWith(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                              style: _pageIndex == index
+                                  ? Theme.of(context).tabBarTheme.labelStyle
+                                  : Theme.of(context)
+                                      .tabBarTheme
+                                      .unselectedLabelStyle,
                             ),
                           ),
                           SizedBox(height: 2.0),
@@ -142,7 +140,10 @@ class _NoticeTabBarState extends State<NoticeTabBar> {
                               width: 28.0,
                               height: 2.0,
                               child: DecoratedBox(
-                                decoration: BoxDecoration(color: Colors.black),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .tabBarTheme
+                                        .labelColor),
                               ),
                             ),
                         ],

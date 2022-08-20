@@ -5,6 +5,20 @@ class MyThemes {
     backgroundColor: Color(0xFF242424),
     scaffoldBackgroundColor: Color(0xFF242424),
     primaryColor: Colors.black,
+    cardColor: Color(0xFF2E2E2E),
+    tabBarTheme: TabBarTheme(
+      labelColor: Colors.white,
+      labelStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+        fontWeight: FontWeight.w700,
+      ),
+      unselectedLabelStyle: TextStyle(
+        color: Colors.white.withAlpha(127),
+        fontSize: 16.0,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
     colorScheme: ColorScheme.dark(),
     iconTheme: IconThemeData(color: Colors.white, opacity: 0.8),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -25,6 +39,20 @@ class MyThemes {
     backgroundColor: Color(0xFFFBFBFB),
     scaffoldBackgroundColor: Color(0xFFFFFFFF),
     primaryColor: Colors.white,
+    cardColor: Colors.white,
+    tabBarTheme: TabBarTheme(
+      labelColor: const Color(0xFF2E2E2E),
+      labelStyle: TextStyle(
+        color: const Color(0xFF2E2E2E),
+        fontSize: 16.0,
+        fontWeight: FontWeight.w700,
+      ),
+      unselectedLabelStyle: TextStyle(
+        color: const Color(0xFFABABAB),
+        fontSize: 16.0,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
     colorScheme: ColorScheme.light(),
     iconTheme: IconThemeData(color: Colors.black87, opacity: 0.8),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
