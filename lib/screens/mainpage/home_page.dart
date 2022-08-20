@@ -53,6 +53,7 @@ class _HomeCalendarState extends State<HomeCalendar> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         RoundedBorder(
           radius: 10.0,

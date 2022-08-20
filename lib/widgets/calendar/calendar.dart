@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -54,8 +55,11 @@ class _CalendarState extends State<Calendar> {
 
   late DateTime _viewDate;
   DateTime _selectedDate = DateTime.now();
-  late Map<String, Widget> _calendars;
-  Widget? _currentCalendar = null;
+  late Map<String, CalendarView> _calendars;
+  CalendarView? _currentCalendar = null;
+
+  GlobalKey _headerKey = GlobalKey();
+  final double _headerPadding = 2.0;
 
   bool _dragFlag = false;
 
@@ -70,7 +74,7 @@ class _CalendarState extends State<Calendar> {
   void initState() {
     super.initState();
 
-    _calendars = <String, Widget>{};
+    _calendars = <String, CalendarView>{};
   }
 
   void _setDate(DateTime date) async {
@@ -78,7 +82,7 @@ class _CalendarState extends State<Calendar> {
     _viewDate = date;
 
     await context.read<ScheduleProvider>().loadSchedules(_viewDate);
-    Widget result = await _getCalendar(date);
+    CalendarView result = await _getCalendar(date);
     _getCalendar(new DateTime(date.year, date.month - 1));
     _getCalendar(new DateTime(date.year, date.month + 1));
 
@@ -86,7 +90,7 @@ class _CalendarState extends State<Calendar> {
     widget.onViewDateChanged?.call(date);
   }
 
-  Future<Widget> _getCalendar(DateTime date) async {
+  Future<CalendarView> _getCalendar(DateTime date) async {
     String yMDate = DateFormat.yM().format(date);
     if (_calendars.containsKey(yMDate)) return _calendars[yMDate]!;
     print(yMDate);
@@ -106,6 +110,34 @@ class _CalendarState extends State<Calendar> {
     );
 
     return _calendars[yMDate]!;
+  }
+
+  double _getHeight() {
+    double _height = 0;
+
+    if (_currentCalendar != null) {
+      DateTime date = _currentCalendar!.date;
+      date = date.add(Duration(days: -date.day + 1));
+
+      int dayAmount = date.weekday % 7, count;
+
+      for (count = 0;
+          date.month == date.add(Duration(days: count)).month;
+          count++);
+
+      dayAmount += count;
+      _height += (widget.dayHeight ?? 0) * (dayAmount ~/ 7 + 1);
+    }
+
+    final RenderBox? renderBox =
+        _headerKey.currentContext?.findRenderObject() as RenderBox?;
+
+    _height += (renderBox?.size.height ?? 0) + _headerPadding * 2;
+    _height += widget.weekDayHeight ?? 0;
+
+    print(_height);
+
+    return _height;
   }
 
   @override
@@ -132,39 +164,45 @@ class _CalendarState extends State<Calendar> {
       },
       onHorizontalDragEnd: (detail) => _dragFlag = false,
       child: Container(
+        //duration: const Duration(milliseconds: 250),
+        //curve: Curves.easeOut,
         width: double.infinity,
-        //height: double.infinity,
-        //color: Colors.black12,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 2.0),
-              child: CalendarHeader(
-                date: _viewDate,
-                arrowButtonSize: widget.headerArrowButtonSize,
-                leftArrow: widget.headerLeftArrow,
-                rightArrow: widget.headerRightArrow,
-                monthTextStyle: widget.headerMonthTextStyle,
-                yearTextStyle: widget.headerYearTextStyle,
-                onArrowPressed: (delta) {
-                  setState(() {
-                    _setDate(new DateTime(
-                      _viewDate.year,
-                      _viewDate.month + delta,
-                    ));
-                  });
-                },
+        height: _getHeight(),
+        child: SingleChildScrollView(
+          dragStartBehavior: DragStartBehavior.down,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: _headerPadding),
+                child: CalendarHeader(
+                  key: _headerKey,
+                  date: _viewDate,
+                  arrowButtonSize: widget.headerArrowButtonSize,
+                  leftArrow: widget.headerLeftArrow,
+                  rightArrow: widget.headerRightArrow,
+                  monthTextStyle: widget.headerMonthTextStyle,
+                  yearTextStyle: widget.headerYearTextStyle,
+                  onArrowPressed: (delta) {
+                    setState(() {
+                      _setDate(new DateTime(
+                        _viewDate.year,
+                        _viewDate.month + delta,
+                      ));
+                    });
+                  },
+                ),
               ),
-            ),
-            Container(
-              height: widget.weekDayHeight,
-              child: CalendarWeekRow(
-                weekDayTextStyle: widget.weekDayTextStyle,
-                firstDayOfWeek: widget.firstDayOfWeek,
+              Container(
+                height: widget.weekDayHeight,
+                child: CalendarWeekRow(
+                  weekDayTextStyle: widget.weekDayTextStyle,
+                  firstDayOfWeek: widget.firstDayOfWeek,
+                ),
               ),
-            ),
-          ]..addAll(_currentCalendar != null ? [_currentCalendar!] : []),
+            ]..addAll(_currentCalendar != null ? [_currentCalendar!] : []),
+          ),
         ),
       ),
     );
@@ -202,6 +240,7 @@ class CalendarView extends StatefulWidget {
 
 class _CalendarViewState extends State<CalendarView> {
   late DateTime _selectedDate;
+  double _height = 0;
 
   @override
   void initState() {
@@ -210,9 +249,12 @@ class _CalendarViewState extends State<CalendarView> {
     _selectedDate = widget.selectedDate ?? DateTime.now();
   }
 
+  double getHeight() => _height;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> days = _getDays(context);
+    _height = (days.length ~/ 7) * (widget.dayHeight ?? 0);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -261,7 +303,7 @@ class _CalendarViewState extends State<CalendarView> {
     }
 
     // 뒷 부분 공백
-    int blanks = 7 - days.length % 7;
+    int blanks = (7 - days.length % 7) % 7;
     for (int i = 0; i < blanks; i++) days.add(_blank);
 
     return days;

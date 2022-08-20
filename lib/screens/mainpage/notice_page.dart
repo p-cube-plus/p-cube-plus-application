@@ -25,7 +25,7 @@ class NoticePage extends StatelessWidget {
         PopupMenuButton(
           tooltip: "정렬기준",
           icon: const Icon(
-            Icons.more_vert,
+            Icons.settings,
           ),
           elevation: 30,
           onSelected: (SortType value) {

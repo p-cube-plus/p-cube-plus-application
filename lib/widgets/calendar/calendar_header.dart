@@ -39,7 +39,7 @@ class CalendarHeader extends StatelessWidget {
             ),
             Column(
               children: [
-                SizedBox(height: arrowButtonSize / 2),
+                SizedBox(height: arrowButtonSize / 4),
                 Text("${DateFormat("M").format(date)}월", style: monthTextStyle),
                 Text(DateFormat("yyyy").format(date), style: yearTextStyle),
               ],

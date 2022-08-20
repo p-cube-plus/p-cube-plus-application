@@ -72,7 +72,7 @@ class CautionListView extends StatelessWidget {
 
     for (var caution in userProvider.user!.cautions) {
       if (mode != caution.amount.sign) continue;
-      String type = ["경고", "주의"][1 - caution.type];
+      String type = ["경고", "주의"][caution.type];
 
       _cautions.add(SizedBox(height: 8.0));
       _cautions.add(
