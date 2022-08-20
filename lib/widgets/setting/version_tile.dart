@@ -19,16 +19,13 @@ class VersionTile extends SettingTile {
           final data = snapshot.data!;
 
           return Container(
-            height: super.height,
             child: Container(
-              padding: super.default_padding,
+              padding: super.allPadding,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //SizedBox(width: super.blank),
-                  const Text('버전'),
-                  const Spacer(),
+                  Text('버전', style: getTextStyle(context)),
                   Text(data.version),
-                  //SizedBox(width: super.blank),
                 ],
               ),
             ),

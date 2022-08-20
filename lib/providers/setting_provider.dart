@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 enum SettingType {
-  Theme,
   AllNotice,
   AllMeetingNotice,
   PartMeetingNotice,
@@ -16,17 +15,17 @@ abstract class ISetting {
   dynamic get item;
 }
 
-class ThemeSetting implements ISetting {
-  ThemeMode themeMode = ThemeMode.system;
+class NoticeAllSetting implements ISetting {
+  bool flag = true;
 
   @override
-  void toggle(bool isOn) => themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+  bool get isOn => flag;
 
   @override
-  bool get isOn => themeMode == ThemeMode.dark;
+  void toggle(bool isOn) => flag = isOn;
 
   @override
-  get item => themeMode;
+  get item => flag;
 }
 
 class NoticeSetting implements ISetting {
@@ -44,15 +43,11 @@ class NoticeSetting implements ISetting {
 
 class SettingProvider with ChangeNotifier {
   late ISetting curState;
-  final theme = ThemeSetting();
-  final allNotice = NoticeSetting();
+  final allNotice = NoticeAllSetting();
   final notices = List<NoticeSetting>.generate(5, (index) => NoticeSetting());
 
   void changeState(SettingType type) {
     switch (type) {
-      case SettingType.Theme:
-        curState = theme;
-        break;
       case SettingType.AllNotice:
         curState = allNotice;
         break;
@@ -77,22 +72,6 @@ class SettingProvider with ChangeNotifier {
 
   void toggle(bool isOn) {
     curState.toggle(isOn);
-
-    if (curState == allNotice) {
-      notices.forEach((element) {
-        element.toggle(isOn);
-      });
-    } else if (curState != theme) {
-      bool isAll = true;
-      for (var element in notices) {
-        if (element.item != isOn) {
-          isAll = false;
-          break;
-        }
-      }
-      if (isAll) allNotice.toggle(isOn);
-    }
-
     notifyListeners();
   }
 

@@ -13,16 +13,16 @@ class AlertTile extends SettingTile {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: super.height,
       child: InkWell(
         onTap: () {
           showDialog(context: context, builder: (context) => alertWidget);
         },
         child: Container(
           child: Padding(
-            padding: super.default_padding,
+            padding: super.allPadding,
             child: Row(
-              children: _getChildren(),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: _getChildren(context),
             ),
           ),
         ),
@@ -30,14 +30,11 @@ class AlertTile extends SettingTile {
     );
   }
 
-  List<Widget> _getChildren() {
+  List<Widget> _getChildren(context) {
     final result = <Widget>[];
-    //result.add(SizedBox(width: super.blank));
-    result.add(Text(super.title));
+    result.add(Text(super.title, style: getTextStyle(context)));
     if (hasIcon) {
-      result.add(const Spacer());
-      result.add(Icon(Icons.arrow_forward_ios, size: 15));
-      //result.add(SizedBox(width: super.blank));
+      result.add(Icon(Icons.arrow_forward_ios, size: defaultFontSize));
     }
     return result;
   }

@@ -52,7 +52,15 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
     final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZoneName!));
+
+    try {
+      print(timeZoneName);
+      tz.setLocalLocation(tz.getLocation(timeZoneName!));
+    } catch (e) {
+      const String fallback = 'Asia/Seoul';
+      tz.setLocalLocation(tz.getLocation(fallback));
+      print("이거 오류야!!");
+    }
   }
 
   Future<void> _initializeNotification() async {
@@ -63,7 +71,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       requestSoundPermission: false,
     );
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_launcher');
+        AndroidInitializationSettings('ic_notification');
 
     const InitializationSettings initializationSettings =
         InitializationSettings(
@@ -147,7 +155,6 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       //    onPressed: () async {
       //      await cancelNotification();
       //      await requestPermissions();
-//
       //      final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
       //      await registerMessage(
       //        hour: now.hour,
@@ -231,7 +238,6 @@ class _ShowButton extends StatelessWidget {
                   ),
                   onPressed: () {
                     _goNaverPage(context);
-                    //context.read<NaverLoginProvider>().naverLogin();
                   },
                 ),
               ),
@@ -243,11 +249,7 @@ class _ShowButton extends StatelessWidget {
   }
 
   void _goNaverPage(BuildContext context) {
-    context.read<NaverLoginProvider>().naverLogin();
-    /*Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MainPage()),
-    );*/
+    context.read<NaverLoginProvider>().naverLogin(context);
   }
 }
 

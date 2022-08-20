@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import 'package:provider/provider.dart';
