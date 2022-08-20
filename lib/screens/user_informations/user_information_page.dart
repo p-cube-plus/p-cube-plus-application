@@ -68,7 +68,7 @@ class InformationList extends StatelessWidget {
   Widget build(BuildContext context) {
     var userProvider = context.watch<UserDataProvider>();
 
-    if (!userProvider.loaded) return Container(); // 로딩 중
+    if (!userProvider.loaded) return CircularProgressIndicator(); // 로딩 중
     if (!userProvider.fail) return Container(); // 정보 불러오기 실패
 
     List<Widget> widgets = <Widget>[

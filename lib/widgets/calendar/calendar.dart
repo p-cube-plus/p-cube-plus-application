@@ -342,6 +342,7 @@ class CalendarDayView extends StatelessWidget {
           date.day.toString(),
           style: selected ? selectedDayTextStyle : dayTextStyle,
         ),
+        SizedBox(height: 2.0),
         Container(
           height: 4.0,
           width: 4.0,
@@ -365,7 +366,7 @@ class CalendarDayView extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 4.0),
+                      padding: const EdgeInsets.only(bottom: 6.0),
                       child: Container(
                         height: 24.0,
                         width: 24.0,

@@ -15,6 +15,9 @@ class MyThemes {
     textTheme: TextTheme(
       headline1: TextStyle(color: const Color(0xFFFFFFFF)),
     ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: const Color(0xFFDE2B13),
+    ),
     fontFamily: "SpoqaHanSansNeo",
   );
 
@@ -50,6 +53,9 @@ class MyThemes {
       headline1: TextStyle(color: const Color(0xFF2E2E2E)),
       headline2: TextStyle(color: const Color(0xFF818181)),
       headline3: TextStyle(color: const Color(0xFFABABAB)),
+    ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: const Color(0xFFDE2B13),
     ),
     fontFamily: "SpoqaHanSansNeo",
   );

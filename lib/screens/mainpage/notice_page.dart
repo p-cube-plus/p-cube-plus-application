@@ -28,7 +28,7 @@ class NoticePage extends StatefulWidget {
   State<NoticePage> createState() => _NoticePageState();
 }
 
-class _NoticePageState extends State<NoticePage> {
+class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
   Future<List<NotificationNode>>? notificationAPI;
 
   @override
@@ -46,8 +46,9 @@ class _NoticePageState extends State<NoticePage> {
       appBarActions: [
         PopupMenuButton(
           tooltip: "정렬기준",
-          icon: const Icon(
+          icon: Icon(
             Icons.settings,
+            color: Theme.of(context).textTheme.headline2!.color,
           ),
           elevation: 30,
           onSelected: (SortType value) {
@@ -69,50 +70,155 @@ class _NoticePageState extends State<NoticePage> {
           ],
         ),
       ],
-      content: FutureBuilder<List<NotificationNode>>(
-        future: notificationAPI,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              children: List.generate(
-                snapshot.data!.length,
-                (index) {
-                  return Dismissible(
-                    key: UniqueKey(),
-                    background: Container(
-                      margin: EdgeInsets.only(
-                          left: 0, top: 12, right: 0, bottom: 0),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      color: Colors.red,
-                      alignment: Alignment.centerRight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+      content: NoticeTabBar(
+        tabs: ["새 알림", "읽은 알림"],
+        pages: [
+          NoticeListView(
+            notificationAPI: notificationAPI,
+          ),
+          Container(),
+        ],
+      ),
+      scrollable: false,
+    );
+  }
+}
+
+class NoticeTabBar extends StatefulWidget {
+  const NoticeTabBar({
+    Key? key,
+    required this.tabs,
+    required this.pages,
+  }) : super(key: key);
+  final List<String> tabs;
+  final List<Widget> pages;
+
+  @override
+  State<NoticeTabBar> createState() => _NoticeTabBarState();
+}
+
+class _NoticeTabBarState extends State<NoticeTabBar> {
+  int _pageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(widget.tabs.length, (index) {
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: GestureDetector(
+                    onTap: () => setState(() => _pageIndex = index),
+                    child: Container(
+                      height: 28.0,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            "삭제 ",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: index > 0 ? 16.0 : 0,
+                            ),
+                            child: Text(
+                              widget.tabs[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
                           ),
-                          Icon(Icons.delete_outlined,
-                              size: 32, color: Colors.white),
+                          SizedBox(height: 2.0),
+                          if (_pageIndex == index)
+                            SizedBox(
+                              width: 28.0,
+                              height: 2.0,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(color: Colors.black),
+                              ),
+                            ),
                         ],
                       ),
                     ),
-                    child: NoticeBoxWidget(snapshot.data![index]),
-                    onDismissed: (direction) {
-                      product.deleteNotice(index);
-                    },
-                  );
-                },
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("메롱");
-          }
-
-          // 기본적으로 로딩 Spinner를 보여줍니다.
-          return CircularProgressIndicator();
-        },
+                  ),
+                );
+              }),
+            ),
+          ),
+          SizedBox(height: 12.0),
+          SingleChildScrollView(
+            child: widget.pages[_pageIndex],
+          ),
+        ],
       ),
+    );
+  }
+}
+
+class NoticeListView extends StatelessWidget {
+  const NoticeListView({
+    Key? key,
+    required this.notificationAPI,
+  }) : super(key: key);
+
+  final Future<List<NotificationNode>>? notificationAPI;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<NotificationNode>>(
+      future: notificationAPI,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children: List.generate(
+              snapshot.data!.length,
+              (index) {
+                return NoticeBoxWidget(snapshot.data![index]);
+                /*
+                return Dismissible(
+                  key: UniqueKey(),
+                  background: Container(
+                    margin: EdgeInsets.only(
+                        left: 0, top: 12, right: 0, bottom: 0),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "삭제 ",
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                        Icon(Icons.delete_outlined,
+                            size: 32, color: Colors.white),
+                      ],
+                    ),
+                  ),
+                  child: NoticeBoxWidget(snapshot.data![index]),
+                  onDismissed: (direction) {
+                    product.deleteNotice(index);
+                  },
+                );
+                */
+              },
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text("메롱");
+        }
+
+        // 기본적으로 로딩 Spinner를 보여줍니다.
+        return Center(child: CircularProgressIndicator());
+      },
     );
   }
 }

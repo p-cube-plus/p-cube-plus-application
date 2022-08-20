@@ -11,6 +11,7 @@ class DefaultPage extends StatelessWidget {
     this.appBarHasPrevious,
     this.content,
     this.padding,
+    this.scrollable = true,
   }) : super(key: key);
 
   final String appBarTitle;
@@ -18,6 +19,7 @@ class DefaultPage extends StatelessWidget {
   final bool? appBarHasPrevious;
   final Widget? content;
   final double? padding;
+  final bool scrollable;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class DefaultPage extends StatelessWidget {
           Expanded(
               child: Padding(
             padding: EdgeInsets.symmetric(horizontal: padding ?? 20.0),
-            child: SingleChildScrollView(child: content),
+            child: scrollable ? SingleChildScrollView(child: content) : content,
           )),
         ],
       ),
