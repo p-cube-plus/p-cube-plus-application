@@ -16,7 +16,6 @@ import 'setting_notice_page.dart';
 class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return DefaultPage(
       appBarTitle: "설정",
       appBarHasPrevious: true,
@@ -29,18 +28,9 @@ class SettingPage extends StatelessWidget {
             title: '테마 설정',
             bottomTitle: '테마 설정',
             bottomWidgets: [
-              RadioBox(
-                  themeProvider: themeProvider,
-                  type: ThemeMode.system,
-                  text: "시스템 설정 사용"),
-              RadioBox(
-                  themeProvider: themeProvider,
-                  type: ThemeMode.light,
-                  text: "라이트 모드"),
-              RadioBox(
-                  themeProvider: themeProvider,
-                  type: ThemeMode.dark,
-                  text: "다크 모드")
+              RadioBox(type: ThemeMode.system, text: "시스템 설정 사용"),
+              RadioBox(type: ThemeMode.light, text: "라이트 모드"),
+              RadioBox(type: ThemeMode.dark, text: "다크 모드")
             ],
           ),
           ListDivider(padding: 20),
@@ -282,14 +272,13 @@ class SettingPage extends StatelessWidget {
 }
 
 class RadioBox extends StatelessWidget {
-  final ThemeProvider themeProvider;
   final ThemeMode type;
   final String text;
-  RadioBox(
-      {required this.themeProvider, required this.type, required this.text});
+  RadioBox({required this.type, required this.text});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(

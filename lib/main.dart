@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    //themeProvider.initType(ThemeMode.system);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PCube+', // 탭 이름

@@ -11,17 +11,17 @@ class SwitchTile extends SettingTile {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<SettingProvider>(context);
-    themeProvider.changeState(type);
-    bool _value = themeProvider.isOn;
+    final settingProvider = Provider.of<SettingProvider>(context);
+    settingProvider.changeState(type);
+    bool _value = settingProvider.isOn;
     print(_value);
     return Container(
       //padding: super.verticalPadding,
       child: InkWell(
         onTap: () {
-          themeProvider.changeState(type);
+          settingProvider.changeState(type);
           _value = !_value;
-          themeProvider.toggle(_value);
+          settingProvider.toggle(_value);
         },
         child: Container(
           padding: super.horizontalPadding,
@@ -48,9 +48,9 @@ class SwitchTile extends SettingTile {
                     //splashRadius: 30, // 클릭 시 색 크기
                     value: _value,
                     onChanged: (value) {
-                      themeProvider.changeState(type);
+                      settingProvider.changeState(type);
                       _value = value;
-                      themeProvider.toggle(_value);
+                      settingProvider.toggle(_value);
                     },
                   ),
                 ),
