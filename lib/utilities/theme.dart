@@ -26,8 +26,27 @@ class MyThemes {
       unselectedItemColor: Colors.white,
       selectedItemColor: const Color(0xFFDE2B13),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+        primary: const Color(0xFFDE2B13),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        minimumSize: Size(0, 35),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        primary: Colors.black,
+        side: BorderSide(width: 0, style: BorderStyle.none),
+        backgroundColor: const Color(0xFF202020),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        minimumSize: Size(0, 35),
+      ),
+    ),
     textTheme: TextTheme(
       headline1: TextStyle(color: const Color(0xFFFFFFFF)),
+      headline2: TextStyle(color: Colors.white70),
+      headline3: TextStyle(color: Colors.white54),
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: const Color(0xFFDE2B13),

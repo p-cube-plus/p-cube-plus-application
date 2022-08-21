@@ -281,20 +281,26 @@ class RadioBox extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(text,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(fontWeight: FontWeight.w400, fontSize: 12)),
-          Radio(
-              activeColor: const Color(0xFFDE2B13),
-              value: type,
-              groupValue: themeProvider.type,
-              onChanged: (value) => themeProvider.changeType(type))
-        ],
+      child: InkWell(
+        onTap: () => themeProvider.changeType(type),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(text,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontWeight: FontWeight.w400, fontSize: 12)),
+              Radio(
+                  activeColor: const Color(0xFFDE2B13),
+                  value: type,
+                  groupValue: themeProvider.type,
+                  onChanged: (value) => themeProvider.changeType(type))
+            ],
+          ),
+        ),
       ),
     );
   }

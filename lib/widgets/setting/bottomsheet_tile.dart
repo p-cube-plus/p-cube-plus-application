@@ -19,11 +19,8 @@ class BottomSheetTile extends SettingTile {
             context: context,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-            builder: (context) => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-                  child: Column(
-                    children: _getChildren(context),
-                  ),
+            builder: (context) => Column(
+                  children: _getChildren(context),
                 )),
         child: Container(
           padding: super.allPadding,
@@ -48,7 +45,7 @@ class BottomSheetTile extends SettingTile {
     result.add(Align(
       alignment: Alignment.centerLeft,
       child: Padding(
-        padding: EdgeInsets.only(bottom: 32),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 32),
         child: Text(bottomTitle,
             style: Theme.of(context).textTheme.headline1!.copyWith(
                   fontWeight: FontWeight.w700,

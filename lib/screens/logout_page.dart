@@ -12,8 +12,16 @@ class LogoutPage extends StatelessWidget {
           children: [
             Text('로그아웃 되었습니다.', style: TextStyle(fontSize: 20)),
             SizedBox(height: 15),
-            Text('다시 로그인 하시려면', style: TextStyle(color: Colors.white54)),
-            Text('홈으로 돌아가기를 눌러주세요.', style: TextStyle(color: Colors.white54)),
+            Text('다시 로그인 하시려면',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: 12, fontWeight: FontWeight.w400)),
+            Text('홈으로 돌아가기를 눌러주세요.',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: 12, fontWeight: FontWeight.w400)),
             SizedBox(height: 200),
             ElevatedButton(
               onPressed: () {
