@@ -8,7 +8,7 @@
     
    <application
         android:label="p_cube_plus_application"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <!-- naver login을 위한 meta-data -->
         <meta-data
             android:name="com.naver.sdk.clientId"

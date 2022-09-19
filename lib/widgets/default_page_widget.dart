@@ -12,6 +12,7 @@ class DefaultPage extends StatelessWidget {
     this.content,
     this.padding,
     this.scrollable = true,
+    this.floatingActionButton,
   }) : super(key: key);
 
   final String appBarTitle;
@@ -20,6 +21,7 @@ class DefaultPage extends StatelessWidget {
   final Widget? content;
   final double? padding;
   final bool scrollable;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class DefaultPage extends StatelessWidget {
         ],
       ),
       resizeToAvoidBottomInset: false,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

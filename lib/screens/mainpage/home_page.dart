@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:scan/scan.dart';
+import '../scan_page.dart';
 import '../../utilities/contants.dart' as Constants;
 import '../../widgets/calendar/calendar.dart';
 import '../../widgets/calendar/calendar_summary_view.dart';
@@ -20,9 +23,68 @@ class HomePage extends StatelessWidget {
       ],
       child: DefaultPage(
         appBarTitle: "홈",
+        floatingActionButton: FloatingBarcodeButton(),
         content: HomeCalendar(
           currentTheme: currentTheme,
         ),
+      ),
+    );
+  }
+}
+
+class FloatingBarcodeButton extends StatefulWidget {
+  @override
+  _FloatingBarcodeButton createState() => _FloatingBarcodeButton();
+}
+
+class _FloatingBarcodeButton extends State<FloatingBarcodeButton> {
+  String _platformVersion = 'Unknown';
+  String qrcode = 'Unknown';
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  Future<void> initPlatformState() async {
+    String platformVersion;
+    try {
+      platformVersion = await Scan.platformVersion;
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("code: $qrcode");
+    return SizedBox(
+      width: 64,
+      height: 64,
+      child: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return ScanPage();
+          }));
+        },
+        elevation: 7.68,
+        focusElevation: 7.68,
+        hoverElevation: 7.68,
+        disabledElevation: 7.68,
+        highlightElevation: 7.68,
+        child: Padding(
+          padding: EdgeInsets.all(14),
+          child: Image.asset(
+            "assets/images/scan.png",
+          ),
+        ),
+        backgroundColor: Color(0xFFDE2B13).withOpacity(0.88),
       ),
     );
   }
