@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/schedule_provider.dart';
+import 'package:p_cube_plus_application/widgets/content_summary_view.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
 import '../scan_page.dart';
+import '../../models/rent.dart';
+import '../../providers/rent_provider.dart';
 import '../../utilities/contants.dart' as Constants;
 import '../../widgets/calendar/calendar.dart';
 import '../../widgets/calendar/calendar_summary_view.dart';
@@ -17,6 +21,7 @@ class HomePage extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<RentProvider>(create: (_) => RentProvider()),
         ChangeNotifierProvider<ScheduleProvider>(
           create: (_) => ScheduleProvider(),
         ),
@@ -24,8 +29,13 @@ class HomePage extends StatelessWidget {
       child: DefaultPage(
         appBarTitle: "홈",
         floatingActionButton: FloatingBarcodeButton(),
-        content: HomeCalendar(
-          currentTheme: currentTheme,
+        content: Column(
+          children: [
+            HomeCalendar(
+              currentTheme: currentTheme,
+            ),
+            //RentListView(),
+          ],
         ),
       ),
     );
@@ -116,6 +126,10 @@ class _HomeCalendarState extends State<HomeCalendar> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        CalendarMonthlySummaryView(
+          viewDate: _viewDate,
+          dayMarkColor: _dayMarkColor,
+        ),
         RoundedBorder(
           radius: 10.0,
           padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
@@ -178,14 +192,7 @@ class _HomeCalendarState extends State<HomeCalendar> {
           )
         else
           Container(),
-      ]
-        ..add(
-          CalendarMonthlySummaryView(
-            viewDate: _viewDate,
-            dayMarkColor: _dayMarkColor,
-          ),
-        )
-        ..add(SizedBox(height: 20.0)),
+      ]..add(SizedBox(height: 20.0)),
     );
   }
 }
