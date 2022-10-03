@@ -21,7 +21,7 @@ class Schedule {
       name: json['name'],
       startDate: DateTime.parse(json['start_date']),
       endDate: DateTime.parse(json['end_date']),
-      hasSpan: json['has_span'],
+      hasSpan: json['has_span'] ?? false,
     );
   }
 
@@ -30,6 +30,6 @@ class Schedule {
         'name': name,
         'start_date': startDate.toString(),
         'end_date': endDate.toString(),
-        'has_span': hasSpan.toString(),
+        'has_span': hasSpan,
       };
 }
