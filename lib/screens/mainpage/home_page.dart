@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/schedule_provider.dart';
+import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
 import 'package:p_cube_plus_application/widgets/content_summary_view.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
-import '../scan_page.dart';
+import '../rent/scan_page.dart';
 import '../../models/rent.dart';
 import '../../providers/rent_provider.dart';
 import '../../utilities/contants.dart' as Constants;
@@ -28,15 +29,99 @@ class HomePage extends StatelessWidget {
       ],
       child: DefaultPage(
         appBarTitle: "홈",
-        floatingActionButton: FloatingBarcodeButton(),
         content: Column(
           children: [
             HomeCalendar(
               currentTheme: currentTheme,
             ),
-            //RentListView(),
+            RentListView(),
           ],
         ),
+        floatingActionButton: FloatingBarcodeButton(),
+      ),
+    );
+  }
+}
+
+class RentListView extends StatelessWidget {
+  const RentListView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var rentProvider = context.watch<RentProvider>();
+
+    return ContentSummaryView(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RentPage(),
+          ),
+        );
+      },
+      title: "대여한 물품",
+      titleFontSize: 16.0,
+      children: List.generate(
+        rentProvider.rentList?.length ?? 0,
+        (index) {
+          Rent? rent = rentProvider.getRent(index: index);
+          if (rent == null) return Container();
+
+          return Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: RoundedBorder(
+              radius: 10.0,
+              //height: 56.0,
+              hasShadow: true,
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          rent.product.name, // debug
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                        SizedBox(height: 2.5),
+                        Text(
+                          "${DateFormat("yyyy/MM/dd").format(rent.date)} 에 대여함", // debug
+                          style:
+                              Theme.of(context).textTheme.headline3!.copyWith(
+                                    fontSize: 11.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      rent.dDay == 0
+                          ? "D-Day"
+                          : "D${rent.dDay.sign == -1 ? "+" : "-"}${rent.dDay}", // debug
+                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w700,
+                            color: rent.dDay > 7 ? null : Color(0xCCDE2B13),
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

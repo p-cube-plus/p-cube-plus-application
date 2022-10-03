@@ -4,7 +4,7 @@ import 'package:p_cube_plus_application/screens/user_informations/user_informati
 import 'package:provider/provider.dart';
 import '../../utilities/contants.dart' as Constants;
 
-import 'rent_page.dart';
+import '../rent/rent_page.dart';
 import 'home_page.dart';
 import 'notice_page.dart';
 

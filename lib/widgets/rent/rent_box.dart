@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/rent.dart';
 import '../rounded_border_widget.dart';
-import 'item_list_view.dart';
+import 'rent_item_list_view.dart';
 
 class RentBox extends StatelessWidget {
   const RentBox({

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../models/rent.dart';
-import '../../screens/scan_page.dart';
+import '../../screens/rent/scan_page.dart';
 import 'rent_box.dart';
 import 'rented_box.dart';
 
@@ -23,6 +23,9 @@ Future<List<Rent>> _fetchRentList() async {
 }
 
 class RentItemListView extends StatefulWidget {
+  const RentItemListView({required this.isActive});
+  final isActive;
+
   @override
   State<RentItemListView> createState() => RentItemListViewState();
 }
@@ -51,10 +54,11 @@ class RentItemListViewState extends State<RentItemListView> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return RentBox(
-                          rent: snapshot.data![index], isActive: true);
+                          rent: snapshot.data![index],
+                          isActive: widget.isActive);
                     }),
               ),
-              RentButton(text: "대여하기")
+              RentButton(text: "대여하기", isActive: widget.isActive)
             ],
           );
         } else if (snapshot.hasError) {
@@ -101,7 +105,7 @@ class RentedItemListViewState extends State<RentedItemListView> {
                           return RentedBox(rent: snapshot.data![index]);
                         }),
                   ),
-                  RentButton(text: "반납하기")
+                  RentButton(text: "반납하기", isActive: true)
                 ],
               ),
             ),
@@ -117,8 +121,10 @@ class RentedItemListViewState extends State<RentedItemListView> {
 }
 
 class RentButton extends StatelessWidget {
-  const RentButton({required this.text});
+  const RentButton({required this.text, required this.isActive});
   final String text;
+  final bool isActive;
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -126,17 +132,29 @@ class RentButton extends StatelessWidget {
       width: double.infinity,
       height: 48,
       child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return ScanPage();
-            }));
-          },
+          onPressed: isActive
+              ? () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return ScanPage();
+                  }));
+                }
+              : null,
           child: Text(
             text,
-            style: theme.textTheme.headline1!
-                .copyWith(fontSize: 14, fontWeight: FontWeight.w700),
+            style: isActive
+                ? theme.textTheme.headline1!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w700)
+                : theme.textTheme.headline3!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w700),
           ),
-          style: theme.elevatedButtonTheme.style),
+          style: isActive
+              ? theme.elevatedButtonTheme.style
+              : ButtonStyle(
+                  side: theme.elevatedButtonTheme.style!.side,
+                  backgroundColor: MaterialStateProperty.all(theme.cardColor),
+                  shape: theme.elevatedButtonTheme.style!.shape,
+                  minimumSize: theme.elevatedButtonTheme.style!.minimumSize,
+                )),
     );
   }
 }

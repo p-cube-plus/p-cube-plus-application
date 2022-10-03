@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/rent/button_page.dart';
-import '../../widgets/rent/item_list_view.dart';
-import 'notice_page.dart';
-import '../scan_page.dart';
+import '../../widgets/rent/rent_item_list_view.dart';
+import '../mainpage/notice_page.dart';
+import 'scan_page.dart';
 
 class RentPage extends StatelessWidget {
   @override
@@ -29,7 +29,11 @@ class RentItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonPage(
       names: ["전체", "대여 가능", "대여 중"],
-      contents: [RentItemListView(), RentItemListView(), RentItemListView()],
+      contents: [
+        RentItemListView(isActive: true),
+        RentItemListView(isActive: true),
+        RentItemListView(isActive: false)
+      ],
     );
   }
 }
