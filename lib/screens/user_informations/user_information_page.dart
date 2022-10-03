@@ -16,7 +16,7 @@ import '../../models/user.dart';
 import '../../widgets/list_divider_widget.dart';
 import '../../widgets/rounded_border_widget.dart';
 
-import '../mainpage/setting_page.dart';
+import '../settings/setting_page.dart';
 import 'seminar_list_page.dart';
 
 class UserInformationPage extends StatelessWidget {

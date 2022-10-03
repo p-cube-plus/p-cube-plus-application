@@ -165,11 +165,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       //    child: const Text('Show Notification'),
       //  ),
       //),
-      body: const SingleChildScrollView(
-        child: Center(
-          child: _MainLogin(),
-        ),
-      ),
+      body: _MainLogin(),
     );
   }
 }
@@ -179,13 +175,18 @@ class _MainLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _ShowLogo(),
-          _ShowButton(),
-          _ShowTextButton(),
-        ],
+      width: double.infinity,
+      height: double.infinity,
+      color: Theme.of(context).backgroundColor,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _ShowLogo(),
+            _ShowButton(),
+            _ShowTextButton(),
+          ],
+        ),
       ),
     );
   }

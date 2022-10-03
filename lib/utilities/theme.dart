@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class MyThemes {
   static final darkTheme = ThemeData(
     backgroundColor: Color(0xFF242424),
-    scaffoldBackgroundColor: Color(0xFF242424),
+    scaffoldBackgroundColor: Color(0xFF2E2E2E),
+    dialogBackgroundColor: Color(0xFF3B3B3B),
     primaryColor: Colors.black,
     cardColor: Color(0xFF2E2E2E),
     tabBarTheme: TabBarTheme(
@@ -47,6 +48,7 @@ class MyThemes {
       headline1: TextStyle(color: const Color(0xFFFFFFFF)),
       headline2: TextStyle(color: Colors.white70),
       headline3: TextStyle(color: Colors.white54),
+      headline4: TextStyle(color: const Color(0xFF000000)),
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: const Color(0xFFDE2B13),
@@ -57,6 +59,7 @@ class MyThemes {
   static final lightTheme = ThemeData(
     backgroundColor: Color(0xFFFBFBFB),
     scaffoldBackgroundColor: Color(0xFFFFFFFF),
+    dialogBackgroundColor: Color(0xFFE9E9E9),
     primaryColor: Colors.white,
     cardColor: Colors.white,
     tabBarTheme: TabBarTheme(
@@ -100,6 +103,7 @@ class MyThemes {
       headline1: TextStyle(color: const Color(0xFF2E2E2E)),
       headline2: TextStyle(color: const Color(0xFF818181)),
       headline3: TextStyle(color: const Color(0xFFABABAB)),
+      headline4: TextStyle(color: const Color(0xFFFFFFFF)),
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: const Color(0xFFDE2B13),
