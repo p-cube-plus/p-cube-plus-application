@@ -99,6 +99,9 @@ class MyThemes {
         minimumSize: Size(0, 35),
       ),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: const Color(0xFFE9E9E9),
+    ),
     textTheme: TextTheme(
       headline1: TextStyle(color: const Color(0xFF2E2E2E)),
       headline2: TextStyle(color: const Color(0xFF818181)),
