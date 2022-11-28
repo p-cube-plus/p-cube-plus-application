@@ -43,10 +43,20 @@ class RentSearchListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RentBox.groupNum = -1;
     return FutureBuilder<List<Rent>>(
       future: _fetchRentList(productName),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data!.length == 0)
+            return Text(
+              "검색 결과가 없어요 ㅠㅠ",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline3!.copyWith(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+            );
           return Column(
             children: List.generate(snapshot.data!.length, (index) {
               return Padding(

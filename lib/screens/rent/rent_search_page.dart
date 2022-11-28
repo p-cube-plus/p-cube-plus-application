@@ -24,6 +24,7 @@ class _RentSearchPageState extends State<RentSearchPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               RoundedBorder(
                 radius: 50.0,
@@ -33,7 +34,9 @@ class _RentSearchPageState extends State<RentSearchPage> {
                 child: TextField(
                   textAlign: TextAlign.left,
                   textAlignVertical: TextAlignVertical.center,
-                  //onChanged:
+                  onChanged: (value) {
+                    _productName = value;
+                  },
                   onSubmitted: (value) {
                     setState(() {
                       _productName = value;
@@ -52,16 +55,31 @@ class _RentSearchPageState extends State<RentSearchPage> {
                         ),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
-                    suffixIcon: Image.asset(
-                      "assets/images/search.png",
-                      color: Theme.of(context).textTheme.headline3!.color,
-                      scale: 1.2,
+                    suffixIcon: GestureDetector(
+                      onTap: () => setState(() {}),
+                      child: Image.asset(
+                        "assets/images/search.png",
+                        color: Theme.of(context).textTheme.headline3!.color,
+                        scale: 1.2,
+                      ),
                     ),
                   ),
                 ),
               ),
               SizedBox(height: 16.0),
-              RentSearchListView(productName: _productName),
+              if (_productName == "")
+                Text(
+                  "원하는 물품을 검색해서\n대여해보세요.",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                )
+              else
+                RentSearchListView(
+                  productName: _productName,
+                ),
             ],
           ),
           Padding(
