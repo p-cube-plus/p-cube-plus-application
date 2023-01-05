@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/rent_provider.dart';
+import 'package:p_cube_plus_application/screens/projects/projects_page.dart';
 import 'package:p_cube_plus_application/screens/user_informations/user_information_page.dart';
 import 'package:provider/provider.dart';
 import '../../utilities/contants.dart' as Constants;
@@ -28,8 +29,9 @@ class _PageControllState extends State<PageControll> {
           });
         },
         children: [
-          NoticePage(),
           HomePage(),
+          ProjectsPage(),
+          NoticePage(),
           UserInformationPage(),
         ],
         physics: NeverScrollableScrollPhysics(),
@@ -44,20 +46,6 @@ class _PageControllState extends State<PageControll> {
         items: [
           BottomNavigationBarItem(
             icon: Constants.Icons.GetIcon(
-              Constants.Icons.bell,
-              color: Theme.of(context)
-                  .bottomNavigationBarTheme
-                  .unselectedItemColor,
-            ),
-            activeIcon: Constants.Icons.GetIcon(
-              Constants.Icons.selected_bell,
-              color:
-                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
-            ),
-            label: '알림',
-          ),
-          BottomNavigationBarItem(
-            icon: Constants.Icons.GetIcon(
               Constants.Icons.home,
               color: Theme.of(context)
                   .bottomNavigationBarTheme
@@ -69,6 +57,34 @@ class _PageControllState extends State<PageControll> {
                   Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
             ),
             label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Constants.Icons.GetIcon(
+              Constants.Icons.projects,
+              color: Theme.of(context)
+                  .bottomNavigationBarTheme
+                  .unselectedItemColor,
+            ),
+            activeIcon: Constants.Icons.GetIcon(
+              Constants.Icons.selected_projects,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '프로젝트',
+          ),
+          BottomNavigationBarItem(
+            icon: Constants.Icons.GetIcon(
+              Constants.Icons.bell,
+              color: Theme.of(context)
+                  .bottomNavigationBarTheme
+                  .unselectedItemColor,
+            ),
+            activeIcon: Constants.Icons.GetIcon(
+              Constants.Icons.selected_bell,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '알림',
           ),
           BottomNavigationBarItem(
             icon: Constants.Icons.GetIcon(

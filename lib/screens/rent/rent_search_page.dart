@@ -4,6 +4,7 @@ import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/rent/rent_item_list_view.dart';
+import 'rent_detail_page.dart';
 
 class RentSearchPage extends StatefulWidget {
   @override

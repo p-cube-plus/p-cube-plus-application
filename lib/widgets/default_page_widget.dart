@@ -6,22 +6,24 @@ import 'custom_appbar_widget.dart';
 class DefaultPage extends StatelessWidget {
   const DefaultPage({
     Key? key,
-    required this.appBarTitle,
+    this.appBarTitle,
     this.appBarActions,
     this.appBarHasPrevious,
+    this.subtitle,
     this.content,
     this.padding,
     this.scrollable = true,
     this.floatingActionButton,
   }) : super(key: key);
 
-  final String appBarTitle;
+  final String? appBarTitle;
   final List<Widget>? appBarActions;
   final bool? appBarHasPrevious;
   final Widget? content;
   final double? padding;
   final bool scrollable;
   final Widget? floatingActionButton;
+  final String? subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class DefaultPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: CustomAppBar(
               title: appBarTitle,
+              subtitle: subtitle,
               actions: appBarActions,
               hasPrevious: appBarHasPrevious,
             ),

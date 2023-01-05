@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../models/rent.dart';
+import '../../screens/rent/rent_detail_page.dart';
 import '../../screens/rent/scan_page.dart';
 import 'rent_box.dart';
 
@@ -61,7 +62,17 @@ class RentSearchListView extends StatelessWidget {
             children: List.generate(snapshot.data!.length, (index) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: RentBox(rent: snapshot.data![index], isActive: true),
+                child: GestureDetector(
+                  onDoubleTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RentDetailPage(
+                        rent: snapshot.data![index],
+                      ),
+                    ),
+                  ),
+                  child: RentBox(rent: snapshot.data![index], isActive: true),
+                ),
               );
             }),
           );

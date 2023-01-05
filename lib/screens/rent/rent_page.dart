@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/rent/button_page.dart';
 import '../../widgets/rent/rent_item_list_view.dart';
+import '../../widgets/tabbar/custom_tab_bar._widget.dart';
 import 'rent_search_page.dart';
 import '../mainpage/notice_page.dart';
 import 'scan_page.dart';
@@ -27,7 +28,7 @@ class RentPage extends StatelessWidget {
           },
         ),
       ],
-      content: NoticeTabBar(
+      content: CustomTabBar(
         tabs: ["대여하기", "내가 대여한"],
         pages: [
           RentItemView(),
