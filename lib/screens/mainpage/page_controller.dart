@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/providers/rent_provider.dart';
 import 'package:p_cube_plus_application/screens/projects/projects_page.dart';
 import 'package:p_cube_plus_application/screens/user_informations/user_information_page.dart';
-import 'package:provider/provider.dart';
 import '../../utilities/contants.dart' as Constants;
 
-import '../rent/rent_page.dart';
 import 'home_page.dart';
 import 'notice_page.dart';
 
@@ -15,8 +12,8 @@ class PageControll extends StatefulWidget {
 }
 
 class _PageControllState extends State<PageControll> {
-  int _idx = 1;
-  final pageController = PageController(initialPage: 1);
+  int _idx = 0;
+  final pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {

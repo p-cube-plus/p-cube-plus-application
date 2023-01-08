@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import '../models/member.dart';
 import '../services/project_api.dart';
@@ -46,7 +44,24 @@ class ProjectProvider with ChangeNotifier {
           Member(id: 3, name: "조승빈", partIndex: 1),
         ],
         pm: Member(id: 0, name: "오창한", partIndex: 1),
-        platforms: <String>[],
+        platforms: <String>["Android"],
+        tags: <String>["태그1", "태그2"],
+      ),
+      Project(
+        id: 0,
+        type: 0,
+        name: "PCube+",
+        isEnd: false,
+        startDate: DateTime(2022, 05, 27),
+        endDate: DateTime(2023, 01, 31),
+        members: <Member>[
+          Member(id: 0, name: "오창한", partIndex: 1),
+          Member(id: 1, name: "권오민", partIndex: 1),
+          Member(id: 2, name: "신혜민", partIndex: 0),
+          Member(id: 3, name: "조승빈", partIndex: 1),
+        ],
+        pm: Member(id: 0, name: "오창한", partIndex: 1),
+        platforms: <String>["Android"],
         tags: <String>[],
       ),
       Project(
@@ -63,25 +78,8 @@ class ProjectProvider with ChangeNotifier {
           Member(id: 3, name: "조승빈", partIndex: 1),
         ],
         pm: Member(id: 0, name: "오창한", partIndex: 1),
-        platforms: <String>[],
-        tags: <String>[],
-      ),
-      Project(
-        id: 0,
-        type: 0,
-        name: "PCube+",
-        isEnd: false,
-        startDate: DateTime(2022, 05, 27),
-        endDate: DateTime(2023, 01, 31),
-        members: <Member>[
-          Member(id: 0, name: "오창한", partIndex: 1),
-          Member(id: 1, name: "권오민", partIndex: 1),
-          Member(id: 2, name: "신혜민", partIndex: 0),
-          Member(id: 3, name: "조승빈", partIndex: 1),
-        ],
-        pm: Member(id: 0, name: "오창한", partIndex: 1),
-        platforms: <String>[],
-        tags: <String>[],
+        platforms: <String>["Android", "iOS"],
+        tags: <String>["태그1", "태그2"],
       ),
       Project(
         id: 0,
@@ -97,8 +95,8 @@ class ProjectProvider with ChangeNotifier {
           Member(id: 3, name: "조승빈", partIndex: 1),
         ],
         pm: Member(id: 0, name: "오창한", partIndex: 1),
-        platforms: <String>[],
-        tags: <String>[],
+        platforms: <String>["Android", "PC"],
+        tags: <String>["태그1", "태그2"],
       ),
     ];
   }
@@ -108,9 +106,9 @@ class ProjectProvider with ChangeNotifier {
     if (id == null && index == null) return null;
     if (index != null) return _projectList![index];
 
-    var rents = _projectList!.where((e) => e.id == id);
+    var projects = _projectList!.where((e) => e.id == id);
 
-    return rents.isEmpty ? null : rents.first;
+    return projects.isEmpty ? null : projects.first;
   }
 
   void update() async {

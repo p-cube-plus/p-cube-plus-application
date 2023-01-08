@@ -9,6 +9,9 @@ class CustomAppBar extends StatelessWidget {
     this.actions,
     this.hasPrevious,
     this.padding,
+    this.appbarTitleColor,
+    this.previousButtonColor,
+    this.subtitleColor,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? padding;
@@ -17,6 +20,10 @@ class CustomAppBar extends StatelessWidget {
   final double? height;
   final List<Widget>? actions;
   final bool? hasPrevious;
+
+  final Color? appbarTitleColor;
+  final Color? subtitleColor;
+  final Color? previousButtonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +40,7 @@ class CustomAppBar extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
+                    color: appbarTitleColor,
                   ),
             ),
             Expanded(
@@ -59,6 +67,7 @@ class CustomAppBar extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w700,
+                        color: subtitleColor,
                       ),
                 ),
               ),
@@ -67,6 +76,7 @@ class CustomAppBar extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_back_ios_new,
                   size: 20.0,
+                  color: previousButtonColor,
                 ),
               ),
             ],

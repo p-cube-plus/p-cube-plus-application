@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/project.dart';
+import '../screens/projects/project_detail_page.dart';
 import 'default_profile.dart';
 import 'rounded_border_widget.dart';
 
@@ -19,7 +20,12 @@ class ProjectView extends StatelessWidget {
       radius: 10.0,
       padding: const EdgeInsets.all(20.0),
       hasShadow: true,
-      onTap: () {},
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProjectDetailPage(project: project),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

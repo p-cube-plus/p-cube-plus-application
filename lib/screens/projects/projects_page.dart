@@ -41,7 +41,7 @@ class _ProjectListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var projectProvider = context.watch<ProjectProvider>();
-    projectProvider.update(); // debug
+    //projectProvider.update(); // debug
 
     if (!projectProvider.loaded) return Container();
     if (projectProvider.fail) return Container();
