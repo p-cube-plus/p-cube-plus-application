@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:p_cube_plus_application/widgets/setting/alert_frame.dart';
 
 import '../../models/rent.dart';
 import '../../screens/rent/scan_page.dart';
@@ -58,11 +59,11 @@ class RentItemListViewState extends State<RentItemListView> {
                           isActive: widget.isActive);
                     }),
               ),
-              RentButton(text: "대여하기", isActive: widget.isActive)
+              RentButton(text: "스캔하기", isActive: widget.isActive, isRent: true)
             ],
           );
         } else if (snapshot.hasError) {
-          return Text("이상해");
+          return Text("정보를 불러올 수 없습니다.");
         }
 
         return Center(child: CircularProgressIndicator());
@@ -92,26 +93,30 @@ class RentedItemListViewState extends State<RentedItemListView> {
       future: rentAPI,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height - 231,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return RentedBox(rent: snapshot.data![index]);
-                        }),
-                  ),
-                  RentButton(text: "반납하기", isActive: true)
-                ],
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height - 231,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return RentedBox(rent: snapshot.data![index]);
+                          }),
+                    ),
+                  ],
+                ),
               ),
             ),
+            persistentFooterButtons: [
+              RentButton(text: "반납하기", isActive: true, isRent: false)
+            ],
           );
         } else if (snapshot.hasError) {
-          return Text("이상해");
+          return Text("정보를 불러올 수 없습니다.");
         }
 
         return Center(child: CircularProgressIndicator());
@@ -121,9 +126,11 @@ class RentedItemListViewState extends State<RentedItemListView> {
 }
 
 class RentButton extends StatelessWidget {
-  const RentButton({required this.text, required this.isActive});
+  const RentButton(
+      {required this.text, required this.isActive, required this.isRent});
   final String text;
   final bool isActive;
+  final bool isRent;
 
   @override
   Widget build(BuildContext context) {
@@ -133,17 +140,86 @@ class RentButton extends StatelessWidget {
       height: 48,
       child: ElevatedButton(
           onPressed: isActive
-              ? () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return ScanPage();
-                  }));
-                }
+              ? () => showDialog(
+                  context: context,
+                  builder: (context) => AlertFrame(
+                        messageType: MessageType.OKCancel,
+                        okText: isRent ? "대여" : "반납",
+                        children: [
+                          Align(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 36, bottom: 16),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    isRent ? '대여하기' : "반납하기",
+                                    style: theme.textTheme.headline1!.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    isRent
+                                        ? '선택한 제품을 대여하시겠습니까?'
+                                        : "선택한 제품을 반납하시겠습니까?",
+                                    style: theme.textTheme.headline1!.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                ],
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                          ),
+                        ],
+                        okWidget: ScanPage(),
+                      )
+                  //AlertFrame(
+                  //  messageType: MessageType.OK,
+                  //  children: [
+                  //    Align(
+                  //      child: Padding(
+                  //        padding:
+                  //            const EdgeInsets.only(top: 36, bottom: 16),
+                  //        child: Column(
+                  //          children: [
+                  //            Text(
+                  //              '대여 완료',
+                  //              style: theme.textTheme.headline1!.copyWith(
+                  //                fontSize: 14,
+                  //                fontWeight: FontWeight.w700,
+                  //              ),
+                  //            ),
+                  //            SizedBox(height: 8),
+                  //            Text(
+                  //              '물품을 대여하였습니다.',
+                  //              style: theme.textTheme.headline1!.copyWith(
+                  //                fontSize: 12,
+                  //                fontWeight: FontWeight.w400,
+                  //              ),
+                  //            ),
+                  //            SizedBox(height: 8),
+                  //          ],
+                  //        ),
+                  //      ),
+                  //      alignment: Alignment.center,
+                  //    ),
+                  //  ],
+                  //  okWidget: ScanPage(),
+                  //)
+                  )
               : null,
           child: Text(
             text,
             style: isActive
-                ? theme.textTheme.headline1!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w700)
+                ? TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white)
                 : theme.textTheme.headline3!
                     .copyWith(fontSize: 14, fontWeight: FontWeight.w700),
           ),
@@ -151,7 +227,8 @@ class RentButton extends StatelessWidget {
               ? theme.elevatedButtonTheme.style
               : ButtonStyle(
                   side: theme.elevatedButtonTheme.style!.side,
-                  backgroundColor: MaterialStateProperty.all(theme.cardColor),
+                  backgroundColor:
+                      MaterialStateProperty.all(theme.disabledColor),
                   shape: theme.elevatedButtonTheme.style!.shape,
                   minimumSize: theme.elevatedButtonTheme.style!.minimumSize,
                 )),

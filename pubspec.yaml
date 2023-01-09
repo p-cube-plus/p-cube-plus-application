@@ -53,6 +53,7 @@ dependencies:
 
   # 안 쓰는데 남겨둠
   flutter_mobile_vision_2: ^0.1.13  # 텍스트, 바코드 인식 가능
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_launcher_icons: "^0.9.2"

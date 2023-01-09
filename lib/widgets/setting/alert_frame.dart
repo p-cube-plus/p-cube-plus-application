@@ -10,10 +10,14 @@ class AlertFrame extends StatelessWidget {
   final children;
   final messageType;
   final okWidget;
+  final okText;
+  final cancelText;
 
   AlertFrame(
       {required List<Widget> this.children,
       required MessageType this.messageType,
+      this.okText = "확인",
+      this.cancelText = "취소",
       Widget? this.okWidget});
 
   @override
@@ -25,12 +29,10 @@ class AlertFrame extends StatelessWidget {
       contentPadding: EdgeInsets.all(0),
       content: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: _getChildren(context),
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: _getChildren(context),
         ),
       ),
     );
@@ -46,7 +48,7 @@ class AlertFrame extends StatelessWidget {
         buttons.add(Expanded(
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('확인'),
+            child: Text(okText),
             style: Theme.of(context).elevatedButtonTheme.style,
           ),
         ));
@@ -55,7 +57,7 @@ class AlertFrame extends StatelessWidget {
         buttons.add(Expanded(
             child: OutlinedButton(
           onPressed: () => Navigator.pop(context),
-          child: Text("취소",
+          child: Text(cancelText!,
               style: Theme.of(context)
                   .textTheme
                   .headline3!
@@ -66,7 +68,7 @@ class AlertFrame extends StatelessWidget {
         buttons.add(Expanded(
           child: ElevatedButton(
             onPressed: () => _backFunc(context, okWidget),
-            child: Text('확인'),
+            child: Text(okText),
             style: Theme.of(context).elevatedButtonTheme.style,
           ),
         ));

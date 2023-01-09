@@ -25,7 +25,7 @@ class SettingNoticePage extends StatelessWidget {
 
   _getChildren(noticeProvider) {
     final result = <Widget>[
-      SwitchTile(title: '알림 활성화', type: SettingType.AllNotice),
+      SwitchTile(title: '알림 허용', type: SettingType.AllNotice),
     ];
     if (noticeProvider.isOn) {
       result.add(ListDivider(padding: 20));

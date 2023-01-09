@@ -28,7 +28,7 @@ class SettingPage extends StatelessWidget {
             title: '테마 설정',
             bottomTitle: '테마 설정',
             bottomWidgets: [
-              RadioBox(type: ThemeMode.system, text: "시스템 설정 사용"),
+              RadioBox(type: ThemeMode.system, text: "시스템 설정"),
               RadioBox(type: ThemeMode.light, text: "라이트 모드"),
               RadioBox(type: ThemeMode.dark, text: "다크 모드")
             ],

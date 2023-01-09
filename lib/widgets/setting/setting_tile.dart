@@ -21,11 +21,16 @@ abstract class SettingTile extends StatelessWidget {
   final background = Colors.white70;
   final title;
 
-  TextStyle getTextStyle(context) =>
-      Theme.of(context).textTheme.headlineSmall!.copyWith(
-            fontSize: defaultFontSize,
-            fontWeight: FontWeight.w400,
-          );
+  TextStyle getTextStyle(BuildContext context, {bool isTitle = false}) =>
+      isTitle
+          ? Theme.of(context).textTheme.headline2!.copyWith(
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+              )
+          : Theme.of(context).textTheme.headline1!.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              );
 
   SettingTile({required String this.title});
 }

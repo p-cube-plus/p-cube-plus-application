@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/theme_provider.dart';
+import 'package:p_cube_plus_application/providers/user_data_provider.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => NoticeProvider()),
       ChangeNotifierProvider(create: (_) => SettingProvider()),
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ChangeNotifierProvider(create: (_) => UserDataProvider()),
     ],
     child: MyApp(),
   ));

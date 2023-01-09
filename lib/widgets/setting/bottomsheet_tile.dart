@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/setting/setting_tile.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/theme_provider.dart';
 
 class BottomSheetTile extends SettingTile {
   final String bottomTitle;
@@ -13,6 +16,7 @@ class BottomSheetTile extends SettingTile {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
       child: InkWell(
         onTap: () => showModalBottomSheet(
@@ -31,7 +35,23 @@ class BottomSheetTile extends SettingTile {
                 title,
                 style: getTextStyle(context),
               ),
-              Icon(Icons.arrow_forward_ios, size: defaultFontSize),
+              Row(
+                children: [
+                  Text(
+                    (themeProvider.type == ThemeMode.system)
+                        ? "시스템 설정"
+                        : ((themeProvider.type == ThemeMode.light)
+                            ? "라이트 모드"
+                            : "다크 모드"),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3
+                        ?.copyWith(fontWeight: FontWeight.w400, fontSize: 11),
+                  ),
+                  SizedBox(width: 10.5),
+                  Icon(Icons.arrow_forward_ios, size: defaultFontSize),
+                ],
+              ),
             ],
           ),
         ),

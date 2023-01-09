@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:p_cube_plus_application/widgets/setting/setting_tile.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:provider/provider.dart';
@@ -36,24 +36,19 @@ class SwitchTile extends SettingTile {
               // Switch.adaptive
               // CupertinoSwitch
               // Switch
-              Container(
+              FlutterSwitch(
                 width: 32,
                 height: 16,
-                child: FittedBox(
-                  child: CupertinoSwitch(
-                    activeColor: Colors.red,
-                    //activeTrackColor: Colors.red.withOpacity(0.4),
-                    //inactiveThumbColor: Colors.blue,
-                    //inactiveTrackColor: Colors.blue.withOpacity(0.4),
-                    //splashRadius: 30, // 클릭 시 색 크기
-                    value: _value,
-                    onChanged: (value) {
-                      settingProvider.changeState(type);
-                      _value = value;
-                      settingProvider.toggle(_value);
-                    },
-                  ),
-                ),
+                activeColor: Color(0xFFDE2B13),
+                value: _value,
+                toggleSize: 12,
+                borderRadius: 50,
+                padding: 2,
+                onToggle: (value) {
+                  settingProvider.changeState(type);
+                  _value = value;
+                  settingProvider.toggle(_value);
+                },
               ),
             ],
           ),

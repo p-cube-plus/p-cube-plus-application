@@ -7,13 +7,11 @@ class MyThemes {
     dialogBackgroundColor: Color(0xFF3B3B3B),
     primaryColor: Colors.black,
     cardColor: Color(0xFF2E2E2E),
+    disabledColor: Color(0xFF2E2E2E),
     tabBarTheme: TabBarTheme(
       labelColor: Colors.white,
       labelStyle: TextStyle(
-        color: Colors.white,
-        fontSize: 16.0,
-        fontWeight: FontWeight.w700,
-      ),
+          color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w700),
       unselectedLabelStyle: TextStyle(
         color: Colors.white.withAlpha(127),
         fontSize: 16.0,
@@ -62,6 +60,7 @@ class MyThemes {
     dialogBackgroundColor: Color(0xFFE9E9E9),
     primaryColor: Colors.white,
     cardColor: Colors.white,
+    disabledColor: Color(0xFFE9E9E9),
     tabBarTheme: TabBarTheme(
       labelColor: const Color(0xFF2E2E2E),
       labelStyle: TextStyle(

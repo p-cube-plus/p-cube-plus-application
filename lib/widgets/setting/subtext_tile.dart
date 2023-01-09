@@ -10,7 +10,7 @@ class SubTextTile extends SettingTile {
       padding: super.allPadding,
       child: Text(
         title,
-        style: getTextStyle(context),
+        style: getTextStyle(context, isTitle: true),
       ),
     );
   }
