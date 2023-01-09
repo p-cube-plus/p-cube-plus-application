@@ -77,7 +77,7 @@ class ProjectProvider with ChangeNotifier {
         id: 0,
         type: 0,
         name: "PCube+",
-        isEnd: false,
+        isEnd: true,
         startDate: DateTime(2022, 05, 27),
         endDate: DateTime(2023, 01, 31),
         members: <Member>[
