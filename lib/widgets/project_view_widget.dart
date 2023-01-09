@@ -58,11 +58,7 @@ class ProjectView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: SizedBox(
-                          height: 24.0,
-                          width: 24.0,
-                          child: const DefaultProfile(),
-                        ),
+                        child: const DefaultProfile(size: 24.0),
                       ),
                     );
                   },
