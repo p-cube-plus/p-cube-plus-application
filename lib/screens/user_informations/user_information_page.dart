@@ -339,11 +339,7 @@ class ProfileView extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {},
-          child: SizedBox(
-            width: 72.0,
-            height: 72.0,
-            child: _hasProfile ? profile : const DefaultProfile(),
-          ),
+          child: _hasProfile ? profile : const DefaultProfile(size: 72),
         ),
         const SizedBox(width: 16.0),
         Column(

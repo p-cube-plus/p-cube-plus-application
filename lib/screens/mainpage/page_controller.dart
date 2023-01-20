@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/providers/rent_provider.dart';
+import 'package:p_cube_plus_application/screens/projects/projects_page.dart';
 import 'package:p_cube_plus_application/screens/user_informations/user_information_page.dart';
-import 'package:provider/provider.dart';
 import '../../utilities/contants.dart' as Constants;
 
-import '../project/project_page.dart';
-import '../rent/rent_page.dart';
 import 'home_page.dart';
 import 'notice_page.dart';
 
@@ -30,7 +27,7 @@ class _PageControllState extends State<PageControll> {
         },
         children: [
           HomePage(),
-          ProjectListPage(),
+          ProjectsPage(),
           NoticePage(),
           UserInformationPage(),
         ],
@@ -44,13 +41,62 @@ class _PageControllState extends State<PageControll> {
         backgroundColor:
             Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         items: [
-          _getBarItem(Constants.Icons.home, Constants.Icons.selected_home, "홈"),
-          _getBarItem(Constants.Icons.project, Constants.Icons.selected_project,
-              "프로젝트"),
-          _getBarItem(
-              Constants.Icons.bell, Constants.Icons.selected_bell, "알림"),
-          _getBarItem(
-              Constants.Icons.user, Constants.Icons.selected_user, "유저정보")
+          BottomNavigationBarItem(
+            icon: Constants.Icons.GetIcon(
+              Constants.Icons.home,
+              color: Theme.of(context)
+                  .bottomNavigationBarTheme
+                  .unselectedItemColor,
+            ),
+            activeIcon: Constants.Icons.GetIcon(
+              Constants.Icons.selected_home,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Constants.Icons.GetIcon(
+              Constants.Icons.projects,
+              color: Theme.of(context)
+                  .bottomNavigationBarTheme
+                  .unselectedItemColor,
+            ),
+            activeIcon: Constants.Icons.GetIcon(
+              Constants.Icons.selected_projects,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '프로젝트',
+          ),
+          BottomNavigationBarItem(
+            icon: Constants.Icons.GetIcon(
+              Constants.Icons.bell,
+              color: Theme.of(context)
+                  .bottomNavigationBarTheme
+                  .unselectedItemColor,
+            ),
+            activeIcon: Constants.Icons.GetIcon(
+              Constants.Icons.selected_bell,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '알림',
+          ),
+          BottomNavigationBarItem(
+            icon: Constants.Icons.GetIcon(
+              Constants.Icons.user,
+              color: Theme.of(context)
+                  .bottomNavigationBarTheme
+                  .unselectedItemColor,
+            ),
+            activeIcon: Constants.Icons.GetIcon(
+              Constants.Icons.selected_user,
+              color:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            ),
+            label: '설정',
+          ),
         ],
         onTap: (int index) {
           pageController.jumpToPage(index);

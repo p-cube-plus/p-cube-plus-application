@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import '../../models/notification_node.dart';
+import '../../widgets/tabbar/custom_tab_bar._widget.dart';
 
 Future<List<NotificationNode>> fetchNotification() async {
   final url = Uri.parse('http://p-cube-plus.com/user/notification');
@@ -70,7 +71,7 @@ class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
           ],
         ),
       ],
-      content: NoticeTabBar(
+      content: CustomTabBar(
         tabs: ["새 알림", "읽은 알림"],
         pages: [
           NoticeListView(
@@ -80,78 +81,6 @@ class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
         ],
       ),
       scrollable: false,
-    );
-  }
-}
-
-class NoticeTabBar extends StatefulWidget {
-  const NoticeTabBar({
-    Key? key,
-    required this.tabs,
-    required this.pages,
-  }) : super(key: key);
-  final List<String> tabs;
-  final List<Widget> pages;
-
-  @override
-  State<NoticeTabBar> createState() => _NoticeTabBarState();
-}
-
-class _NoticeTabBarState extends State<NoticeTabBar> {
-  int _pageIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(widget.tabs.length, (index) {
-                return GestureDetector(
-                  onTap: () => setState(() => _pageIndex = index),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 28.0,
-                        color: _pageIndex == index
-                            ? Theme.of(context).tabBarTheme.labelColor
-                            : Theme.of(context).backgroundColor,
-                        child: Column(
-                          children: [
-                            Container(
-                              color: Theme.of(context).backgroundColor,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 4, left: 4, right: 4, bottom: 2),
-                                child: Text(
-                                  widget.tabs[index],
-                                  style: _pageIndex == index
-                                      ? Theme.of(context).tabBarTheme.labelStyle
-                                      : Theme.of(context)
-                                          .tabBarTheme
-                                          .unselectedLabelStyle,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 20)
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
-          SizedBox(height: 16.0),
-          SingleChildScrollView(
-            child: widget.pages[_pageIndex],
-          ),
-        ],
-      ),
     );
   }
 }
