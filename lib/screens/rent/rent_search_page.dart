@@ -28,7 +28,7 @@ class _RentSearchPageState extends State<RentSearchPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RoundedBorder(
-                radius: 50.0,
+                radius: BorderRadius.circular(50),
                 color: Theme.of(context).inputDecorationTheme.fillColor,
                 hasShadow: false,
                 padding: EdgeInsets.only(left: 16.0),

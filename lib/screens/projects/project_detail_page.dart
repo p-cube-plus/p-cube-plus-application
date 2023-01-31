@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/screens/projects/project_chat_page.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import '../../models/member.dart';
 import '../../models/project.dart';
@@ -62,7 +63,7 @@ class ProjectDetailPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
                 RoundedBorder(
-                  radius: 10.0,
+                  radius: BorderRadius.circular(10),
                   width: double.infinity,
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -152,7 +153,13 @@ class ProjectDetailPage extends StatelessWidget {
                           child: _ProjectDetailSectionView(
                             title: "문의사항",
                             content: [],
-                            onTap: () {},
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ProjectChatPage(project: project),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -233,7 +240,7 @@ class _ProjectDetailMemeberView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: 10.0,
+      radius: BorderRadius.circular(10),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
       onTap: () {},
       child: Row(
@@ -298,7 +305,7 @@ class _TagBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: 10.0,
+      radius: BorderRadius.circular(10),
       color: color ?? Theme.of(context).dialogBackgroundColor,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(

@@ -15,7 +15,7 @@ class RoundedBorder extends StatelessWidget {
 
   final double? height;
   final double? width;
-  final double radius;
+  final BorderRadius radius;
   final Widget? child;
   final Color? color;
   final bool? hasShadow;
@@ -30,7 +30,7 @@ class RoundedBorder extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: color ?? Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(radius),
+          borderRadius: radius,
           boxShadow: (hasShadow ?? true)
               ? [
                   BoxShadow(
@@ -46,7 +46,7 @@ class RoundedBorder extends StatelessWidget {
           color: Colors.white.withAlpha(0),
           child: InkWell(
             customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius),
+              borderRadius: radius,
             ),
             onTap: onTap,
             child: Container(

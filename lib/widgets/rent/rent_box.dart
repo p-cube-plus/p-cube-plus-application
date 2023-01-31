@@ -27,7 +27,7 @@ class RentBox extends StatelessWidget {
             : Theme.of(context).dialogBackgroundColor,
         height: 48,
         width: double.infinity,
-        radius: 10,
+        radius: BorderRadius.circular(10),
         child: InkWell(
           onTap: () => parent!.setState(() {
             RentBox.groupNum = rent.id;

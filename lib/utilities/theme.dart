@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyThemes {
   static final darkTheme = ThemeData(
+    secondaryHeaderColor: Color(0xFF3AEFA3),
     backgroundColor: Color(0xFF242424),
     scaffoldBackgroundColor: Color(0xFF2E2E2E),
     dialogBackgroundColor: Color(0xFF3B3B3B),
@@ -44,6 +45,9 @@ class MyThemes {
         minimumSize: Size(0, 35),
       ),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: const Color(0xFF202020),
+    ),
     textTheme: TextTheme(
       headline1: TextStyle(color: const Color(0xFFFFFFFF)),
       headline2: TextStyle(color: Colors.white70),
@@ -57,6 +61,7 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
+    secondaryHeaderColor: Color(0xFF3AEFA3),
     backgroundColor: Color(0xFFFBFBFB),
     scaffoldBackgroundColor: Color(0xFFFFFFFF),
     dialogBackgroundColor: Color(0xFFE9E9E9),

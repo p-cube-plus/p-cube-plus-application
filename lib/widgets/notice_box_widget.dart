@@ -13,7 +13,7 @@ class NoticeBoxWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8),
       child: RoundedBorder(
-        radius: 10.0,
+        radius: BorderRadius.circular(10),
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

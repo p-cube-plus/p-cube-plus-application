@@ -19,7 +19,7 @@ class ProjectView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: 10.0,
+      radius: BorderRadius.circular(10),
       padding: const EdgeInsets.all(20.0),
       color: project.isEnd ? Theme.of(context).dialogBackgroundColor : null,
       hasShadow: true,

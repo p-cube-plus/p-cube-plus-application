@@ -72,7 +72,7 @@ class RentListView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: RoundedBorder(
-              radius: 10.0,
+              radius: BorderRadius.circular(10),
               //height: 56.0,
               hasShadow: true,
               onTap: () {},
@@ -216,7 +216,7 @@ class _HomeCalendarState extends State<HomeCalendar> {
           dayMarkColor: _dayMarkColor,
         ),
         RoundedBorder(
-          radius: 10.0,
+          radius: BorderRadius.circular(10),
           padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
           child: Calendar(
             headerArrowButtonSize: 40.0,

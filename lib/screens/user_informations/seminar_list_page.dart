@@ -63,7 +63,7 @@ class SeminarListView extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 8.0),
             child: RoundedBorder(
-              radius: 10.0,
+              radius: BorderRadius.circular(10),
               height: 48.0,
               hasShadow: true,
               onTap: () {},

@@ -77,7 +77,7 @@ class CautionListView extends StatelessWidget {
       _cautions.add(SizedBox(height: 8.0));
       _cautions.add(
         RoundedBorder(
-          radius: 10.0,
+          radius: BorderRadius.circular(10),
           padding: const EdgeInsets.all(16.0),
           onTap: () {},
           child: Row(

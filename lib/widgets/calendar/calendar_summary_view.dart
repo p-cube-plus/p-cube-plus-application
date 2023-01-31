@@ -68,7 +68,7 @@ class CalendarDailySummaryView extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16.0),
       child: RoundedBorder(
         width: double.infinity,
-        radius: 10,
+        radius: BorderRadius.circular(10),
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +130,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.only(bottom: 10.0),
           child: RoundedBorder(
-            radius: 10.0,
+            radius: BorderRadius.circular(10),
             height: 48.0,
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(

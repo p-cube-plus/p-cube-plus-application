@@ -23,7 +23,7 @@ class RentedBox extends StatelessWidget {
         color: Theme.of(context).cardColor,
         height: 56,
         width: double.infinity,
-        radius: 10,
+        radius: BorderRadius.circular(10),
         child: InkWell(
           onTap: () => parent!.setState(() {
             RentedBox.groupNum = rent.id;

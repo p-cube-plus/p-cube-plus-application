@@ -66,7 +66,7 @@ class SettingPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: RoundedBorder(
-            radius: 4,
+            radius: BorderRadius.circular(4),
             child: SizedBox(
               height: 30,
               child: TextField(
@@ -96,7 +96,7 @@ class SettingPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
           child: RoundedBorder(
-            radius: 4,
+            radius: BorderRadius.circular(4),
             child: SizedBox(
               height: 160,
               child: TextField(
