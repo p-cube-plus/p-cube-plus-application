@@ -73,7 +73,13 @@ class BottomSheetTile extends SettingTile {
                 )),
       ),
     ));
-    result.addAll(bottomWidgets);
+    result.add(Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: bottomWidgets,
+        ),
+      ),
+    ));
     return result;
   }
 }

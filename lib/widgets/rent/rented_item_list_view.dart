@@ -3,10 +3,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/widgets/rent/rent_button.dart';
+import 'package:p_cube_plus_application/widgets/rent/rented_box.dart';
 
 import '../../models/rent.dart';
-import 'button_page.dart';
-import 'rent_box.dart';
 
 Future<List<Rent>> _fetchRentList() async {
   final url = Uri.parse('http://p-cube-plus.com/rent/list');
@@ -22,22 +21,12 @@ Future<List<Rent>> _fetchRentList() async {
   }
 }
 
-class RentItenListView extends StatelessWidget {
+class RentedItemListView extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return ButtonPage(
-      names: ["전체", "대여 가능", "대여 중"],
-      contents: [RentItemView(), RentItemView(), RentItemView()],
-    );
-  }
+  State<RentedItemListView> createState() => RentedItemListViewState();
 }
 
-class RentItemView extends StatefulWidget {
-  @override
-  State<RentItemView> createState() => RentItemViewState();
-}
-
-class RentItemViewState extends State<RentItemView> {
+class RentedItemListViewState extends State<RentedItemListView> {
   late Future<List<Rent>> rentAPI;
 
   @override
@@ -59,7 +48,7 @@ class RentItemViewState extends State<RentItemView> {
                     padding: EdgeInsets.all(0),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return RentBox(rent: snapshot.data![index]);
+                      return RentedBox(rent: snapshot.data![index]);
                     }),
               ),
               Padding(
@@ -77,4 +66,3 @@ class RentItemViewState extends State<RentItemView> {
     );
   }
 }
-

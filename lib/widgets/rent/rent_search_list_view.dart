@@ -44,7 +44,6 @@ class RentSearchListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RentBox.groupNum = -1;
     return FutureBuilder<List<Rent>>(
       future: _fetchRentList(productName),
       builder: (context, snapshot) {
@@ -60,19 +59,16 @@ class RentSearchListView extends StatelessWidget {
             );
           return Column(
             children: List.generate(snapshot.data!.length, (index) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: GestureDetector(
-                  onDoubleTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RentDetailPage(
-                        rent: snapshot.data![index],
-                      ),
+              return GestureDetector(
+                onDoubleTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RentDetailPage(
+                      rent: snapshot.data![index],
                     ),
                   ),
-                  child: RentBox(rent: snapshot.data![index], isActive: true),
                 ),
+                child: RentBox(rent: snapshot.data![index]),
               );
             }),
           );

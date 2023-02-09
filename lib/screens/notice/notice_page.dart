@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/providers/notice_provider.dart';
 import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
 import 'package:p_cube_plus_application/widgets/notice_box_widget.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 import '../../models/notification_node.dart';
 import '../../widgets/tabbar/custom_tab_bar._widget.dart';
+import '../settings/setting_notice_page.dart';
 
 Future<List<NotificationNode>> fetchNotification() async {
   final url = Uri.parse('http://p-cube-plus.com/user/notification');
@@ -40,44 +39,35 @@ class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var product = Provider.of<NoticeProvider>(context);
-
     return DefaultPage(
       appBarTitle: "알림",
       appBarActions: [
-        PopupMenuButton(
-          tooltip: "정렬기준",
-          icon: Icon(
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SettingNoticePage(),
+              ),
+            );
+          },
+          child: Icon(
             Icons.settings,
             color: Theme.of(context).textTheme.headline2!.color,
           ),
-          elevation: 30,
-          onSelected: (SortType value) {
-            product.changeSortType(value);
-          },
-          itemBuilder: (context) => [
-            const PopupMenuItem(
-              child: Text(
-                "오름차순",
-              ),
-              value: SortType.Ascending,
-            ),
-            const PopupMenuItem(
-              child: Text(
-                "내림차순",
-              ),
-              value: SortType.Descending,
-            ),
-          ],
         ),
       ],
       content: CustomTabBar(
         tabs: ["새 알림", "읽은 알림"],
         pages: [
           NoticeListView(
+            isNew: true,
             notificationAPI: notificationAPI,
           ),
-          Container(),
+          NoticeListView(
+            isNew: false,
+            notificationAPI: notificationAPI,
+          ),
         ],
       ),
       scrollable: false,
@@ -88,10 +78,12 @@ class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
 class NoticeListView extends StatelessWidget {
   const NoticeListView({
     Key? key,
+    required this.isNew,
     required this.notificationAPI,
   }) : super(key: key);
 
   final Future<List<NotificationNode>>? notificationAPI;
+  final bool isNew;
 
   @override
   Widget build(BuildContext context) {
@@ -102,13 +94,12 @@ class NoticeListView extends StatelessWidget {
           return Column(
             children: List.generate(
               snapshot.data!.length,
-              (index) {
-                return NoticeBoxWidget(snapshot.data![index]);
-              },
+              (index) =>
+                  NoticeBoxWidget(isNew: isNew, box: snapshot.data![index]),
             ),
           );
         } else if (snapshot.hasError) {
-          return Text("정보를 불러올 수 없습니다.");
+          return Center(child: Text("정보를 불러올 수 없습니다."));
         }
 
         // 기본적으로 로딩 Spinner를 보여줍니다.

@@ -50,7 +50,7 @@ class UserInformationPage extends StatelessWidget {
             },
             child: Icon(
               Icons.settings,
-              color: Color(0xFF818181),
+              color: Theme.of(context).textTheme.headline2!.color,
             ),
           ),
         ],
@@ -69,7 +69,8 @@ class InformationList extends StatelessWidget {
   Widget build(BuildContext context) {
     var userProvider = context.watch<UserDataProvider>();
 
-    if (!userProvider.loaded) return CircularProgressIndicator(); // 로딩 중
+    if (!userProvider.loaded)
+      return Center(child: CircularProgressIndicator()); // 로딩 중
     if (!userProvider.fail) return Container(); // 정보 불러오기 실패
 
     List<Widget> widgets = <Widget>[

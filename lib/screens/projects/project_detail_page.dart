@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/screens/projects/project_inquiry_page.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import '../../models/member.dart';
 import '../../models/project.dart';
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/default_profile.dart';
+import '../../widgets/project/inquiry_tile.dart';
 
 class ProjectDetailPage extends StatelessWidget {
   const ProjectDetailPage({
@@ -151,7 +153,22 @@ class ProjectDetailPage extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 32.0),
                           child: _ProjectDetailSectionView(
                             title: "문의사항",
-                            content: [],
+                            content: [
+                              Column(
+                                children: List.generate(
+                                  3,
+                                  (index) => Padding(
+                                    padding: EdgeInsets.only(top: 8),
+                                    child: InquiryTile(
+                                        showChat: false,
+                                        content: ProjectInquiryPage(
+                                            projectName: projectName,
+                                            projectType: projectType,
+                                            inquiryCount: index)),
+                                  ),
+                                ),
+                              )
+                            ],
                             onTap: () {},
                           ),
                         ),

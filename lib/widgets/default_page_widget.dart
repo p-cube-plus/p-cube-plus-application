@@ -7,6 +7,7 @@ class DefaultPage extends StatelessWidget {
   const DefaultPage({
     Key? key,
     this.appBarTitle,
+    this.appBarSecondTitle,
     this.appBarActions,
     this.appBarHasPrevious,
     this.appBarPadding,
@@ -22,6 +23,7 @@ class DefaultPage extends StatelessWidget {
   }) : super(key: key);
 
   final String? appBarTitle;
+  final String? appBarSecondTitle;
   final List<Widget>? appBarActions;
   final bool? appBarHasPrevious;
   final EdgeInsetsGeometry? appBarPadding;
@@ -55,6 +57,7 @@ class DefaultPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: CustomAppBar(
                 title: appBarTitle,
+                secondTitle: appBarSecondTitle,
                 subtitle: subtitle,
                 actions: appBarActions,
                 hasPrevious: appBarHasPrevious,

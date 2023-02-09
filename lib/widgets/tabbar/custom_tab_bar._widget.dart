@@ -24,23 +24,24 @@ class _CustomTabBarState extends State<CustomTabBar> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(widget.tabs.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: GestureDetector(
-                    onTap: () => setState(() => _pageIndex = index),
+          Row(
+            children: List.generate(widget.tabs.length, (index) {
+              return Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: GestureDetector(
+                  onTap: () => setState(() => _pageIndex = index),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: index > 0 ? 16.0 : 0,
+                    ),
                     child: Container(
                       height: 28.0,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: index > 0 ? 16.0 : 0,
-                            ),
+                            padding: EdgeInsets.only(
+                                left: 4, right: 4, top: 4, bottom: 2),
                             child: Text(
                               widget.tabs[index],
                               style: _pageIndex == index
@@ -50,30 +51,27 @@ class _CustomTabBarState extends State<CustomTabBar> {
                                       .unselectedLabelStyle,
                             ),
                           ),
-                          SizedBox(height: 2.0),
                           if (_pageIndex == index)
-                            SizedBox(
-                              width: 28.0,
-                              height: 2.0,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .tabBarTheme
-                                        .labelColor),
+                            Expanded(
+                              child: Container(
+                                color: Theme.of(context).tabBarTheme.labelColor,
+                                child: Text(
+                                  widget.tabs[index] + " ",
+                                  style:
+                                      Theme.of(context).tabBarTheme.labelStyle,
+                                ),
                               ),
-                            ),
+                            )
                         ],
                       ),
                     ),
                   ),
-                );
-              }),
-            ),
+                ),
+              );
+            }),
           ),
           SizedBox(height: 12.0),
-          SingleChildScrollView(
-            child: widget.pages[_pageIndex],
-          ),
+          widget.pages[_pageIndex],
         ],
       ),
     );

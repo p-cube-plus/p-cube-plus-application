@@ -5,6 +5,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import '../utilities/contants.dart' as Constants;
 
 // 임시
 import '../providers/naver_login.dart';
@@ -149,7 +150,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       //body: Center(
       //  child: ElevatedButton(
       //    onPressed: () async {
@@ -174,33 +175,32 @@ class _MainLogin extends StatelessWidget {
   const _MainLogin();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Theme.of(context).backgroundColor,
-      child: SingleChildScrollView(
+    return Center(
+      child: Container(
+        color: Theme.of(context).backgroundColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _ShowLogo(),
-            _ShowButton(),
-            _ShowTextButton(),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                child: Constants.Icons.GetIcon(Constants.Icons.main_logo),
+                height: 168,
+                width: 138,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 78),
+              child: Column(
+                children: [
+                  _ShowButton(),
+                  _ShowTextButton(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _ShowLogo extends StatelessWidget {
-  const _ShowLogo();
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Image(image: AssetImage('assets/images/symbol.png')),
-      height: 500,
-      width: 500,
-      margin: EdgeInsets.only(bottom: 60),
     );
   }
 }
@@ -215,28 +215,38 @@ class _ShowButton extends StatelessWidget {
         return Container(
           child: ButtonBar(
             alignment: MainAxisAlignment.center,
-            //buttonMinWidth: MediaQuery.of(context).size.width * 0.35,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: ElevatedButton(
-                  child: Row(
-                    children: [
-                      const Text(
-                        "네이버 아이디로 로그인",
-                        style: const TextStyle(
-                          fontSize: 18,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50.5, vertical: 18),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 24),
+                          child: SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Constants.Icons.GetIcon(
+                                  Constants.Icons.naver)),
                         ),
+                        Text(
+                          "네이버 아이디로 로그인",
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
+                        backgroundColor:
+                            MaterialStateProperty.all(Color(0xFF1EC402)),
                       ),
-                    ],
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 25,
-                        horizontal: MediaQuery.of(context).size.width * 0.2),
-                    primary: Color(0xff2DB400), // background
-                    onPrimary: Colors.white, // foreground
-                  ),
                   onPressed: () {
                     _goNaverPage(context);
                   },
@@ -259,23 +269,18 @@ class _ShowTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-        style: TextButton.styleFrom(
-          splashFactory: NoSplash.splashFactory,
-          //primary: Color.fromARGB(153, 75, 75, 75),
-          textStyle: const TextStyle(
-            fontSize: 14,
-          ),
-        ),
-        child: const Text('동아리 가입 신청서 작성하기'),
-        onPressed: () {
-          _goApplicationPage(context);
-        },
+    return TextButton(
+      style: TextButton.styleFrom(
+        splashFactory: NoSplash.splashFactory,
       ),
-      margin: EdgeInsets.only(top: 5),
-      height: 40,
-      width: MediaQuery.of(context).size.width * 0.5,
+      child: Text('동아리 가입 신청서 작성하기',
+          style: Theme.of(context)
+              .textTheme
+              .headline2!
+              .copyWith(fontSize: 14.0, fontWeight: FontWeight.w500)),
+      onPressed: () {
+        _goApplicationPage(context);
+      },
     );
   }
 

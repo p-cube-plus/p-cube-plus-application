@@ -10,32 +10,46 @@ class LogoutPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('로그아웃 되었습니다.', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 15),
-            Text('다시 로그인 하시려면',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontSize: 12, fontWeight: FontWeight.w400)),
-            Text('홈으로 돌아가기를 눌러주세요.',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontSize: 12, fontWeight: FontWeight.w400)),
-            SizedBox(height: 200),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => LoginPage(),
-                  ),
-                );
-              },
-              child: Text('홈으로 돌아가기'),
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(400, 50),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0))),
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: Text('로그아웃 되었습니다.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1!
+                              .copyWith(
+                                  fontSize: 20, fontWeight: FontWeight.w700)),
+                    ),
+                    Text('다시 로그인 하시려면',
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                            fontSize: 12, fontWeight: FontWeight.w400)),
+                    Text('홈으로 돌아가기를 눌러주세요.',
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                            fontSize: 12, fontWeight: FontWeight.w400)),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 48, horizontal: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (context) => LoginPage(),
+                    ),
+                  );
+                },
+                child: Text('홈으로 돌아가기'),
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size(400, 50),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+              ),
             ),
           ],
         ),

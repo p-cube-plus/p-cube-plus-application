@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import 'package:p_cube_plus_application/widgets/setting/bottomsheet_tile.dart';
@@ -50,82 +51,92 @@ class SettingPage extends StatelessWidget {
   }
 
   _getFeedback(context) {
-    return AlertFrame(
-      messageType: MessageType.OKCancel,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8, top: 16, bottom: 8),
-          child: Text(
-            '피드백 보내기',
-            style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RoundedBorder(
-            radius: 4,
-            child: SizedBox(
-              height: 30,
-              child: TextField(
+    return Center(
+      child: SingleChildScrollView(
+        child: AlertFrame(
+          messageType: MessageType.OKCancel,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8, top: 16, bottom: 8),
+              child: Text(
+                '피드백 보내기',
                 style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
                     ),
-                textAlign: TextAlign.start,
-                cursorColor: Theme.of(context).textTheme.headline1!.color,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Theme.of(context).scaffoldBackgroundColor,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelText: '이름을 입력하세요',
-                  labelStyle: Theme.of(context).textTheme.headline3!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10,
-                      ),
-                  border: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 0, style: BorderStyle.none)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RoundedBorder(
+                radius: 4,
+                child: SizedBox(
+                  height: 30,
+                  child: TextField(
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10,
+                        ),
+                    maxLength: 20,
+                    cursorColor: Theme.of(context).textTheme.headline1!.color,
+                    decoration: InputDecoration(
+                      filled: true,
+                      counterText: "", // 글자수 제한 보이기 삭제
+                      fillColor: Theme.of(context).scaffoldBackgroundColor,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      labelText: '이름을 입력하세요',
+                      labelStyle:
+                          Theme.of(context).textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 10,
+                              ),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 0, style: BorderStyle.none)),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-          child: RoundedBorder(
-            radius: 4,
-            child: SizedBox(
-              height: 160,
-              child: TextField(
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+              child: RoundedBorder(
+                radius: 4,
+                child: SizedBox(
+                  height: 160,
+                  child: TextField(
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10,
+                        ),
+                    maxLines: 100,
+                    maxLength: 500,
+                    cursorColor: Theme.of(context).textTheme.headline1!.color,
+                    decoration: InputDecoration(
+                      filled: true,
+                      counterText: "",
+                      fillColor: Theme.of(context).scaffoldBackgroundColor,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      isDense: true,
+                      alignLabelWithHint: true, // left top 정렬
+                      labelText: '내용을 입력하세요',
+                      labelStyle:
+                          Theme.of(context).textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 10,
+                              ),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 0, style: BorderStyle.none)),
                     ),
-                maxLines: 100,
-                cursorColor: Theme.of(context).textTheme.headline1!.color,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Theme.of(context).scaffoldBackgroundColor,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  alignLabelWithHint: true,
-                  labelText: '내용을 입력하세요',
-                  labelStyle: Theme.of(context).textTheme.headline3!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10,
-                      ),
-                  border: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 0, style: BorderStyle.none)),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
+          okWidget: _getOKFeedback(context),
         ),
-      ],
-      okWidget: _getOKFeedback(context),
+      ),
     );
   }
 
@@ -279,27 +290,24 @@ class RadioBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
-        onTap: () => themeProvider.changeType(type),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(text,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(fontWeight: FontWeight.w400, fontSize: 12)),
-              Radio(
-                  activeColor: const Color(0xFFDE2B13),
-                  value: type,
-                  groupValue: themeProvider.type,
-                  onChanged: (value) => themeProvider.changeType(type))
-            ],
-          ),
+    return InkWell(
+      onTap: () => themeProvider.changeType(type),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(text,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline1!
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 12)),
+            Radio(
+                activeColor: const Color(0xFFDE2B13),
+                value: type,
+                groupValue: themeProvider.type,
+                onChanged: (value) => themeProvider.changeType(type))
+          ],
         ),
       ),
     );

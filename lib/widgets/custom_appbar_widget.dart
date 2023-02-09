@@ -4,6 +4,7 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     Key? key,
     this.title,
+    this.secondTitle,
     this.subtitle,
     this.height,
     this.actions,
@@ -16,6 +17,7 @@ class CustomAppBar extends StatelessWidget {
 
   final EdgeInsetsGeometry? padding;
   final String? title;
+  final String? secondTitle;
   final String? subtitle;
   final double? height;
   final List<Widget>? actions;
@@ -33,15 +35,33 @@ class CustomAppBar extends StatelessWidget {
         0,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              title!,
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w700,
-                    color: appbarTitleColor,
-                  ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title!,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.w700,
+                        color: appbarTitleColor,
+                      ),
+                ),
+                if (secondTitle != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Text(
+                      secondTitle!,
+                      style:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w700,
+                                color: appbarTitleColor,
+                              ),
+                    ),
+                  )
+              ],
             ),
             Expanded(
               child: Row(

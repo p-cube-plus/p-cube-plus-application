@@ -7,7 +7,7 @@ class MyThemes {
     dialogBackgroundColor: Color(0xFF3B3B3B),
     primaryColor: Colors.black,
     cardColor: Color(0xFF2E2E2E),
-    disabledColor: Color(0xFF2E2E2E),
+    disabledColor: Color(0xFF1E1E1E),
     tabBarTheme: TabBarTheme(
       labelColor: Colors.white,
       labelStyle: TextStyle(
@@ -27,7 +27,8 @@ class MyThemes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+        textStyle: TextStyle(
+            fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
         primary: const Color(0xFFDE2B13),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         minimumSize: Size(0, 35),

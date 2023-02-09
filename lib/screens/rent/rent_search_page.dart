@@ -3,8 +3,7 @@ import 'package:p_cube_plus_application/widgets/rent/rent_search_list_view.dart'
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 
 import '../../widgets/default_page_widget.dart';
-import '../../widgets/rent/rent_item_list_view.dart';
-import 'rent_detail_page.dart';
+import '../../widgets/rent/rent_button.dart';
 
 class RentSearchPage extends StatefulWidget {
   @override
@@ -85,7 +84,7 @@ class _RentSearchPageState extends State<RentSearchPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 24.0),
-            child: RentButton(text: "대여하기", isActive: true),
+            child: RentButton(text: "대여하기", isActive: true, isRent: true),
           ),
         ],
       ),

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../models/project.dart';
 import '../../widgets/default_page_widget.dart';
 import '../../widgets/tabbar/custom_tab_bar._widget.dart';
-import '../mainpage/notice_page.dart';
+import '../notice/notice_page.dart';
 
 class ProjectsPage extends StatelessWidget {
   @override
