@@ -17,7 +17,7 @@ class InquiryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-        radius: 10,
+        radius: BorderRadius.circular(10.0),
         onTap: () => content != null
             ? Navigator.push(
                 context,
@@ -102,7 +102,7 @@ class InquiryTile extends StatelessWidget {
                             left: 16,
                             bottom: 16,
                             child: RoundedBorder(
-                              radius: 50,
+                              radius: BorderRadius.circular(50.0),
                               color: Color(0xFFDE2B13),
                               height: 16,
                               width: 16,

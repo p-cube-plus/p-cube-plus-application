@@ -85,7 +85,7 @@ class RentedDetailTile extends StatelessWidget {
           child: RoundedBorder(
             color: Theme.of(context).cardColor,
             width: double.infinity,
-            radius: 10,
+            radius: BorderRadius.circular(10.0),
             hasShadow: true,
             child: InkWell(
                 borderRadius: BorderRadius.circular(10),

@@ -28,7 +28,7 @@ class ProjectInquiryPage extends StatelessWidget {
         appBarActions: [
           GestureDetector(
               child: RoundedBorder(
-                radius: 20,
+                radius: BorderRadius.circular(20.0),
                 height: 31,
                 color: Color(0xFFDE2B13),
                 padding:

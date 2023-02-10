@@ -80,7 +80,7 @@ class MonthFee extends StatelessWidget {
           width: double.infinity,
           onTap: () {},
           color: Theme.of(context).scaffoldBackgroundColor,
-          radius: 10,
+          radius: BorderRadius.circular(10.0),
           child: Padding(
             padding: EdgeInsets.only(top: 32, bottom: 24, left: 24, right: 24),
             child: Column(
@@ -200,7 +200,7 @@ class _YearCalenderState extends State<YearCalender> {
       }),
       child: RoundedBorder(
           color: Theme.of(context).scaffoldBackgroundColor,
-          radius: 10,
+          radius: BorderRadius.circular(10.0),
           child: Padding(
             padding: EdgeInsets.only(bottom: 32, top: 20),
             child: Column(
@@ -281,7 +281,7 @@ class FeeInfo extends StatelessWidget {
               builder: (context) => FeeDetailPage(),
             ),
           ),
-          radius: 10,
+          radius: BorderRadius.circular(10.0),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 17, vertical: 20),
             child: Row(

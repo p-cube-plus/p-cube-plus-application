@@ -41,7 +41,7 @@ class AccountInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: 10,
+      radius: BorderRadius.circular(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -114,7 +114,7 @@ class DuesDetail extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(16),
                 child: RoundedBorder(
-                    radius: 10,
+                    radius: BorderRadius.circular(10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
