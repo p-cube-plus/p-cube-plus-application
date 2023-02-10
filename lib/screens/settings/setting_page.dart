@@ -51,92 +51,67 @@ class SettingPage extends StatelessWidget {
   }
 
   _getFeedback(context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: AlertFrame(
-          messageType: MessageType.OKCancel,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8, top: 16, bottom: 8),
-              child: Text(
-                '피드백 보내기',
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RoundedBorder(
-                radius: 4,
-                child: SizedBox(
-                  height: 30,
-                  child: TextField(
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10,
-                        ),
-                    maxLength: 20,
-                    cursorColor: Theme.of(context).textTheme.headline1!.color,
-                    decoration: InputDecoration(
-                      filled: true,
-                      counterText: "", // 글자수 제한 보이기 삭제
-                      fillColor: Theme.of(context).scaffoldBackgroundColor,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: '이름을 입력하세요',
-                      labelStyle:
-                          Theme.of(context).textTheme.headline3!.copyWith(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10,
-                              ),
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 0, style: BorderStyle.none)),
-                    ),
-                  ),
+    return AlertFrame(
+      messageType: MessageType.OKCancel,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8, top: 16, bottom: 8),
+          child: Text(
+            '피드백 보내기',
+            style: Theme.of(context).textTheme.headline1!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-              child: RoundedBorder(
-                radius: 4,
-                child: SizedBox(
-                  height: 160,
-                  child: TextField(
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10,
-                        ),
-                    maxLines: 100,
-                    maxLength: 500,
-                    cursorColor: Theme.of(context).textTheme.headline1!.color,
-                    decoration: InputDecoration(
-                      filled: true,
-                      counterText: "",
-                      fillColor: Theme.of(context).scaffoldBackgroundColor,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      isDense: true,
-                      alignLabelWithHint: true, // left top 정렬
-                      labelText: '내용을 입력하세요',
-                      labelStyle:
-                          Theme.of(context).textTheme.headline3!.copyWith(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10,
-                              ),
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 0, style: BorderStyle.none)),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-          okWidget: _getOKFeedback(context),
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RoundedBorder(
+            radius: BorderRadius.circular(4),
+            child: SizedBox(
+              height: 30,
+              child: TextField(
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                    ),
+                maxLength: 20,
+                cursorColor: Theme.of(context).textTheme.headline1!.color,
+                decoration: InputDecoration(
+                  filled: true,
+                  counterText: "", // 글자수 제한 보이기 삭제
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  labelText: '이름을 입력하세요',
+                  labelStyle: Theme.of(context).textTheme.headline3!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10,
+                      ),
+                  border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+          child: RoundedBorder(
+            radius: BorderRadius.circular(4),
+            child: SizedBox(
+              height: 160,
+              child: TextField(
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                    ),
+              ),
+            ),
+          ),
+        ),
+      ],
+      okWidget: _getOKFeedback(context),
     );
   }
 

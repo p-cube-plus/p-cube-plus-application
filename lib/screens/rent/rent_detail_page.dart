@@ -154,7 +154,7 @@ class _SummaryText extends StatelessWidget {
           ),
         ),
         RoundedBorder(
-          radius: 10,
+          radius: BorderRadius.circular(10),
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

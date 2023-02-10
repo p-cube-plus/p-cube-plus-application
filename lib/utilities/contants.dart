@@ -10,6 +10,7 @@ class Icons {
   static String home = "assets/images/icons/home.svg";
   static String bell = "assets/images/icons/bell.svg";
   static String user = "assets/images/icons/user.svg";
+  static String send = "assets/images/icons/send.svg";
 
   static String selected_projects = "assets/images/icons/projects_selected.svg";
   static String selected_fee = "assets/images/icons/fee_selected.svg";

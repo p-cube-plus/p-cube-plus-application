@@ -102,7 +102,7 @@ class InformationList extends StatelessWidget {
             child: Stack(
               children: [
                 RoundedBorder(
-                  radius: 8.0,
+                  radius: BorderRadius.circular(8),
                   height: 16.0,
                   color: const Color(0xFFF9D4CF),
                 ),
@@ -113,7 +113,7 @@ class InformationList extends StatelessWidget {
                           (userProvider.user!.promotionProgress.progress * 100)
                               .toInt(),
                       child: RoundedBorder(
-                        radius: 8.0,
+                        radius: BorderRadius.circular(8),
                         height: 16.0,
                         color: Color(0xCCDE2B13),
                       ),
@@ -153,7 +153,7 @@ class InformationList extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: RoundedBorder(
-                radius: 10.0,
+                radius: BorderRadius.circular(10),
                 height: 48.0,
                 hasShadow: true,
                 onTap: () {},
@@ -210,7 +210,7 @@ class InformationList extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: RoundedBorder(
-                  radius: 10.0,
+                  radius: BorderRadius.circular(10),
                   height: 48.0,
                   hasShadow: true,
                   onTap: () {},
@@ -268,7 +268,7 @@ class InformationList extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: RoundedBorder(
-                  radius: 10.0,
+                  radius: BorderRadius.circular(10),
                   height: 48.0,
                   hasShadow: true,
                   onTap: () {},
