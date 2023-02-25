@@ -275,7 +275,7 @@ class DuesDetail extends StatelessWidget {
                   ),
                 ),
                 RoundedBorder(
-                    radius: 10.0,
+                    radius: BorderRadius.all(Radius.circular(10)),
                     child: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 16, vertical: 12),
