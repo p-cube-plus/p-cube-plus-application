@@ -45,7 +45,7 @@ class PromotionProgressPage extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     children: [
                       RoundedBorder(
-                        radius: 8.0,
+                        radius: BorderRadius.circular(8.0),
                         height: 16.0,
                         color: const Color(0xFFF9D4CF),
                       ),
@@ -57,7 +57,7 @@ class PromotionProgressPage extends StatelessWidget {
                                         100)
                                     .toInt(),
                             child: RoundedBorder(
-                              radius: 8.0,
+                              radius: BorderRadius.circular(8.0),
                               height: 16.0,
                               color: Color(0xCCDE2B13),
                             ),
@@ -111,7 +111,7 @@ class PromotionRequirement extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 8.0),
       child: RoundedBorder(
         onTap: () {},
-        radius: 10.0,
+        radius: BorderRadius.circular(10.0),
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
