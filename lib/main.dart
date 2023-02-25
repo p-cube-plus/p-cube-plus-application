@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/providers/fee_provider.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/theme_provider.dart';
 import 'package:p_cube_plus_application/providers/user_data_provider.dart';
@@ -22,6 +23,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NoticeProvider()),
+      ChangeNotifierProvider(create: (_) => FeeProvider()),
       ChangeNotifierProvider(create: (_) => SettingProvider()),
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ChangeNotifierProvider(create: (_) => UserDataProvider()),

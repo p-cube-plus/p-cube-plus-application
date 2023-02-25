@@ -20,11 +20,18 @@ class Icons {
 
   static String left_arrow = "assets/images/icons/arrow_left.svg";
   static String right_arrow = "assets/images/icons/arrow_right.svg";
+  static String copy = "assets/images/icons/copy.svg";
+  static String check = "assets/images/icons/check.svg";
 
   static String profile = "assets/images/icons/profile.svg";
   static String general = "assets/images/icons/general.svg";
   static String pencil = "assets/images/icons/pencil.svg";
+  static String pcube_logo = "assets/images/icons/pcube_logo.svg";
 
   static Widget GetIcon(String icon, {Color? color}) =>
       SvgPicture.asset(icon, color: color);
 }
+/*
+import '../../utilities/contants.dart' as Constants;
+Constants.Icons.GetIcon(Constants.Icons.main_logo),
+*/

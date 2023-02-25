@@ -62,7 +62,8 @@ class DefaultPage extends StatelessWidget {
                 actions: appBarActions,
                 hasPrevious: appBarHasPrevious,
                 previousButtonColor: previousButtonColor,
-                appbarTitleColor: appBarTitleColor,
+                appbarTitleColor: appBarTitleColor ??
+                    Theme.of(context).textTheme.headline1!.color,
                 subtitleColor: subtitleColor,
                 padding: appBarPadding,
               ),

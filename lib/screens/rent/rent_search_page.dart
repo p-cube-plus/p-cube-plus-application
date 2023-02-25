@@ -18,7 +18,6 @@ class _RentSearchPageState extends State<RentSearchPage> {
     return DefaultPage(
       appBarTitle: "검색",
       appBarHasPrevious: true,
-      scrollable: false,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

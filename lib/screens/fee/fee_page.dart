@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
 import '../../widgets/default_page_widget.dart';
+import '../../widgets/list_divider_widget.dart';
 import 'fee_detail_page.dart';
+import '../../utilities/contants.dart' as Constants;
 
 enum FeeStateType { None, Done, Late, Due, Wait }
 
@@ -32,13 +35,15 @@ class FeePage extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.only(bottom: 40),
                 child: MonthFee(
-                  type: FeeStateType.Done,
+                  type: FeeStateType.Due,
                   startDay: DateTime(2022, 10, 6),
                   endDay: DateTime(2022, 10, 13),
                   charge: 5000,
                 )),
             Padding(padding: EdgeInsets.only(bottom: 40), child: AnnualFee()),
-            FeeInfo(sum: 1200340),
+            Padding(
+                padding: EdgeInsets.only(bottom: 32),
+                child: FeeInfo(sum: 1200340)),
           ],
         ),
       ),
@@ -91,7 +96,8 @@ class MonthFee extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 16),
                     child: _getImage(type, 72.0)),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 32),
+                  padding: EdgeInsets.only(
+                      bottom: type != FeeStateType.Wait ? 32.0 : 8.0),
                   child: Text(_getText(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
@@ -117,6 +123,56 @@ class MonthFee extends StatelessWidget {
                     children: [
                       Text("납부 금액"),
                       Text(NumberFormat('###,###,###원').format(charge!))
+                    ],
+                  ),
+                if (type == FeeStateType.Due)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListDivider(padding: 0),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 3),
+                        child: Text("회비계좌",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3!
+                                .copyWith(
+                                    fontSize: 11, fontWeight: FontWeight.w400)),
+                      ),
+                      GestureDetector(
+                        onTap: () => Clipboard.setData(
+                            ClipboardData(text: "카카오뱅크 1234-5678-90")),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: Text(
+                                "카카오뱅크",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline5!
+                                    .copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: Text(
+                                "1234-5678-90 정성희",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Constants.Icons.GetIcon(Constants.Icons.copy)
+                          ],
+                        ),
+                      )
                     ],
                   )
               ],
