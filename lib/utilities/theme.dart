@@ -48,6 +48,7 @@ class MyThemes {
       headline2: TextStyle(color: Colors.white70),
       headline3: TextStyle(color: Colors.white54),
       headline4: TextStyle(color: const Color(0xFF000000)),
+      headline5: TextStyle(color: Colors.white60),
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: const Color(0xFFDE2B13),
@@ -107,7 +108,9 @@ class MyThemes {
       headline2: TextStyle(color: const Color(0xFF818181)),
       headline3: TextStyle(color: const Color(0xFFABABAB)),
       headline4: TextStyle(color: const Color(0xFFFFFFFF)),
+      headline5: TextStyle(color: const Color(0xFF575757)),
     ),
+
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: const Color(0xFFDE2B13),
     ),

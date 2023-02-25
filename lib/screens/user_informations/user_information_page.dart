@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
+import 'package:p_cube_plus_application/screens/user_informations/promotion_progress_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/content_summary_view.dart';
@@ -81,7 +82,12 @@ class InformationList extends StatelessWidget {
     widgets.add(
       ContentSummaryView(
         title: "승급 진행률",
-        onTap: () {},
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  PromotionProgressPage(userProvider: userProvider)),
+        ),
         descript: Align(
           alignment: Alignment.centerLeft,
           child: Padding(

@@ -12,7 +12,6 @@ class RentPage extends StatelessWidget {
     return DefaultPage(
       appBarTitle: "물품",
       appBarHasPrevious: true,
-      scrollable: false,
       appBarActions: [
         //체크
         GestureDetector(
