@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
 import 'package:p_cube_plus_application/widgets/content_summary_view.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
 import '../rent/scan_page.dart';
@@ -13,32 +13,24 @@ import '../../providers/rent_provider.dart';
 import '../../utilities/contants.dart' as Constants;
 import '../../widgets/calendar/calendar.dart';
 import '../../widgets/calendar/calendar_summary_view.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme currentTheme = Theme.of(context).textTheme;
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<RentProvider>(create: (_) => RentProvider()),
-        ChangeNotifierProvider<ScheduleProvider>(
-          create: (_) => ScheduleProvider(),
-        ),
-      ],
-      child: DefaultPage(
-        appBarTitle: "홈",
-        content: Column(
-          children: [
-            HomeCalendar(
-              currentTheme: currentTheme,
-            ),
-            RentListView(),
-          ],
-        ),
-        floatingActionButton: FloatingBarcodeButton(),
+    return DefaultPage(
+      title: "홈",
+      content: Column(
+        children: [
+          HomeCalendar(
+            currentTheme: currentTheme,
+          ),
+          RentListView(),
+        ],
       ),
+      floatingActionButton: FloatingBarcodeButton(),
     );
   }
 }
@@ -72,7 +64,6 @@ class RentListView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: RoundedBorder(
-              radius: BorderRadius.circular(10),
               //height: 56.0,
               hasShadow: true,
               onTap: () {},
@@ -216,7 +207,6 @@ class _HomeCalendarState extends State<HomeCalendar> {
           dayMarkColor: _dayMarkColor,
         ),
         RoundedBorder(
-          radius: BorderRadius.circular(10),
           padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
           child: Calendar(
             headerArrowButtonSize: 40.0,

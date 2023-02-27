@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
 import '../../widgets/default_profile.dart';
 import '../../models/project.dart';
 import '../../providers/user_data_provider.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/project_view_widget.dart';
-import '../../widgets/rounded_border_widget.dart';
+import '../../widgets/default/rounded_border_widget.dart';
 
 class ProjectListPage extends StatelessWidget {
   const ProjectListPage({
@@ -25,8 +26,8 @@ class ProjectListPage extends StatelessWidget {
     );
 
     return DefaultPage(
-      appBarTitle: "참여 프로젝트",
-      appBarHasPrevious: true,
+      title: "참여 프로젝트",
+      appbar: DefaultAppBar(),
       content: (userProvider.user!.projects.length == 0)
           ? Padding(
               padding: const EdgeInsets.only(top: 10.0),

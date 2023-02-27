@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/default_profile.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 import '../../models/project.dart';
 import '../../utilities/contants.dart' as Constants;
 
@@ -263,7 +263,6 @@ class _ProjectChatAppBar extends StatelessWidget {
                   horizontal: 8.0,
                   vertical: 2.0,
                 ),
-                radius: BorderRadius.circular(10),
                 color: Theme.of(context).secondaryHeaderColor,
                 child: Text(
                   "문의 가능", // debug
@@ -330,12 +329,6 @@ class _ChatBubble extends StatelessWidget {
     return Flexible(
       child: RoundedBorder(
         color: mine ? Color(0x99DE2B13) : null,
-        radius: BorderRadius.only(
-          topLeft: Radius.circular(mine ? 10.0 : 0),
-          topRight: Radius.circular(mine ? 0 : 10.0),
-          bottomLeft: Radius.circular(10.0),
-          bottomRight: Radius.circular(10.0),
-        ),
         padding: EdgeInsets.all(16.0),
         child: Text(
           content,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:p_cube_plus_application/screens/main_page.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -9,175 +10,173 @@ import '../utilities/contants.dart' as Constants;
 
 // 임시
 import '../providers/naver_login.dart';
-import 'mainpage/page_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+// class LoginPage extends StatefulWidget {
+//   const LoginPage({Key? key}) : super(key: key);
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+//   @override
+//   State<LoginPage> createState() => _LoginPageState();
+// }
 
-class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+// class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
+//   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+//       FlutterLocalNotificationsPlugin();
 
-// Init Badge
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _init();
-  }
+// // Init Badge
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addObserver(this);
+//     _init();
+//   }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     WidgetsBinding.instance.removeObserver(this);
+//     super.dispose();
+//   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      FlutterAppBadger.removeBadge();
-    }
-  }
+//   @override
+//   void didChangeAppLifecycleState(AppLifecycleState state) {
+//     if (state == AppLifecycleState.resumed) {
+//       FlutterAppBadger.removeBadge();
+//     }
+//   }
 
-// Init flutter_local_notification
-  Future<void> _init() async {
-    await _configureLocalTimeZone();
-    await _initializeNotification();
-  }
+// // Init flutter_local_notification
+//   Future<void> _init() async {
+//     await _configureLocalTimeZone();
+//     await _initializeNotification();
+//   }
 
-  // 현재 시간 등록
-  Future<void> _configureLocalTimeZone() async {
-    tz.initializeTimeZones();
-    final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+//   // 현재 시간 등록
+//   Future<void> _configureLocalTimeZone() async {
+//     tz.initializeTimeZones();
+//     final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
 
-    try {
-      print(timeZoneName);
-      tz.setLocalLocation(tz.getLocation(timeZoneName!));
-    } catch (e) {
-      const String fallback = 'Asia/Seoul';
-      tz.setLocalLocation(tz.getLocation(fallback));
-      print("이거 오류야!!");
-    }
-  }
+//     try {
+//       print(timeZoneName);
+//       tz.setLocalLocation(tz.getLocation(timeZoneName!));
+//     } catch (e) {
+//       const String fallback = 'Asia/Seoul';
+//       tz.setLocalLocation(tz.getLocation(fallback));
+//       print("이거 오류야!!");
+//     }
+//   }
 
-  Future<void> _initializeNotification() async {
-    const IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
-    );
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_notification');
+//   Future<void> _initializeNotification() async {
+//     const IOSInitializationSettings initializationSettingsIOS =
+//         IOSInitializationSettings(
+//       requestAlertPermission: false,
+//       requestBadgePermission: false,
+//       requestSoundPermission: false,
+//     );
+//     const AndroidInitializationSettings initializationSettingsAndroid =
+//         AndroidInitializationSettings('ic_notification');
 
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
-    );
-    await _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: _onSelectNotification);
-  }
+//     const InitializationSettings initializationSettings =
+//         InitializationSettings(
+//       android: initializationSettingsAndroid,
+//       iOS: initializationSettingsIOS,
+//     );
+//     await _flutterLocalNotificationsPlugin.initialize(initializationSettings,
+//         onSelectNotification: _onSelectNotification);
+//   }
 
-  //알림을 눌렀을때 어떤 행동을 할지 정해주는 부분
-  Future _onSelectNotification(String? payload) async {
-    print("payload : $payload");
-  }
+//   //알림을 눌렀을때 어떤 행동을 할지 정해주는 부분
+//   Future _onSelectNotification(String? payload) async {
+//     print("payload : $payload");
+//   }
 
-// 메시지 등록 취소
-  Future<void> cancelNotification() async {
-    await _flutterLocalNotificationsPlugin.cancelAll();
-  }
+// // 메시지 등록 취소
+//   Future<void> cancelNotification() async {
+//     await _flutterLocalNotificationsPlugin.cancelAll();
+//   }
 
-// 알림 권한 요청
-  Future<void> requestPermissions() async {
-    await _flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
-  }
+// // 알림 권한 요청
+//   Future<void> requestPermissions() async {
+//     await _flutterLocalNotificationsPlugin
+//         .resolvePlatformSpecificImplementation<
+//             IOSFlutterLocalNotificationsPlugin>()
+//         ?.requestPermissions(
+//           alert: true,
+//           badge: true,
+//           sound: true,
+//         );
+//   }
 
-// 메시지 등록
-  Future<void> registerMessage({
-    required int hour,
-    required int minutes,
-    required message,
-  }) async {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      hour,
-      minutes,
-    );
+// // 메시지 등록
+//   Future<void> registerMessage({
+//     required int hour,
+//     required int minutes,
+//     required message,
+//   }) async {
+//     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+//     tz.TZDateTime scheduledDate = tz.TZDateTime(
+//       tz.local,
+//       now.year,
+//       now.month,
+//       now.day,
+//       hour,
+//       minutes,
+//     );
 
-    await _flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'flutter_local_notifications',
-      message,
-      scheduledDate,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          'channel id',
-          'channel name',
-          importance: Importance.max,
-          priority: Priority.high,
-          ongoing: true,
-          styleInformation: BigTextStyleInformation(message),
-          icon: 'ic_notification',
-        ),
-        iOS: const IOSNotificationDetails(
-          badgeNumber: 1,
-        ),
-      ),
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
-  }
+//     await _flutterLocalNotificationsPlugin.zonedSchedule(
+//       0,
+//       'flutter_local_notifications',
+//       message,
+//       scheduledDate,
+//       NotificationDetails(
+//         android: AndroidNotificationDetails(
+//           'channel id',
+//           'channel name',
+//           importance: Importance.max,
+//           priority: Priority.high,
+//           ongoing: true,
+//           styleInformation: BigTextStyleInformation(message),
+//           icon: 'ic_notification',
+//         ),
+//         iOS: const IOSNotificationDetails(
+//           badgeNumber: 1,
+//         ),
+//       ),
+//       androidAllowWhileIdle: true,
+//       uiLocalNotificationDateInterpretation:
+//           UILocalNotificationDateInterpretation.absoluteTime,
+//       matchDateTimeComponents: DateTimeComponents.time,
+//     );
+//   }
 
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       resizeToAvoidBottomInset: false,
+//       body: Center(
+//        child: ElevatedButton(
+//          onPressed: () async {
+//            await cancelNotification();
+//            await requestPermissions();
+//            final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+//            await registerMessage(
+//              hour: now.hour,
+//              minutes: now.minute + 1,
+//              message: 'Hello, world!',
+//            );
+//          },
+//          child: const Text('Show Notification'),
+//        ),
+//       ),
+//       body: _MainLogin(),
+//     );
+//   }
+// }
+
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
-      //body: Center(
-      //  child: ElevatedButton(
-      //    onPressed: () async {
-      //      await cancelNotification();
-      //      await requestPermissions();
-      //      final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-      //      await registerMessage(
-      //        hour: now.hour,
-      //        minutes: now.minute + 1,
-      //        message: 'Hello, world!',
-      //      );
-      //    },
-      //    child: const Text('Show Notification'),
-      //  ),
-      //),
-      body: _MainLogin(),
-    );
-  }
-}
-
-class _MainLogin extends StatelessWidget {
-  const _MainLogin();
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        color: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -206,88 +205,62 @@ class _MainLogin extends StatelessWidget {
 }
 
 class _ShowButton extends StatelessWidget {
-  const _ShowButton();
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<NaverLoginProvider>(
-      create: (_) => NaverLoginProvider(),
-      builder: (context, child) {
-        return Container(
-          child: ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: ElevatedButton(
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50.5, vertical: 18),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 24),
-                          child: SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: Constants.Icons.GetIcon(
-                                  Constants.Icons.naver)),
-                        ),
-                        Text(
-                          "네이버 아이디로 로그인",
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                        backgroundColor:
-                            MaterialStateProperty.all(Color(0xFF1EC402)),
-                      ),
-                  onPressed: () {
-                    _goNaverPage(context);
-                  },
+    final theme = Theme.of(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      child: ElevatedButton(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50.5, vertical: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 24),
+                  child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Constants.Icons.GetIcon(Constants.Icons.naver)),
                 ),
-              ),
-            ],
+                Text(
+                  "네이버 아이디로 로그인",
+                  style: theme.textTheme.headline1!.copyWith(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
-        );
-      },
+          style: theme.elevatedButtonTheme.style!.copyWith(
+            backgroundColor: MaterialStateProperty.all(Color(0xFF1EC402)),
+          ),
+          onPressed: () =>
+              context.read<NaverLoginProvider>().naverLogin(context)),
     );
-  }
-
-  void _goNaverPage(BuildContext context) {
-    context.read<NaverLoginProvider>().naverLogin(context);
   }
 }
 
 class _ShowTextButton extends StatelessWidget {
-  const _ShowTextButton();
-
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        splashFactory: NoSplash.splashFactory,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      child: SizedBox(
+        width: double.infinity,
+        child: TextButton(
+          child: Text('동아리 가입 신청서 작성하기',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2!
+                  .copyWith(fontSize: 14.0, fontWeight: FontWeight.w500)),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainPage()),
+          ),
+        ),
       ),
-      child: Text('동아리 가입 신청서 작성하기',
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(fontSize: 14.0, fontWeight: FontWeight.w500)),
-      onPressed: () {
-        _goApplicationPage(context);
-      },
-    );
-  }
-
-  void _goApplicationPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PageControll()),
     );
   }
 }

@@ -8,14 +8,14 @@ import 'package:provider/provider.dart';
 import '../../widgets/content_summary_view.dart';
 import '../../widgets/default_profile.dart';
 import '../user_informations/project_list_page.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../models/project.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
 import '../../models/user.dart';
 import '../../widgets/list_divider_widget.dart';
-import '../../widgets/rounded_border_widget.dart';
+import '../../widgets/default/rounded_border_widget.dart';
 
 import '../settings/setting_page.dart';
 import 'seminar_list_page.dart';
@@ -25,38 +25,24 @@ class UserInformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //SystemChrome.setSystemUIOverlayStyle(
-    //  SystemUiOverlayStyle.dark.copyWith(
-    //    statusBarColor: Color(0xFFFBFBFB),
-    //  ),
-    //);
-
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserDataProvider>(
-          create: (_) => UserDataProvider(),
-        ),
-      ],
-      child: DefaultPage(
-        appBarTitle: "내 정보",
-        appBarActions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingPage(),
-                ),
-              );
-            },
-            child: Icon(
-              Icons.settings,
-              color: Theme.of(context).textTheme.headline2!.color,
+    return DefaultPage(
+      title: "내 정보",
+      bottomPadding: 20.0,
+      action: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SettingPage(),
             ),
-          ),
-        ],
-        content: InformationList(),
+          );
+        },
+        child: Icon(
+          Icons.settings,
+          color: Theme.of(context).textTheme.headline2!.color,
+        ),
       ),
+      content: InformationList(),
     );
   }
 }
@@ -108,7 +94,7 @@ class InformationList extends StatelessWidget {
             child: Stack(
               children: [
                 RoundedBorder(
-                  radius: BorderRadius.circular(8),
+                  radius: 8.0,
                   height: 16.0,
                   color: const Color(0xFFF9D4CF),
                 ),
@@ -119,7 +105,7 @@ class InformationList extends StatelessWidget {
                           (userProvider.user!.promotionProgress.progress * 100)
                               .toInt(),
                       child: RoundedBorder(
-                        radius: BorderRadius.circular(8),
+                        radius: 8.0,
                         height: 16.0,
                         color: Color(0xCCDE2B13),
                       ),
@@ -159,7 +145,6 @@ class InformationList extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: RoundedBorder(
-                radius: BorderRadius.circular(10),
                 height: 48.0,
                 hasShadow: true,
                 onTap: () {},
@@ -216,7 +201,6 @@ class InformationList extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: RoundedBorder(
-                  radius: BorderRadius.circular(10),
                   height: 48.0,
                   hasShadow: true,
                   onTap: () {},
@@ -274,7 +258,6 @@ class InformationList extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: RoundedBorder(
-                  radius: BorderRadius.circular(10),
                   height: 48.0,
                   hasShadow: true,
                   onTap: () {},

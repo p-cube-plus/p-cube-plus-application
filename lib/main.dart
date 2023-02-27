@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:p_cube_plus_application/providers/fee_provider.dart';
+import 'package:p_cube_plus_application/providers/naver_login.dart';
+import 'package:p_cube_plus_application/providers/project_provider.dart';
+import 'package:p_cube_plus_application/providers/rent_provider.dart';
+import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/theme_provider.dart';
 import 'package:p_cube_plus_application/providers/user_data_provider.dart';
-import 'package:p_cube_plus_application/screens/projects/project_inquiry_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -12,18 +16,14 @@ import 'providers/notice_provider.dart';
 import 'screens/login_page.dart';
 
 void main() async {
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-  // 이후, 앱 시작 시 필요한 정보나 요청을 다 받고
-  // FlutterNativeSplash.remove();
-
-  //WidgetsFlutterBinding.ensureInitialized();
-
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => NoticeProvider()),
+      Provider(create: (_) => NaverLoginProvider()),
       ChangeNotifierProvider(create: (_) => FeeProvider()),
+      ChangeNotifierProvider(create: (_) => NoticeProvider()),
+      ChangeNotifierProvider(create: (_) => ProjectProvider()),
+      ChangeNotifierProvider(create: (_) => RentProvider()),
+      ChangeNotifierProvider(create: (_) => ScheduleProvider()),
       ChangeNotifierProvider(create: (_) => SettingProvider()),
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ChangeNotifierProvider(create: (_) => UserDataProvider()),
@@ -35,6 +35,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Status Bar 투명하게
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,

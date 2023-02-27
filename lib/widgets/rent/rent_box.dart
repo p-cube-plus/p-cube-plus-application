@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/rent.dart';
-import '../rounded_border_widget.dart';
+import '../default/rounded_border_widget.dart';
 
 class RentBox extends StatelessWidget {
   const RentBox({
@@ -22,7 +22,6 @@ class RentBox extends StatelessWidget {
             : Theme.of(context).dialogBackgroundColor,
         height: 48,
         width: double.infinity,
-        radius: BorderRadius.circular(10),
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: rent.product.isAvailable ? () {} : null,

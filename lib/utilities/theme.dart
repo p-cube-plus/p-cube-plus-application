@@ -19,6 +19,7 @@ class MyThemes {
         fontWeight: FontWeight.w700,
       ),
     ),
+    dividerColor: Colors.transparent,
     colorScheme: ColorScheme.dark(),
     iconTheme: IconThemeData(color: Colors.white, opacity: 0.8),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -28,8 +29,6 @@ class MyThemes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(
-            fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
         primary: const Color(0xFFDE2B13),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         minimumSize: Size(0, 35),
@@ -37,11 +36,17 @@ class MyThemes {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        primary: Colors.black,
+        primary: Colors.black45,
         side: BorderSide(width: 0, style: BorderStyle.none),
         backgroundColor: const Color(0xFF202020),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         minimumSize: Size(0, 35),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        splashFactory: NoSplash.splashFactory,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -54,6 +59,7 @@ class MyThemes {
       headline4: TextStyle(color: const Color(0xFF000000)),
       headline5: TextStyle(color: Colors.white60),
     ),
+    shadowColor: Color(0x0A000000),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: const Color(0xFFDE2B13),
     ),
@@ -68,6 +74,7 @@ class MyThemes {
     primaryColor: Colors.white,
     cardColor: Colors.white,
     disabledColor: Color(0xFFE9E9E9),
+    dividerColor: Colors.transparent,
     tabBarTheme: TabBarTheme(
       labelColor: const Color(0xFF2E2E2E),
       labelStyle: TextStyle(
@@ -105,6 +112,11 @@ class MyThemes {
         minimumSize: Size(0, 35),
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+      splashFactory: NoSplash.splashFactory,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    )),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: const Color(0xFFE9E9E9),
     ),
@@ -115,7 +127,7 @@ class MyThemes {
       headline4: TextStyle(color: const Color(0xFFFFFFFF)),
       headline5: TextStyle(color: const Color(0xFF575757)),
     ),
-
+    shadowColor: Color(0x0A000000),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: const Color(0xFFDE2B13),
     ),

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../models/project.dart';
 import '../screens/projects/project_detail_page.dart';
 import 'default_profile.dart';
-import 'rounded_border_widget.dart';
+import 'default/rounded_border_widget.dart';
 
 class ProjectView extends StatelessWidget {
   const ProjectView({
@@ -19,7 +19,6 @@ class ProjectView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: BorderRadius.circular(10),
       padding: const EdgeInsets.all(20.0),
       color: project.isEnd ? Theme.of(context).dialogBackgroundColor : null,
       hasShadow: true,

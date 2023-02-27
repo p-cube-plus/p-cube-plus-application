@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../widgets/default_page_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/project/inquiry_tile.dart';
-import '../../widgets/rounded_border_widget.dart';
+import '../../widgets/default/rounded_border_widget.dart';
 import '../../utilities/contants.dart' as Constants;
 
 class ProjectInquiryPage extends StatelessWidget {
@@ -19,31 +20,28 @@ class ProjectInquiryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-        subtitle: "프로젝트에 문의하기",
-        appBarTitle: projectName,
-        appBarSecondTitle: projectType,
-        appBarHasPrevious: true,
-        scrollable: false,
+        title: projectName,
+        subtitle: projectType,
+        appbar: DefaultAppBar(
+          centerTitle: "프로젝트에 문의하기",
+        ),
         floatingActionButton: _FloatingInquiryButton(),
-        appBarActions: [
-          GestureDetector(
-              child: RoundedBorder(
-                radius: BorderRadius.circular(20.0),
-                height: 31,
-                color: Color(0xFFDE2B13),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: Text(
-                  "상태 지정하기",
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
+        action: GestureDetector(
+            child: RoundedBorder(
+              radius: 20.0,
+              height: 31,
+              color: Color(0xFFDE2B13),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Text(
+                "상태 지정하기",
+                style: Theme.of(context).textTheme.headline2!.copyWith(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
               ),
-              onTap: () {}),
-        ],
+            ),
+            onTap: () {}),
         content: inquiryCount != 0
             ? Column(
                 children: List.generate(

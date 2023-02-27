@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
 import 'package:p_cube_plus_application/widgets/list_divider_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/setting_provider.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/setting/subtext_tile.dart';
 import '../../widgets/setting/switch_tile.dart';
 
@@ -13,9 +14,8 @@ class SettingNoticePage extends StatelessWidget {
     final noticeProvider = Provider.of<SettingProvider>(context);
     noticeProvider.changeState(SettingType.AllNotice);
     return DefaultPage(
-      appBarTitle: "알림 설정",
-      appBarHasPrevious: true,
-      padding: 0.0,
+      title: "알림 설정",
+      appbar: DefaultAppBar(),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: _getChildren(noticeProvider),

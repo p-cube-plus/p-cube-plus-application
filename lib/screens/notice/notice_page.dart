@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_page_widget.dart';
 import 'package:p_cube_plus_application/widgets/notice_box_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 import '../../models/notification_node.dart';
-import '../../widgets/tabbar/custom_tab_bar._widget.dart';
+import '../../widgets/default/default_tabbar_widget.dart';
 import '../settings/setting_notice_page.dart';
 
 Future<List<NotificationNode>> fetchNotification() async {
@@ -14,7 +14,6 @@ Future<List<NotificationNode>> fetchNotification() async {
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
-    print(json.decode(response.body).runtimeType);
     return (json.decode(response.body) as List)
         .map((data) => NotificationNode.fromJson(data))
         .toList();
@@ -40,37 +39,36 @@ class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      appBarTitle: "알림",
-      appBarActions: [
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SettingNoticePage(),
-              ),
-            );
-          },
-          child: Icon(
-            Icons.settings,
-            color: Theme.of(context).textTheme.headline2!.color,
-          ),
+      title: "알림",
+      bottomPadding: 20.0,
+      action: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SettingNoticePage(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.settings,
+          color: Theme.of(context).textTheme.headline2!.color,
         ),
-      ],
-      content: CustomTabBar(
-        tabs: ["새 알림", "읽은 알림"],
-        pages: [
-          NoticeListView(
-            isNew: true,
-            notificationAPI: notificationAPI,
-          ),
-          NoticeListView(
-            isNew: false,
-            notificationAPI: notificationAPI,
-          ),
-        ],
       ),
-      scrollable: false,
+      content: DefaultTabBar(bottomPadding: 20.0, tabs: [
+        DefaultTab(
+            title: "새 알림",
+            page: NoticeListView(
+              isNew: true,
+              notificationAPI: notificationAPI,
+            )),
+        DefaultTab(
+            title: "읽은 알림",
+            page: NoticeListView(
+              isNew: false,
+              notificationAPI: notificationAPI,
+            )),
+      ]),
     );
   }
 }
@@ -91,11 +89,13 @@ class NoticeListView extends StatelessWidget {
       future: notificationAPI,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Column(
-            children: List.generate(
-              snapshot.data!.length,
-              (index) =>
-                  NoticeBoxWidget(isNew: isNew, box: snapshot.data![index]),
+          return ListView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: NoticeBoxWidget(isNew: isNew, box: snapshot.data![index]),
             ),
           );
         } else if (snapshot.hasError) {

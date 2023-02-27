@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
 import 'package:p_cube_plus_application/widgets/rent/rent_search_list_view.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/rent/rent_button.dart';
 
 class RentSearchPage extends StatefulWidget {
@@ -16,8 +17,8 @@ class _RentSearchPageState extends State<RentSearchPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      appBarTitle: "검색",
-      appBarHasPrevious: true,
+      title: "검색",
+      appbar: DefaultAppBar(),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,7 +27,7 @@ class _RentSearchPageState extends State<RentSearchPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RoundedBorder(
-                radius: BorderRadius.circular(50),
+                radius: 50.0,
                 color: Theme.of(context).inputDecorationTheme.fillColor,
                 hasShadow: false,
                 padding: EdgeInsets.only(left: 16.0),

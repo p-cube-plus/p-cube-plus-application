@@ -2,10 +2,11 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 
 import '../../models/rent.dart';
-import '../default_page_widget.dart';
+import '../default/default_page_widget.dart';
 
 class RentedDetail extends StatelessWidget {
   const RentedDetail({required this.rent});
@@ -13,8 +14,8 @@ class RentedDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      subtitle: "물품",
-      appBarHasPrevious: true,
+      title: "물품",
+      appbar: DefaultAppBar(),
       content: Column(
         children: [
           RentedDetailTile(
@@ -85,7 +86,6 @@ class RentedDetailTile extends StatelessWidget {
           child: RoundedBorder(
             color: Theme.of(context).cardColor,
             width: double.infinity,
-            radius: BorderRadius.circular(10.0),
             hasShadow: true,
             child: InkWell(
                 borderRadius: BorderRadius.circular(10),

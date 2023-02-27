@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/rent/rented_detail.dart';
 
 import '../../models/rent.dart';
-import '../rounded_border_widget.dart';
+import '../default/rounded_border_widget.dart';
 
 class RentedBox extends StatelessWidget {
   const RentedBox({
@@ -22,7 +22,6 @@ class RentedBox extends StatelessWidget {
         color: Theme.of(context).cardColor,
         height: 56,
         width: double.infinity,
-        radius: BorderRadius.circular(10),
         child: InkWell(
           onTap: () => Navigator.push(
             context,

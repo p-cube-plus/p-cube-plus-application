@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
-import '../../widgets/default_page_widget.dart';
-import '../../widgets/rounded_border_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/rounded_border_widget.dart';
 
 class SeminarListPage extends StatelessWidget {
   const SeminarListPage({
@@ -24,8 +25,8 @@ class SeminarListPage extends StatelessWidget {
     );
 
     return DefaultPage(
-      appBarTitle: "세미나 내역",
-      appBarHasPrevious: true,
+      title: "세미나 내역",
+      appbar: DefaultAppBar(),
       content: (userProvider.user!.seminars.length == 0)
           ? Padding(
               padding: const EdgeInsets.only(top: 10.0),
@@ -63,7 +64,6 @@ class SeminarListView extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 8.0),
             child: RoundedBorder(
-              radius: BorderRadius.circular(10),
               height: 48.0,
               hasShadow: true,
               onTap: () {},

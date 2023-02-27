@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:p_cube_plus_application/widgets/default_page_widget.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_page_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 import 'package:p_cube_plus_application/widgets/setting/bottomsheet_tile.dart';
 import 'package:p_cube_plus_application/widgets/setting/new_page_tile.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +19,8 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      appBarTitle: "설정",
-      appBarHasPrevious: true,
-      padding: 0.0,
+      title: "설정",
+      appbar: DefaultAppBar(),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -67,7 +67,7 @@ class SettingPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: RoundedBorder(
-            radius: BorderRadius.circular(4),
+            radius: 4.0,
             child: SizedBox(
               height: 30,
               child: TextField(
@@ -98,7 +98,7 @@ class SettingPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
           child: RoundedBorder(
-            radius: BorderRadius.circular(4),
+            radius: 4.0,
             child: SizedBox(
               height: 160,
               child: TextField(

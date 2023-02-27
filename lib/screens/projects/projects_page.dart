@@ -4,29 +4,20 @@ import 'package:p_cube_plus_application/widgets/project_view_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/project.dart';
-import '../../widgets/default_page_widget.dart';
-import '../../widgets/tabbar/custom_tab_bar._widget.dart';
+import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/default_tabbar_widget.dart';
 import '../notice/notice_page.dart';
 
 class ProjectsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ProjectProvider>(
-            create: (_) => ProjectProvider()),
-      ],
-      child: DefaultPage(
-        appBarTitle: "프로젝트",
-        content: CustomTabBar(
-          tabs: ["메인", "꼬꼬마"],
-          pages: [
-            _ProjectListView(type: 0), // type 0 - 메인 프로젝트
-            _ProjectListView(type: 1), // type 1 - 꼬꼬마 프로젝트
-          ],
-        ),
-        scrollable: false,
-      ),
+    return DefaultPage(
+      title: "프로젝트",
+      bottomPadding: 24.0,
+      content: DefaultTabBar(bottomPadding: 20.0, tabs: [
+        DefaultTab(title: "메인", page: _ProjectListView(type: 0)),
+        DefaultTab(title: "꼬꼬마", page: _ProjectListView(type: 1)),
+      ]),
     );
   }
 }
@@ -41,7 +32,6 @@ class _ProjectListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var projectProvider = context.watch<ProjectProvider>();
-    //projectProvider.update(); // debug
 
     if (!projectProvider.loaded) return Container();
     if (projectProvider.fail) return Container();

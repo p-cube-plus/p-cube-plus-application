@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 
 import '../../providers/user_data_provider.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/list_divider_widget.dart';
 
 String _autoFix(double d) {
@@ -31,8 +32,8 @@ class CautionListPage extends StatelessWidget {
     );
 
     return DefaultPage(
-      appBarTitle: "경고 현황",
-      appBarHasPrevious: true,
+      title: "경고 현황",
+      appbar: DefaultAppBar(),
       content: Column(
         children: [
           CautionSummaryView(userProvider: userProvider),
@@ -77,7 +78,6 @@ class CautionListView extends StatelessWidget {
       _cautions.add(SizedBox(height: 8.0));
       _cautions.add(
         RoundedBorder(
-          radius: BorderRadius.circular(10),
           padding: const EdgeInsets.all(16.0),
           onTap: () {},
           child: Row(

@@ -3,12 +3,13 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
 import '../../widgets/default_profile.dart';
 import '../../models/project.dart';
 import '../../providers/user_data_provider.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/project_view_widget.dart';
-import '../../widgets/rounded_border_widget.dart';
+import '../../widgets/default/rounded_border_widget.dart';
 import '../../utilities/contants.dart' as Constants;
 
 class PromotionProgressPage extends StatelessWidget {
@@ -17,9 +18,8 @@ class PromotionProgressPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      appBarTitle: "승급 진행률",
-      appBarSecondTitle: "아직 승급을 신청할 수 없어요. 조금만 더 힘내요!",
-      appBarHasPrevious: true,
+      title: "승급 진행률",
+      appbar: DefaultAppBar(),
       content: Column(
         children: [
           Column(
@@ -45,7 +45,7 @@ class PromotionProgressPage extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     children: [
                       RoundedBorder(
-                        radius: BorderRadius.circular(8.0),
+                        radius: 8.0,
                         height: 16.0,
                         color: const Color(0xFFF9D4CF),
                       ),
@@ -57,7 +57,7 @@ class PromotionProgressPage extends StatelessWidget {
                                         100)
                                     .toInt(),
                             child: RoundedBorder(
-                              radius: BorderRadius.circular(8.0),
+                              radius: 8.0,
                               height: 16.0,
                               color: Color(0xCCDE2B13),
                             ),
@@ -111,7 +111,6 @@ class PromotionRequirement extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 8.0),
       child: RoundedBorder(
         onTap: () {},
-        radius: BorderRadius.circular(10.0),
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

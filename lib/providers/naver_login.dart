@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:p_cube_plus_application/screens/mainpage/page_controller.dart';
+
+import '../screens/main_page.dart';
 
 class NaverLoginProvider with ChangeNotifier {
   late String nName, nGender, nBirth;
@@ -18,7 +19,7 @@ class NaverLoginProvider with ChangeNotifier {
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PageControll()),
+          MaterialPageRoute(builder: (context) => MainPage()),
         );
 
         // data 처리

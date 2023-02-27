@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 import '../../models/rent.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 
 class RentDetailPage extends StatelessWidget {
   const RentDetailPage({
@@ -52,8 +53,9 @@ class RentDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      appBarHasPrevious: true,
-      subtitle: rent.product.category,
+      appbar: DefaultAppBar(
+        centerTitle: rent.product.category,
+      ),
       content: Column(
         children: [
           _SummaryText(
@@ -154,7 +156,6 @@ class _SummaryText extends StatelessWidget {
           ),
         ),
         RoundedBorder(
-          radius: BorderRadius.circular(10),
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

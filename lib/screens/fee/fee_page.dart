@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
-import '../../widgets/default_page_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/list_divider_widget.dart';
 import 'fee_detail_page.dart';
 import '../../utilities/contants.dart' as Constants;
@@ -26,9 +26,7 @@ class FeePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      appBarTitle: "회비",
-      appBarHasPrevious: false,
-      scrollable: false,
+      title: "회비",
       content: SingleChildScrollView(
         child: Column(
           children: [
@@ -85,7 +83,6 @@ class MonthFee extends StatelessWidget {
           width: double.infinity,
           onTap: () {},
           color: Theme.of(context).scaffoldBackgroundColor,
-          radius: BorderRadius.circular(10.0),
           child: Padding(
             padding: EdgeInsets.only(top: 32, bottom: 24, left: 24, right: 24),
             child: Column(
@@ -256,7 +253,6 @@ class _YearCalenderState extends State<YearCalender> {
       }),
       child: RoundedBorder(
           color: Theme.of(context).scaffoldBackgroundColor,
-          radius: BorderRadius.circular(10.0),
           child: Padding(
             padding: EdgeInsets.only(bottom: 32, top: 20),
             child: Column(
@@ -337,7 +333,6 @@ class FeeInfo extends StatelessWidget {
               builder: (context) => FeeDetailPage(),
             ),
           ),
-          radius: BorderRadius.circular(10.0),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 17, vertical: 20),
             child: Row(

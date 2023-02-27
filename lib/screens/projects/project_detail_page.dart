@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/projects/project_inquiry_page.dart';
 import 'package:p_cube_plus_application/screens/projects/project_chat_page.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 import '../../models/member.dart';
 import '../../models/project.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/default_profile.dart';
 import '../../widgets/project/inquiry_tile.dart';
 
@@ -31,42 +32,23 @@ class ProjectDetailPage extends StatelessWidget {
       projectDate += DateFormat('yyyy.MM.dd').format(project.endDate!);
 
     return DefaultPage(
-      scrollable: false,
-      backgroundColor: const Color(0xC9DE2B13),
-      appBarHasPrevious: true,
-      appBarTitle: projectName,
-      appBarTitleColor: Colors.white,
-      appBarPadding: const EdgeInsets.only(top: 40, bottom: 4),
-      subtitle: "프로젝트 정보",
-      subtitleColor: Colors.white,
-      previousButtonColor: Colors.white,
-      padding: 0,
-      content: Stack(
+      textColor: Colors.white,
+      appbar: DefaultAppBar(
+        appBarColor: Colors.white,
+        backgroundColor: const Color(0xFFDE2B13),
+        centerTitle: "프로젝트 정보",
+      ),
+      title: projectName,
+      subtitle: projectType,
+      backgroundColor: const Color(0xFFDE2B13),
+      bottomPadding: 71.0,
+      content: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 96.0),
-            child: Container(
-              height: double.infinity,
-              color: Theme.of(context).backgroundColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  projectType,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                RoundedBorder(
-                  radius: BorderRadius.circular(10),
-                  width: double.infinity,
+          Stack(
+            children: [
+              Positioned(
+                top: 1.0,
+                child: RoundedBorder(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,61 +107,56 @@ class ProjectDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: _ProjectDetailSectionView(
-                            title: "팀원 정보",
-                            content: List.generate(
-                              project.members.length,
-                              (index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: _ProjectDetailMemeberView(
-                                    member: project.members[index],
-                                    pm: project.members[index].id ==
-                                        project.pm.id,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 32.0),
-                          child: _ProjectDetailSectionView(
-                            title: "문의사항",
-                            content: [
-                              Column(
-                                children: List.generate(
-                                  3,
-                                  (index) => Padding(
-                                    padding: EdgeInsets.only(top: 8),
-                                    child: InquiryTile(
-                                        showChat: false,
-                                        content: ProjectInquiryPage(
-                                            projectName: projectName,
-                                            projectType: projectType,
-                                            inquiryCount: index)),
-                                  ),
-                                ),
-                              )
-                            ],
-                            onTap: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
+          SizedBox(height: 16.0),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: _ProjectDetailSectionView(
+                  title: "팀원 정보",
+                  content: List.generate(
+                    project.members.length,
+                    (index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: _ProjectDetailMemeberView(
+                          member: project.members[index],
+                          pm: project.members[index].id == project.pm.id,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 32.0),
+                child: _ProjectDetailSectionView(
+                  title: "문의사항",
+                  content: [
+                    Column(
+                      children: List.generate(
+                        3,
+                        (index) => Padding(
+                          padding: EdgeInsets.only(top: 8),
+                          child: InquiryTile(
+                              showChat: false,
+                              content: ProjectInquiryPage(
+                                  projectName: projectName,
+                                  projectType: projectType,
+                                  inquiryCount: index)),
+                        ),
+                      ),
+                    )
+                  ],
+                  onTap: () {},
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -251,7 +228,6 @@ class _ProjectDetailMemeberView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: BorderRadius.circular(10),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
       onTap: () {},
       child: Row(
@@ -316,7 +292,6 @@ class _TagBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: BorderRadius.circular(10),
       color: color ?? Theme.of(context).dialogBackgroundColor,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(

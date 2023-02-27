@@ -1,42 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
 
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/rent/rent_item_list_view.dart';
 import '../../widgets/rent/rented_item_list_view.dart';
-import '../../widgets/tabbar/custom_tab_bar._widget.dart';
+import '../../widgets/default/default_tabbar_widget.dart';
 import 'rent_search_page.dart';
 
 class RentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-      appBarTitle: "물품",
-      appBarHasPrevious: true,
-      appBarActions: [
-        //체크
-        GestureDetector(
-          child: Image.asset("assets/images/search.png"),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RentSearchPage(),
-              ),
-            );
-          },
-        ),
-      ],
+      title: "물품",
+      appbar: DefaultAppBar(),
+      action:
+          //체크
+          GestureDetector(
+        child: Image.asset("assets/images/search.png"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RentSearchPage(),
+            ),
+          );
+        },
+      ),
       content: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: CustomTabBar(
-              tabs: ["대여하기", "내가 대여한"],
-              pages: [
-                Expanded(child: RentItenListView()),
-                Expanded(child: RentedItemListView()),
-              ],
-            ),
+            child: DefaultTabBar(tabs: [
+              DefaultTab(title: "대여하기", page: RentItenListView()),
+              DefaultTab(title: "내가 대여한", page: RentedItemListView())
+            ]),
           )
         ],
       ),

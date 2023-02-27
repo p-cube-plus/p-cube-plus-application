@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/models/due.dart';
-import 'package:p_cube_plus_application/widgets/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
 import 'package:provider/provider.dart';
 import '../../providers/fee_provider.dart';
-import '../../widgets/default_page_widget.dart';
+import '../../widgets/default/default_page_widget.dart';
 import '../../widgets/list_divider_widget.dart';
 import '../../utilities/contants.dart' as Constants;
 
@@ -17,44 +18,38 @@ class FeeDetailPage extends StatelessWidget {
     final feeProvider = Provider.of<FeeProvider>(context);
 
     return DefaultPage(
-      appBarTitle: "회비 내역",
-      appBarTitleColor: Colors.white,
-      appBarHasPrevious: true,
-      scrollable: false,
-      backgroundColor: const Color(0xFFDE2B13),
-      subtitleColor: Colors.white,
-      previousButtonColor: Colors.white,
-      padding: 0,
-      appBarPadding: EdgeInsets.symmetric(vertical: 20),
-      appBarActions: [
-        GestureDetector(
-          onTap: () => showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(20))),
-              builder: (context) => _getBottomsheetData(context, feeProvider)),
-          child: Row(
-            children: [
-              Text(
-                feeProvider.type == FeeType.All
-                    ? "전체"
-                    : feeProvider.type == FeeType.Deposit
-                        ? "입금"
-                        : "출금",
-                style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0),
-              ),
-              Icon(
-                Icons.keyboard_arrow_down,
-                color: Colors.white,
-              )
-            ],
-          ),
-        )
-      ],
+      title: "회비 내역",
+      appbar: DefaultAppBar(
+        appBarColor: Colors.white,
+        backgroundColor: const Color(0xFFDE2B13),
+      ),
+      contentColor: const Color(0xFFDE2B13),
+      action: GestureDetector(
+        onTap: () => showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+            builder: (context) => _getBottomsheetData(context, feeProvider)),
+        child: Row(
+          children: [
+            Text(
+              feeProvider.type == FeeType.All
+                  ? "전체"
+                  : feeProvider.type == FeeType.Deposit
+                      ? "입금"
+                      : "출금",
+              style: Theme.of(context).textTheme.headline4!.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0),
+            ),
+            Icon(
+              Icons.keyboard_arrow_down,
+              color: Colors.white,
+            )
+          ],
+        ),
+      ),
       content: Container(
         height: double.infinity,
         width: double.infinity,
@@ -136,7 +131,6 @@ class AccountInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorder(
-      radius: BorderRadius.circular(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -275,16 +269,14 @@ class DuesDetail extends StatelessWidget {
                   ),
                 ),
                 RoundedBorder(
-                    radius: BorderRadius.all(Radius.circular(10)),
                     child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      child: Column(
-                        children: [
-                          _getDueListItem(theme, dueList[i]),
-                        ],
-                      ),
-                    )),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Column(
+                    children: [
+                      _getDueListItem(theme, dueList[i]),
+                    ],
+                  ),
+                )),
               ],
             ),
           ),

@@ -4,7 +4,7 @@ import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/schedule_provider.dart';
-import '../rounded_border_widget.dart';
+import '../default/rounded_border_widget.dart';
 
 class CalendarDailySummaryView extends StatelessWidget {
   const CalendarDailySummaryView({
@@ -68,7 +68,6 @@ class CalendarDailySummaryView extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16.0),
       child: RoundedBorder(
         width: double.infinity,
-        radius: BorderRadius.circular(10),
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +129,6 @@ class CalendarMonthlySummaryView extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.only(bottom: 10.0),
           child: RoundedBorder(
-            radius: BorderRadius.circular(10),
             height: 48.0,
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
