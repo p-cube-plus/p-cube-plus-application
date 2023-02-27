@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
 import 'package:p_cube_plus_application/widgets/content_summary_view.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
 import '../rent/scan_page.dart';
@@ -13,7 +14,7 @@ import '../../providers/rent_provider.dart';
 import '../../utilities/contants.dart' as Constants;
 import '../../widgets/calendar/calendar.dart';
 import '../../widgets/calendar/calendar_summary_view.dart';
-import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/default_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -22,13 +23,16 @@ class HomePage extends StatelessWidget {
 
     return DefaultPage(
       title: "홈",
-      content: Column(
-        children: [
-          HomeCalendar(
-            currentTheme: currentTheme,
-          ),
-          RentListView(),
-        ],
+      bottomPadding: 20.0,
+      content: DefaultContent(
+        child: Column(
+          children: [
+            HomeCalendar(
+              currentTheme: currentTheme,
+            ),
+            RentListView(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingBarcodeButton(),
     );

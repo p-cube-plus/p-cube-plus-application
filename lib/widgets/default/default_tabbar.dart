@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'default_content.dart';
+
 class DefaultTab {
   DefaultTab({
     required this.title,
@@ -34,7 +36,8 @@ class _DefaultTabBarState extends State<DefaultTabBar> {
       children: [
         // 상단탭 부분
         Padding(
-          padding: EdgeInsets.only(bottom: widget.bottomPadding),
+          padding: EdgeInsets.only(
+              left: 20.0, right: 20.0, bottom: widget.bottomPadding),
           child: Row(
             children: List.generate(widget.tabs.length, (index) {
               return GestureDetector(
@@ -77,7 +80,7 @@ class _DefaultTabBarState extends State<DefaultTabBar> {
         ),
 
         // 탭의 내용부분
-        widget.tabs[_pageIndex].page,
+        Expanded(child: DefaultContent(child: widget.tabs[_pageIndex].page)),
       ],
     );
   }

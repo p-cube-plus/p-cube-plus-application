@@ -6,7 +6,7 @@ class DefaultAppBar extends StatelessWidget {
     this.leftTitle,
     this.leftTitleState,
     this.hasPrevious = true,
-    this.appBarColor,
+    this.contentColor,
     this.backgroundColor,
     this.bottomPadding = 24.0,
   });
@@ -14,7 +14,7 @@ class DefaultAppBar extends StatelessWidget {
   final String? leftTitle;
   final Widget? leftTitleState;
   final bool hasPrevious;
-  final Color? appBarColor;
+  final Color? contentColor;
   final Color? backgroundColor;
   final double bottomPadding;
 
@@ -25,7 +25,7 @@ class DefaultAppBar extends StatelessWidget {
     final topPadding =
         statusBarHeight + ((leftTitleState == null) ? 19.0 : 34.0);
     return Container(
-      color: backgroundColor,
+      color: backgroundColor ?? theme.backgroundColor,
       padding: EdgeInsets.only(
           left: 24.0,
           right: 24.0,
@@ -40,7 +40,7 @@ class DefaultAppBar extends StatelessWidget {
               ? Icon(
                   Icons.arrow_back_ios_new,
                   size: 20.0,
-                  color: appBarColor ?? theme.textTheme.headline1!.color,
+                  color: contentColor ?? theme.textTheme.headline1!.color,
                 )
               : SizedBox(),
           if (centerTitle != null)
@@ -49,7 +49,7 @@ class DefaultAppBar extends StatelessWidget {
               style: theme.textTheme.headline1!.copyWith(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w700,
-                color: appBarColor ?? theme.textTheme.headline1!.color,
+                color: contentColor ?? theme.textTheme.headline1!.color,
               ),
             ),
           if (leftTitle != null)
@@ -62,7 +62,7 @@ class DefaultAppBar extends StatelessWidget {
                     style: theme.textTheme.headline1!.copyWith(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
-                      color: appBarColor ?? theme.textTheme.headline1!.color,
+                      color: contentColor ?? theme.textTheme.headline1!.color,
                     ),
                   ),
                   Padding(

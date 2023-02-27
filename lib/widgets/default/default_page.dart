@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:p_cube_plus_application/widgets/default/default_tabbar.dart';
 
-import 'default_appbar_widget.dart';
+import 'default_appbar.dart';
 
 class DefaultPage extends StatelessWidget {
   const DefaultPage({
     this.appbar,
     this.title,
     this.subtitle,
-    required this.content,
+    this.content,
     this.action,
+    this.decorate,
     this.floatingActionButton,
     this.textColor,
     this.contentColor,
@@ -20,8 +22,9 @@ class DefaultPage extends StatelessWidget {
   final DefaultAppBar? appbar;
   final String? title;
   final String? subtitle;
-  final Widget content;
+  final Widget? content;
   final Widget? action;
+  final Widget? decorate;
   final Widget? floatingActionButton;
   final Color? textColor;
   final Color? contentColor;
@@ -43,8 +46,8 @@ class DefaultPage extends StatelessWidget {
             color: backgroundColor ?? contentColor ?? theme.backgroundColor,
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
+                  left: 20.0,
+                  right: 20.0,
                   top: topPadding,
                   bottom: bottomPadding),
               child: Row(
@@ -78,11 +81,8 @@ class DefaultPage extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-              child: SingleChildScrollView(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: content)))
+          decorate ?? SizedBox(),
+          Expanded(child: content ?? SizedBox())
         ],
       ),
       resizeToAvoidBottomInset: false,

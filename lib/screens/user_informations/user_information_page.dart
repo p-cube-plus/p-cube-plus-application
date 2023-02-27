@@ -8,14 +8,14 @@ import 'package:provider/provider.dart';
 import '../../widgets/content_summary_view.dart';
 import '../../widgets/default_profile.dart';
 import '../user_informations/project_list_page.dart';
-import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/default_page.dart';
 import '../../models/project.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
 import '../../models/user.dart';
 import '../../widgets/list_divider_widget.dart';
-import '../../widgets/default/rounded_border_widget.dart';
+import '../../widgets/default/rounded_border.dart';
 
 import '../settings/setting_page.dart';
 import 'seminar_list_page.dart';

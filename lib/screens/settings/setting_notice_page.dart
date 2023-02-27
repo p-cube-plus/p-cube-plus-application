@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
 import 'package:p_cube_plus_application/widgets/list_divider_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/setting_provider.dart';
-import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/default_page.dart';
 import '../../widgets/setting/subtext_tile.dart';
 import '../../widgets/setting/switch_tile.dart';
 

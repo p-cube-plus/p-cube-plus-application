@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/default_page_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_page.dart';
 import 'package:p_cube_plus_application/widgets/notice_box_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 import '../../models/notification_node.dart';
-import '../../widgets/default/default_tabbar_widget.dart';
+import '../../widgets/default/default_tabbar.dart';
 import '../settings/setting_notice_page.dart';
 
 Future<List<NotificationNode>> fetchNotification() async {

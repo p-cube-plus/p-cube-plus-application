@@ -1,8 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/default_profile.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import '../../models/project.dart';
 import '../../utilities/contants.dart' as Constants;
 

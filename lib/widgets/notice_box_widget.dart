@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import '../models/notification_node.dart';
 import 'package:intl/intl.dart';
 

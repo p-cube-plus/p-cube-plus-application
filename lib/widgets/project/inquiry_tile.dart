@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/default_profile.dart';
-import '../default/rounded_border_widget.dart';
+import '../default/rounded_border.dart';
 import '../../utilities/contants.dart' as Constants;
 
 class InquiryTile extends StatelessWidget {

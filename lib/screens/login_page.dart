@@ -193,6 +193,7 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 children: [
                   _ShowButton(),
+                  SizedBox(height: 16.0),
                   _ShowTextButton(),
                 ],
               ),

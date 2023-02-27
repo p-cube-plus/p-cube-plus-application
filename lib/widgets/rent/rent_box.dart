@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/rent.dart';
-import '../default/rounded_border_widget.dart';
+import '../default/rounded_border.dart';
 
 class RentBox extends StatelessWidget {
   const RentBox({

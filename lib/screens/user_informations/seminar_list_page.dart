@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
-import '../../widgets/default/default_page_widget.dart';
-import '../../widgets/default/rounded_border_widget.dart';
+import '../../widgets/default/default_page.dart';
+import '../../widgets/default/rounded_border.dart';
 
 class SeminarListPage extends StatelessWidget {
   const SeminarListPage({

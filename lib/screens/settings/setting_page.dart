@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
-import 'package:p_cube_plus_application/widgets/default/default_page_widget.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_page.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:p_cube_plus_application/widgets/setting/bottomsheet_tile.dart';
 import 'package:p_cube_plus_application/widgets/setting/new_page_tile.dart';
 import 'package:provider/provider.dart';

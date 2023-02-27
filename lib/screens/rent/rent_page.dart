@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
 
-import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/default_page.dart';
 import '../../widgets/rent/rent_item_list_view.dart';
 import '../../widgets/rent/rented_item_list_view.dart';
-import '../../widgets/default/default_tabbar_widget.dart';
+import '../../widgets/default/default_tabbar.dart';
 import 'rent_search_page.dart';
 
 class RentPage extends StatelessWidget {

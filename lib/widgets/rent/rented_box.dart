@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/rent/rented_detail.dart';
 
 import '../../models/rent.dart';
-import '../default/rounded_border_widget.dart';
+import '../default/rounded_border.dart';
 
 class RentedBox extends StatelessWidget {
   const RentedBox({

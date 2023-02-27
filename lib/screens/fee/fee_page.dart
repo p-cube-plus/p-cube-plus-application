@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
-import '../../widgets/default/default_page_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
+import '../../widgets/default/default_page.dart';
 import '../../widgets/list_divider_widget.dart';
 import 'fee_detail_page.dart';
 import '../../utilities/contants.dart' as Constants;
@@ -27,7 +28,8 @@ class FeePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultPage(
       title: "회비",
-      content: SingleChildScrollView(
+      bottomPadding: 24.0,
+      content: DefaultContent(
         child: Column(
           children: [
             Padding(

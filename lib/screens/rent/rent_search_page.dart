@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
 import 'package:p_cube_plus_application/widgets/rent/rent_search_list_view.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 
-import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/default_page.dart';
 import '../../widgets/rent/rent_button.dart';
 
 class RentSearchPage extends StatefulWidget {

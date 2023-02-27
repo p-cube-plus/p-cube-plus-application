@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/models/due.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:provider/provider.dart';
 import '../../providers/fee_provider.dart';
-import '../../widgets/default/default_page_widget.dart';
+import '../../widgets/default/default_page.dart';
 import '../../widgets/list_divider_widget.dart';
 import '../../utilities/contants.dart' as Constants;
 
@@ -19,11 +20,12 @@ class FeeDetailPage extends StatelessWidget {
 
     return DefaultPage(
       title: "회비 내역",
+      backgroundColor: const Color(0xFFDE2B13),
+      bottomPadding: 24.0,
       appbar: DefaultAppBar(
-        appBarColor: Colors.white,
+        contentColor: Colors.white,
         backgroundColor: const Color(0xFFDE2B13),
       ),
-      contentColor: const Color(0xFFDE2B13),
       action: GestureDetector(
         onTap: () => showModalBottomSheet(
             context: context,
@@ -50,22 +52,17 @@ class FeeDetailPage extends StatelessWidget {
           ],
         ),
       ),
-      content: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Theme.of(context).backgroundColor,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AccountInfo(),
-                DuesDetail(
-                  type: feeProvider.type,
-                )
-              ],
-            ),
+      content: DefaultContent(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AccountInfo(),
+              DuesDetail(
+                type: feeProvider.type,
+              )
+            ],
           ),
         ),
       ),

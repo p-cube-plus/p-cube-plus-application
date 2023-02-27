@@ -1,12 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar_widget.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border_widget.dart';
+import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 
 import '../../models/rent.dart';
-import '../default/default_page_widget.dart';
+import '../default/default_page.dart';
 
 class RentedDetail extends StatelessWidget {
   const RentedDetail({required this.rent});

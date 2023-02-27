@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/project.dart';
-import '../screens/projects/project_detail_page.dart';
-import 'default_profile.dart';
-import 'default/rounded_border_widget.dart';
+import '../../models/project.dart';
+import '../../screens/projects/project_detail_page.dart';
+import '../default_profile.dart';
+import '../default/rounded_border.dart';
 
 class ProjectView extends StatelessWidget {
   const ProjectView({
