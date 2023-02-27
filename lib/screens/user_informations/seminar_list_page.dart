@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
@@ -39,7 +40,7 @@ class SeminarListPage extends StatelessWidget {
                     ),
               ),
             )
-          : SeminarListView(userProvider: userProvider),
+          : DefaultContent(child: SeminarListView(userProvider: userProvider)),
     );
   }
 }

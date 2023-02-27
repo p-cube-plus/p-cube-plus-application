@@ -16,7 +16,6 @@ class DefaultPage extends StatelessWidget {
     this.textColor,
     this.contentColor,
     this.backgroundColor,
-    this.bottomPadding = 0.0,
   });
 
   final DefaultAppBar? appbar;
@@ -29,19 +28,18 @@ class DefaultPage extends StatelessWidget {
   final Color? textColor;
   final Color? contentColor;
   final Color? backgroundColor;
-  final double bottomPadding;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final topPadding = (appbar != null) ? 19.0 : statusBarHeight + 34.0;
+    final topPadding = (appbar != null) ? 6.0 : statusBarHeight + 34.0;
     return Scaffold(
       backgroundColor: contentColor ?? theme.backgroundColor,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          appbar ?? SizedBox(),
+          if (appbar != null) appbar!,
           Container(
             color: backgroundColor ?? contentColor ?? theme.backgroundColor,
             child: Padding(
@@ -49,7 +47,7 @@ class DefaultPage extends StatelessWidget {
                   left: 20.0,
                   right: 20.0,
                   top: topPadding,
-                  bottom: bottomPadding),
+                  bottom: decorate == null ? 20.0 : 0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -69,7 +67,7 @@ class DefaultPage extends StatelessWidget {
                           padding: EdgeInsets.only(top: 4.0),
                           child: Text(subtitle!,
                               style: theme.textTheme.headline1!.copyWith(
-                                  fontSize: 16.0,
+                                  fontSize: 14.0,
                                   fontWeight: FontWeight.w700,
                                   color: textColor ??
                                       theme.textTheme.headline1!.color)),

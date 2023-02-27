@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/default_profile.dart';
+import '../default/default_profile.dart';
 import '../default/rounded_border.dart';
 import '../../utilities/contants.dart' as Constants;
 
@@ -36,14 +36,15 @@ class InquiryTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 16, top: 16, right: 12),
+                      padding:
+                          EdgeInsets.only(left: 16.0, top: 16.0, right: 12.0),
                       child: const DefaultProfile(
                         size: 32.0,
                       ),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: EdgeInsets.symmetric(vertical: 20.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -107,12 +108,10 @@ class InquiryTile extends StatelessWidget {
                               width: 16,
                               child: Center(
                                 child: Text(chatCount.toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .copyWith(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500)),
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white)),
                               ),
                             ),
                           )

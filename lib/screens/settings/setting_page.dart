@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:p_cube_plus_application/widgets/default/default_page.dart';
 import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:p_cube_plus_application/widgets/setting/bottomsheet_tile.dart';
@@ -21,31 +22,35 @@ class SettingPage extends StatelessWidget {
     return DefaultPage(
       title: "설정",
       appbar: DefaultAppBar(),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          NewPageTile(title: '알림 설정', newPage: SettingNoticePage()),
-          BottomSheetTile(
-            title: '테마 설정',
-            bottomTitle: '테마 설정',
-            bottomWidgets: [
-              RadioBox(type: ThemeMode.system, text: "시스템 설정"),
-              RadioBox(type: ThemeMode.light, text: "라이트 모드"),
-              RadioBox(type: ThemeMode.dark, text: "다크 모드")
-            ],
-          ),
-          ListDivider(padding: 20),
-          VersionTile(title: '버전'),
-          AlertTile(
-              title: '피드백 보내기',
-              hasIcon: true,
-              alertWidget: _getFeedback(context)),
-          AlertTile(
-              title: '개발진 목록', hasIcon: true, alertWidget: _getDev(context)),
-          ListDivider(padding: 20),
-          AlertTile(
-              title: '로그아웃', hasIcon: false, alertWidget: _getLogout(context)),
-        ],
+      content: DefaultContent(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            NewPageTile(title: '알림 설정', newPage: SettingNoticePage()),
+            BottomSheetTile(
+              title: '테마 설정',
+              bottomTitle: '테마 설정',
+              bottomWidgets: [
+                RadioBox(type: ThemeMode.system, text: "시스템 설정"),
+                RadioBox(type: ThemeMode.light, text: "라이트 모드"),
+                RadioBox(type: ThemeMode.dark, text: "다크 모드")
+              ],
+            ),
+            ListDivider(padding: 20),
+            VersionTile(title: '버전'),
+            AlertTile(
+                title: '피드백 보내기',
+                hasIcon: true,
+                alertWidget: _getFeedback(context)),
+            AlertTile(
+                title: '개발진 목록', hasIcon: true, alertWidget: _getDev(context)),
+            ListDivider(padding: 20),
+            AlertTile(
+                title: '로그아웃',
+                hasIcon: false,
+                alertWidget: _getLogout(context)),
+          ],
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ class Member {
   final int id;
   final String name;
   final int partIndex;
+  String getPart() => "${["디자인", "프로그래밍", "아트"][partIndex]}";
 
   Member({
     required this.id,

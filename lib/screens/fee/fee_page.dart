@@ -28,12 +28,11 @@ class FeePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultPage(
       title: "회비",
-      bottomPadding: 24.0,
       content: DefaultContent(
         child: Column(
           children: [
             Padding(
-                padding: EdgeInsets.only(bottom: 40),
+                padding: EdgeInsets.only(top: 12, bottom: 40),
                 child: MonthFee(
                   type: FeeStateType.Due,
                   startDay: DateTime(2022, 10, 6),
@@ -41,9 +40,7 @@ class FeePage extends StatelessWidget {
                   charge: 5000,
                 )),
             Padding(padding: EdgeInsets.only(bottom: 40), child: AnnualFee()),
-            Padding(
-                padding: EdgeInsets.only(bottom: 32),
-                child: FeeInfo(sum: 1200340)),
+            FeeInfo(sum: 1200340),
           ],
         ),
       ),
@@ -83,7 +80,6 @@ class MonthFee extends StatelessWidget {
         ),
         RoundedBorder(
           width: double.infinity,
-          onTap: () {},
           color: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(
             padding: EdgeInsets.only(top: 32, bottom: 24, left: 24, right: 24),

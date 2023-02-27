@@ -8,7 +8,7 @@ import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import '../../models/member.dart';
 import '../../models/project.dart';
 import '../../widgets/default/default_page.dart';
-import '../../widgets/default_profile.dart';
+import '../../widgets/default/default_profile.dart';
 import '../../widgets/project/inquiry_tile.dart';
 
 class ProjectDetailPage extends StatelessWidget {
@@ -21,7 +21,7 @@ class ProjectDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var projectName = project.name;
-    var projectType = "${["메인", "꼬꼬마"][project.type]}프로젝트";
+    var projectType = project.getType() + "프로젝트";
     var projectProperty = project.platforms.join(", ");
     if (project.tags.length > 0)
       projectProperty += " / " + project.tags.join(", ");
@@ -144,13 +144,11 @@ class ProjectDetailPage extends StatelessWidget {
                         children: List.generate(
                           3,
                           (index) => Padding(
-                            padding: EdgeInsets.only(top: 8),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: InquiryTile(
                                 showChat: false,
                                 content: ProjectInquiryPage(
-                                    projectName: projectName,
-                                    projectType: projectType,
-                                    inquiryCount: index)),
+                                    project: project, inquiryCount: index)),
                           ),
                         ),
                       )
@@ -252,7 +250,7 @@ class _ProjectDetailMemeberView extends StatelessWidget {
                         ),
                   ),
                   Text(
-                    "${["디자인", "프로그래밍", "아트"][member.partIndex]} 파트",
+                    member.getPart() + "파트",
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontSize: 10.0,
                           fontWeight: FontWeight.w400,

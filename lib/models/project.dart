@@ -7,8 +7,9 @@ class Project {
   final int id; // 프로젝트 Id
 
   final int type; // 메인, 꼬꼬마, 등등
-  final String name; // 프로젝트 이름
+  String getType() => "${["메인", "꼬꼬마"][type]}";
 
+  final String name; // 프로젝트 이름
   final DateTime? startDate; // 시작 시간
   final DateTime? endDate; // 종료 시간
   final bool isEnd;

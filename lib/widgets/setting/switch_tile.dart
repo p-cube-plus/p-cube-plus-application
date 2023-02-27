@@ -23,35 +23,32 @@ class SwitchTile extends SettingTile {
           _value = !_value;
           settingProvider.toggle(_value);
         },
-        child: Container(
-          padding: super.horizontalPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: super.verticalPadding,
-                child: Text(super.title, style: getTextStyle(context)),
-              ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: super.verticalPadding,
+              child: Text(super.title, style: getTextStyle(context)),
+            ),
 
-              // Switch.adaptive
-              // CupertinoSwitch
-              // Switch
-              FlutterSwitch(
-                width: 32,
-                height: 16,
-                activeColor: Color(0xFFDE2B13),
-                value: _value,
-                toggleSize: 12,
-                borderRadius: 50,
-                padding: 2,
-                onToggle: (value) {
-                  settingProvider.changeState(type);
-                  _value = value;
-                  settingProvider.toggle(_value);
-                },
-              ),
-            ],
-          ),
+            // Switch.adaptive
+            // CupertinoSwitch
+            // Switch
+            FlutterSwitch(
+              width: 32,
+              height: 16,
+              activeColor: Color(0xFFDE2B13),
+              value: _value,
+              toggleSize: 12,
+              borderRadius: 50,
+              padding: 2,
+              onToggle: (value) {
+                settingProvider.changeState(type);
+                _value = value;
+                settingProvider.toggle(_value);
+              },
+            ),
+          ],
         ),
       ),
     );

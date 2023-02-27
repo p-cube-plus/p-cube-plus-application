@@ -36,7 +36,7 @@ class RoundedBorder extends StatelessWidget {
               color: Theme.of(context).shadowColor,
               blurRadius: 10.0,
               spreadRadius: 0.0,
-              offset: Offset.fromDirection(0, 2.0),
+              offset: Offset.fromDirection(0.0, 2.0),
             )
         ],
       ),
@@ -44,7 +44,7 @@ class RoundedBorder extends StatelessWidget {
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
         ),
-        onTap: onTap ?? () {},
+        onTap: onTap ?? null,
         child: Container(
           padding: padding,
           child: child,

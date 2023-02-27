@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
 import 'package:p_cube_plus_application/screens/user_informations/promotion_progress_page.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/content_summary_view.dart';
-import '../../widgets/default_profile.dart';
+import '../../widgets/default/default_profile.dart';
 import '../user_informations/project_list_page.dart';
 import '../../widgets/default/default_page.dart';
 import '../../models/project.dart';
@@ -27,7 +28,6 @@ class UserInformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultPage(
       title: "내 정보",
-      bottomPadding: 20.0,
       action: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -42,7 +42,7 @@ class UserInformationPage extends StatelessWidget {
           color: Theme.of(context).textTheme.headline2!.color,
         ),
       ),
-      content: InformationList(),
+      content: DefaultContent(child: InformationList()),
     );
   }
 }

@@ -12,12 +12,10 @@ import 'package:flutter/material.dart';
 
 abstract class SettingTile extends StatelessWidget {
   static const double vertical = 10.0;
-  static const double horizontal = 20.0;
+  static const double horizontal = 0.0;
   final defaultFontSize = 12.0;
-  final horizontalPadding = EdgeInsets.symmetric(horizontal: horizontal);
   final verticalPadding = EdgeInsets.symmetric(vertical: vertical);
-  final allPadding =
-      EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical);
+  final allPadding = EdgeInsets.symmetric(horizontal: 0.0, vertical: vertical);
   final background = Colors.white70;
   final title;
 

@@ -37,11 +37,8 @@ class _ButtonPageState extends State<ButtonPage> {
     return Column(
       children: [
         Row(children: _rowChildren),
-        Expanded(
-          child: Padding(
-              padding: EdgeInsets.only(top: 24),
-              child: widget.contents[_index]),
-        ),
+        Padding(
+            padding: EdgeInsets.only(top: 24), child: widget.contents[_index]),
       ],
     );
   }
@@ -77,10 +74,8 @@ class _ButtonPageState extends State<ButtonPage> {
               }),
           child: Text(
             name,
-            style: Theme.of(context)
-                .textTheme
-                .headline4!
-                .copyWith(fontSize: 12, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
           ),
           style: Theme.of(context).elevatedButtonTheme.style),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 
 import '../../providers/user_data_provider.dart';
@@ -34,22 +35,24 @@ class CautionListPage extends StatelessWidget {
     return DefaultPage(
       title: "경고 현황",
       appbar: DefaultAppBar(),
-      content: Column(
-        children: [
-          CautionSummaryView(userProvider: userProvider),
-          ListDivider(),
-          CautionListView(
-            title: "경고 및 주의 내역",
-            userProvider: userProvider,
-            mode: 1,
-          ),
-          SizedBox(height: 32.0),
-          CautionListView(
-            title: "경고 차감 내역",
-            userProvider: userProvider,
-            mode: -1,
-          ),
-        ],
+      content: DefaultContent(
+        child: Column(
+          children: [
+            CautionSummaryView(userProvider: userProvider),
+            ListDivider(),
+            CautionListView(
+              title: "경고 및 주의 내역",
+              userProvider: userProvider,
+              mode: 1,
+            ),
+            SizedBox(height: 32.0),
+            CautionListView(
+              title: "경고 차감 내역",
+              userProvider: userProvider,
+              mode: -1,
+            ),
+          ],
+        ),
       ),
     );
   }

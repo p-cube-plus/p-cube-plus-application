@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:p_cube_plus_application/widgets/list_divider_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +17,11 @@ class SettingNoticePage extends StatelessWidget {
     return DefaultPage(
       title: "알림 설정",
       appbar: DefaultAppBar(),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: _getChildren(noticeProvider),
+      content: DefaultContent(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: _getChildren(noticeProvider),
+        ),
       ),
     );
   }

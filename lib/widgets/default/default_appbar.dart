@@ -22,10 +22,15 @@ class DefaultAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final topPadding =
-        statusBarHeight + ((leftTitleState == null) ? 19.0 : 34.0);
+    final topPadding = (leftTitleState == null) ? 19.0 : 34.0;
     return Container(
-      color: backgroundColor ?? theme.backgroundColor,
+      //color: backgroundColor ?? theme.backgroundColor,
+      decoration: BoxDecoration(
+          color: backgroundColor ?? theme.backgroundColor,
+          border: Border.all(
+            width: 0.0,
+            color: backgroundColor ?? theme.backgroundColor,
+          )),
       padding: EdgeInsets.only(
           left: 24.0,
           right: 24.0,
@@ -36,13 +41,17 @@ class DefaultAppBar extends StatelessWidget {
             ? MainAxisAlignment.spaceBetween
             : MainAxisAlignment.start,
         children: [
-          hasPrevious
-              ? Icon(
-                  Icons.arrow_back_ios_new,
-                  size: 20.0,
-                  color: contentColor ?? theme.textTheme.headline1!.color,
-                )
-              : SizedBox(),
+          if (hasPrevious)
+            GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                size: 20.0,
+                color: contentColor ?? theme.textTheme.headline1!.color,
+              ),
+            )
+          else
+            SizedBox(),
           if (centerTitle != null)
             Text(
               centerTitle!,

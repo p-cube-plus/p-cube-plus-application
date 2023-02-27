@@ -53,19 +53,17 @@ class RentItemViewState extends State<RentItemView> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: ListView.builder(
-                    padding: EdgeInsets.all(0),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return RentBox(rent: snapshot.data![index]);
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 24.0),
-                child: RentButton(text: "스캔하기", isActive: true, isRent: true),
-              )
+              ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return RentBox(rent: snapshot.data![index]);
+                  }),
+              //Padding(
+              //  padding: const EdgeInsets.only(top: 8, bottom: 24.0),
+              //  child: RentButton(text: "스캔하기", isActive: true, isRent: true),
+              //)
             ],
           );
         } else if (snapshot.hasError) {
@@ -77,4 +75,3 @@ class RentItemViewState extends State<RentItemView> {
     );
   }
 }
-

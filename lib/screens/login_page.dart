@@ -189,11 +189,11 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 78),
+              padding: EdgeInsets.only(bottom: 70),
               child: Column(
                 children: [
                   _ShowButton(),
-                  SizedBox(height: 16.0),
+                  SizedBox(height: 8.0),
                   _ShowTextButton(),
                 ],
               ),
@@ -224,13 +224,11 @@ class _ShowButton extends StatelessWidget {
                       width: 20,
                       child: Constants.Icons.GetIcon(Constants.Icons.naver)),
                 ),
-                Text(
-                  "네이버 아이디로 로그인",
-                  style: theme.textTheme.headline1!.copyWith(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                Text("네이버 아이디로 로그인",
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white)),
               ],
             ),
           ),
@@ -247,7 +245,7 @@ class _ShowTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.symmetric(horizontal: 98),
       child: SizedBox(
         width: double.infinity,
         child: TextButton(

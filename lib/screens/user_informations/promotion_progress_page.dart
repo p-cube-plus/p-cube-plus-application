@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import '../../widgets/default_profile.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
+import '../../widgets/default/default_profile.dart';
 import '../../models/project.dart';
 import '../../providers/user_data_provider.dart';
 import '../../widgets/default/default_page.dart';
-import '../../widgets/project/project_view_widget.dart';
+import '../../widgets/project/project_view.dart';
 import '../../widgets/default/rounded_border.dart';
 import '../../utilities/contants.dart' as Constants;
 
@@ -18,81 +19,83 @@ class PromotionProgressPage extends StatelessWidget {
     return DefaultPage(
       title: "승급 진행률",
       appbar: DefaultAppBar(),
-      content: Column(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: Row(children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 16),
-                    child: Text(
-                      "${(userProvider.user!.promotionProgress.progress * 100).round()}%", // debug
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: Color(0xCCDE2B13),
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w700,
-                              ),
-                    ),
-                  ),
-                  Expanded(
-                      child: Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      RoundedBorder(
-                        radius: 8.0,
-                        height: 16.0,
-                        color: const Color(0xFFF9D4CF),
+      content: DefaultContent(
+        child: Column(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: Row(children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 16),
+                      child: Text(
+                        "${(userProvider.user!.promotionProgress.progress * 100).round()}%", // debug
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: Color(0xCCDE2B13),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex:
-                                (userProvider.user!.promotionProgress.progress *
-                                        100)
-                                    .toInt(),
-                            child: RoundedBorder(
-                              radius: 8.0,
-                              height: 16.0,
-                              color: Color(0xCCDE2B13),
-                            ),
-                          ),
-                          Expanded(
-                              flex: ((1 -
-                                          userProvider.user!.promotionProgress
-                                              .progress) *
+                    ),
+                    Expanded(
+                        child: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        RoundedBorder(
+                          radius: 8.0,
+                          height: 16.0,
+                          color: const Color(0xFFF9D4CF),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: (userProvider
+                                          .user!.promotionProgress.progress *
                                       100)
                                   .toInt(),
-                              child: Container()),
-                        ],
-                      ),
-                    ],
-                  )),
-                ]),
-              ),
-              PromotionRequirement(requirement: PeriodRequirement(1)),
-              PromotionRequirement(requirement: WorkshopRequirement(2)),
-              PromotionRequirement(requirement: ProjectRequirement(1)),
-              PromotionRequirement(
-                  requirement: PartRequirement(false, "플로우 차트와 데이터 테이블")),
-              PromotionRequirement(requirement: VoteRequirement(false)),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 32.0),
-            child: SizedBox(
-              height: 48.0,
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text("승급 신청하기"),
+                              child: RoundedBorder(
+                                radius: 8.0,
+                                height: 16.0,
+                                color: Color(0xCCDE2B13),
+                              ),
+                            ),
+                            Expanded(
+                                flex: ((1 -
+                                            userProvider.user!.promotionProgress
+                                                .progress) *
+                                        100)
+                                    .toInt(),
+                                child: Container()),
+                          ],
+                        ),
+                      ],
+                    )),
+                  ]),
+                ),
+                PromotionRequirement(requirement: PeriodRequirement(1)),
+                PromotionRequirement(requirement: WorkshopRequirement(2)),
+                PromotionRequirement(requirement: ProjectRequirement(1)),
+                PromotionRequirement(
+                    requirement: PartRequirement(false, "플로우 차트와 데이터 테이블")),
+                PromotionRequirement(requirement: VoteRequirement(false)),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 32.0),
+              child: SizedBox(
+                height: 48.0,
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text("승급 신청하기"),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/screens/projects/project_chat_page.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
+import '../../models/project.dart';
 import '../../widgets/default/default_page.dart';
 import '../../widgets/project/inquiry_tile.dart';
 import '../../widgets/default/rounded_border.dart';
@@ -7,48 +10,58 @@ import '../../utilities/contants.dart' as Constants;
 
 class ProjectInquiryPage extends StatelessWidget {
   const ProjectInquiryPage({
-    required this.projectName,
-    required this.projectType,
+    required this.project,
     required this.inquiryCount,
+    this.isPM = false,
     Key? key,
   }) : super(key: key);
 
-  final String projectName;
-  final String projectType;
+  final Project project;
   final int inquiryCount;
+  final bool isPM;
 
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
-        title: projectName,
-        subtitle: projectType,
+        title: project.name,
+        subtitle: project.getType() + "프로젝트",
         appbar: DefaultAppBar(
           centerTitle: "프로젝트에 문의하기",
         ),
-        floatingActionButton: _FloatingInquiryButton(),
-        action: GestureDetector(
-            child: RoundedBorder(
-              radius: 20.0,
-              height: 31,
-              color: Color(0xFFDE2B13),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Text(
-                "상태 지정하기",
-                style: Theme.of(context).textTheme.headline2!.copyWith(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-            ),
-            onTap: () {}),
+        floatingActionButton:
+            !isPM ? _FloatingInquiryButton(project: project) : null,
+        action: isPM
+            ? GestureDetector(
+                child: RoundedBorder(
+                  radius: 20.0,
+                  height: 31.0,
+                  color: Color(0xFFDE2B13),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: Text(
+                    "상태 지정하기",
+                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                ),
+                onTap: () {})
+            : null,
         content: inquiryCount != 0
-            ? Column(
-                children: List.generate(
-                  inquiryCount,
-                  (index) => Padding(
-                    padding: EdgeInsets.only(top: (index == 0 ? 0.0 : 8.0)),
-                    child: InquiryTile(showChat: true, chatCount: index),
+            ? DefaultContent(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(
+                    inquiryCount,
+                    (index) => Padding(
+                      padding: EdgeInsets.only(
+                        top: (index == 0 ? 4.0 : 8.0),
+                      ),
+                      child: InquiryTile(showChat: true, chatCount: index),
+                    ),
+                    growable: false,
                   ),
                 ),
               )
@@ -89,6 +102,9 @@ class ProjectInquiryPage extends StatelessWidget {
 }
 
 class _FloatingInquiryButton extends StatelessWidget {
+  const _FloatingInquiryButton({required this.project});
+  final Project project;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -97,7 +113,7 @@ class _FloatingInquiryButton extends StatelessWidget {
       child: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return Container();
+            return ProjectChatPage(project: project);
           }));
         },
         elevation: 7.68,

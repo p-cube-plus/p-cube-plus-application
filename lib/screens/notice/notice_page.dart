@@ -40,7 +40,6 @@ class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return DefaultPage(
       title: "알림",
-      bottomPadding: 20.0,
       action: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -55,7 +54,7 @@ class _NoticePageState extends State<NoticePage> with TickerProviderStateMixin {
           color: Theme.of(context).textTheme.headline2!.color,
         ),
       ),
-      content: DefaultTabBar(bottomPadding: 20.0, tabs: [
+      content: DefaultTabBar(tabs: [
         DefaultTab(
             title: "새 알림",
             page: NoticeListView(
@@ -89,15 +88,14 @@ class NoticeListView extends StatelessWidget {
       future: notificationAPI,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ListView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: NoticeBoxWidget(isNew: isNew, box: snapshot.data![index]),
-            ),
-          );
+          return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(
+                  snapshot.data!.length,
+                  (index) => Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: NoticeBoxWidget(
+                          isNew: isNew, box: snapshot.data![index]))));
         } else if (snapshot.hasError) {
           return Center(child: Text("정보를 불러올 수 없습니다."));
         }

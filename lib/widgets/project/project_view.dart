@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../models/project.dart';
 import '../../screens/projects/project_detail_page.dart';
-import '../default_profile.dart';
+import '../default/default_profile.dart';
 import '../default/rounded_border.dart';
 
 class ProjectView extends StatelessWidget {
@@ -47,23 +47,16 @@ class ProjectView extends StatelessWidget {
               Stack(
                 alignment: Alignment.centerRight,
                 children: List.generate(
-                  project.members.length,
+                  project.members.length > 5 ? 6 : project.members.length,
                   (index) {
                     return Padding(
                       padding: EdgeInsets.only(right: index * 20.0),
                       child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0x0A000000),
-                              blurRadius: 3.0,
-                              spreadRadius: 0.0,
-                              offset: Offset.fromDirection(1.0, 1.0),
-                            ),
-                          ],
+                        child: DefaultProfile(
+                          size: 24.0,
+                          isOverflow:
+                              (project.members.length > 5 && index == 0),
                         ),
-                        child: const DefaultProfile(size: 24.0),
                       ),
                     );
                   },
@@ -73,7 +66,7 @@ class ProjectView extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           Text(
-            "${["메인", "꼬꼬마"][project.type]} 프로젝트", // debug
+            "${["메인", "꼬꼬마"][project.type]} 프로젝트",
             style: Theme.of(context).textTheme.headline1!.copyWith(
                   color: project.isEnd
                       ? Theme.of(context).textTheme.headline3!.color
@@ -108,13 +101,14 @@ class ProjectView extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                "팀원 모집 마감", // json 수정
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
+              if (!project.isEnd)
+                Text(
+                  "팀원 모집 마감", // json 수정
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
             ],
           ),
         ],

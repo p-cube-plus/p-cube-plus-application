@@ -13,10 +13,11 @@ class RentPage extends StatelessWidget {
     return DefaultPage(
       title: "물품",
       appbar: DefaultAppBar(),
-      action:
-          //체크
-          GestureDetector(
-        child: Image.asset("assets/images/search.png"),
+      action: GestureDetector(
+        child: Image.asset(
+          "assets/images/search.png",
+          color: Theme.of(context).textTheme.headline1!.color,
+        ),
         onTap: () {
           Navigator.push(
             context,
@@ -26,17 +27,10 @@ class RentPage extends StatelessWidget {
           );
         },
       ),
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: DefaultTabBar(tabs: [
-              DefaultTab(title: "대여하기", page: RentItenListView()),
-              DefaultTab(title: "내가 대여한", page: RentedItemListView())
-            ]),
-          )
-        ],
-      ),
+      content: DefaultTabBar(tabs: [
+        DefaultTab(title: "대여하기", page: RentItenListView()),
+        DefaultTab(title: "내가 대여한", page: RentedItemListView())
+      ]),
     );
   }
 }

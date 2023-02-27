@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import '../../widgets/default_profile.dart';
+import 'package:p_cube_plus_application/widgets/default/default_content.dart';
+import '../../widgets/default/default_profile.dart';
 import '../../models/project.dart';
 import '../../providers/user_data_provider.dart';
 import '../../widgets/default/default_page.dart';
-import '../../widgets/project/project_view_widget.dart';
+import '../../widgets/project/project_view.dart';
 import '../../widgets/default/rounded_border.dart';
 
 class ProjectListPage extends StatelessWidget {
@@ -39,7 +40,7 @@ class ProjectListPage extends StatelessWidget {
                     ),
               ),
             )
-          : ProjectListView(userProvider: userProvider),
+          : DefaultContent(child: ProjectListView(userProvider: userProvider)),
     );
   }
 }

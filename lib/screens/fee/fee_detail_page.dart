@@ -20,8 +20,8 @@ class FeeDetailPage extends StatelessWidget {
 
     return DefaultPage(
       title: "회비 내역",
+      textColor: Colors.white,
       backgroundColor: const Color(0xFFDE2B13),
-      bottomPadding: 24.0,
       appbar: DefaultAppBar(
         contentColor: Colors.white,
         backgroundColor: const Color(0xFFDE2B13),
@@ -218,7 +218,7 @@ class DuesDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 40),
+          padding: EdgeInsets.only(top: 8),
           child: Column(
             children: [
               _getDueList(theme, due, type),
@@ -253,7 +253,7 @@ class DuesDetail extends StatelessWidget {
       children: [
         for (int i = 0; i < dueList.length; ++i)
           Padding(
-            padding: EdgeInsets.only(bottom: 32),
+            padding: EdgeInsets.only(top: 32),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

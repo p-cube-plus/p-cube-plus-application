@@ -23,7 +23,6 @@ class HomePage extends StatelessWidget {
 
     return DefaultPage(
       title: "홈",
-      bottomPadding: 20.0,
       content: DefaultContent(
         child: Column(
           children: [

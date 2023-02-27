@@ -8,21 +8,19 @@ class NewPageTile extends SettingTile {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: InkWell(
-        onTap: () => tapFunc(context),
-        child: Container(
-          padding: super.allPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: getTextStyle(context),
-              ),
-              Icon(Icons.arrow_forward_ios, size: defaultFontSize),
-            ],
-          ),
+    return InkWell(
+      onTap: () => tapFunc(context),
+      child: Container(
+        padding: super.allPadding,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: getTextStyle(context),
+            ),
+            Icon(Icons.arrow_forward_ios, size: defaultFontSize),
+          ],
         ),
       ),
     );
