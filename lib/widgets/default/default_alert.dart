@@ -66,7 +66,7 @@ class DefaultAlert extends StatelessWidget {
                       width: double.infinity,
                       height: 35.0,
                       child: ElevatedButton(
-                        onPressed: onTap ?? () {},
+                        onPressed: onTap ?? () => Navigator.pop(context),
                         child:
                             Text("확인", style: TextStyle(color: Colors.white)),
                       ))
@@ -89,7 +89,8 @@ class DefaultAlert extends StatelessWidget {
                           SizedBox(width: 16.0),
                           Expanded(
                             child: ElevatedButton(
-                                onPressed: onTap ?? () {},
+                                onPressed:
+                                    onTap ?? () => Navigator.pop(context),
                                 child: Text("확인",
                                     style: TextStyle(color: Colors.white))),
                           )

@@ -17,32 +17,26 @@ class SettingNoticePage extends StatelessWidget {
     return DefaultPage(
       title: "알림 설정",
       appbar: DefaultAppBar(),
-      content: DefaultContent(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: _getChildren(noticeProvider),
-        ),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SwitchTile(title: '알림 허용', type: SettingType.AllNotice),
+        ]..addAll(noticeProvider.isOn
+            ? [
+                (ListDivider(horizontal: 20)),
+                (SubTextTile(title: '회비 알림')),
+                (SwitchTile(
+                    title: '정기회의 알림', type: SettingType.AllMeetingNotice)),
+                (SwitchTile(
+                    title: '파트회의 알림', type: SettingType.PartMeetingNotice)),
+                (ListDivider(horizontal: 20)),
+                (SubTextTile(title: '기타 알림')),
+                (SwitchTile(title: '회비 알림', type: SettingType.DuesNotice)),
+                (SwitchTile(title: '청소 알림', type: SettingType.CleanNotice)),
+                (SwitchTile(title: '도서 대여 알림', type: SettingType.BookNotice)),
+              ]
+            : [SizedBox()]),
       ),
     );
-  }
-
-  _getChildren(noticeProvider) {
-    final result = <Widget>[
-      SwitchTile(title: '알림 허용', type: SettingType.AllNotice),
-    ];
-    if (noticeProvider.isOn) {
-      result.add(ListDivider(horizontal: 20));
-      result.add(SubTextTile(title: '회비 알림'));
-      result.add(
-          SwitchTile(title: '정기회의 알림', type: SettingType.AllMeetingNotice));
-      result.add(
-          SwitchTile(title: '파트회의 알림', type: SettingType.PartMeetingNotice));
-      result.add(ListDivider(horizontal: 20));
-      result.add(SubTextTile(title: '기타 알림'));
-      result.add(SwitchTile(title: '회비 알림', type: SettingType.DuesNotice));
-      result.add(SwitchTile(title: '청소 알림', type: SettingType.CleanNotice));
-      result.add(SwitchTile(title: '도서 대여 알림', type: SettingType.BookNotice));
-    }
-    return result;
   }
 }

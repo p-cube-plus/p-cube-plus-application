@@ -16,7 +16,7 @@ class SwitchTile extends TSettingTile {
     bool _value = settingProvider.isOn;
     print(_value);
     return Container(
-      //padding: super.verticalPadding,
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: InkWell(
         onTap: () {
           settingProvider.changeState(type);
