@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/setting/setting_tile.dart';
+import 'package:p_cube_plus_application/widgets/setting/Tsetting_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/theme_provider.dart';
 
-class BottomSheetTile extends SettingTile {
+class BottomSheetTile extends TSettingTile {
   final String bottomTitle;
   final List<Widget> bottomWidgets;
 

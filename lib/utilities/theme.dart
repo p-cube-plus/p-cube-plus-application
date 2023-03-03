@@ -19,7 +19,7 @@ class MyThemes {
         fontWeight: FontWeight.w700,
       ),
     ),
-    dividerColor: Colors.transparent,
+    dividerColor: Color(0xFFC9C9C9),
     colorScheme: ColorScheme.dark(),
     iconTheme: IconThemeData(color: Colors.white, opacity: 0.8),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -29,10 +29,13 @@ class MyThemes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: const Color(0xFFDE2B13),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minimumSize: Size(0, 35),
-      ),
+          primary: const Color(0xFFDE2B13),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          textStyle: TextStyle(
+              fontSize: 12.0,
+              fontWeight: FontWeight.w700,
+              color: Colors.white)),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
@@ -50,7 +53,18 @@ class MyThemes {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: const Color(0xFF202020),
+      helperMaxLines: 0,
+      errorMaxLines: 0,
+      filled: true,
+      fillColor: const Color(0xFF2E2E2E),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      hintStyle: TextStyle(
+        fontSize: 10.0,
+        fontWeight: FontWeight.w400,
+        color: Colors.white54,
+      ),
+      border: OutlineInputBorder(
+          borderSide: BorderSide(width: 0.0, style: BorderStyle.none)),
     ),
     textTheme: TextTheme(
       headline1: TextStyle(color: const Color(0xFFFFFFFF)),
@@ -74,7 +88,7 @@ class MyThemes {
     primaryColor: Colors.white,
     cardColor: Colors.white,
     disabledColor: Color(0xFFE9E9E9),
-    dividerColor: Colors.transparent,
+    dividerColor: Color(0xFFE9E9E9),
     tabBarTheme: TabBarTheme(
       labelColor: const Color(0xFF2E2E2E),
       labelStyle: TextStyle(
@@ -97,10 +111,11 @@ class MyThemes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
         primary: const Color(0xFFDE2B13),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         minimumSize: Size(0, 35),
+        textStyle: TextStyle(
+            fontSize: 12.0, fontWeight: FontWeight.w700, color: Colors.white),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -118,7 +133,18 @@ class MyThemes {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     )),
     inputDecorationTheme: InputDecorationTheme(
+      helperMaxLines: 0,
+      errorMaxLines: 0,
+      filled: true,
       fillColor: const Color(0xFFE9E9E9),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      hintStyle: TextStyle(
+        fontSize: 10.0,
+        fontWeight: FontWeight.w400,
+        color: const Color(0xFFABABAB),
+      ),
+      border: OutlineInputBorder(
+          borderSide: BorderSide(width: 0.0, style: BorderStyle.none)),
     ),
     textTheme: TextTheme(
       headline1: TextStyle(color: const Color(0xFF2E2E2E)),

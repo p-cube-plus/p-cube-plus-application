@@ -7,7 +7,7 @@ import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 
 import '../../providers/user_data_provider.dart';
 import '../../widgets/default/default_page.dart';
-import '../../widgets/list_divider_widget.dart';
+import '../../widgets/default/list_divider.dart';
 
 String _autoFix(double d) {
   if (d.toInt() == d)

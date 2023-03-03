@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/models/due.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_bottomsheet.dart';
 import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:provider/provider.dart';
 import '../../providers/fee_provider.dart';
 import '../../widgets/default/default_page.dart';
-import '../../widgets/list_divider_widget.dart';
+import '../../widgets/default/list_divider.dart';
 import '../../utilities/contants.dart' as Constants;
 
 class FeeDetailPage extends StatelessWidget {
@@ -27,11 +28,16 @@ class FeeDetailPage extends StatelessWidget {
         backgroundColor: const Color(0xFFDE2B13),
       ),
       action: GestureDetector(
-        onTap: () => showModalBottomSheet(
-            context: context,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-            builder: (context) => _getBottomsheetData(context, feeProvider)),
+        onTap: () => DefaultBottomsheet.getBottomsheet(context, "내역 유형", [
+          _getBottomTile(context, FeeType.All, feeProvider),
+          _getBottomTile(context, FeeType.Deposit, feeProvider),
+          _getBottomTile(context, FeeType.Withdraw, feeProvider),
+        ]),
+        //showModalBottomSheet(
+        //    context: context,
+        //    shape: const RoundedRectangleBorder(
+        //        borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        //    builder: (context) => _getBottomsheetData(context, feeProvider)),
         child: Row(
           children: [
             Text(
@@ -66,30 +72,6 @@ class FeeDetailPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  _getBottomsheetData(context, feeProvider) {
-    feeProvider = Provider.of<FeeProvider>(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 20, top: 32, bottom: 40),
-          child: Text(
-            "내역 유형",
-            style: Theme.of(context)
-                .textTheme
-                .headline1!
-                .copyWith(fontSize: 20.0, fontWeight: FontWeight.w700),
-          ),
-        ),
-        _getBottomTile(context, FeeType.All, feeProvider),
-        _getBottomTile(context, FeeType.Deposit, feeProvider),
-        _getBottomTile(context, FeeType.Withdraw, feeProvider),
-        SizedBox(height: 56)
-      ],
     );
   }
 
@@ -143,7 +125,7 @@ class AccountInfo extends StatelessWidget {
               ),
             ),
           ),
-          ListDivider(padding: 24),
+          ListDivider(horizontal: 24),
           Padding(
             padding: EdgeInsets.only(bottom: 24, left: 32),
             child: Column(

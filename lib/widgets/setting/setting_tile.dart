@@ -1,34 +1,49 @@
 import 'package:flutter/material.dart';
 
-// NewPageTile: 클릭 시 새 페이지로 넘어가는 설정
-// SwitchTile: 스위치 기능의 설정
-// alertTile: 클릭 시 alert창이 나오는 설정
+class SettingTile extends StatelessWidget {
+  const SettingTile({
+    required this.title,
+    this.hasIcon = true,
+    this.optionText,
+    this.onTap,
+  });
+  final String title;
+  final bool hasIcon;
+  final Widget? optionText;
+  final void Function()? onTap;
 
-// versionTile: 현재 앱버전을 알기 위한 특수한 설정
-// mainTitleTile: AppBar 역할의 설정 텍스트
-// subTextTile: 설정 구분을 위한 텍스트
-
-// botttomsheetTile: bottomsheet를 띄우는 설정
-
-abstract class SettingTile extends StatelessWidget {
-  static const double vertical = 10.0;
-  static const double horizontal = 0.0;
-  final defaultFontSize = 12.0;
-  final verticalPadding = EdgeInsets.symmetric(vertical: vertical);
-  final allPadding = EdgeInsets.symmetric(horizontal: 0.0, vertical: vertical);
-  final background = Colors.white70;
-  final title;
-
-  TextStyle getTextStyle(BuildContext context, {bool isTitle = false}) =>
-      isTitle
-          ? Theme.of(context).textTheme.headline2!.copyWith(
-                fontSize: 10,
-                fontWeight: FontWeight.w400,
-              )
-          : Theme.of(context).textTheme.headline1!.copyWith(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              );
-
-  SettingTile({required String this.title});
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: theme.textTheme.headline1!
+                  .copyWith(fontSize: 12.0, fontWeight: FontWeight.w400),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 5.0),
+                  child: optionText ?? SizedBox(width: 0.0),
+                ),
+                hasIcon
+                    ? Icon(Icons.chevron_right,
+                        size: 25.0, color: theme.textTheme.headline2!.color)
+                    : SizedBox(width: 0.0),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }

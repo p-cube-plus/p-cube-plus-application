@@ -15,7 +15,7 @@ import '../../models/project.dart';
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
 import '../../models/user.dart';
-import '../../widgets/list_divider_widget.dart';
+import '../../widgets/default/list_divider.dart';
 import '../../widgets/default/rounded_border.dart';
 
 import '../settings/setting_page.dart';

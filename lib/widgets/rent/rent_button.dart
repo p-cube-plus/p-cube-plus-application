@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../screens/rent/scan_page.dart';
-import '../setting/alert_frame.dart';
 
 class RentButton extends StatelessWidget {
   const RentButton(
@@ -16,46 +15,49 @@ class RentButton extends StatelessWidget {
       width: double.infinity,
       height: 48,
       child: ElevatedButton(
-          onPressed: isActive
-              ? () => showDialog(
-                  context: context,
-                  builder: (context) => AlertFrame(
-                        messageType: MessageType.OKCancel,
-                        okText: isRent ? "대여" : "반납",
-                        children: [
-                          Align(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 36, bottom: 16),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    isRent ? '대여하기' : "반납하기",
-                                    style: theme.textTheme.headline1!.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    isRent
-                                        ? '선택한 제품을 대여하시겠습니까?'
-                                        : "선택한 제품을 반납하시겠습니까?",
-                                    style: theme.textTheme.headline1!.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                ],
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                          ),
-                        ],
-                        okWidget: ScanPage(),
-                      ))
-              : null,
+          onPressed: () {},
+          // onPressed: isActive
+          //     ? () => showDialog(
+          //         context: context,
+          //         builder: (context) =>
+          //         AlertFrame(
+          //               messageType: MessageType.OKCancel,
+          //               okText: isRent ? "대여" : "반납",
+          //               children: [
+          //                 Align(
+          //                   child: Padding(
+          //                     padding:
+          //                         const EdgeInsets.only(top: 36, bottom: 16),
+          //                     child: Column(
+          //                       children: [
+          //                         Text(
+          //                           isRent ? '대여하기' : "반납하기",
+          //                           style: theme.textTheme.headline1!.copyWith(
+          //                             fontSize: 14,
+          //                             fontWeight: FontWeight.w700,
+          //                           ),
+          //                         ),
+          //                         SizedBox(height: 8),
+          //                         Text(
+          //                           isRent
+          //                               ? '선택한 제품을 대여하시겠습니까?'
+          //                               : "선택한 제품을 반납하시겠습니까?",
+          //                           style: theme.textTheme.headline1!.copyWith(
+          //                             fontSize: 12,
+          //                             fontWeight: FontWeight.w400,
+          //                           ),
+          //                         ),
+          //                         SizedBox(height: 8),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                   alignment: Alignment.center,
+          //                 ),
+          //               ],
+          //               okWidget: ScanPage(),
+          //             )
+          //             )
+          //     : null,
           child: Text(
             text,
             style: isActive
