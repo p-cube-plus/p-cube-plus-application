@@ -62,7 +62,7 @@ class InformationList extends StatelessWidget {
 
     List<Widget> widgets = <Widget>[
       const ProfileView(),
-      ListDivider(),
+      ListDivider(vertial: 20.0),
     ];
 
     widgets.add(

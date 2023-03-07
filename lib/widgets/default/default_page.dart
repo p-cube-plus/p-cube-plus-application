@@ -41,7 +41,14 @@ class DefaultPage extends StatelessWidget {
         children: [
           if (appbar != null) appbar!,
           Container(
-            color: backgroundColor ?? contentColor ?? theme.backgroundColor,
+            //color: backgroundColor ?? contentColor ?? theme.backgroundColor,
+            decoration: BoxDecoration(
+                color: backgroundColor ?? contentColor ?? theme.backgroundColor,
+                border: Border.all(
+                  width: 0.0,
+                  color:
+                      backgroundColor ?? contentColor ?? theme.backgroundColor,
+                )),
             child: Padding(
               padding: EdgeInsets.only(
                   left: 20.0,
