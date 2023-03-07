@@ -39,7 +39,7 @@ class CautionListPage extends StatelessWidget {
         child: Column(
           children: [
             CautionSummaryView(userProvider: userProvider),
-            ListDivider(),
+            ListDivider(vertial: 24.0),
             CautionListView(
               title: "경고 및 주의 내역",
               userProvider: userProvider,

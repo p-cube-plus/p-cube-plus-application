@@ -15,14 +15,18 @@ class DefaultContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SingleChildScrollView(
-          // GlowingOverscrollIndicator: Android
-          // physics: BouncingScrollPhysics() : IOS
-          physics: BouncingScrollPhysics(),
-          child: Padding(
-              padding: EdgeInsets.only(
-                  left: 20.0, right: 20.0, bottom: bottomPadding),
-              child: child),
+        SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: SingleChildScrollView(
+            // GlowingOverscrollIndicator: Android
+            // physics: BouncingScrollPhysics() : IOS
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+                padding: EdgeInsets.only(
+                    left: 20.0, right: 20.0, bottom: bottomPadding),
+                child: child),
+          ),
         ),
         if (bottomButtonText != null)
           Positioned(
