@@ -8,6 +8,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/theme_provider.dart';
+import '../../widgets/default/default_textField.dart';
 import '../../widgets/default/list_divider.dart';
 import '../../widgets/default/rounded_border.dart';
 import '../../widgets/setting/setting_tile.dart';
@@ -16,7 +17,7 @@ import 'setting_notice_page.dart';
 class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = context.read<ThemeProvider>();
     final theme = Theme.of(context);
     return DefaultPage(
       title: "설정",
@@ -36,19 +37,28 @@ class SettingPage extends StatelessWidget {
                         ),
                       )),
               SettingTile(
-                title: "테마 설정",
-                optionText: Text(
-                  _getMode(themeProvider.type),
-                  style: theme.textTheme.headline3!
-                      .copyWith(fontSize: 11.0, fontWeight: FontWeight.w400),
-                ),
-                onTap: () =>
-                    DefaultBottomsheet.getBottomsheet(context, "테마 설정", [
-                  RadioBox(type: ThemeMode.system, text: "시스템 설정"),
-                  RadioBox(type: ThemeMode.light, text: "라이트 모드"),
-                  RadioBox(type: ThemeMode.dark, text: "다크 모드")
-                ]),
-              ),
+                  title: "테마 설정",
+                  optionText: Text(
+                    _getMode(themeProvider.type),
+                    style: theme.textTheme.headline3!
+                        .copyWith(fontSize: 11.0, fontWeight: FontWeight.w400),
+                  ),
+                  onTap: () => showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20))),
+                      builder: (context) => DefaultBottomsheet(
+                            title: "테마 설정",
+                            contents: [
+                              SettingRadioBox(
+                                  type: ThemeMode.system, text: "시스템 설정"),
+                              SettingRadioBox(
+                                  type: ThemeMode.light, text: "라이트 모드"),
+                              SettingRadioBox(
+                                  type: ThemeMode.dark, text: "다크 모드"),
+                            ],
+                          ))),
               ListDivider(horizontal: 20, vertial: 10.0),
               SettingTile(
                 title: "버전",
@@ -72,14 +82,30 @@ class SettingPage extends StatelessWidget {
               SettingTile(
                   title: "피드백 보내기",
                   onTap: () => showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (context) => DefaultAlert(
                           title: "피드백 보내기",
                           children: [
                             SizedBox(height: 16.0),
-                            _getinputField(theme, 1, "이름을 입력하세요"),
+                            RoundedBorder(
+                              radius: 4.0,
+                              height: 30.0,
+                              child: DefaultTextField(
+                                maxLength: 20,
+                                hintText: "이름을 입력하세요",
+                              ),
+                            ),
                             SizedBox(height: 8.0),
-                            _getinputField(theme, 14, "내용을 입력하세요"),
+                            RoundedBorder(
+                              radius: 4.0,
+                              height: 150.0,
+                              child: DefaultTextField(
+                                minLine: 11,
+                                maxLength: 500,
+                                hintText: "내용을 입력하세요",
+                              ),
+                            ),
                             SizedBox(height: 16.0),
                           ],
                           onTap: () {
@@ -164,35 +190,16 @@ class SettingPage extends StatelessWidget {
             ? "라이트 모드"
             : "다크 모드";
   }
-
-  Widget _getinputField(ThemeData theme, int line, String hintText) {
-    return RoundedBorder(
-      height: line * 10.0 + 20.0,
-      child: TextField(
-        textAlignVertical: TextAlignVertical.bottom,
-        scrollPadding: EdgeInsets.all(8.0),
-        maxLines: line,
-        maxLength: line * 20,
-        cursorColor: theme.textTheme.headline1!.color,
-        style: theme.textTheme.headline1!
-            .copyWith(fontSize: 10.0, fontWeight: FontWeight.w400),
-        decoration: InputDecoration(
-          counterText: "", // 글자수 제한 보이기 삭제
-          hintText: hintText,
-        ),
-      ),
-    );
-  }
 }
 
-class RadioBox extends StatelessWidget {
+class SettingRadioBox extends StatelessWidget {
   final ThemeMode type;
   final String text;
-  RadioBox({required this.type, required this.text});
+  SettingRadioBox({required this.type, required this.text});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = context.watch<ThemeProvider>();
     return InkWell(
       onTap: () => themeProvider.changeType(type),
       child: Padding(
@@ -206,7 +213,7 @@ class RadioBox extends StatelessWidget {
                     .headline1!
                     .copyWith(fontWeight: FontWeight.w400, fontSize: 12.0)),
             Radio(
-                activeColor: const Color(0xFFDE2B13),
+                activeColor: Theme.of(context).primaryColor,
                 value: type,
                 groupValue: themeProvider.type,
                 onChanged: (value) => themeProvider.changeType(type))

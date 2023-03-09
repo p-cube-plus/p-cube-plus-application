@@ -17,7 +17,7 @@ class DefaultProfile extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Color(0xFFE9E9E9),
+        color: Theme.of(context).dialogBackgroundColor,
         image: !isOverflow
             ? DecorationImage(
                 image: AssetImage('assets/images/default_profile.png'),
@@ -36,10 +36,10 @@ class DefaultProfile extends StatelessWidget {
           ? Center(
               child: Text(
               "+1",
-              style: TextStyle(
-                  color: Color(0xFFABABAB),
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w400),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3!
+                  .copyWith(fontSize: 12.0, fontWeight: FontWeight.w400),
             ))
           : null,
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
 import 'package:p_cube_plus_application/widgets/default/default_content.dart';
@@ -19,12 +18,6 @@ class SeminarListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Theme.of(context).backgroundColor,
-      ),
-    );
-
     return DefaultPage(
       title: "세미나 내역",
       appbar: DefaultAppBar(),
@@ -34,7 +27,6 @@ class SeminarListPage extends StatelessWidget {
               child: Text(
                 "세미나 참여 내역이 존재하지 않습니다.",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Color(0xFF818181),
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
@@ -75,21 +67,17 @@ class SeminarListView extends StatelessWidget {
                   children: [
                     Text(
                       "${["수습회원", "정회원", "졸업생"][seminar.type]} 세미나", // debug
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: const Color(0xFF2E2E2E),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500,
-                              ),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                     Text(
                       "${DateFormat("yyyy/MM/dd").format(seminar.date)}", // debug
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: const Color(0xFFABABAB),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400,
-                              ),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400,
+                          ),
                     ),
                   ],
                 ),

@@ -79,12 +79,23 @@ class DefaultAlert extends StatelessWidget {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text("취소",
-                                    style: TextStyle(
-                                        color: const Color(0xFF575757))),
-                                style: ElevatedButton.styleFrom(
-                                    primary: const Color(0xFFE9E9E9))),
+                              onPressed: () => Navigator.pop(context),
+                              child: Text("취소",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w700)),
+                              style: Theme.of(context)
+                                  .elevatedButtonTheme
+                                  .style!
+                                  .copyWith(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Theme.of(context)
+                                                  .dialogBackgroundColor)),
+                            ),
                           ),
                           SizedBox(width: 16.0),
                           Expanded(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/projects/project_inquiry_page.dart';
-import 'package:p_cube_plus_application/screens/projects/project_chat_page.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
 import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
@@ -36,16 +35,16 @@ class ProjectDetailPage extends StatelessWidget {
       textColor: Colors.white,
       appbar: DefaultAppBar(
         contentColor: Colors.white,
-        backgroundColor: const Color(0xFFDE2B13),
+        backgroundColor: Theme.of(context).primaryColor,
         centerTitle: "프로젝트 정보",
       ),
       title: projectName,
       subtitle: projectType,
-      backgroundColor: const Color(0xFFDE2B13),
+      backgroundColor: Theme.of(context).primaryColor,
       decorate: Stack(
         children: [
           Container(
-            color: const Color(0xFFDE2B13),
+            color: Theme.of(context).primaryColor,
             height: 71.0,
             width: double.infinity,
           ),
@@ -69,7 +68,7 @@ class ProjectDetailPage extends StatelessWidget {
                       Text(
                         "팀원 모집 중", // 이 부분에 대한 json 수정 필요
                         style: TextStyle(
-                          color: const Color(0xC9DE2B13),
+                          color: Theme.of(context).primaryColor,
                           fontSize: 12.0,
                           fontWeight: FontWeight.w700,
                         ),
@@ -267,7 +266,7 @@ class _ProjectDetailMemeberView extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 4.0),
                   child: _TagBorder(
                     "PM",
-                    color: const Color(0xC9DE2B13),
+                    color: Theme.of(context).primaryColor,
                     contentColor: Colors.white,
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/projects/project_chat_page.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
+import 'package:p_cube_plus_application/widgets/default/default_bottomsheet.dart';
 import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import '../../models/project.dart';
 import '../../widgets/default/default_page.dart';
@@ -35,7 +36,7 @@ class ProjectInquiryPage extends StatelessWidget {
                 child: RoundedBorder(
                   radius: 20.0,
                   height: 31.0,
-                  color: Color(0xFFDE2B13),
+                  color: Theme.of(context).primaryColor,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Text(
@@ -47,7 +48,18 @@ class ProjectInquiryPage extends StatelessWidget {
                         ),
                   ),
                 ),
-                onTap: () {})
+                onTap: () => showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20))),
+                    builder: (context) => DefaultBottomsheet(
+                          title: "상태 지정하기",
+                          contents: [
+                            _StatusTile("문의 가능"),
+                            _StatusTile("문의 불가"),
+                          ],
+                        )))
             : null,
         content: inquiryCount != 0
             ? DefaultContent(
@@ -101,6 +113,45 @@ class ProjectInquiryPage extends StatelessWidget {
   }
 }
 
+class _StatusTile extends StatefulWidget {
+  const _StatusTile(this.optionText);
+  final String optionText;
+
+  @override
+  State<_StatusTile> createState() => _StatusTileState();
+}
+
+class _StatusTileState extends State<_StatusTile> {
+  bool dummy = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              widget.optionText,
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+            ),
+            Radio(
+              activeColor: Theme.of(context).primaryColor,
+              groupValue: dummy,
+              value: dummy,
+              onChanged: (value) => setState(() => dummy = true),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _FloatingInquiryButton extends StatelessWidget {
   const _FloatingInquiryButton({required this.project});
   final Project project;
@@ -125,7 +176,7 @@ class _FloatingInquiryButton extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Constants.Icons.GetIcon(Constants.Icons.pencil),
         ),
-        backgroundColor: Color(0xFFDE2B13).withOpacity(0.88),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }

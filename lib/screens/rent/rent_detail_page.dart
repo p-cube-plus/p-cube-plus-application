@@ -73,7 +73,7 @@ class RentDetailPage extends StatelessWidget {
                   Text(
                     "${rent.dDay}일",
                     style: TextStyle(
-                      color: const Color(0xCCDE2B13),
+                      color: Theme.of(context).primaryColor,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
                     ),

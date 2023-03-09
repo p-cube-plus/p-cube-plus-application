@@ -3,10 +3,8 @@ import 'package:p_cube_plus_application/providers/project_provider.dart';
 import 'package:p_cube_plus_application/widgets/project/project_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/project.dart';
 import '../../widgets/default/default_page.dart';
 import '../../widgets/default/default_tabbar.dart';
-import '../notice/notice_page.dart';
 
 class ProjectsPage extends StatelessWidget {
   @override

@@ -125,7 +125,7 @@ class MonthFee extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ListDivider(horizontal: 0),
+                      ListDivider(vertial: 16.0),
                       Padding(
                         padding: EdgeInsets.only(bottom: 3),
                         child: Text("회비계좌",
@@ -239,16 +239,19 @@ class _YearCalenderState extends State<YearCalender> {
 
   @override
   Widget build(BuildContext context) {
+    late double startX, endX;
     return GestureDetector(
-      onHorizontalDragEnd: ((details) {
+      onHorizontalDragStart: (details) => startX = details.globalPosition.dx,
+      onHorizontalDragUpdate: (details) {
+        endX = details.localPosition.dx;
+      },
+      onHorizontalDragEnd: (details) {
         setState(() {
-          details.velocity.pixelsPerSecond.dx > 0.0
-              ? ++_curYear
-              : details.velocity.pixelsPerSecond.dx < 0.0
-                  ? --_curYear
-                  : _curYear = _curYear;
+          if (endX - startX > 50.0)
+            --_curYear;
+          else if (startX - endX > 50.0) ++_curYear;
         });
-      }),
+      },
       child: RoundedBorder(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(

@@ -102,7 +102,7 @@ class RentedDetailTile extends StatelessWidget {
                                     )),
                                 Text(returnText! + "일",
                                     style: theme.textTheme.headline1!.copyWith(
-                                      color: Color(0xFFDE2B13),
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                     )),

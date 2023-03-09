@@ -35,11 +35,21 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Status Bar 투명하게
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
     final themeProvider = Provider.of<ThemeProvider>(context);
+
+    SystemChrome.setSystemUIOverlayStyle(
+        themeProvider.brightness == Brightness.light
+            ? SystemUiOverlayStyle.dark.copyWith(
+                systemStatusBarContrastEnforced: false,
+                systemNavigationBarContrastEnforced: false,
+                statusBarColor: Colors.transparent,
+              )
+            : SystemUiOverlayStyle.light.copyWith(
+                systemStatusBarContrastEnforced: false,
+                systemNavigationBarContrastEnforced: false,
+                statusBarColor: Colors.transparent,
+              ));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PCube+', // 탭 이름
@@ -47,6 +57,14 @@ class MyApp extends StatelessWidget {
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
       home: LoginPage(),
+      scrollBehavior: RemoveGlowEffect(),
     );
   }
+}
+
+class RemoveGlowEffect extends MaterialScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+          BuildContext context, Widget child, ScrollableDetails details) =>
+      child;
 }

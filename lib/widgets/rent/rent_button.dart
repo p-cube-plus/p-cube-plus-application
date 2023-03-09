@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../screens/rent/scan_page.dart';
 
 class RentButton extends StatelessWidget {
   const RentButton(

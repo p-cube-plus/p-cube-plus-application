@@ -32,28 +32,26 @@ class SwitchTile extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: _getSwitch(_value, (value) {
-              settingProvider.changeState(type);
-              _value = value;
-              settingProvider.toggle(_value);
-            }),
+            // Switch.adaptive
+            // CupertinoSwitch
+            // Switch
+            child: FlutterSwitch(
+              width: 32,
+              height: 16,
+              activeColor: Theme.of(context).primaryColor,
+              value: _value,
+              toggleSize: 12,
+              borderRadius: 50,
+              padding: 2,
+              onToggle: (value) {
+                settingProvider.changeState(type);
+                _value = value;
+                settingProvider.toggle(_value);
+              },
+            ),
           )
         ],
       ),
     );
   }
-
-  // Switch.adaptive
-  // CupertinoSwitch
-  // Switch
-  Widget _getSwitch(value, Function(bool) onToggle) => FlutterSwitch(
-        width: 32,
-        height: 16,
-        activeColor: Color(0xFFDE2B13),
-        value: value,
-        toggleSize: 12,
-        borderRadius: 50,
-        padding: 2,
-        onToggle: onToggle,
-      );
 }

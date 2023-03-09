@@ -103,7 +103,7 @@ class InquiryTile extends StatelessWidget {
                             bottom: 16,
                             child: RoundedBorder(
                               radius: 50.0,
-                              color: Color(0xFFDE2B13),
+                              color: Theme.of(context).primaryColor,
                               height: 16,
                               width: 16,
                               child: Center(

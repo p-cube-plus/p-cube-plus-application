@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import 'product.dart';
+import 'package:p_cube_plus_application/models/product.dart';
 
 @JsonSerializable()
 class Rent {

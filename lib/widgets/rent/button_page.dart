@@ -46,23 +46,19 @@ class _ButtonPageState extends State<ButtonPage> {
   Widget _getInactiveButton(index, name) {
     var theme = Theme.of(context);
     return SizedBox(
-      height: 23,
-      child: OutlinedButton(
+        height: 23,
+        child: OutlinedButton(
           onPressed: () => setState(() {
-                _index = index;
-              }),
+            _index = index;
+          }),
           child: Text(
             name,
             style: theme.textTheme.headline1!
                 .copyWith(fontSize: 12, fontWeight: FontWeight.w500),
           ),
-          style: ButtonStyle(
-            side: theme.outlinedButtonTheme.style!.side,
-            backgroundColor: MaterialStateProperty.all(theme.cardColor),
-            shape: theme.outlinedButtonTheme.style!.shape,
-            minimumSize: theme.outlinedButtonTheme.style!.minimumSize,
-          )),
-    );
+          style: theme.outlinedButtonTheme.style!.copyWith(
+              backgroundColor: MaterialStateProperty.all(theme.cardColor)),
+        ));
   }
 
   Widget _getActiveButton(index, name) {

@@ -26,7 +26,7 @@ class PromotionProgressPage extends StatelessWidget {
                   child: Text(
                     "${(userProvider.user!.promotionProgress.progress * 100).round()}%", // debug
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Color(0xCCDE2B13),
+                          color: Theme.of(context).primaryColor,
                           fontSize: 16.0,
                           fontWeight: FontWeight.w700,
                         ),
@@ -39,7 +39,7 @@ class PromotionProgressPage extends StatelessWidget {
                     RoundedBorder(
                       radius: 8.0,
                       height: 16.0,
-                      color: const Color(0xFFF9D4CF),
+                      color: const Color(0x1ADE2B13),
                     ),
                     Row(
                       children: [
@@ -50,7 +50,7 @@ class PromotionProgressPage extends StatelessWidget {
                           child: RoundedBorder(
                             radius: 8.0,
                             height: 16.0,
-                            color: Color(0xCCDE2B13),
+                            color: const Color(0xCCDE2B13),
                           ),
                         ),
                         Expanded(
@@ -129,7 +129,7 @@ class PromotionRequirement extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: requirement.isDone
-                      ? Color(0xFF25CA85)
+                      ? const Color(0xFF25CA85)
                       : theme.textTheme.headline3!.color),
             ),
           ],

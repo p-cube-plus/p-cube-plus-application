@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
 import 'package:p_cube_plus_application/widgets/default/default_content.dart';
@@ -26,12 +25,6 @@ class CautionListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Theme.of(context).backgroundColor,
-      ),
-    );
-
     return DefaultPage(
       title: "경고 현황",
       appbar: DefaultAppBar(),

@@ -47,27 +47,10 @@ class SettingProvider with ChangeNotifier {
   final notices = List<NoticeSetting>.generate(5, (index) => NoticeSetting());
 
   void changeState(SettingType type) {
-    switch (type) {
-      case SettingType.AllNotice:
-        curState = allNotice;
-        break;
-      case SettingType.AllMeetingNotice:
-        curState = notices[0];
-        break;
-      case SettingType.PartMeetingNotice:
-        curState = notices[1];
-        break;
-      case SettingType.DuesNotice:
-        curState = notices[2];
-        break;
-      case SettingType.CleanNotice:
-        curState = notices[3];
-        break;
-      case SettingType.BookNotice:
-        curState = notices[4];
-        break;
-      default:
-    }
+    if (type == SettingType.AllNotice)
+      curState = allNotice;
+    else
+      curState = notices[type.index - 1];
   }
 
   void toggle(bool isOn) {

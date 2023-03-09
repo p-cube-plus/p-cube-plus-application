@@ -1,42 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
+import 'package:p_cube_plus_application/providers/rent_provider.dart';
+import 'package:provider/provider.dart';
 import '../../models/rent.dart';
 import '../../screens/rent/rent_detail_page.dart';
-import '../../screens/rent/scan_page.dart';
 import 'rent_box.dart';
-
-// Future<List<Rent>> _fetchRentList(String name) async {
-//   final url = Uri.parse('http://p-cube-plus.com/rent/list/' + name);
-//   final response = await http.get(url);
-
-//   if (response.statusCode == 200) {
-//     print(json.decode(response.body).runtimeType);
-//     return (json.decode(response.body) as List)
-//         .map((data) => Rent.fromJson(data))
-//         .toList();
-//   } else {
-//     throw Exception('Failed to load post');
-//   }
-// }
-
-Future<List<Rent>> _fetchRentList(String name) async {
-  final url = Uri.parse('http://p-cube-plus.com/rent/list');
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    print(json.decode(response.body).runtimeType);
-    return (json.decode(response.body) as List)
-        .map((data) => Rent.fromJson(data))
-        .toList()
-        .where((element) => element.product.name.contains(name))
-        .toList();
-  } else {
-    throw Exception('Failed to load post');
-  }
-}
 
 class RentSearchListView extends StatelessWidget {
   const RentSearchListView({required this.productName});
@@ -44,8 +11,9 @@ class RentSearchListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final rentProvider = context.read<RentProvider>();
     return FutureBuilder<List<Rent>>(
-      future: _fetchRentList(productName),
+      future: rentProvider.searchRentList(productName),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.length == 0)

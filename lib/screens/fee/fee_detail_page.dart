@@ -22,22 +22,24 @@ class FeeDetailPage extends StatelessWidget {
     return DefaultPage(
       title: "회비 내역",
       textColor: Colors.white,
-      backgroundColor: const Color(0xFFDE2B13),
+      backgroundColor: Theme.of(context).primaryColor,
       appbar: DefaultAppBar(
         contentColor: Colors.white,
-        backgroundColor: const Color(0xFFDE2B13),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       action: GestureDetector(
-        onTap: () => DefaultBottomsheet.getBottomsheet(context, "내역 유형", [
-          _getBottomTile(context, FeeType.All, feeProvider),
-          _getBottomTile(context, FeeType.Deposit, feeProvider),
-          _getBottomTile(context, FeeType.Withdraw, feeProvider),
-        ]),
-        //showModalBottomSheet(
-        //    context: context,
-        //    shape: const RoundedRectangleBorder(
-        //        borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-        //    builder: (context) => _getBottomsheetData(context, feeProvider)),
+        onTap: () => showModalBottomSheet(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+            context: context,
+            builder: (context) => DefaultBottomsheet(
+                  title: "내역 유형",
+                  contents: [
+                    _getBottomTile(context, FeeType.All),
+                    _getBottomTile(context, FeeType.Deposit),
+                    _getBottomTile(context, FeeType.Withdraw),
+                  ],
+                )),
         child: Row(
           children: [
             Text(
@@ -75,7 +77,9 @@ class FeeDetailPage extends StatelessWidget {
     );
   }
 
-  _getBottomTile(context, FeeType type, FeeProvider feeProvider) {
+  _getBottomTile(context, FeeType type) {
+    final feeProvider = Provider.of<FeeProvider>(context);
+
     return InkWell(
       onTap: () => feeProvider.changeType(type),
       child: Padding(
@@ -95,7 +99,7 @@ class FeeDetailPage extends StatelessWidget {
                   .copyWith(fontSize: 16.0, fontWeight: FontWeight.w400),
             ),
             Radio(
-                activeColor: const Color(0xFFDE2B13),
+                activeColor: Theme.of(context).primaryColor,
                 value: type,
                 groupValue: feeProvider.type,
                 onChanged: (value) => feeProvider.changeType(type))
@@ -125,7 +129,10 @@ class AccountInfo extends StatelessWidget {
               ),
             ),
           ),
-          ListDivider(horizontal: 24),
+          ListDivider(
+            horizontal: 24.0,
+            vertial: 16.0,
+          ),
           Padding(
             padding: EdgeInsets.only(bottom: 24, left: 32),
             child: Column(

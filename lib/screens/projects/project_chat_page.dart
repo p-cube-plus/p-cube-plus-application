@@ -115,7 +115,7 @@ class _ProjectChatTextBarState extends State<_ProjectChatTextBar> {
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Color(0x0A000000),
+            color: Theme.of(context).shadowColor,
             blurRadius: 10.0,
             spreadRadius: 0.0,
             offset: Offset.fromDirection(0, 2.0),
@@ -148,7 +148,7 @@ class _ProjectChatTextBarState extends State<_ProjectChatTextBar> {
                   controller: _controller,
                   minLines: 1,
                   maxLines: 5,
-                  cursorColor: const Color(0xC9DE2B13),
+                  cursorColor: Theme.of(context).primaryColor,
                   cursorWidth: 1.2,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontSize: 12.0,
@@ -193,7 +193,7 @@ class _ProjectChatTextBarState extends State<_ProjectChatTextBar> {
                 child: Constants.Icons.GetIcon(
                   Constants.Icons.send,
                   color: _sendable
-                      ? const Color(0xC9DE2B13)
+                      ? Theme.of(context).primaryColor
                       : Theme.of(context).textTheme.headline3!.color,
                 ),
               ),
@@ -226,7 +226,7 @@ class _ProjectChatAppBar extends StatelessWidget {
       color: Colors.white,
       child: Container(
         alignment: Alignment.bottomLeft,
-        color: const Color(0xC9DE2B13),
+        color: Theme.of(context).primaryColor,
         height: 104.0,
         width: double.infinity,
         child: Padding(
@@ -261,7 +261,7 @@ class _ProjectChatAppBar extends StatelessWidget {
                   horizontal: 8.0,
                   vertical: 2.0,
                 ),
-                color: Theme.of(context).secondaryHeaderColor,
+                color: const Color(0xFF5EDCA7),
                 child: Text(
                   "문의 가능", // debug
                   style: TextStyle(
@@ -326,7 +326,7 @@ class _ChatBubble extends StatelessWidget {
   Flexible _Bubble(BuildContext context, String content, bool mine) {
     return Flexible(
       child: RoundedBorder(
-        color: mine ? Color(0x99DE2B13) : null,
+        color: mine ? Theme.of(context).primaryColor : null,
         padding: EdgeInsets.all(16.0),
         child: Text(
           content,

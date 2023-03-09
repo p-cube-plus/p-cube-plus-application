@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:scan/scan.dart';
 
 class ScanPage extends StatelessWidget {

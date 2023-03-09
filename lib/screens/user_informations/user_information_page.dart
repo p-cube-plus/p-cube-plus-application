@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
 import 'package:p_cube_plus_application/screens/user_informations/promotion_progress_page.dart';
 import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/content_summary_view.dart';
 import '../../widgets/default/default_profile.dart';
+import '../../widgets/home/content_summary_view.dart';
 import '../user_informations/project_list_page.dart';
 import '../../widgets/default/default_page.dart';
 import '../../models/project.dart';
@@ -80,11 +79,11 @@ class InformationList extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
               "${(userProvider.user!.promotionProgress.progress * 100).round()}%", // debug
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Color(0xCCDE2B13),
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w700,
-                  ),
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
         ),
@@ -96,7 +95,7 @@ class InformationList extends StatelessWidget {
                 RoundedBorder(
                   radius: 8.0,
                   height: 16.0,
-                  color: const Color(0xFFF9D4CF),
+                  color: const Color(0x1ADE2B13),
                 ),
                 Row(
                   children: [
@@ -107,7 +106,7 @@ class InformationList extends StatelessWidget {
                       child: RoundedBorder(
                         radius: 8.0,
                         height: 16.0,
-                        color: Color(0xCCDE2B13),
+                        color: const Color(0xCCDE2B13),
                       ),
                     ),
                     Expanded(
@@ -162,12 +161,11 @@ class InformationList extends StatelessWidget {
                       ),
                       Text(
                         "총 ${userProvider.totalCaution(0)}회", // debug
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Color(0xCCDE2B13),
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ],
                   ),

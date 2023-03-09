@@ -1,162 +1,149 @@
 import 'package:flutter/material.dart';
 
 class MyThemes {
-  static final darkTheme = ThemeData(
-    secondaryHeaderColor: Color(0xFF3AEFA3),
-    backgroundColor: Color(0xFF242424),
-    scaffoldBackgroundColor: Color(0xFF2E2E2E),
-    dialogBackgroundColor: Color(0xFF3B3B3B),
-    primaryColor: Colors.black,
-    cardColor: Color(0xFF2E2E2E),
-    disabledColor: Color(0xFF1E1E1E),
-    tabBarTheme: TabBarTheme(
-      labelColor: Colors.white,
-      labelStyle: TextStyle(
-          color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w700),
-      unselectedLabelStyle: TextStyle(
-        color: Colors.white.withAlpha(127),
-        fontSize: 16.0,
-        fontWeight: FontWeight.w700,
-      ),
-    ),
-    dividerColor: Color(0xFFC9C9C9),
-    colorScheme: ColorScheme.dark(),
-    iconTheme: IconThemeData(color: Colors.white, opacity: 0.8),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Color(0xFF2E2E2E),
-      unselectedItemColor: Colors.white,
-      selectedItemColor: const Color(0xFFDE2B13),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-          primary: const Color(0xFFDE2B13),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          textStyle: TextStyle(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w700,
-              color: Colors.white)),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.black45,
-        side: BorderSide(width: 0, style: BorderStyle.none),
-        backgroundColor: const Color(0xFF202020),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minimumSize: Size(0, 35),
-      ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        splashFactory: NoSplash.splashFactory,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      helperMaxLines: 0,
-      errorMaxLines: 0,
-      filled: true,
-      fillColor: const Color(0xFF2E2E2E),
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      hintStyle: TextStyle(
-        fontSize: 10.0,
-        fontWeight: FontWeight.w400,
-        color: Colors.white54,
-      ),
-      border: OutlineInputBorder(
-          borderSide: BorderSide(width: 0.0, style: BorderStyle.none)),
-    ),
-    textTheme: TextTheme(
-      headline1: TextStyle(color: const Color(0xFFFFFFFF)),
-      headline2: TextStyle(color: Colors.white70),
-      headline3: TextStyle(color: Colors.white54),
-      headline4: TextStyle(color: const Color(0xFF000000)),
-      headline5: TextStyle(color: Colors.white60),
-    ),
-    shadowColor: Color(0x0A000000),
-    progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: const Color(0xFFDE2B13),
-    ),
-    fontFamily: "SpoqaHanSansNeo",
-  );
-
   static final lightTheme = ThemeData(
-    secondaryHeaderColor: Color(0xFF3AEFA3),
-    backgroundColor: Color(0xFFFBFBFB),
-    scaffoldBackgroundColor: Color(0xFFFFFFFF),
-    dialogBackgroundColor: Color(0xFFE9E9E9),
-    primaryColor: Colors.white,
-    cardColor: Colors.white,
-    disabledColor: Color(0xFFE9E9E9),
-    dividerColor: Color(0xFFE9E9E9),
-    tabBarTheme: TabBarTheme(
-      labelColor: const Color(0xFF2E2E2E),
-      labelStyle: TextStyle(
-        color: const Color(0xFF2E2E2E),
-        fontSize: 16.0,
-        fontWeight: FontWeight.w700,
-      ),
-      unselectedLabelStyle: TextStyle(
-        color: const Color(0xFFABABAB),
-        fontSize: 16.0,
-        fontWeight: FontWeight.w700,
-      ),
-    ),
-    colorScheme: ColorScheme.light(),
-    iconTheme: IconThemeData(color: Colors.black87, opacity: 0.8),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Colors.white,
-      unselectedItemColor: Color(0xFF2E2E2E),
-      selectedItemColor: const Color(0xCCDE2B13),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        primary: const Color(0xFFDE2B13),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minimumSize: Size(0, 35),
-        textStyle: TextStyle(
-            fontSize: 12.0, fontWeight: FontWeight.w700, color: Colors.white),
-      ),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        side: BorderSide(width: 0, style: BorderStyle.none),
-        backgroundColor: const Color(0xFFE9E9E9),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minimumSize: Size(0, 35),
-      ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-      splashFactory: NoSplash.splashFactory,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    )),
-    inputDecorationTheme: InputDecorationTheme(
-      helperMaxLines: 0,
-      errorMaxLines: 0,
-      filled: true,
-      fillColor: const Color(0xFFE9E9E9),
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      hintStyle: TextStyle(
-        fontSize: 10.0,
-        fontWeight: FontWeight.w400,
-        color: const Color(0xFFABABAB),
-      ),
-      border: OutlineInputBorder(
-          borderSide: BorderSide(width: 0.0, style: BorderStyle.none)),
-    ),
-    textTheme: TextTheme(
+    brightness: Brightness.light,
+    colorScheme: const ColorScheme.light(),
+    primaryColor: const Color(0xFFE45441),
+    backgroundColor: const Color(0xFFFBFBFB),
+    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+    dialogBackgroundColor: const Color(0xFFE9E9E9),
+    cardColor: const Color(0xFFFFFFFF),
+    dividerColor: const Color(0xFFE9E9E9),
+    disabledColor: const Color(0xFFE8E8E8),
+    shadowColor: const Color(0x0A000000),
+    fontFamily: "SpoqaHanSansNeo",
+    textTheme: const TextTheme(
       headline1: TextStyle(color: const Color(0xFF2E2E2E)),
       headline2: TextStyle(color: const Color(0xFF818181)),
       headline3: TextStyle(color: const Color(0xFFABABAB)),
       headline4: TextStyle(color: const Color(0xFFFFFFFF)),
       headline5: TextStyle(color: const Color(0xFF575757)),
     ),
-    shadowColor: Color(0x0A000000),
-    progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: const Color(0xFFDE2B13),
+    tabBarTheme: const TabBarTheme(
+      labelColor: const Color(0xFF2E2E2E),
+      labelStyle: const TextStyle(
+        color: const Color(0xFF2E2E2E),
+        fontSize: 16.0,
+        fontWeight: FontWeight.w700,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        color: const Color(0xFFABABAB),
+        fontSize: 16.0,
+        fontWeight: FontWeight.w700,
+      ),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: const Color(0xFFFFFFFF),
+      unselectedItemColor: const Color(0xFF2E2E2E),
+      selectedItemColor: const Color(0xFFE45441),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: const Color(0xFFE45441),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        minimumSize: const Size(0.0, 35.0),
+        textStyle: const TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFFFFFFFF)),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        primary: const Color(0xFFFFFF),
+        side: const BorderSide(width: 0.0, style: BorderStyle.none),
+        backgroundColor: const Color(0xFFE9E9E9),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        minimumSize: const Size(0.0, 35.0),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+      splashFactory: NoSplash.splashFactory,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    )),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: const Color(0xFFE45441),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      selectionColor: const Color(0xCCE45441),
+      cursorColor: const Color(0xCCE45441),
+      selectionHandleColor: const Color(0xCCE45441),
+    ),
+  );
+
+  static final darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    colorScheme: const ColorScheme.dark(),
+    primaryColor: const Color(0xFFBA2916),
+    backgroundColor: const Color(0xFF242424),
+    scaffoldBackgroundColor: const Color(0xFF2E2E2E),
+    dialogBackgroundColor: const Color(0xFF3B3B3B),
+    cardColor: const Color(0xFF2E2E2E),
+    dividerColor: const Color(0xFFC9C9C9),
+    disabledColor: const Color(0xFF1E1E1E),
+    shadowColor: const Color(0x0A000000),
     fontFamily: "SpoqaHanSansNeo",
+    textTheme: const TextTheme(
+      headline1: TextStyle(color: const Color(0xFFFFFFFF)),
+      headline2: TextStyle(color: const Color(0xFFBCBCBC)),
+      headline3: TextStyle(color: const Color(0xFF979797)),
+      headline4: TextStyle(color: const Color(0xFF000000)),
+      headline5: TextStyle(color: const Color(0xFFA5A5A5)),
+    ),
+    tabBarTheme: TabBarTheme(
+      labelColor: const Color(0xFFFBFBFB),
+      labelStyle: const TextStyle(
+          color: const Color(0xFFFBFBFB),
+          fontSize: 16.0,
+          fontWeight: FontWeight.w700),
+      unselectedLabelStyle: const TextStyle(
+        color: const Color(0xFFE9E9E9),
+        fontSize: 16.0,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: const Color(0xFF2E2E2E),
+        unselectedItemColor: const Color(0xFFFFFFFF),
+        selectedItemColor: const Color(0xFFBA2916)),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+          primary: const Color(0xFFBA2916),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          textStyle: const TextStyle(
+              fontSize: 12.0,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xFFFFFFFF))),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        primary: const Color(0xFF101010),
+        side: const BorderSide(width: 0.0, style: BorderStyle.none),
+        backgroundColor: const Color(0xFF202020),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        minimumSize: const Size(0.0, 35.0),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        splashFactory: NoSplash.splashFactory,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      ),
+    ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: const Color(0xFFBA2916),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      selectionColor: const Color(0xCCE45441),
+      cursorColor: const Color(0xCCE45441),
+      selectionHandleColor: const Color(0xCCBA2916),
+    ),
   );
 }

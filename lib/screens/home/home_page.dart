@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
-import 'package:p_cube_plus_application/widgets/content_summary_view.dart';
 import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
+import '../../widgets/home/content_summary_view.dart';
 import '../rent/scan_page.dart';
 import '../../models/rent.dart';
 import '../../providers/rent_provider.dart';
@@ -107,7 +106,9 @@ class RentListView extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w700,
-                            color: rent.dDay > 7 ? null : Color(0xCCDE2B13),
+                            color: rent.dDay > 7
+                                ? null
+                                : Theme.of(context).primaryColor,
                           ),
                     ),
                   ],
@@ -173,7 +174,7 @@ class _FloatingBarcodeButton extends State<FloatingBarcodeButton> {
             "assets/images/scan.png",
           ),
         ),
-        backgroundColor: Color(0xFFDE2B13).withOpacity(0.88),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
@@ -196,7 +197,7 @@ class _HomeCalendarState extends State<HomeCalendar> {
   DateTime _viewDate = DateTime.now();
 
   List<Color> _dayMarkColor = const [
-    Color(0xC9DE2B13),
+    Color(0xCCDE2B13),
     Color(0xFF3ABDAD),
   ];
 
