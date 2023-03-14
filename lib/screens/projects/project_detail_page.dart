@@ -41,6 +41,7 @@ class ProjectDetailPage extends StatelessWidget {
       title: projectName,
       subtitle: projectType,
       backgroundColor: Theme.of(context).primaryColor,
+      bottomPadding: 0.0,
       decorate: Stack(
         children: [
           Container(

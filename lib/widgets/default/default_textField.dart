@@ -2,20 +2,27 @@ import 'package:flutter/material.dart';
 
 class DefaultTextField extends StatelessWidget {
   const DefaultTextField(
-      {this.minLine, required this.maxLength, this.hintText, this.textType});
+      {this.minLine,
+      this.maxLine,
+      required this.maxLength,
+      this.hintText,
+      this.textType,
+      required this.inputController});
 
   final int? minLine;
+  final int? maxLine;
   final int maxLength;
   final String? hintText;
   final TextInputType? textType;
+  final TextEditingController inputController;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return TextField(
       textAlignVertical: TextAlignVertical.bottom,
-      minLines: minLine,
-      maxLines: minLine ?? 1,
+      minLines: minLine ?? 1,
+      maxLines: maxLine ?? minLine ?? 1,
       maxLength: maxLength,
       keyboardType: textType,
       cursorColor: theme.textTheme.headline1!.color,
@@ -36,6 +43,7 @@ class DefaultTextField extends StatelessWidget {
           border: OutlineInputBorder(
               borderSide: BorderSide(width: 0.0, style: BorderStyle.none))),
       toolbarOptions: ToolbarOptions(),
+      controller: inputController,
     );
   }
 }

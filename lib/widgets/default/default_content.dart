@@ -5,8 +5,10 @@ class DefaultContent extends StatelessWidget {
       {this.child,
       this.bottomPadding = 24.0,
       this.bottomButtonText,
+      this.isReverse = false,
       this.onTap});
   final Widget? child;
+  final bool isReverse;
   final double bottomPadding;
   final String? bottomButtonText;
   final void Function()? onTap;
@@ -19,6 +21,7 @@ class DefaultContent extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           child: SingleChildScrollView(
+            reverse: isReverse,
             // GlowingOverscrollIndicator: Android
             // physics: BouncingScrollPhysics() : IOS
             physics: BouncingScrollPhysics(),

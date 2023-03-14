@@ -4,7 +4,7 @@ class MyThemes {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(),
-    primaryColor: const Color(0xFFE45441),
+    primaryColor: const Color(0xFFE55542),
     backgroundColor: const Color(0xFFFBFBFB),
     scaffoldBackgroundColor: const Color(0xFFFFFFFF),
     dialogBackgroundColor: const Color(0xFFE9E9E9),

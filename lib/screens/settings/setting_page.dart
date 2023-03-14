@@ -19,6 +19,9 @@ class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = context.read<ThemeProvider>();
     final theme = Theme.of(context);
+    TextEditingController nameController = TextEditingController();
+    TextEditingController contentController = TextEditingController();
+
     return DefaultPage(
       title: "설정",
       appbar: DefaultAppBar(),
@@ -82,44 +85,62 @@ class SettingPage extends StatelessWidget {
               SettingTile(
                   title: "피드백 보내기",
                   onTap: () => showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) => DefaultAlert(
-                          title: "피드백 보내기",
-                          children: [
-                            SizedBox(height: 16.0),
-                            RoundedBorder(
-                              radius: 4.0,
-                              height: 30.0,
-                              child: DefaultTextField(
-                                maxLength: 20,
-                                hintText: "이름을 입력하세요",
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => DefaultAlert(
+                            title: "피드백 보내기",
+                            messageType: MessageType.OKCancel,
+                            children: [
+                              SizedBox(height: 16.0),
+                              RoundedBorder(
+                                radius: 4.0,
+                                height: 30.0,
+                                child: DefaultTextField(
+                                  maxLength: 20,
+                                  hintText: "이름을 입력하세요",
+                                  inputController: nameController,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 8.0),
-                            RoundedBorder(
-                              radius: 4.0,
-                              height: 150.0,
-                              child: DefaultTextField(
-                                minLine: 11,
-                                maxLength: 500,
-                                hintText: "내용을 입력하세요",
+                              SizedBox(height: 8.0),
+                              RoundedBorder(
+                                radius: 4.0,
+                                height: 150.0,
+                                child: DefaultTextField(
+                                  minLine: 11,
+                                  maxLength: 500,
+                                  hintText: "내용을 입력하세요",
+                                  inputController: contentController,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 16.0),
-                          ],
-                          onTap: () {
-                            Navigator.pop(context);
-                            showDialog(
-                              context: context,
-                              builder: (context) => DefaultAlert(
-                                title: "피드백이 제출되었습니다!",
-                                description: "소중한 의견 감사합니다.",
-                                messageType: MessageType.OK,
-                              ),
-                            );
-                          },
-                          messageType: MessageType.OKCancel))),
+                              SizedBox(height: 16.0),
+                            ],
+                            // data 저장 provider 부르면 해결. 현재는 오류있음
+                            onTap: nameController.text != "" &&
+                                    contentController.text != ""
+                                ? () {
+                                    nameController.text = "";
+                                    contentController.text = "";
+                                    Navigator.pop(context);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => DefaultAlert(
+                                        title: "피드백이 제출되었습니다!",
+                                        description: "소중한 의견 감사합니다.",
+                                        messageType: MessageType.OK,
+                                      ),
+                                    );
+                                  }
+                                : () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => DefaultAlert(
+                                        title: "입력 오류",
+                                        description: "이름과 내용을 모두 입력해주세요.",
+                                        messageType: MessageType.OK,
+                                      ),
+                                    );
+                                  }),
+                      )),
               SettingTile(
                 title: "개발진 목록",
                 onTap: () => showDialog(

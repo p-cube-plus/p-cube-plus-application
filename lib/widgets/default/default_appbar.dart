@@ -23,9 +23,7 @@ class DefaultAppBar extends StatelessWidget {
     final theme = Theme.of(context);
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     final topPadding = (leftTitleState == null) ? 19.0 : 34.0;
-    print("이거: " + backgroundColor.toString());
     return Container(
-      //color: backgroundColor ?? theme.backgroundColor,
       decoration: BoxDecoration(
         border: Border.all(
           width: 0.0,
@@ -77,7 +75,7 @@ class DefaultAppBar extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.only(right: 4), child: leftTitleState)
+                      padding: EdgeInsets.only(left: 8), child: leftTitleState)
                 ],
               ),
             ),

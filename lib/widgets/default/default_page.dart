@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'default_appbar.dart';
 
 class DefaultPage extends StatelessWidget {
@@ -8,30 +7,37 @@ class DefaultPage extends StatelessWidget {
     this.title,
     this.subtitle,
     this.content,
+    this.bottomContent,
     this.action,
     this.decorate,
     this.floatingActionButton,
     this.textColor,
     this.contentColor,
     this.backgroundColor,
+    this.bottomPadding = 20.0,
   });
 
   final DefaultAppBar? appbar;
   final String? title;
   final String? subtitle;
   final Widget? content;
+  final Widget? bottomContent;
   final Widget? action;
   final Widget? decorate;
   final Widget? floatingActionButton;
   final Color? textColor;
   final Color? contentColor;
   final Color? backgroundColor;
+  final double bottomPadding;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final topPadding = (appbar != null) ? 6.0 : statusBarHeight + 34.0;
+    final topPadding = title == null
+        ? 0.0
+        : (appbar != null)
+            ? 6.0
+            : MediaQuery.of(context).padding.top + 34.0;
     return Scaffold(
       backgroundColor: contentColor ?? theme.backgroundColor,
       body: Column(
@@ -39,7 +45,6 @@ class DefaultPage extends StatelessWidget {
         children: [
           if (appbar != null) appbar!,
           Container(
-            //color: backgroundColor ?? contentColor ?? theme.backgroundColor,
             decoration: BoxDecoration(
                 color: backgroundColor ?? contentColor ?? theme.backgroundColor,
                 border: Border.all(
@@ -52,9 +57,10 @@ class DefaultPage extends StatelessWidget {
                   left: 20.0,
                   right: 20.0,
                   top: topPadding,
-                  bottom: decorate == null ? 20.0 : 0.0),
+                  bottom: bottomPadding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,10 +90,12 @@ class DefaultPage extends StatelessWidget {
               ),
             ),
           ),
-          decorate ?? SizedBox(),
-          Expanded(child: content ?? SizedBox())
+          if (decorate != null) decorate!,
+          Expanded(child: content ?? SizedBox()),
+          bottomContent ?? SizedBox(),
         ],
       ),
+      
       resizeToAvoidBottomInset: false,
       floatingActionButton: floatingActionButton,
     );
