@@ -189,14 +189,18 @@ class SettingPage extends StatelessWidget {
                   onTap: () => showDialog(
                       context: context,
                       builder: (context) => DefaultAlert(
-                          title: "로그아웃",
-                          messageType: MessageType.OKCancel,
-                          description: "정말 로그아웃 하시겠습니까?",
-                          onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LogoutPage()),
-                              ))))
+                            title: "로그아웃",
+                            messageType: MessageType.OKCancel,
+                            description: "정말 로그아웃 하시겠습니까?",
+                            onTap: () => Navigator.pushAndRemoveUntil(context,
+                                PageRouteBuilder(
+                              pageBuilder: (BuildContext context,
+                                  Animation animation,
+                                  Animation secondaryAnimation) {
+                                return LogoutPage();
+                              },
+                            ), (Route route) => false),
+                          )))
             ],
           ),
         ),

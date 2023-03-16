@@ -8,12 +8,17 @@ import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/theme_provider.dart';
 import 'package:p_cube_plus_application/providers/user_data_provider.dart';
+import 'package:p_cube_plus_application/screens/main_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/notice_provider.dart';
 
 import 'screens/login_page.dart';
+
+class System {
+  static bool isLogin = false;
+}
 
 void main() async {
   runApp(MultiProvider(
@@ -56,13 +61,13 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.type,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      home: LoginPage(),
-      scrollBehavior: RemoveGlowEffect(),
+      home: System.isLogin ? MainPage() : LoginPage(),
+      scrollBehavior: _RemoveGlowEffect(),
     );
   }
 }
 
-class RemoveGlowEffect extends MaterialScrollBehavior {
+class _RemoveGlowEffect extends MaterialScrollBehavior {
   @override
   Widget buildOverscrollIndicator(
           BuildContext context, Widget child, ScrollableDetails details) =>

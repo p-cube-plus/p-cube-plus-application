@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyThemes {
+  static const Color primary80 = Color(0xCCDE2B13);
+  static const Color primary60 = Color(0x99DE2B13);
+  static const Color primary40 = Color(0x66DE2B13);
+  static const Color primary20 = Color(0x33DE2B13);
+  static const Color primary10 = Color(0x1ADE2B13);
+
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(),
@@ -62,6 +68,7 @@ class MyThemes {
     ),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
+      primary: const Color(0xFF2E2E2E),
       splashFactory: NoSplash.splashFactory,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     )),
@@ -132,6 +139,7 @@ class MyThemes {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
+        primary: const Color(0xFFFBFBFB),
         splashFactory: NoSplash.splashFactory,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
