@@ -14,7 +14,7 @@ class RentedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var date = DateTime.parse(rent.date.toString());
+    var date = rent.rentDay;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: RoundedBorder(

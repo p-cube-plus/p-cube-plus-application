@@ -65,14 +65,9 @@ class RentProvider with ChangeNotifier {
         .toList();
   }
 
-  Rent? getRent({int? id, int? index}) {
+  Rent? getRent(int index) {
     if (!loaded) return null;
-    if (id == null && index == null) return null;
-    if (index != null) return _rentList![index];
-
-    var rents = _rentList!.where((e) => e.id == id);
-
-    return rents.isEmpty ? null : rents.first;
+    return _rentList![index];
   }
 
   void update() async {

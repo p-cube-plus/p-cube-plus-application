@@ -53,7 +53,7 @@ class RentBox extends StatelessWidget {
                               .headline3!
                               .copyWith(
                                   fontSize: 11, fontWeight: FontWeight.w700)),
-                      Text(rent.product.location,
+                      Text(rent.product.location ?? "",
                           style: Theme.of(context)
                               .textTheme
                               .headline3!

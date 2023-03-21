@@ -23,13 +23,13 @@ class RentedDetail extends StatelessWidget {
               infoes: [
                 ItemInfo(
                     title: "대여한 날짜",
-                    date: DateFormat("yyyy.MM.dd").format(rent.date)),
+                    date: DateFormat("yyyy.MM.dd").format(rent.rentDay)),
                 ItemInfo(
                     title: "반납 마감일",
                     date: DateFormat("yyyy.MM.dd").format(DateTime(
-                        rent.date.year,
-                        rent.date.month,
-                        rent.date.day + rent.dDay))),
+                        rent.rentDay.year,
+                        rent.rentDay.month,
+                        rent.rentDay.day + rent.dDay))),
               ]),
           RentedDetailTile(infoText: "도서 정보", infoes: [
             ItemInfo(title: "도서명", date: rent.product.name),
@@ -39,8 +39,9 @@ class RentedDetail extends StatelessWidget {
           RentedDetailTile(infoText: "물품 정보", infoes: [
             ItemInfo(title: "이름", date: rent.product.name),
             ItemInfo(title: "종류", date: rent.product.category),
-            ItemInfo(title: "위치", date: rent.product.location),
-            ItemInfo(title: "상태", date: rent.product.status),
+            if (rent.product.location != null)
+              ItemInfo(title: "위치", date: rent.product.location!),
+            ItemInfo(title: "상태", date: rent.product.status.value),
           ]),
         ],
       ),

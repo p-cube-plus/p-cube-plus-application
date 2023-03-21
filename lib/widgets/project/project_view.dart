@@ -20,7 +20,8 @@ class ProjectView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RoundedBorder(
       padding: const EdgeInsets.all(20.0),
-      color: project.isEnd ? Theme.of(context).dialogBackgroundColor : null,
+      color:
+          project.status == 0 ? Theme.of(context).dialogBackgroundColor : null,
       hasShadow: true,
       onTap: () => Navigator.push(
         context,
@@ -37,7 +38,7 @@ class ProjectView extends StatelessWidget {
               Text(
                 project.name, // debug
                 style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: project.isEnd
+                      color: project.status == 0
                           ? Theme.of(context).textTheme.headline3!.color
                           : null,
                       fontSize: 16.0,
@@ -68,7 +69,7 @@ class ProjectView extends StatelessWidget {
           Text(
             "${["메인", "꼬꼬마"][project.type]} 프로젝트",
             style: Theme.of(context).textTheme.headline1!.copyWith(
-                  color: project.isEnd
+                  color: project.status == 0
                       ? Theme.of(context).textTheme.headline3!.color
                       : null,
                   fontSize: 12.0,
@@ -82,7 +83,7 @@ class ProjectView extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    project.isEnd ? "종료" : "진행중", // debug
+                    project.getStatus(),
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
@@ -92,7 +93,7 @@ class ProjectView extends StatelessWidget {
                   Text(
                     project.startDate != null
                         ? "${DateFormat("yyyy.MM.dd").format(project.startDate!)} ~ " +
-                            "${project.isEnd && project.endDate != null ? DateFormat("yyyy.MM.dd").format(project.startDate!) : ""}"
+                            "${project.status == 0 && project.endDate != null ? DateFormat("yyyy.MM.dd").format(project.startDate!) : ""}"
                         : "", // debug
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           fontSize: 12.0,
@@ -101,9 +102,9 @@ class ProjectView extends StatelessWidget {
                   ),
                 ],
               ),
-              if (!project.isEnd)
+              if (project.status != 0)
                 Text(
-                  "팀원 모집 마감", // json 수정
+                  project.isFindingMember ? "팀원 모집 마감" : "팀원 모집중",
                   style: Theme.of(context).textTheme.headline3!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w700,

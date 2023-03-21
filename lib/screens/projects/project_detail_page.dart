@@ -22,13 +22,14 @@ class ProjectDetailPage extends StatelessWidget {
     var projectName = project.name;
     var projectType = project.getType() + "프로젝트";
     var projectProperty = project.platforms.join(", ");
-    if (project.tags.length > 0)
-      projectProperty += " / " + project.tags.join(", ");
+    if (project.graphic != null) {
+      projectProperty += " / " + project.graphic!;
+    }
 
     var projectDate = "";
     if (project.startDate != null)
       projectDate = "${DateFormat('yyyy.MM.dd').format(project.startDate!)} ~ ";
-    if (project.isEnd && project.endDate != null)
+    if (project.status == 0 && project.endDate != null)
       projectDate += DateFormat('yyyy.MM.dd').format(project.endDate!);
 
     return DefaultPage(
@@ -88,7 +89,7 @@ class ProjectDetailPage extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        project.isEnd ? "종료" : "진행중",
+                        project.getStatus(),
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w400,

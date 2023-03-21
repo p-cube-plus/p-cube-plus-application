@@ -60,7 +60,7 @@ class RentListView extends StatelessWidget {
       children: List.generate(
         rentProvider.rentList?.length ?? 0,
         (index) {
-          Rent? rent = rentProvider.getRent(index: index);
+          Rent? rent = rentProvider.getRent(index);
           if (rent == null) return Container();
 
           return Padding(
@@ -90,7 +90,7 @@ class RentListView extends StatelessWidget {
                         ),
                         SizedBox(height: 2.5),
                         Text(
-                          "${DateFormat("yyyy/MM/dd").format(rent.date)} 에 대여함", // debug
+                          "${DateFormat("yyyy/MM/dd").format(rent.rentDay)} 에 대여함",
                           style:
                               Theme.of(context).textTheme.headline3!.copyWith(
                                     fontSize: 11.0,
@@ -102,7 +102,7 @@ class RentListView extends StatelessWidget {
                     Text(
                       rent.dDay == 0
                           ? "D-Day"
-                          : "D${rent.dDay.sign == -1 ? "+" : "-"}${rent.dDay}", // debug
+                          : "D${rent.dDay.sign == -1 ? "+" : "-"}${rent.dDay}",
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w700,

@@ -85,7 +85,7 @@ class RentDetailPage extends StatelessWidget {
                 "대여한 날짜",
                 "반납 마감일"
               ], [
-                "${DateFormat("yyyy.MM.dd").format(rent.date)}",
+                "${DateFormat("yyyy.MM.dd").format(rent.rentDay)}",
                 "${DateFormat("yyyy.MM.dd").format(rent.deadline)}",
               ]),
             ],

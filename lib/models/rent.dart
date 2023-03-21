@@ -1,37 +1,40 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:p_cube_plus_application/models/product.dart';
 
 @JsonSerializable()
 class Rent {
-  final int id;
-  final int dDay;
-  final DateTime date;
-  final DateTime deadline;
   final Product product;
+  final DateTime deadline;
+  final DateTime rentDay;
+  final int dDay;
+  final DateTime? returnDay;
 
   Rent({
-    required this.id,
-    required this.dDay,
-    required this.date,
-    required this.deadline,
     required this.product,
+    required this.deadline,
+    required this.rentDay,
+    required this.dDay,
+    required this.returnDay,
   });
 
   factory Rent.fromJson(Map<String, dynamic> json) {
     return Rent(
-      id: json['id'],
-      dDay: json['d_day'],
-      date: DateTime.parse(json['rent_day']),
-      deadline: DateTime.parse(json['deadline']),
       product: Product.fromJson(json['product']),
+      deadline: DateTime.parse(json['deadline']),
+      rentDay: DateTime.parse(json['rent_day']),
+      dDay: json['d_day'],
+      returnDay: DateTime.parse(json['return_day']),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'd_day': dDay,
-        'rent_day': date.toString(),
-        'deadline': deadline.toString(),
         'product': product.toJson(),
+        'deadline': DateFormat('yyyy-mm-dd').format(deadline),
+        'rent_day': DateFormat('yyyy-mm-dd').format(rentDay),
+        'd_day': dDay,
+        'return_day': returnDay == null
+            ? null
+            : DateFormat('yyyy-mm-dd').format(returnDay!),
       };
 }
