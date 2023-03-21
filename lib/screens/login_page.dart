@@ -93,7 +93,7 @@ class _ShowTextButton extends StatelessWidget {
           onPressed: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) {
-              System.isLogin = true;
+              //System.isLogin = true;
               return MainPage();
             }),
           ),
