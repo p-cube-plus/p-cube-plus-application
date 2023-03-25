@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import '../../models/rent.dart';
-import '../../widgets/default/default_page.dart';
+import '../../widgets/common/rounded_border.dart';
+import '../../widgets/page/default_appbar.dart';
+import '../../widgets/page/default_page.dart';
 
 class RentDetailPage extends StatelessWidget {
   const RentDetailPage({

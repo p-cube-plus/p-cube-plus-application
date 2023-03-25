@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:p_cube_plus_application/widgets/executive/notification/required_text.dart';
-import '../../default/rounded_border.dart';
+
+import '../../common/rounded_border.dart';
 
 class SetNotification extends StatelessWidget {
   @override
@@ -25,33 +27,7 @@ class SetNotification extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 8),
-              Column(
-                children: [
-                  Text(
-                    "일",
-                    style: textTheme.headline3!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "월",
-                    style: textTheme.headline1!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "화",
-                    style: textTheme.headline3!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
+              ScrollableDate(["월", "화", "수", "목", "금", "토", "일"]),
               SizedBox(width: 8),
               Text(
                 "요일",
@@ -61,63 +37,14 @@ class SetNotification extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 32),
-              Column(
-                children: [
-                  Text(
-                    "12",
-                    style: textTheme.headline3!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "13",
-                    style: textTheme.headline1!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "14",
-                    style: textTheme.headline3!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
+              ScrollableDate([
+                for (int i = 19, cnt = 0; cnt < 24; ++cnt, i = (i + 1) % 24)
+                  i.toString()
+              ]),
               SizedBox(width: 8),
               Text("시"),
               SizedBox(width: 16),
-              Column(
-                children: [
-                  Text(
-                    "12",
-                    style: textTheme.headline3!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "13",
-                    style: textTheme.headline1!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "14",
-                    style: textTheme.headline3!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
+              ScrollableDate([for (int i = 0; i < 60; ++i) i.toString()]),
               SizedBox(width: 8),
               Text("분"),
             ],
@@ -125,5 +52,58 @@ class SetNotification extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ScrollableDate extends StatefulWidget {
+  ScrollableDate(this.words);
+  final List<String> words;
+
+  @override
+  State<ScrollableDate> createState() => _ScrollableDateState();
+}
+
+class _ScrollableDateState extends State<ScrollableDate> {
+  int _selected = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 32,
+      height: 105,
+      child: CupertinoPicker(
+        selectionOverlay: null,
+        useMagnifier: false,
+        backgroundColor: Theme.of(context).cardColor,
+        itemExtent: 55,
+        diameterRatio: 10,
+        offAxisFraction: -1,
+        onSelectedItemChanged: (i) {
+          setState(() {
+            _selected = i;
+          });
+        },
+        children: _getChildren(),
+        looping: true,
+      ),
+    );
+  }
+
+  _getChildren() {
+    List<Widget> children = <Widget>[];
+    for (int i = 0; i < widget.words.length; ++i)
+      children.add(Center(
+        child: Text(widget.words[i],
+            style: _selected == i
+                ? Theme.of(context).textTheme.headline1!.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    )
+                : Theme.of(context).textTheme.headline3!.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                    )),
+      ));
+    return children;
   }
 }

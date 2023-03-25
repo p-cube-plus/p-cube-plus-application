@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
 import 'package:p_cube_plus_application/screens/user_informations/promotion_progress_page.dart';
-import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/default/default_profile.dart';
+import '../../widgets/common/default_profile.dart';
+import '../../widgets/common/list_divider.dart';
+import '../../widgets/common/rounded_border.dart';
 import '../../widgets/home/content_summary_view.dart';
+import '../../widgets/page/default_content.dart';
+import '../../widgets/page/default_page.dart';
 import '../user_informations/project_list_page.dart';
-import '../../widgets/default/default_page.dart';
 import '../../models/project.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
 import '../../models/user.dart';
-import '../../widgets/default/list_divider.dart';
-import '../../widgets/default/rounded_border.dart';
 
 import '../settings/setting_page.dart';
 import 'seminar_list_page.dart';

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/screens/executives/notification/regular_meeting_page.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import 'package:p_cube_plus_application/widgets/default/default_content.dart';
-import 'package:p_cube_plus_application/widgets/default/default_page.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
+import 'package:p_cube_plus_application/screens/executives/notification/cleaning_notification_page.dart';
+import 'package:p_cube_plus_application/screens/executives/notification/part_meeting_padge.dart';
+import 'package:p_cube_plus_application/screens/executives/notification/set_notification_page.dart';
+
+import '../../../widgets/common/rounded_border.dart';
+import '../../../widgets/page/default_appbar.dart';
+import '../../../widgets/page/default_content.dart';
+import '../../../widgets/page/default_page.dart';
 
 class ExecutiveNotificationPage extends StatelessWidget {
   @override
@@ -15,13 +18,13 @@ class ExecutiveNotificationPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _getButton(context, "정기회의 알림", RegularMettingPage()),
+            _getButton(context, "정기회의 알림", SetNotificationPage("정기회의 알림")),
             SizedBox(height: 10),
-            _getButton(context, "파트회의 알림", null),
+            _getButton(context, "파트회의 알림", PartMettingPage()),
             SizedBox(height: 10),
-            _getButton(context, "회비 알림", null),
+            _getButton(context, "회비 알림", SetNotificationPage("회비 알림")),
             SizedBox(height: 10),
-            _getButton(context, "청소 알림", null),
+            _getButton(context, "청소 알림", CleaningNotificationPage()),
             SizedBox(height: 10),
             _getButton(context, "기타 알림", null),
           ],

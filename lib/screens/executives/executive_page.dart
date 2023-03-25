@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/executives/notification/executive_notification_page.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import 'package:p_cube_plus_application/widgets/default/default_content.dart';
-import 'package:p_cube_plus_application/widgets/default/default_page.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import '../../utilities/contants.dart' as Constants;
 
 class ExecutivePage extends StatelessWidget {

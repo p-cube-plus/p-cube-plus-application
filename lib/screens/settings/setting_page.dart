@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/logout_page.dart';
-import 'package:p_cube_plus_application/widgets/default/default_alert.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import 'package:p_cube_plus_application/widgets/default/default_bottomsheet.dart';
-import 'package:p_cube_plus_application/widgets/default/default_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/theme_provider.dart';
-import '../../widgets/default/default_textField.dart';
-import '../../widgets/default/list_divider.dart';
-import '../../widgets/default/rounded_border.dart';
+import '../../widgets/common/default_alert.dart';
+import '../../widgets/common/default_bottomsheet.dart';
+import '../../widgets/common/default_textField.dart';
+import '../../widgets/common/list_divider.dart';
+import '../../widgets/common/rounded_border.dart';
+import '../../widgets/page/default_appbar.dart';
+import '../../widgets/page/default_page.dart';
 import '../../widgets/setting/setting_tile.dart';
 import 'setting_notice_page.dart';
 

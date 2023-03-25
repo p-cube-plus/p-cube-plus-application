@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import 'package:p_cube_plus_application/widgets/default/default_content.dart';
 import '../../providers/user_data_provider.dart';
-import '../../widgets/default/default_page.dart';
-import '../../widgets/default/rounded_border.dart';
 import '../../utilities/contants.dart' as Constants;
+import '../../widgets/common/rounded_border.dart';
+import '../../widgets/page/default_appbar.dart';
+import '../../widgets/page/default_content.dart';
+import '../../widgets/page/default_page.dart';
 
 class PromotionProgressPage extends StatelessWidget {
   const PromotionProgressPage({required this.userProvider});

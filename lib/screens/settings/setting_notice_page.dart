@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import 'package:p_cube_plus_application/widgets/default/list_divider.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/setting_provider.dart';
-import '../../widgets/default/default_page.dart';
+import '../../widgets/common/list_divider.dart';
+import '../../widgets/page/default_appbar.dart';
+import '../../widgets/page/default_page.dart';
 import '../../widgets/setting/setting_switch_tile.dart';
 
 class SettingNoticePage extends StatelessWidget {

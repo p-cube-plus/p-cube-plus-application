@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
-import 'package:p_cube_plus_application/widgets/default/default_content.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
+import '../../widgets/common/rounded_border.dart';
 import '../../widgets/home/content_summary_view.dart';
+import '../../widgets/page/default_content.dart';
+import '../../widgets/page/default_page.dart';
 import '../rent/scan_page.dart';
 import '../../models/rent.dart';
 import '../../providers/rent_provider.dart';
 import '../../utilities/contants.dart' as Constants;
 import '../../widgets/calendar/calendar.dart';
 import '../../widgets/calendar/calendar_summary_view.dart';
-import '../../widgets/default/default_page.dart';
 
 class HomePage extends StatelessWidget {
   @override

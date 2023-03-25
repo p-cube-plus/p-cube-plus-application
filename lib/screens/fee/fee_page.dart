@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/widgets/default/default_content.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
-import '../../widgets/default/default_page.dart';
-import '../../widgets/default/list_divider.dart';
+import '../../widgets/common/list_divider.dart';
+import '../../widgets/common/rounded_border.dart';
+import '../../widgets/page/default_content.dart';
+import '../../widgets/page/default_page.dart';
 import 'fee_detail_page.dart';
 import '../../utilities/contants.dart' as Constants;
 

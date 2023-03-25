@@ -4,7 +4,7 @@ import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/schedule_provider.dart';
-import '../default/rounded_border.dart';
+import '../common/rounded_border.dart';
 
 class CalendarDailySummaryView extends StatelessWidget {
   const CalendarDailySummaryView({

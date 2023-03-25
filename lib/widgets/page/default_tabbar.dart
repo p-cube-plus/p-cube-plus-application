@@ -15,9 +15,11 @@ class DefaultTabBar extends StatefulWidget {
   const DefaultTabBar({
     Key? key,
     required this.tabs,
+    this.isCenter = false,
   }) : super(key: key);
 
   final List<DefaultTab> tabs;
+  final bool isCenter;
 
   @override
   State<DefaultTabBar> createState() => _DefaultTabBarState();
@@ -44,7 +46,7 @@ class _DefaultTabBarState extends State<DefaultTabBar>
       mainAxisSize: MainAxisSize.min,
       children: [
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: widget.isCenter ? Alignment.center : Alignment.centerLeft,
           child: TabBar(
             tabs: [
               for (int i = 0; i < widget.tabs.length; ++i)
@@ -52,13 +54,15 @@ class _DefaultTabBarState extends State<DefaultTabBar>
             ],
             controller: controller,
             physics: const PageScrollPhysics(),
-            indicatorSize: TabBarIndicatorSize.label,
+            indicatorSize: widget.isCenter
+                ? TabBarIndicatorSize.tab
+                : TabBarIndicatorSize.label,
             indicator: UnderlineTabIndicator(
                 borderSide: BorderSide(
               width: 2.0,
               color: theme.tabBarTheme.labelColor!,
             )),
-            isScrollable: true,
+            isScrollable: !widget.isCenter,
             padding:
                 const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
             unselectedLabelStyle: theme.tabBarTheme.unselectedLabelStyle,

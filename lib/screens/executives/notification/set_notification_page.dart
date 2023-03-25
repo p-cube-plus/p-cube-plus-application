@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/default_appbar.dart';
-import 'package:p_cube_plus_application/widgets/default/default_content.dart';
-import 'package:p_cube_plus_application/widgets/default/default_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:p_cube_plus_application/widgets/executive/notification/required_text.dart';
 
 import '../../../widgets/executive/notification/notifitation_input.dart';
 import '../../../widgets/executive/notification/set_notification.dart';
+import '../../../widgets/page/default_appbar.dart';
+import '../../../widgets/page/default_content.dart';
+import '../../../widgets/page/default_page.dart';
 
-class RegularMettingPage extends StatelessWidget {
+class SetNotificationPage extends StatelessWidget {
+  const SetNotificationPage(this.title);
+  final String title;
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
       appbar: DefaultAppBar(
-        centerTitle: "정기회의 알림",
+        centerTitle: title,
       ),
       content: DefaultContent(
         bottomButtonText: "확인",

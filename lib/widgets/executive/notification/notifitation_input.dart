@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/widgets/default/default_textField.dart';
-import 'package:p_cube_plus_application/widgets/default/rounded_border.dart';
 import 'package:p_cube_plus_application/widgets/executive/notification/required_text.dart';
 import '../../../utilities/contants.dart' as Constants;
+import '../../common/default_textField.dart';
+import '../../common/rounded_border.dart';
 
 class NotificationInput extends StatelessWidget {
   const NotificationInput(this.text);
