@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:p_cube_plus_application/screens/executives/notification/set_notification_page.dart';
 
+import '../../../widgets/common/rounded_border.dart';
+import '../../../widgets/page/default_appbar.dart';
+import '../../../widgets/page/default_page.dart';
+import '../../../widgets/page/default_tabbar.dart';
+
 class PartMettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

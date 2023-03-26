@@ -5,6 +5,12 @@ import 'package:p_cube_plus_application/models/due.dart';
 import 'package:provider/provider.dart';
 import '../../providers/fee_provider.dart';
 import '../../utilities/contants.dart' as Constants;
+import '../../widgets/common/default_bottomsheet.dart';
+import '../../widgets/common/list_divider.dart';
+import '../../widgets/common/rounded_border.dart';
+import '../../widgets/page/default_appbar.dart';
+import '../../widgets/page/default_content.dart';
+import '../../widgets/page/default_page.dart';
 
 class FeeDetailPage extends StatelessWidget {
   static FeeType feeType = FeeType.All;

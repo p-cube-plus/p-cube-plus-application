@@ -4,6 +4,9 @@ import 'package:p_cube_plus_application/providers/notice_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/notification_node.dart';
+import '../../widgets/common/rounded_border.dart';
+import '../../widgets/page/default_page.dart';
+import '../../widgets/page/default_tabbar.dart';
 import '../settings/setting_notice_page.dart';
 
 class NoticePage extends StatelessWidget {

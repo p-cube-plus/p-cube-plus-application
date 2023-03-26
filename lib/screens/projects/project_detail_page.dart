@@ -3,6 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/projects/project_inquiry_page.dart';
 import '../../models/member.dart';
 import '../../models/project.dart';
+import '../../widgets/common/default_profile.dart';
+import '../../widgets/common/rounded_border.dart';
+import '../../widgets/page/default_appbar.dart';
+import '../../widgets/page/default_content.dart';
+import '../../widgets/page/default_page.dart';
 import '../../widgets/project/inquiry_tile.dart';
 
 class ProjectDetailPage extends StatelessWidget {
