@@ -11,7 +11,6 @@ import '../../widgets/page/default_page.dart';
 import '../rent/scan_page.dart';
 import '../../models/rent.dart';
 import '../../providers/rent_provider.dart';
-import '../../utilities/contants.dart' as Constants;
 import '../../widgets/calendar/calendar.dart';
 import '../../widgets/calendar/calendar_summary_view.dart';
 
@@ -19,7 +18,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme currentTheme = Theme.of(context).textTheme;
-
     return DefaultPage(
       title: "홈",
       content: DefaultContent(
@@ -196,11 +194,6 @@ class _HomeCalendarState extends State<HomeCalendar> {
   DateTime _selectedDate = DateTime.now();
   DateTime _viewDate = DateTime.now();
 
-  List<Color> _dayMarkColor = const [
-    Color(0xCCDE2B13),
-    Color(0xFF3ABDAD),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -208,65 +201,21 @@ class _HomeCalendarState extends State<HomeCalendar> {
       children: [
         CalendarMonthlySummaryView(
           viewDate: _viewDate,
-          dayMarkColor: _dayMarkColor,
         ),
         RoundedBorder(
           padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
           child: Calendar(
-            headerArrowButtonSize: 40.0,
-            headerLeftArrow: SizedBox(
-              height: 12.0,
-              width: 12.0,
-              child: Constants.Icons.GetIcon(
-                Constants.Icons.left_arrow,
-                color: widget.currentTheme.headline3!.color,
-              ),
-            ),
-            headerRightArrow: SizedBox(
-              height: 12.0,
-              width: 12.0,
-              child: Constants.Icons.GetIcon(
-                Constants.Icons.right_arrow,
-                color: widget.currentTheme.headline3!.color,
-              ),
-            ),
-            headerMonthTextStyle: widget.currentTheme.headline1!.copyWith(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-            ),
-            headerYearTextStyle: widget.currentTheme.headline3!.copyWith(
-              fontSize: 10.0,
-              fontWeight: FontWeight.w400,
-            ),
-            weekDayHeight: 20.0,
-            weekDayTextStyle: widget.currentTheme.headline3!.copyWith(
-              fontSize: 10.0,
-              fontWeight: FontWeight.w400,
-            ),
-            dayHeight: 38.0,
-            dayTextStyle: widget.currentTheme.headline1!.copyWith(
-              fontSize: 11.0,
-              fontWeight: FontWeight.w400,
-            ),
-            selectedDayTextStyle: widget.currentTheme.headline1!.copyWith(
-              fontSize: 11.0,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-            //firstDayOfWeek: 1,
-            daySelectedColor: _dayMarkColor[0],
-            dayMarkColor: _dayMarkColor,
             onSelectedDateChanged: (date) =>
                 setState(() => _selectedDate = date),
             onViewDateChanged: (date) => setState(() {
               _viewDate = date;
             }),
+            isHomeCalendar: true,
           ),
         ),
         if (_viewDate.month == _selectedDate.month &&
             _viewDate.difference(_selectedDate).inDays.abs() < 32)
           CalendarDailySummaryView(
-            dayMarkColor: _dayMarkColor,
             selectedDate: _selectedDate,
           )
         else

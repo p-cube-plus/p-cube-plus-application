@@ -1,11 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/material.dart';
 
 @JsonSerializable()
 class Schedule {
-  final int? type;
+  final int type;
   final String name;
   final DateTime? startDate, endDate;
   final bool hasSpan;
+
+  Color getMarkColor() {
+    return [Color(0xCCDE2B13), Color(0xFF5EDCA7), Color(0xCC4813DE)][type];
+  }
 
   Schedule({
     required this.type,

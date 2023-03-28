@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:p_cube_plus_application/widgets/calendar/calendar.dart';
 
-import '../../../widgets/calendar/calendar_header.dart';
-import '../../../widgets/calendar/calendar_week_row.dart';
 import '../../../widgets/page/default_appbar.dart';
 import '../../../widgets/page/default_content.dart';
 import '../../../widgets/page/default_page.dart';
@@ -17,12 +16,29 @@ class CleaningNotificationPage extends StatelessWidget {
       content: DefaultContent(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            CalendarHeader(date: DateTime.now()),
-            CalendarWeekRow(),
-          ],
+          children: [CleaningCalendar()],
         ),
       ),
+    );
+  }
+}
+
+class CleaningCalendar extends StatefulWidget {
+  @override
+  State<CleaningCalendar> createState() => _CleaningCalendarState();
+}
+
+class _CleaningCalendarState extends State<CleaningCalendar> {
+  DateTime? _selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return Calendar(
+      onSelectedDateChanged: (date) {
+        setState(() {
+          _selectedDate = date;
+        });
+      },
     );
   }
 }

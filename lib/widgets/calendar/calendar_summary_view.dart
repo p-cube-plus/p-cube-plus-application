@@ -9,11 +9,9 @@ import '../common/rounded_border.dart';
 class CalendarDailySummaryView extends StatelessWidget {
   const CalendarDailySummaryView({
     Key? key,
-    required this.dayMarkColor,
     required this.selectedDate,
   }) : super(key: key);
 
-  final List<Color> dayMarkColor;
   final DateTime selectedDate;
 
   @override
@@ -38,7 +36,7 @@ class CalendarDailySummaryView extends StatelessWidget {
                 width: 7.0,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: dayMarkColor[_schedules[index].type ?? 0]),
+                    color: _schedules[index].getMarkColor()),
               ),
               SizedBox(width: 16.0),
               Text(
@@ -97,11 +95,9 @@ class CalendarMonthlySummaryView extends StatelessWidget {
   const CalendarMonthlySummaryView({
     Key? key,
     required this.viewDate,
-    required this.dayMarkColor,
   }) : super(key: key);
 
   final DateTime viewDate;
-  final List<Color> dayMarkColor;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +134,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
                   width: 7.0,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: dayMarkColor[_schedule.type ?? 0]),
+                      color: _schedules[index].getMarkColor()),
                 ),
                 SizedBox(width: 12.0),
                 Text(

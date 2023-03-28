@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../utilities/contants.dart' as Constants;
 
 class CalendarHeader extends StatelessWidget {
   const CalendarHeader({
     Key? key,
-    this.arrowButtonSize = 16.0,
-    this.leftArrow,
-    this.rightArrow,
-    this.monthTextStyle,
-    this.yearTextStyle,
     this.onArrowPressed,
     required this.date,
   }) : super(key: key);
 
-  final TextStyle? monthTextStyle, yearTextStyle;
-  final double arrowButtonSize;
-  final Widget? leftArrow, rightArrow;
   final DateTime date;
-
-  // int : 전 달 -> -1, 다음 달 -> 1
   final Function(int)? onArrowPressed;
 
   @override
   Widget build(BuildContext context) {
+    final double arrowButtonSize = 40;
+    final theme = Theme.of(context);
     return Column(
       children: [
         Row(
@@ -34,14 +27,29 @@ class CalendarHeader extends StatelessWidget {
                 height: arrowButtonSize,
                 width: arrowButtonSize,
                 alignment: Alignment.center,
-                child: leftArrow ?? Icon(Icons.chevron_left),
+                child: SizedBox(
+                  height: 12.0,
+                  width: 12.0,
+                  child: Constants.Icons.GetIcon(
+                    Constants.Icons.left_arrow,
+                    color: theme.textTheme.headline3!.color,
+                  ),
+                ),
               ),
             ),
             Column(
               children: [
-                SizedBox(height: arrowButtonSize / 4),
-                Text("${DateFormat("M").format(date)}월", style: monthTextStyle),
-                Text(DateFormat("yyyy").format(date), style: yearTextStyle),
+                SizedBox(height: 10),
+                Text("${DateFormat("M").format(date)}월",
+                    style: theme.textTheme.headline1!.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    )),
+                Text(DateFormat("yyyy").format(date),
+                    style: theme.textTheme.headline3!.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400,
+                    )),
               ],
             ),
             GestureDetector(
@@ -50,7 +58,14 @@ class CalendarHeader extends StatelessWidget {
                 height: arrowButtonSize,
                 width: arrowButtonSize,
                 alignment: Alignment.center,
-                child: rightArrow ?? Icon(Icons.chevron_right),
+                child: SizedBox(
+                  height: 12.0,
+                  width: 12.0,
+                  child: Constants.Icons.GetIcon(
+                    Constants.Icons.right_arrow,
+                    color: theme.textTheme.headline3!.color,
+                  ),
+                ),
               ),
             ),
           ],
