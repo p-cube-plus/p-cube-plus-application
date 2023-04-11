@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.type,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      home: ExecutivePage(), //LoginPage(),
+      home: LoginPage(),
       scrollBehavior: _RemoveGlowEffect(),
     );
   }
