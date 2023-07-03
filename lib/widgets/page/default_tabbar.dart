@@ -50,7 +50,10 @@ class _DefaultTabBarState extends State<DefaultTabBar>
           child: TabBar(
             tabs: [
               for (int i = 0; i < widget.tabs.length; ++i)
-                Container(child: Text(widget.tabs[i].title))
+                Container(
+                    child: Padding(
+                        padding: EdgeInsets.only(bottom: 4),
+                        child: Text(widget.tabs[i].title)))
             ],
             controller: controller,
             physics: const PageScrollPhysics(),

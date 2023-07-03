@@ -67,12 +67,16 @@ class _CalendarViewState extends State<CalendarView> {
     while (itr.month == widget.date.month) {
       days.add(CalendarDayView(
           date: itr,
-          selected: itr.day == _selectedDate.day &&
-                  itr.difference(_selectedDate).inDays == 0 ||
-              itr == widget.date,
-          selectedColor: itr == widget.date
-              ? Theme.of(context).dialogBackgroundColor
-              : MyThemes.primary80,
+          selected: itr.year == DateTime.now().year &&
+                  itr.month == DateTime.now().month &&
+                  itr.day == DateTime.now().day ||
+              itr.day == _selectedDate.day &&
+                  itr.difference(_selectedDate).inDays == 0,
+          selectedColor: itr != widget.date ||
+                  (itr.day == _selectedDate.day &&
+                      itr.difference(_selectedDate).inDays == 0)
+              ? MyThemes.primary80
+              : Theme.of(context).dialogBackgroundColor,
           onTap: (date) {
             setState(() {
               _selectedDate = date;

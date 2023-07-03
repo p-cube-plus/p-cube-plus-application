@@ -10,6 +10,7 @@ class CalendarDayView extends StatelessWidget {
     this.onTap,
     this.decorateColor,
     this.selectedColor = MyThemes.primary80,
+    this.isExecutive = false,
   }) : super(key: key);
 
   final DateTime date;
@@ -17,6 +18,7 @@ class CalendarDayView extends StatelessWidget {
   final Function(DateTime)? onTap;
   final Color? decorateColor;
   final Color selectedColor;
+  final bool isExecutive;
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +75,7 @@ class CalendarDayView extends StatelessWidget {
                     view
                   ],
                 )
-              : 
-              view,
+              : view,
         ),
       ),
     );

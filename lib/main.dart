@@ -9,7 +9,6 @@ import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/theme_provider.dart';
 import 'package:p_cube_plus_application/providers/user_data_provider.dart';
 import 'package:p_cube_plus_application/screens/executives/executive_page.dart';
-import 'package:p_cube_plus_application/screens/main_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +57,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.type,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      home: LoginPage(),
+      home: ExecutivePage(),
       scrollBehavior: _RemoveGlowEffect(),
     );
   }

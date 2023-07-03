@@ -29,12 +29,6 @@ class Icons {
   static String pencil = "assets/images/icons/pencil.svg";
   static String pcube_logo = "assets/images/icons/pcube_logo.svg";
 
-  static String executives_alarm = "assets/images/icons/alarm.svg";
-  static String executives_fee = "assets/images/icons/fee2.svg";
-  static String executives_member = "assets/images/icons/member.svg";
-  static String executives_product = "assets/images/icons/product.svg";
-  static String executives_feedback = "assets/images/icons/feedback.svg";
-
   static Widget GetIcon(String icon, {Color? color}) =>
       SvgPicture.asset(icon, color: color);
 }
