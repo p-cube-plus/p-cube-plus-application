@@ -29,6 +29,8 @@ class Icons {
   static String pencil = "assets/images/icons/pencil.svg";
   static String pcube_logo = "assets/images/icons/pcube_logo.svg";
 
+  static String filter = "assets/images/icons/filter.svg";
+
   static Widget GetIcon(String icon, {Color? color}) =>
       SvgPicture.asset(icon, color: color);
 }

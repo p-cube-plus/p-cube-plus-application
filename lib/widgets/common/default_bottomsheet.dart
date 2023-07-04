@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DefaultBottomsheet extends StatelessWidget {
-  const DefaultBottomsheet({required this.title, this.contents});
+  const DefaultBottomsheet(
+      {required this.title, this.contents, this.bottomPaddingFlag = true});
   final String title;
   final List<Widget>? contents;
+  final bool bottomPaddingFlag;
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +23,18 @@ class DefaultBottomsheet extends StatelessWidget {
         ),
       ]
         ..addAll(contents ?? [SizedBox()])
-        ..add(const SizedBox(height: 56.0)),
+        ..add(bottomPaddingFlag ? const SizedBox(height: 32.0) : SizedBox()),
     );
   }
 }
 
-/*
-showModalBottomSheet(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-            context: context,
-            builder: (context) => DefaultBottomsheet(
-                  title: "",
-                  contents: [],
-                )),
-*/
+
+// showModalBottomSheet(
+//   isScrollControlled: true,
+//             shape: const RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+//             context: context,
+//             builder: (context) => DefaultBottomsheet(
+//                   title: "",
+//                   contents: [],
+//                 )),

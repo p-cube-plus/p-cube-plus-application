@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/project_provider.dart';
+import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:p_cube_plus_application/widgets/project/project_view.dart';
 import 'package:provider/provider.dart';
 
@@ -38,14 +39,16 @@ class _ProjectListView extends StatelessWidget {
     var projects =
         projectProvider.projectList!.where((e) => e.type == type).toList();
 
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(
-            projects.length,
-            (index) => Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: ProjectView(project: projects[index]),
-                ),
-            growable: false));
+    return DefaultContent(
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(
+              projects.length,
+              (index) => Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: ProjectView(project: projects[index]),
+                  ),
+              growable: false)),
+    );
   }
 }

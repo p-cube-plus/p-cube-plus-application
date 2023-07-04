@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/notice_provider.dart';
+import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/notification_node.dart';
@@ -66,13 +67,16 @@ class NoticeListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(
-            noticeList.length,
-            (index) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: NoticeBoxWidget(isNew: isNew, box: noticeList[index]))));
+    return DefaultContent(
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(
+              noticeList.length,
+              (index) => Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child:
+                      NoticeBoxWidget(isNew: isNew, box: noticeList[index])))),
+    );
   }
 }
 
