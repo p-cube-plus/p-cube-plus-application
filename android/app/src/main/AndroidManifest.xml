@@ -5,7 +5,17 @@
     <!-- 예약 알림과 진동을 통한 알림을 이용-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE" />
-    
+
+    <!-- 블루투스 설정-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />  
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />  
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> 
+	<uses-permission android:name="android.permission.BLUETOOTH_SCAN"/> 
+	<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/> 
+	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> 
+
    <application
         android:label="p_cube_plus_application"
         android:icon="@mipmap/launcher_icon">

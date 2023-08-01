@@ -4,10 +4,9 @@ import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';
 import 'package:p_cube_plus_application/widgets/page/default_appbar.dart';
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:p_cube_plus_application/widgets/page/default_tabbar.dart';
-import '../../utilities/theme.dart';
-import '../../widgets/common/default_bottomsheet.dart';
-import '../../widgets/executive/notification/set_notification.dart';
-import '../../widgets/page/default_page.dart';
+import '../../../widgets/common/default_bottomsheet.dart';
+import '../../../widgets/executive/notification/set_notification.dart';
+import '../../../widgets/page/default_page.dart';
 import 'attendence_addition.dart';
 import 'attendence_tab.dart';
 

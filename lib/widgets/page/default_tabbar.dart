@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'default_content.dart';
-
 class DefaultTab {
   DefaultTab({
     required this.title,
@@ -41,8 +39,6 @@ class _DefaultTabBarState extends State<DefaultTabBar>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    double startX = 0.0;
-    double endX = 0.0;
 
     return Column(
       mainAxisSize: MainAxisSize.min,

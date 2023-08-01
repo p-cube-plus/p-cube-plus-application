@@ -41,11 +41,16 @@ class DefaultContent extends StatelessWidget {
     }
     return Stack(
       children: [
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: _children,
-          ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: _children,
+              ),
+            ),
+          ],
         ),
         if (bottomButtonText != null)
           Positioned(

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/screens/user_informations/user_information_page.dart';
 import 'package:p_cube_plus_application/widgets/common/list_divider.dart';
 import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';
 
-import '../../utilities/theme.dart';
-import '../../widgets/common/default_bottomsheet.dart';
-import '../../widgets/common/default_profile.dart';
-import '../../widgets/page/default_appbar.dart';
-import '../../widgets/page/default_content.dart';
-import '../../widgets/page/default_page.dart';
+import '../../../widgets/common/default_bottomsheet.dart';
+import '../../../widgets/common/default_profile.dart';
+import '../../../widgets/page/default_appbar.dart';
+import '../../../widgets/page/default_content.dart';
+import '../../../widgets/page/default_page.dart';
 import 'attendence_page.dart';
 
 class AttendenceAddition extends StatelessWidget {
