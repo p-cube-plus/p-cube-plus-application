@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../providers/schedule_provider.dart';
 import 'calendar_day_view.dart';
 
+// Year, Month를 바탕으로 한 달 달력을 보여주는 위젯
 class CalendarView extends StatefulWidget {
   const CalendarView({
     Key? key,
@@ -14,8 +15,8 @@ class CalendarView extends StatefulWidget {
     this.isHomeCalendar = false,
   }) : super(key: key);
 
-  final DateTime date;
-  final DateTime? selectedDate;
+  final DateTime date; // 현재 Year, Month 정보
+  final DateTime? selectedDate; // 클릭된 Day 정보
   final Function(DateTime)? onSelectedDateChanged;
   final isHomeCalendar;
 
@@ -57,21 +58,32 @@ class _CalendarViewState extends State<CalendarView> {
     if (widget.isHomeCalendar) {
       scheduleProvider = context.read<ScheduleProvider>();
     }
-    Widget _blank = Expanded(child: Container());
+
+    // 스크롤 인식을 위해 blank도 크기가 존재
+    Widget _blank = Expanded(
+        child: Container(
+      height: 36,
+      color: Colors.transparent,
+    ));
+
+    // 시작 날짜 초기화
     DateTime itr = widget.date.add(Duration(days: -widget.date.day + 1));
 
     // 앞 부분 공백
     for (int i = 0; i < itr.weekday % 7; i++) days.add(_blank);
 
-    // 날짜들
+    // 한 달의 날짜들을 얻기
     while (itr.month == widget.date.month) {
       days.add(CalendarDayView(
           date: itr,
+          // 선택: 현재 날짜 + 클릭된 날짜
           selected: itr.year == DateTime.now().year &&
                   itr.month == DateTime.now().month &&
                   itr.day == DateTime.now().day ||
               itr.day == _selectedDate.day &&
                   itr.difference(_selectedDate).inDays == 0,
+          // 현재 날짜: 회색
+          // 클릭 날짜: 붉은색
           selectedColor: itr != widget.date ||
                   (itr.day == _selectedDate.day &&
                       itr.difference(_selectedDate).inDays == 0)
@@ -83,6 +95,7 @@ class _CalendarViewState extends State<CalendarView> {
               widget.onSelectedDateChanged?.call(date);
             });
           },
+          // type color의 첫번째 정보만 가져옴
           decorateColor: scheduleProvider
               ?.dailySchedules[DateFormat.yMd().format(itr)]?[0]
               .getMarkColor()));

@@ -23,21 +23,29 @@ class ScheduleProvider with ChangeNotifier {
     loaded = true;
   }
 
+// Month 단위 데이터 가져오기
   Future loadSchedules(DateTime date) async {
-    String yMDate = DateFormat.yM().format(date);
-
+    // init 안됐다면 종료
     if (!loaded) return;
+
+    // 이전에 load 됐다면 종료
+    String yMDate = DateFormat.yM().format(date);
     if (_monthlySchedules.containsKey(yMDate)) return;
 
+    // year, month로 현재 월 데이터 가져오기
+    _monthlySchedules.clear();
+    _dailySchedules.clear();
     _monthlySchedules[yMDate] = await _getScheduels(date);
 
+    // day 스케줄 초기화
     for (int i = 0; i < _monthlySchedules[yMDate]!.length; i++) {
       Schedule schedule = _monthlySchedules[yMDate]![i];
       if (schedule.startDate == null) continue;
 
       for (DateTime d = schedule.startDate!;
-          d.difference(schedule.endDate ?? schedule.startDate!).inDays <= 0;
+          d.difference(schedule.endDate ?? schedule.startDate!).isNegative;
           d = d.add(const Duration(days: 1))) {
+            
         String yMdDate = DateFormat.yMd().format(d);
 
         _dailySchedules[yMdDate] ??= <Schedule>[];
@@ -49,54 +57,39 @@ class ScheduleProvider with ChangeNotifier {
   }
 
   Future<List<Schedule>> _getScheduels(DateTime date) async {
-    if (date.month == 8 && date.year == 2022) // 더미 데이터
-      return _getTmpSchedule();
-    else // 실제 스케쥴 가져오기
-      return <Schedule>[];
+    return _getTmpSchedule();
+
+    // 실제 스케줄 가져와야
   }
 
   List<Schedule> _getTmpSchedule() {
     return <Schedule>[
       Schedule(
         type: 0,
-        name: "판도라큐브 정기회의",
-        startDate: DateTime(2022, 08, 03, 15, 00),
-        endDate: DateTime(2022, 08, 03, 15, 00),
-        hasSpan: false,
-      ),
-      Schedule(
-        type: 0,
-        name: "판도라큐브 정기회의",
-        startDate: DateTime(2022, 08, 10, 15, 00),
-        endDate: DateTime(2022, 08, 10, 15, 00),
-        hasSpan: false,
-      ),
-      Schedule(
-        type: 0,
-        name: "판도라큐브 정기회의",
-        startDate: DateTime(2022, 08, 17, 15, 00),
-        endDate: DateTime(2022, 08, 17, 15, 00),
+        name: "일정 1",
+        startDate: DateTime(2023, 08, 1, 15, 00),
+        endDate: DateTime(2023, 08, 3, 17, 00),
         hasSpan: false,
       ),
       Schedule(
         type: 1,
-        name: "아무것도 안하기",
-        startDate: DateTime(2022, 08, 17, 18, 00),
-        endDate: DateTime(2022, 08, 17, 18, 00),
+        name: "일정 2",
+        startDate: DateTime(2023, 08, 16, 19, 00),
+        endDate: DateTime(2023, 08, 16, 21, 00),
+        hasSpan: false,
+      ),
+      Schedule(
+        type: 0,
+        name: "일정 3",
+        startDate: DateTime(2023, 08, 16, 21, 00),
+        endDate: DateTime(2023, 08, 18, 22, 00),
         hasSpan: false,
       ),
       Schedule(
         type: 1,
-        name: "여름 워크샵",
-        startDate: DateTime(2022, 08, 23),
-        endDate: DateTime(2022, 08, 25),
-        hasSpan: true,
-      ),
-      Schedule(
-        type: 0,
-        name: "판도라큐브 정기회의",
-        startDate: DateTime(2022, 08, 31, 15, 00),
-        endDate: DateTime(2022, 08, 31, 15, 00),
+        name: "일정 4",
+        startDate: DateTime(2023, 08, 26, 22, 00),
+        endDate: DateTime(2023, 08, 26, 23, 00),
         hasSpan: false,
       ),
     ];

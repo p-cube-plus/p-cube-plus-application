@@ -13,12 +13,13 @@ class CalendarDayView extends StatelessWidget {
     this.isExecutive = false,
   }) : super(key: key);
 
-  final DateTime date;
-  final bool selected;
-  final Function(DateTime)? onTap;
-  final Color? decorateColor;
-  final Color selectedColor;
-  final bool isExecutive;
+  final DateTime date; // day 정보
+  final bool selected; // 현재 날짜 or 클릭된 날짜
+  final Function(DateTime)? onTap; // 터치 시 작동 함수
+  final Color? decorateColor; // 날짜 아래 색
+  final Color selectedColor; // 날짜를 덮는 큰 원의 색
+
+  final bool isExecutive; // 임원진 달력
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,7 @@ class CalendarDayView extends StatelessWidget {
         onTap: () => onTap?.call(date),
         child: Container(
           height: 38,
+          // 현재 날짜 or 클릭 시 날짜를 덮는 큰 원이 생김
           child: selected
               ? Stack(
                   alignment: Alignment.center,

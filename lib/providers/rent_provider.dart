@@ -38,7 +38,7 @@ class RentProvider with ChangeNotifier {
   }
 
   Future<List<Rent>?> fetchRentList() async {
-    final url = Uri.parse('http://p-cube-plus.com/rent/list');
+    final url = Uri.parse('http://p-cube-plus.com/proeuct/list');
     final response = await http.get(url);
 
     if (response.statusCode == 200 && response.body.length > 0) {

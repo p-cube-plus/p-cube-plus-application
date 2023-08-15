@@ -8,19 +8,11 @@ import '../../widgets/page/default_page.dart';
 import 'fee_detail_page.dart';
 import '../../utilities/contants.dart' as Constants;
 
-enum FeeStateType { None, Done, Late, Due, Wait }
+enum StateType { none, positive, late, negative, off }
 
-_getImage(type, size) {
-  if (type == FeeStateType.Done)
-    return Image.asset("assets/images/positive.png", width: size, height: size);
-  else if (type == FeeStateType.Late)
-    return Image.asset("assets/images/late.png", width: size, height: size);
-  else if (type == FeeStateType.Due)
-    return Image.asset("assets/images/negative.png", width: size, height: size);
-  else if (type == FeeStateType.Wait)
-    return Image.asset("assets/images/off.png", width: size, height: size);
-  else
-    return Image.asset("assets/images/none.png", width: size, height: size);
+_getImage(StateType type, double size) {
+  return Image.asset("assets/images/${type.toString().split('.').last}.png",
+      width: size, height: size);
 }
 
 class FeePage extends StatelessWidget {
@@ -34,7 +26,7 @@ class FeePage extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.only(top: 12, bottom: 40),
                 child: MonthFee(
-                  type: FeeStateType.Due,
+                  type: StateType.negative,
                   startDay: DateTime(2022, 10, 6),
                   endDay: DateTime(2022, 10, 13),
                   charge: 5000,
@@ -50,19 +42,19 @@ class FeePage extends StatelessWidget {
 
 class MonthFee extends StatelessWidget {
   const MonthFee({required this.type, this.startDay, this.endDay, this.charge});
-  final FeeStateType type;
+  final StateType type;
   final DateTime? startDay;
   final DateTime? endDay;
   final int? charge;
 
   _getText() {
-    if (type == FeeStateType.Done)
+    if (type == StateType.positive)
       return "회부 납부 완료!";
-    else if (type == FeeStateType.Late)
+    else if (type == StateType.late)
       return "회비 납부 완료!\n납부 기간을 꼭 지켜주세요.";
-    else if (type == FeeStateType.Due)
+    else if (type == StateType.negative)
       return "아직 회비를 납부하지 않았어요.";
-    else if (type == FeeStateType.Wait) return "회비 납부 기간이 아닙니다.";
+    else if (type == StateType.off) return "회비 납부 기간이 아닙니다.";
   }
 
   @override
@@ -92,7 +84,7 @@ class MonthFee extends StatelessWidget {
                     child: _getImage(type, 72.0)),
                 Padding(
                   padding: EdgeInsets.only(
-                      bottom: type != FeeStateType.Wait ? 32.0 : 8.0),
+                      bottom: type != StateType.off ? 32.0 : 8.0),
                   child: Text(_getText(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
@@ -100,7 +92,7 @@ class MonthFee extends StatelessWidget {
                           .headline3!
                           .copyWith(fontSize: 12, fontWeight: FontWeight.w500)),
                 ),
-                if (type != FeeStateType.Wait)
+                if (type != StateType.off)
                   Padding(
                     padding: EdgeInsets.only(bottom: 8),
                     child: Row(
@@ -112,7 +104,7 @@ class MonthFee extends StatelessWidget {
                       ],
                     ),
                   ),
-                if (type != FeeStateType.Wait)
+                if (type != StateType.off)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -120,7 +112,7 @@ class MonthFee extends StatelessWidget {
                       Text(NumberFormat('###,###,###원').format(charge!))
                     ],
                   ),
-                if (type == FeeStateType.Due)
+                if (type == StateType.negative)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,24 +205,24 @@ class _YearCalenderState extends State<YearCalender> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _getYearData(1, FeeStateType.None),
-            _getYearData(2, FeeStateType.None),
-            _getYearData(3, FeeStateType.Late),
-            _getYearData(4, FeeStateType.Done),
-            _getYearData(5, FeeStateType.Done),
-            _getYearData(6, FeeStateType.Done),
+            _getYearData(1, StateType.none),
+            _getYearData(2, StateType.none),
+            _getYearData(3, StateType.late),
+            _getYearData(4, StateType.positive),
+            _getYearData(5, StateType.positive),
+            _getYearData(6, StateType.positive),
           ],
         ),
         SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _getYearData(7, FeeStateType.Late),
-            _getYearData(8, FeeStateType.Done),
-            _getYearData(9, FeeStateType.Due),
-            _getYearData(10, FeeStateType.None),
-            _getYearData(11, FeeStateType.None),
-            _getYearData(12, FeeStateType.None),
+            _getYearData(7, StateType.late),
+            _getYearData(8, StateType.positive),
+            _getYearData(9, StateType.negative),
+            _getYearData(10, StateType.none),
+            _getYearData(11, StateType.none),
+            _getYearData(12, StateType.none),
           ],
         )
       ],
@@ -291,7 +283,7 @@ class _YearCalenderState extends State<YearCalender> {
     );
   }
 
-  _getYearData(int month, FeeStateType type) {
+  _getYearData(int month, StateType type) {
     return Column(
       children: [
         Padding(

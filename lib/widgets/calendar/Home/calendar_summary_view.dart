@@ -3,16 +3,17 @@ import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/schedule_provider.dart';
-import '../common/rounded_border.dart';
+import '../../../providers/schedule_provider.dart';
+import '../../common/rounded_border.dart';
 
+// 클린된 날짜 일정 타임라인을 보여주는 위젯
 class CalendarDailySummaryView extends StatelessWidget {
   const CalendarDailySummaryView({
     Key? key,
     required this.selectedDate,
   }) : super(key: key);
 
-  final DateTime selectedDate;
+  final DateTime selectedDate; // 클릭된 Day 정보
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,10 @@ class CalendarDailySummaryView extends StatelessWidget {
               ),
               SizedBox(width: 16.0),
               Text(
-                DateFormat("a hh:mm", "ko_KR")
-                    .format(_schedules[index].startDate ?? DateTime(0)),
+                DateFormat("a hh:mm", "ko_KR").format(
+                    selectedDate.day == _schedules[index].startDate?.day
+                        ? _schedules[index].startDate ?? DateTime(0)
+                        : DateTime(0)),
                 style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
@@ -81,6 +84,15 @@ class CalendarDailySummaryView extends StatelessWidget {
             Stack(
               alignment: Alignment.topLeft,
               children: [
+                Positioned(
+                  left: 3,
+                  top: 9,
+                  child: Container(
+                    color: Theme.of(context).dialogBackgroundColor,
+                    height: (_schedules!.length - 1) * 42.0,
+                    width: 1,
+                  ),
+                ),
                 Column(children: _widgets),
               ],
             ),
@@ -91,6 +103,8 @@ class CalendarDailySummaryView extends StatelessWidget {
   }
 }
 
+// 이번달 일주일 후까지의 정보를 가져옴
+// => 마지막 주일 때 다음달 정보 가져오는 예외처리 안 함
 class CalendarMonthlySummaryView extends StatelessWidget {
   const CalendarMonthlySummaryView({
     Key? key,
@@ -115,7 +129,13 @@ class CalendarMonthlySummaryView extends StatelessWidget {
 
         DateTime start = _schedule.startDate!;
         DateTime end = _schedule.endDate ?? start;
+
+        // 이전 정보는 버림
         if (DateTime.now().isAfter(end)) return Container();
+
+        // 일주일 후까지의 정보만 가져옴
+        var weekLater = DateTime.now().add(Duration(days: 7));
+        if (!start.difference(weekLater).isNegative) return Container();
 
         bool span = _schedule.hasSpan &&
             !(start.day == end.day && start.difference(end).inDays <= 0);
@@ -166,7 +186,6 @@ class CalendarMonthlySummaryView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 28.0),
         Text(
           "다가오는 일정",
           style: Theme.of(context).textTheme.headline1!.copyWith(
