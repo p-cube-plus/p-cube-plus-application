@@ -61,7 +61,7 @@ class _AttendancePageState extends State<AttendancePage>
     widget.endTimes[1]!.add(Duration(minutes: 15)),
   ];
 
-  // 현재 상태 관리
+  // 현재 상태 관리 => 임시 데이터. 서버와 연동해야 한다.
   DateTime curDate = DateTime.now();
   List<StateType> curStates = [StateType.off, StateType.off];
   List<DateTime?> checkTime = [null, null];
