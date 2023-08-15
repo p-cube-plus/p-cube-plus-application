@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/logout_page.dart';
+import 'package:p_cube_plus_application/widgets/common/default_profile.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +45,7 @@ class SettingPage extends StatelessWidget {
                   optionText: Text(
                     _getMode(themeProvider.type),
                     style: theme.textTheme.headline3!
-                        .copyWith(fontSize: 11.0, fontWeight: FontWeight.w400),
+                        .copyWith(fontSize: 12.0, fontWeight: FontWeight.w400),
                   ),
                   onTap: () => showModalBottomSheet(
                       context: context,
@@ -53,9 +54,10 @@ class SettingPage extends StatelessWidget {
                               BorderRadius.vertical(top: Radius.circular(20))),
                       builder: (context) => DefaultBottomsheet(
                             title: "테마 설정",
+                            bottomPadding: 48,
                             contents: [
                               SettingRadioBox(
-                                  type: ThemeMode.system, text: "시스템 설정"),
+                                  type: ThemeMode.system, text: "시스템 설정 사용"),
                               SettingRadioBox(
                                   type: ThemeMode.light, text: "라이트 모드"),
                               SettingRadioBox(
@@ -76,14 +78,14 @@ class SettingPage extends StatelessWidget {
                         return const Text('버전 확인중');
                       }
                       return Text(
-                        snapshot.data!.version,
+                        "v" + snapshot.data!.version,
                         style: theme.textTheme.headline2!.copyWith(
-                            fontSize: 12.0, fontWeight: FontWeight.w400),
+                            fontSize: 14.0, fontWeight: FontWeight.w400),
                       );
                     }),
               ),
               SettingTile(
-                  title: "피드백 보내기",
+                  title: "PCube+에 피드백 보내기",
                   onTap: () => showDialog(
                         barrierDismissible: false,
                         context: context,
@@ -95,6 +97,7 @@ class SettingPage extends StatelessWidget {
                               RoundedBorder(
                                 radius: 4.0,
                                 height: 30.0,
+                                width: MediaQuery.of(context).size.width - 80,
                                 child: DefaultTextField(
                                   maxLength: 20,
                                   hintText: "이름을 입력하세요",
@@ -105,6 +108,7 @@ class SettingPage extends StatelessWidget {
                               RoundedBorder(
                                 radius: 4.0,
                                 height: 150.0,
+                                width: MediaQuery.of(context).size.width - 80,
                                 child: DefaultTextField(
                                   minLine: 11,
                                   maxLength: 500,
@@ -143,43 +147,101 @@ class SettingPage extends StatelessWidget {
                       )),
               SettingTile(
                 title: "개발진 목록",
-                onTap: () => showDialog(
+                onTap: () => showModalBottomSheet(
                     context: context,
-                    builder: (context) => DefaultAlert(
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20))),
+                    builder: (context) => DefaultBottomsheet(
                           title: "개발진 목록",
-                          messageType: MessageType.OK,
-                          children: [
-                            Text(
-                              "PCube+의 개발진 목록입니다.",
-                              style: theme.textTheme.headline2!.copyWith(
-                                fontSize: 11.0,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: 26.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text("오창한",
-                                    style: theme.textTheme.headline2!.copyWith(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w400)),
-                                Text("오창한",
-                                    style: theme.textTheme.headline2!.copyWith(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w400)),
-                                Text("오창한",
-                                    style: theme.textTheme.headline2!.copyWith(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w400)),
-                                Text("오창한",
-                                    style: theme.textTheme.headline2!.copyWith(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w400)),
-                              ],
-                            ),
-                            SizedBox(height: 44.0),
+                          bottomPadding: 8,
+                          contents: [
+                            Container(
+                              height: 630,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: ListView.builder(
+                                  itemCount: 7,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 20),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  DefaultProfile(size: 32),
+                                                  SizedBox(width: 16),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "오창한",
+                                                        style: theme.textTheme
+                                                            .headline5!
+                                                            .copyWith(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 3),
+                                                      Text(
+                                                        "컴퓨터공학과 18학번",
+                                                        style: theme.textTheme
+                                                            .headline5!
+                                                            .copyWith(
+                                                          fontSize: 11,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    "프로그래밍",
+                                                    style: theme
+                                                        .textTheme.headline5!
+                                                        .copyWith(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  Text("졸업회원",
+                                                      style: theme
+                                                          .textTheme.headline3!
+                                                          .copyWith(
+                                                        fontSize: 11,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      )),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        if (index < 6)
+                                          ListDivider()
+                                        else
+                                          SizedBox(height: 8)
+                                      ],
+                                    );
+                                  }),
+                            )
                           ],
                         )),
               ),
@@ -228,7 +290,7 @@ class SettingRadioBox extends StatelessWidget {
     return InkWell(
       onTap: () => themeProvider.changeType(type),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -236,12 +298,16 @@ class SettingRadioBox extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline1!
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 12.0)),
-            Radio(
-                activeColor: Theme.of(context).primaryColor,
-                value: type,
-                groupValue: themeProvider.type,
-                onChanged: (value) => themeProvider.changeType(type))
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 16.0)),
+            SizedBox(
+              width: 20,
+              height: 20,
+              child: Radio(
+                  activeColor: Theme.of(context).primaryColor,
+                  value: type,
+                  groupValue: themeProvider.type,
+                  onChanged: (value) => themeProvider.changeType(type)),
+            )
           ],
         ),
       ),

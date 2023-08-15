@@ -19,7 +19,6 @@ import 'providers/notice_provider.dart';
 void main() {
   // beacon 설정
   WidgetsFlutterBinding.ensureInitialized();
-  print("run!");
   runApp(MultiProvider(
     providers: [
       Provider(create: (_) => NaverLoginProvider()),

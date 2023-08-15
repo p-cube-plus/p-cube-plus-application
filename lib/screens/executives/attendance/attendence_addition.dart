@@ -124,7 +124,7 @@ class AttendenceAddition extends StatelessWidget {
   _MakeBottomsheet(context) {
     return DefaultBottomsheet(
       title: "회원 선택",
-      bottomPaddingFlag: false,
+      bottomPadding: 0,
       contents: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
