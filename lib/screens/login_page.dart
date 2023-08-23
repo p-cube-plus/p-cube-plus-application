@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/main.dart';
 import 'package:p_cube_plus_application/screens/main_page.dart';
 import 'package:provider/provider.dart';
 import '../utilities/contants.dart' as Constants;

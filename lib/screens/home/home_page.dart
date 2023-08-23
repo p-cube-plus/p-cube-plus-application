@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/screens/attendence/attendance_page.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
@@ -12,7 +13,7 @@ import '../rent/scan_page.dart';
 import '../../models/rent.dart';
 import '../../providers/rent_provider.dart';
 import '../../widgets/calendar/calendar.dart';
-import '../../widgets/calendar/calendar_summary_view.dart';
+import '../../widgets/calendar/Home/calendar_summary_view.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -23,6 +24,7 @@ class HomePage extends StatelessWidget {
       content: DefaultContent(
         child: Column(
           children: [
+            Attendence(),
             HomeCalendar(
               currentTheme: currentTheme,
             ),
@@ -31,6 +33,113 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingBarcodeButton(),
+    );
+  }
+}
+
+class Attendence extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 40),
+      child: ContentSummaryView(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AttendancePage(),
+              ),
+            );
+          },
+          title: "출석체크",
+          titleFontSize: 16.0,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: RoundedBorder(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AttendancePage(),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 18.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 7.0,
+                            width: 7.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFFE55542)),
+                          ),
+                          SizedBox(width: 12),
+                          Text("2022.08.17"),
+                          SizedBox(width: 8),
+                          Text("판도라큐브 정기회의"),
+                        ],
+                      ),
+                      Icon(Icons.chevron_right),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ]),
+    );
+  }
+}
+
+class HomeCalendar extends StatefulWidget {
+  const HomeCalendar({
+    Key? key,
+    required this.currentTheme,
+  }) : super(key: key);
+
+  final TextTheme currentTheme;
+
+  @override
+  State<HomeCalendar> createState() => _HomeCalendarState();
+}
+
+class _HomeCalendarState extends State<HomeCalendar> {
+  DateTime _selectedDate = DateTime.now();
+  DateTime _viewDate = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CalendarMonthlySummaryView(
+          viewDate: _viewDate,
+        ),
+        RoundedBorder(
+          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+          child: Calendar(
+            onSelectedDateChanged: (date) =>
+                setState(() => _selectedDate = date),
+            onViewDateChanged: (date) => setState(() {
+              _viewDate = date;
+            }),
+            isHomeCalendar: true,
+          ),
+        ),
+        if (_viewDate.month == _selectedDate.month &&
+            _viewDate.difference(_selectedDate).inDays.abs() < 32)
+          CalendarDailySummaryView(
+            selectedDate: _selectedDate,
+          )
+        else
+          Container(),
+      ]..add(SizedBox(height: 20.0)),
     );
   }
 }
@@ -174,53 +283,6 @@ class _FloatingBarcodeButton extends State<FloatingBarcodeButton> {
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-    );
-  }
-}
-
-class HomeCalendar extends StatefulWidget {
-  const HomeCalendar({
-    Key? key,
-    required this.currentTheme,
-  }) : super(key: key);
-
-  final TextTheme currentTheme;
-
-  @override
-  State<HomeCalendar> createState() => _HomeCalendarState();
-}
-
-class _HomeCalendarState extends State<HomeCalendar> {
-  DateTime _selectedDate = DateTime.now();
-  DateTime _viewDate = DateTime.now();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CalendarMonthlySummaryView(
-          viewDate: _viewDate,
-        ),
-        RoundedBorder(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
-          child: Calendar(
-            onSelectedDateChanged: (date) =>
-                setState(() => _selectedDate = date),
-            onViewDateChanged: (date) => setState(() {
-              _viewDate = date;
-            }),
-            isHomeCalendar: true,
-          ),
-        ),
-        if (_viewDate.month == _selectedDate.month &&
-            _viewDate.difference(_selectedDate).inDays.abs() < 32)
-          CalendarDailySummaryView(
-            selectedDate: _selectedDate,
-          )
-        else
-          Container(),
-      ]..add(SizedBox(height: 20.0)),
     );
   }
 }

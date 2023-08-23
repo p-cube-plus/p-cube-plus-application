@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'default_content.dart';
-
 class DefaultTab {
   DefaultTab({
     required this.title,
@@ -16,10 +14,12 @@ class DefaultTabBar extends StatefulWidget {
     Key? key,
     required this.tabs,
     this.isCenter = false,
+    this.tabHeight = 2,
   }) : super(key: key);
 
   final List<DefaultTab> tabs;
   final bool isCenter;
+  final double tabHeight;
 
   @override
   State<DefaultTabBar> createState() => _DefaultTabBarState();
@@ -39,8 +39,6 @@ class _DefaultTabBarState extends State<DefaultTabBar>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    double startX = 0.0;
-    double endX = 0.0;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -50,7 +48,10 @@ class _DefaultTabBarState extends State<DefaultTabBar>
           child: TabBar(
             tabs: [
               for (int i = 0; i < widget.tabs.length; ++i)
-                Container(child: Text(widget.tabs[i].title))
+                Container(
+                    child: Padding(
+                        padding: EdgeInsets.only(bottom: 4),
+                        child: Text(widget.tabs[i].title)))
             ],
             controller: controller,
             physics: const PageScrollPhysics(),
@@ -67,8 +68,11 @@ class _DefaultTabBarState extends State<DefaultTabBar>
                 const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
             unselectedLabelStyle: theme.tabBarTheme.unselectedLabelStyle,
             labelStyle: theme.tabBarTheme.labelStyle,
-            labelPadding:
-                EdgeInsets.only(left: 8.0, right: 8.0, bottom: 2.0, top: 2.0),
+            labelPadding: EdgeInsets.only(
+                left: 8.0,
+                right: 8.0,
+                bottom: widget.tabHeight,
+                top: widget.tabHeight),
           ),
         ),
         Expanded(
@@ -76,8 +80,7 @@ class _DefaultTabBarState extends State<DefaultTabBar>
             physics: const PageScrollPhysics(),
             controller: controller,
             children: [
-              for (int i = 0; i < widget.tabs.length; ++i)
-                DefaultContent(child: widget.tabs[i].page)
+              for (int i = 0; i < widget.tabs.length; ++i) widget.tabs[i].page
             ],
           ),
         ),

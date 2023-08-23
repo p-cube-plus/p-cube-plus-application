@@ -25,7 +25,7 @@ class SettingNoticePage extends StatelessWidget {
           ]..addAll(noticeProvider.isOn
               ? [
                   ListDivider(horizontal: 20.0, vertial: 10.0),
-                  _getSubTitle(theme, '회비 알림'),
+                  _getSubTitle(theme, '회의 알림'),
                   SwitchTile(
                       title: '정기회의 알림', type: SettingType.AllMeetingNotice),
                   SwitchTile(

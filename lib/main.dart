@@ -8,16 +8,17 @@ import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/theme_provider.dart';
 import 'package:p_cube_plus_application/providers/user_data_provider.dart';
-import 'package:p_cube_plus_application/screens/executives/executive_page.dart';
+import 'package:p_cube_plus_application/screens/attendence/beacon_test.dart';
 import 'package:p_cube_plus_application/screens/main_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/notice_provider.dart';
 
-import 'screens/login_page.dart';
-
-void main() async {
+void main() {
+  // beacon 설정
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
     providers: [
       Provider(create: (_) => NaverLoginProvider()),
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.type,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      home: LoginPage(),
+      home: MainPage(), //AttendencePage(), //ExecutivePage(),
       scrollBehavior: _RemoveGlowEffect(),
     );
   }
