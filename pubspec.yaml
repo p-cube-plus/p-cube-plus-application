@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.1.0"
+  sdk: ">=2.12.0 <3.2.0"
 
 dependencies:
   flutter:
@@ -44,7 +44,7 @@ dependencies:
   flutter_settings_screens: ^0.3.2-null-safety
   package_info_plus: ^1.4.2
   flutter_app_badger: ^1.4.0
-  flutter_naver_login: ^1.6.0
+  flutter_naver_login: ^1.8.0
   intl: ^0.17.0
   flutter_svg: ^1.1.1+1
   http: ^0.13.5

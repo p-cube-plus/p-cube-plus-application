@@ -21,7 +21,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
     providers: [
-      Provider(create: (_) => NaverLoginProvider()),
+      ChangeNotifierProvider(create: (_) => NaverLoginProvider()),
       ChangeNotifierProvider(create: (_) => FeeProvider()),
       ChangeNotifierProvider(create: (_) => NoticeProvider()),
       ChangeNotifierProvider(create: (_) => ProjectProvider()),
