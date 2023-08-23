@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../models/oauth_token.dart';
+import '../services/oauth_api.dart';
 import '../screens/main_page.dart';
 
 class NaverLoginProvider with ChangeNotifier {
@@ -12,29 +14,26 @@ class NaverLoginProvider with ChangeNotifier {
 
     switch (res.status) {
       case NaverLoginStatus.loggedIn:
-        Fluttertoast.showToast(
-            msg: "${res.account.name}님! PCube+ 가입을 환영해요 :)",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        NaverAccessToken token = await FlutterNaverLogin.currentAccessToken;
+        OAuthToken? oAuthToken = await OAuthAPI().naver(token.refreshToken,
+            res.account.id, res.account.name, res.account.mobile);
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage()),
-        );
-
-        // data 처리
-        // nName = res.account.name;
-        // nGender = res.account.birthyear;
-        // nBirth = res.account.birthday;
-
-        // debugPrint("test " + nName);
-        // debugPrint("test " + nGender);
-        // debugPrint("test " + nBirth);
-
-        // retrofit으로 판큐 회원인지 검증해야됨
-        // 아니면 탈퇴처리
-        // UI에 뿌려주는 거
-
+        if (oAuthToken?.accessToken != null) {
+          Fluttertoast.showToast(
+              msg: "${res.account.name}님! 로그인에 성공했어요 :)",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            //System.isLogin = true;
+            return MainPage();
+          }));
+        } else {
+          Fluttertoast.showToast(
+              msg: "${res.account.name}님! 로그인에 실패했어요 :(",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM);
+        }
         break;
       case NaverLoginStatus.cancelledByUser:
         // 유저에 의해 cancel
@@ -47,11 +46,7 @@ class NaverLoginProvider with ChangeNotifier {
     //notifyListeners();
   }
 
-  void naverLogout(int index) {
+  void naverLogout() {
     FlutterNaverLogin.logOut();
-
-    nName = "이름 정보가 없습니다.";
-    nGender = "성별 정보가 없습니다.";
-    nBirth = "생일 정보가 없습니다.";
   }
 }
