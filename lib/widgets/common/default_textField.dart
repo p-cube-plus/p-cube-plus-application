@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/rendering/editable.dart';
@@ -144,10 +145,10 @@ class CustomTextSelectionControls extends TextSelectionControls {
       BuildContext context,
       Rect globalEditableRegion,
       double textLineHeight,
-      Offset position,
+      Offset selectionMidpoint,
       List<TextSelectionPoint> endpoints,
       TextSelectionDelegate delegate,
-      ClipboardStatusNotifier? clipboardStatus,
+      ValueListenable<ClipboardStatus>? clipboardStatus,
       Offset? lastSecondaryTapDownPosition) {
     final List<Widget> items = <Widget>[];
     final TextStyle style = Theme.of(context).textTheme.headline1!.copyWith(
@@ -198,11 +199,11 @@ class CustomTextSelectionControls extends TextSelectionControls {
           ),
           child: widget),
       anchorAbove: Offset(
-        globalEditableRegion.left + position.dx,
+        globalEditableRegion.left + selectionMidpoint.dx,
         globalEditableRegion.top + endpoints[0].point.dy - textLineHeight - 8,
       ),
       anchorBelow: Offset(
-        globalEditableRegion.left + position.dx,
+        globalEditableRegion.left + selectionMidpoint.dx,
         globalEditableRegion.top +
             (endpoints.length > 1 ? endpoints[1] : endpoints[0]).point.dy +
             _kHandleSize,

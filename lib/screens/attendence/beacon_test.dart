@@ -210,7 +210,7 @@ class _TestPageState extends State<TestPage> with WidgetsBindingObserver {
 
   Widget _buildResultsList() {
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
         shrinkWrap: true,
