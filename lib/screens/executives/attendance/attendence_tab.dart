@@ -27,14 +27,14 @@ class AttendenceAll extends StatelessWidget {
                     children: [
                       Text(
                         "회원 이름을 검색해보세요",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
                       ),
                       Image.asset(
                         "assets/images/search.png",
-                        color: Theme.of(context).textTheme.headline3!.color,
+                        color: Theme.of(context).textTheme.displaySmall!.color,
                         scale: 1.5,
                       ),
                     ],
@@ -75,7 +75,7 @@ class AttendenceAll extends StatelessWidget {
           SizedBox(height: 24),
           Text(
             "총 85명",
-            style: Theme.of(context).textTheme.headline1!.copyWith(
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   fontSize: 11,
                   fontWeight: FontWeight.w400,
                 ),
@@ -105,7 +105,7 @@ class AttendenceAll extends StatelessWidget {
                                   "홍길동",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline1!
+                                      .displayLarge!
                                       .copyWith(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
@@ -134,7 +134,7 @@ class AttendenceAll extends StatelessWidget {
                                   "3학년 · 프로그래밍",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline3!
+                                      .displaySmall!
                                       .copyWith(
                                         fontSize: 10,
                                         fontWeight: FontWeight.w500,
@@ -155,7 +155,7 @@ class AttendenceAll extends StatelessWidget {
                                       "1차",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline2!
+                                          .displayMedium!
                                           .copyWith(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w700,
@@ -179,7 +179,7 @@ class AttendenceAll extends StatelessWidget {
                                       "2차",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline2!
+                                          .displayMedium!
                                           .copyWith(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w700,
@@ -223,7 +223,7 @@ class AttendenceAll extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("회원 분류",
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                       )),
@@ -232,7 +232,7 @@ class AttendenceAll extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("활동 회원만 보기",
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           )),
@@ -250,7 +250,7 @@ class AttendenceAll extends StatelessWidget {
               ),
               SizedBox(height: 40),
               Text("정렬",
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                       )),
@@ -261,12 +261,12 @@ class AttendenceAll extends StatelessWidget {
                   child: RoundedBorder(
                     hasShadow: false,
                     radius: 50,
-                    color: Theme.of(context).textTheme.headline3!.color,
+                    color: Theme.of(context).textTheme.displaySmall!.color,
                     padding: const EdgeInsets.all(1),
                     child: RoundedBorder(
                       radius: 50,
                       hasShadow: false,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                       padding: const EdgeInsets.all(3),
                       child: Row(
                         children: [
@@ -290,7 +290,7 @@ class AttendenceAll extends StatelessWidget {
                             child: RoundedBorder(
                               radius: 0,
                               hasShadow: false,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                               child: Text(
                                 "회원구분 순",
                                 textAlign: TextAlign.center,
@@ -311,7 +311,7 @@ class AttendenceAll extends StatelessWidget {
                     onPressed: () {},
                     child: Text(
                       "필터 적용하기",
-                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                           ),

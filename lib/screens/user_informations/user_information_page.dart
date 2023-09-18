@@ -38,7 +38,7 @@ class UserInformationPage extends StatelessWidget {
         },
         child: Icon(
           Icons.settings,
-          color: Theme.of(context).textTheme.headline2!.color,
+          color: Theme.of(context).textTheme.displayMedium!.color,
         ),
       ),
       content: DefaultContent(child: InformationList()),
@@ -154,7 +154,7 @@ class InformationList extends StatelessWidget {
                     children: [
                       Text(
                         "누적 경고 횟수", // debug
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
                               fontSize: 11.0,
                               fontWeight: FontWeight.w400,
                             ),
@@ -210,7 +210,7 @@ class InformationList extends StatelessWidget {
                         Text(
                           project.name, // debug
                           style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
+                              Theme.of(context).textTheme.displayLarge!.copyWith(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -218,7 +218,7 @@ class InformationList extends StatelessWidget {
                         Text(
                           "${["메인", "꼬꼬마"][project.type]} 프로젝트", // debug
                           style:
-                              Theme.of(context).textTheme.headline3!.copyWith(
+                              Theme.of(context).textTheme.displaySmall!.copyWith(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -271,7 +271,7 @@ class InformationList extends StatelessWidget {
                             "졸업생"
                           ][seminar.type]} 세미나", // debug
                           style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
+                              Theme.of(context).textTheme.displayLarge!.copyWith(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -279,7 +279,7 @@ class InformationList extends StatelessWidget {
                         Text(
                           "${DateFormat("MM.dd").format(seminar.date)}", // debug
                           style:
-                              Theme.of(context).textTheme.headline3!.copyWith(
+                              Theme.of(context).textTheme.displaySmall!.copyWith(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -335,7 +335,7 @@ class ProfileView extends StatelessWidget {
           children: [
             Text(
               user.name,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -345,7 +345,7 @@ class ProfileView extends StatelessWidget {
               onTap: () {}, // 회원 목록 보기?
               child: Text(
                 user.level,
-                style: Theme.of(context).textTheme.headline2!.copyWith(
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w700,
                     ),

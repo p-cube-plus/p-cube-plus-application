@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/rendering/editable.dart';
 
 class DefaultTextField extends StatelessWidget {
   const DefaultTextField(
@@ -30,8 +29,8 @@ class DefaultTextField extends StatelessWidget {
       maxLines: maxLine ?? minLine ?? 1,
       maxLength: maxLength,
       keyboardType: textType,
-      cursorColor: theme.textTheme.headline1!.color,
-      style: theme.textTheme.headline1!
+      cursorColor: theme.textTheme.displayLarge!.color,
+      style: theme.textTheme.displayLarge!
           .copyWith(fontSize: fontSize, fontWeight: FontWeight.w400),
       decoration: InputDecoration(
           isDense: true,
@@ -41,7 +40,7 @@ class DefaultTextField extends StatelessWidget {
           contentPadding: EdgeInsets.all(8.0),
           counterText: "", // 글자수 제한 보이기 삭제
           hintText: hintText,
-          hintStyle: theme.textTheme.headline3!.copyWith(
+          hintStyle: theme.textTheme.displaySmall!.copyWith(
             fontSize: 10.0,
             fontWeight: FontWeight.w400,
           ),
@@ -151,7 +150,7 @@ class CustomTextSelectionControls extends TextSelectionControls {
       ValueListenable<ClipboardStatus>? clipboardStatus,
       Offset? lastSecondaryTapDownPosition) {
     final List<Widget> items = <Widget>[];
-    final TextStyle style = Theme.of(context).textTheme.headline1!.copyWith(
+    final TextStyle style = Theme.of(context).textTheme.displayLarge!.copyWith(
           fontSize: 13.0,
           fontWeight: FontWeight.w700,
         );

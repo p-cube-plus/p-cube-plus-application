@@ -12,7 +12,7 @@ class UserDataProvider with ChangeNotifier {
   late UserProfileApi _client;
   bool loaded = false, fail = false;
 
-  User? _user = null;
+  User? _user;
   User? get user => _user;
 
   // mode = 0(경고), 1(주의)

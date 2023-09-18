@@ -24,7 +24,7 @@ class ProjectListPage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
                 "참여한 프로젝트가 없습니다.",
-                style: Theme.of(context).textTheme.headline2!.copyWith(
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),

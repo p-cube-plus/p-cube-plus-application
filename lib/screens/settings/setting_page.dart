@@ -44,7 +44,7 @@ class SettingPage extends StatelessWidget {
                   title: "테마 설정",
                   optionText: Text(
                     _getMode(themeProvider.type),
-                    style: theme.textTheme.headline3!
+                    style: theme.textTheme.displaySmall!
                         .copyWith(fontSize: 12.0, fontWeight: FontWeight.w400),
                   ),
                   onTap: () => showModalBottomSheet(
@@ -79,7 +79,7 @@ class SettingPage extends StatelessWidget {
                       }
                       return Text(
                         "v" + snapshot.data!.version,
-                        style: theme.textTheme.headline2!.copyWith(
+                        style: theme.textTheme.displayMedium!.copyWith(
                             fontSize: 14.0, fontWeight: FontWeight.w400),
                       );
                     }),
@@ -185,7 +185,7 @@ class SettingPage extends StatelessWidget {
                                                       Text(
                                                         "오창한",
                                                         style: theme.textTheme
-                                                            .headline5!
+                                                            .headlineSmall!
                                                             .copyWith(
                                                           fontSize: 14,
                                                           fontWeight:
@@ -196,7 +196,7 @@ class SettingPage extends StatelessWidget {
                                                       Text(
                                                         "컴퓨터공학과 18학번",
                                                         style: theme.textTheme
-                                                            .headline5!
+                                                            .headlineSmall!
                                                             .copyWith(
                                                           fontSize: 11,
                                                           fontWeight:
@@ -214,7 +214,7 @@ class SettingPage extends StatelessWidget {
                                                   Text(
                                                     "프로그래밍",
                                                     style: theme
-                                                        .textTheme.headline5!
+                                                        .textTheme.headlineSmall!
                                                         .copyWith(
                                                       fontSize: 12,
                                                       fontWeight:
@@ -223,7 +223,7 @@ class SettingPage extends StatelessWidget {
                                                   ),
                                                   Text("졸업회원",
                                                       style: theme
-                                                          .textTheme.headline3!
+                                                          .textTheme.displaySmall!
                                                           .copyWith(
                                                         fontSize: 11,
                                                         fontWeight:
@@ -297,7 +297,7 @@ class SettingRadioBox extends StatelessWidget {
             Text(text,
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(fontWeight: FontWeight.w400, fontSize: 16.0)),
             SizedBox(
               width: 20,

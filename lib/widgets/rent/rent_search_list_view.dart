@@ -20,7 +20,7 @@ class RentSearchListView extends StatelessWidget {
             return Text(
               "검색 결과가 없어요 ㅠㅠ",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline3!.copyWith(
+              style: Theme.of(context).textTheme.displaySmall!.copyWith(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),

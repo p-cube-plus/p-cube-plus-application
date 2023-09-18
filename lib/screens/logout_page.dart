@@ -20,15 +20,15 @@ class LogoutPage extends StatelessWidget {
                       child: Text('로그아웃 되었습니다.',
                           style: Theme.of(context)
                               .textTheme
-                              .headline1!
+                              .displayLarge!
                               .copyWith(
                                   fontSize: 20, fontWeight: FontWeight.w700)),
                     ),
                     Text('다시 로그인 하시려면',
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 12, fontWeight: FontWeight.w400)),
                     Text('홈으로 돌아가기를 눌러주세요.',
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 12, fontWeight: FontWeight.w400)),
                   ],
                 ),

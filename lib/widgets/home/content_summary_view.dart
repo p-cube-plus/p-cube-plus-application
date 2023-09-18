@@ -21,7 +21,7 @@ class ContentSummaryView extends StatelessWidget {
     List<Widget> _barContents = <Widget>[
       Text(
         title,
-        style: Theme.of(context).textTheme.headline1!.copyWith(
+        style: Theme.of(context).textTheme.displayLarge!.copyWith(
               fontSize: titleFontSize ?? 14.0,
               fontWeight: FontWeight.w700,
             ),
@@ -32,14 +32,14 @@ class ContentSummaryView extends StatelessWidget {
           children: [
             Text(
               "자세히 보기",
-              style: Theme.of(context).textTheme.headline2!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 11.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
             Icon(
               Icons.chevron_right,
-              color: Theme.of(context).textTheme.headline2!.color,
+              color: Theme.of(context).textTheme.displayMedium!.color,
               size: 20.0,
             ),
           ],

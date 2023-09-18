@@ -7,7 +7,7 @@ class ProjectListApi extends PCubeApi {
   ProjectListApi({int? id}) : super(endPoint: "/project");
 
   Future<List<Project>?> getProjectList() async {
-    Map<String, String>? headers = null;
+    Map<String, String>? headers;
     var response = await get(headers: headers);
 
     switch (response.statusCode) {

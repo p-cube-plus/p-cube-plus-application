@@ -190,7 +190,7 @@ class RentListView extends StatelessWidget {
                         Text(
                           rent.product.name, // debug
                           style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
+                              Theme.of(context).textTheme.displayLarge!.copyWith(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -199,7 +199,7 @@ class RentListView extends StatelessWidget {
                         Text(
                           "${DateFormat("yyyy/MM/dd").format(rent.rentDay)} 에 대여함",
                           style:
-                              Theme.of(context).textTheme.headline3!.copyWith(
+                              Theme.of(context).textTheme.displaySmall!.copyWith(
                                     fontSize: 11.0,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -210,7 +210,7 @@ class RentListView extends StatelessWidget {
                       rent.dDay == 0
                           ? "D-Day"
                           : "D${rent.dDay.sign == -1 ? "+" : "-"}${rent.dDay}",
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w700,
                             color: rent.dDay > 7

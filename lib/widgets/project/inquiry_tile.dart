@@ -52,7 +52,7 @@ class InquiryTile extends StatelessWidget {
                             Text("김아무개",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .displayLarge!
                                     .copyWith(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
@@ -62,7 +62,7 @@ class InquiryTile extends StatelessWidget {
                                 "Lorem ipsum dolor sit amet consectetur. Commodo iaculis tortor mollis turpis auctor augue. Non dui condimentum morbi molestie ultrices sem sed.",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w400,
@@ -83,7 +83,7 @@ class InquiryTile extends StatelessWidget {
                       padding: EdgeInsets.only(right: 20),
                       child: Text("1월 1일",
                           style:
-                              Theme.of(context).textTheme.headline3!.copyWith(
+                              Theme.of(context).textTheme.displaySmall!.copyWith(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w400,
                                   )),

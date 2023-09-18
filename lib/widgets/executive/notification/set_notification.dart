@@ -21,7 +21,7 @@ class SetNotification extends StatelessWidget {
             children: [
               Text(
                 "매주",
-                style: textTheme.headline5!.copyWith(
+                style: textTheme.headlineSmall!.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -31,7 +31,7 @@ class SetNotification extends StatelessWidget {
               SizedBox(width: 8),
               Text(
                 "요일",
-                style: textTheme.headline5!.copyWith(
+                style: textTheme.headlineSmall!.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -95,11 +95,11 @@ class _ScrollableDateState extends State<ScrollableDate> {
       children.add(Center(
         child: Text(widget.words[i],
             style: _selected == i
-                ? Theme.of(context).textTheme.headline1!.copyWith(
+                ? Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                     )
-                : Theme.of(context).textTheme.headline3!.copyWith(
+                : Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.w400,
                     )),

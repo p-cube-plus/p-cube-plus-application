@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +87,7 @@ class _ShowTextButton extends StatelessWidget {
           child: Text('동아리 가입 신청서 작성하기',
               style: Theme.of(context)
                   .textTheme
-                  .headline2!
+                  .displayMedium!
                   .copyWith(fontSize: 14.0, fontWeight: FontWeight.w500)),
           onPressed: () => Navigator.pushReplacement(
             context,

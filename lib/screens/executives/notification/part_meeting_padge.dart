@@ -113,7 +113,7 @@ class _PartMettingBox extends StatelessWidget {
               Text(
                 "오전",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
@@ -122,7 +122,7 @@ class _PartMettingBox extends StatelessWidget {
               Text(
                 "11:00",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 22,
                       fontWeight: FontWeight.w500,
                     ),

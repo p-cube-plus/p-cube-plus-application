@@ -67,7 +67,7 @@ class MonthFee extends StatelessWidget {
           child: Text("이번 달 회비 납부",
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w700)),
         ),
         RoundedBorder(
@@ -89,7 +89,7 @@ class MonthFee extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .headline3!
+                          .displaySmall!
                           .copyWith(fontSize: 12, fontWeight: FontWeight.w500)),
                 ),
                 if (type != StateType.off)
@@ -123,7 +123,7 @@ class MonthFee extends StatelessWidget {
                         child: Text("회비계좌",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline3!
+                                .displaySmall!
                                 .copyWith(
                                     fontSize: 11, fontWeight: FontWeight.w400)),
                       ),
@@ -138,7 +138,7 @@ class MonthFee extends StatelessWidget {
                                 "카카오뱅크",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline5!
+                                    .headlineSmall!
                                     .copyWith(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
@@ -150,7 +150,7 @@ class MonthFee extends StatelessWidget {
                                 "1234-5678-90 정성희",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .displayLarge!
                                     .copyWith(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500),
@@ -182,7 +182,7 @@ class AnnualFee extends StatelessWidget {
           child: Text("연도별 회비 납부",
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w700)),
         ),
         YearCalender(),
@@ -262,7 +262,7 @@ class _YearCalenderState extends State<YearCalender> {
                               child: Icon(Icons.chevron_left))),
                       Text(
                         _curYear.toString() + "년",
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       Padding(
@@ -292,7 +292,7 @@ class _YearCalenderState extends State<YearCalender> {
             month.toString() + "월",
             style: Theme.of(context)
                 .textTheme
-                .headline3!
+                .displaySmall!
                 .copyWith(fontSize: 10, fontWeight: FontWeight.w500),
           ),
         ),
@@ -316,7 +316,7 @@ class FeeInfo extends StatelessWidget {
           child: Text("회비 내역",
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w700)),
         ),
         RoundedBorder(
@@ -334,12 +334,12 @@ class FeeInfo extends StatelessWidget {
                 Text(NumberFormat('###,###,###원').format(sum),
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 14, fontWeight: FontWeight.w400)),
                 Row(
                   children: [
                     Text("자세히 보기",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 12, fontWeight: FontWeight.w500)),
                     Icon(Icons.chevron_right)
                   ],

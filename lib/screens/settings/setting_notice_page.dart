@@ -46,7 +46,7 @@ class SettingNoticePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Text(title,
-          style: theme.textTheme.headline2!
+          style: theme.textTheme.displayMedium!
               .copyWith(fontSize: 10.0, fontWeight: FontWeight.w400)),
     );
   }

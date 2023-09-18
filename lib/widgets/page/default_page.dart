@@ -39,18 +39,18 @@ class DefaultPage extends StatelessWidget {
             ? 6.0
             : MediaQuery.of(context).padding.top + 34.0;
     return Scaffold(
-      backgroundColor: contentColor ?? theme.backgroundColor,
+      backgroundColor: contentColor ?? theme.colorScheme.background,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (appbar != null) appbar!,
           Container(
             decoration: BoxDecoration(
-                color: backgroundColor ?? contentColor ?? theme.backgroundColor,
+                color: backgroundColor ?? contentColor ?? theme.colorScheme.background,
                 border: Border.all(
                   width: 0.0,
                   color:
-                      backgroundColor ?? contentColor ?? theme.backgroundColor,
+                      backgroundColor ?? contentColor ?? theme.colorScheme.background,
                 )),
             child: Padding(
               padding: EdgeInsets.only(
@@ -68,20 +68,20 @@ class DefaultPage extends StatelessWidget {
                     children: [
                       if (title != null)
                         Text(title!,
-                            style: theme.textTheme.headline1!.copyWith(
+                            style: theme.textTheme.displayLarge!.copyWith(
                                 fontSize: 24.0,
                                 fontWeight: FontWeight.w700,
                                 color: textColor ??
-                                    theme.textTheme.headline1!.color)),
+                                    theme.textTheme.displayLarge!.color)),
                       if (subtitle != null)
                         Padding(
                           padding: EdgeInsets.only(top: 4.0),
                           child: Text(subtitle!,
-                              style: theme.textTheme.headline1!.copyWith(
+                              style: theme.textTheme.displayLarge!.copyWith(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w700,
                                   color: textColor ??
-                                      theme.textTheme.headline1!.color)),
+                                      theme.textTheme.displayLarge!.color)),
                         ),
                     ],
                   ),

@@ -35,9 +35,9 @@ class RentBox extends StatelessWidget {
                   ),
                   Text(rent.product.name,
                       style: rent.product.isAvailable
-                          ? Theme.of(context).textTheme.headline1!.copyWith(
+                          ? Theme.of(context).textTheme.displayLarge!.copyWith(
                               fontSize: 12, fontWeight: FontWeight.w500)
-                          : Theme.of(context).textTheme.headline3!.copyWith(
+                          : Theme.of(context).textTheme.displaySmall!.copyWith(
                               fontSize: 12, fontWeight: FontWeight.w500))
                 ],
               ),
@@ -50,13 +50,13 @@ class RentBox extends StatelessWidget {
                       Text(rent.product.category,
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(
                                   fontSize: 11, fontWeight: FontWeight.w700)),
                       Text(rent.product.location ?? "",
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(
                                   fontSize: 11, fontWeight: FontWeight.w400)),
                     ]),

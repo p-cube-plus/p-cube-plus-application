@@ -34,7 +34,7 @@ class NoticePage extends StatelessWidget {
         },
         child: Icon(
           Icons.settings,
-          color: Theme.of(context).textTheme.headline2!.color,
+          color: Theme.of(context).textTheme.displayMedium!.color,
         ),
       ),
       content: DefaultTabBar(tabs: [
@@ -107,7 +107,7 @@ class NoticeBoxWidget extends StatelessWidget {
                 children: [
                   Text(
                     box.name,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w700,
                         ),
@@ -126,7 +126,7 @@ class NoticeBoxWidget extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 box.description,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 11.0,
                       fontWeight: FontWeight.w400,
                     ),
@@ -135,7 +135,7 @@ class NoticeBoxWidget extends StatelessWidget {
           ),
           Text(
             DateFormat("hh:mm").format(DateTime.parse(box.date)),
-            style: Theme.of(context).textTheme.headline2!.copyWith(
+            style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   fontSize: 11.0,
                   fontWeight: FontWeight.w400,
                 ),

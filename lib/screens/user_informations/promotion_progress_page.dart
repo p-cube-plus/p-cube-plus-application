@@ -104,7 +104,7 @@ class PromotionRequirement extends StatelessWidget {
                       padding: EdgeInsets.only(right: 8.0),
                       child: Text(
                         requirement.title,
-                        style: theme.textTheme.headline1!.copyWith(
+                        style: theme.textTheme.displayLarge!.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w400),
                       ),
                     ),
@@ -117,7 +117,7 @@ class PromotionRequirement extends StatelessWidget {
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(
                       requirement.description!,
-                      style: theme.textTheme.headline3!
+                      style: theme.textTheme.displaySmall!
                           .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
                     ),
                   )
@@ -125,12 +125,12 @@ class PromotionRequirement extends StatelessWidget {
             ),
             Text(
               requirement.state.toString(),
-              style: theme.textTheme.headline3!.copyWith(
+              style: theme.textTheme.displaySmall!.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: requirement.isDone
                       ? const Color(0xFF25CA85)
-                      : theme.textTheme.headline3!.color),
+                      : theme.textTheme.displaySmall!.color),
             ),
           ],
         ),

@@ -7,7 +7,7 @@ class ThemeProvider with ChangeNotifier {
   void changeType(ThemeMode newType) {
     type = newType;
     brightness = type == ThemeMode.system
-        ? MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+        ? MediaQueryData.fromView(WidgetsBinding.instance.window)
             .platformBrightness
         : type == ThemeMode.light
             ? Brightness.light

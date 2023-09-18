@@ -67,14 +67,14 @@ class SeminarListView extends StatelessWidget {
                   children: [
                     Text(
                       "${["수습회원", "정회원", "졸업생"][seminar.type]} 세미나", // debug
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
                     Text(
                       "${DateFormat("yyyy/MM/dd").format(seminar.date)}", // debug
-                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w400,
                           ),

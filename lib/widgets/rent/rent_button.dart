@@ -64,7 +64,7 @@ class RentButton extends StatelessWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: Colors.white)
-                : theme.textTheme.headline3!
+                : theme.textTheme.displaySmall!
                     .copyWith(fontSize: 14, fontWeight: FontWeight.w700),
           ),
           style: isActive

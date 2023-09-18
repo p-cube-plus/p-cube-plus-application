@@ -8,7 +8,7 @@ class RentListApi extends PCubeApi {
       : super(endPoint: "/rent/" + (id?.toString() ?? "list"));
 
   Future<List<Rent>?> getRentList() async {
-    Map<String, String>? headers = null;
+    Map<String, String>? headers;
     var response = await get(headers: headers);
 
     switch (response.statusCode) {
@@ -25,7 +25,7 @@ class RentListApi extends PCubeApi {
   }
 
   Future<Rent?> getRentInformation() async {
-    Map<String, String>? headers = null;
+    Map<String, String>? headers;
     var response = await get(headers: headers);
 
     switch (response.statusCode) {

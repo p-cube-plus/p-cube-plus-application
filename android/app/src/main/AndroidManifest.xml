@@ -14,8 +14,11 @@
 	<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/> 
 	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
 
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> 
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />  
+-->
    <application
         android:label="p_cube_plus_application"
         android:icon="@mipmap/launcher_icon">
@@ -29,6 +32,9 @@
          <meta-data
             android:name="com.naver.sdk.clientName"
             android:value="@string/client_name" />
+ <!---       <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="high_importance_channel" />-->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -58,6 +64,10 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+<!--            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter> -->
         </activity>
 
         <!-- 재부팅시 예약된 알림이 예약된 상태 그대로 유지될 수 있도록 해주는 설정 -->

@@ -15,7 +15,7 @@ class RentPage extends StatelessWidget {
       action: GestureDetector(
         child: Image.asset(
           "assets/images/search.png",
-          color: Theme.of(context).textTheme.headline1!.color,
+          color: Theme.of(context).textTheme.displayLarge!.color,
         ),
         onTap: () {
           Navigator.push(

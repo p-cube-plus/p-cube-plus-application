@@ -15,7 +15,7 @@ class RentDetailPage extends StatelessWidget {
   Widget _defaultText(BuildContext context, String text) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.headline1!.copyWith(
+      style: Theme.of(context).textTheme.displayLarge!.copyWith(
             fontSize: 12.0,
             fontWeight: FontWeight.w500,
           ),
@@ -65,7 +65,7 @@ class RentDetailPage extends StatelessWidget {
                 children: [
                   Text(
                     "반납까지 ",
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w700,
                         ),
@@ -149,7 +149,7 @@ class _SummaryText extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text(
             summary,
-            style: Theme.of(context).textTheme.headline3!.copyWith(
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   fontSize: 11.0,
                   fontWeight: FontWeight.w400,
                 ),

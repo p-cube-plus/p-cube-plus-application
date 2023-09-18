@@ -34,7 +34,7 @@ class CalendarHeader extends StatelessWidget {
                   width: 12.0,
                   child: Constants.Icons.GetIcon(
                     Constants.Icons.left_arrow,
-                    color: theme.textTheme.headline3!.color,
+                    color: theme.textTheme.displaySmall!.color,
                   ),
                 ),
               ),
@@ -47,12 +47,12 @@ class CalendarHeader extends StatelessWidget {
                   children: [
                     SizedBox(height: 10),
                     Text("${DateFormat("M").format(date)}월",
-                        style: theme.textTheme.headline1!.copyWith(
+                        style: theme.textTheme.displayLarge!.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         )),
                     Text(DateFormat("yyyy").format(date),
-                        style: theme.textTheme.headline3!.copyWith(
+                        style: theme.textTheme.displaySmall!.copyWith(
                           fontSize: 10,
                           fontWeight: FontWeight.w400,
                         )),
@@ -73,7 +73,7 @@ class CalendarHeader extends StatelessWidget {
                   width: 12.0,
                   child: Constants.Icons.GetIcon(
                     Constants.Icons.right_arrow,
-                    color: theme.textTheme.headline3!.color,
+                    color: theme.textTheme.displaySmall!.color,
                   ),
                 ),
               ),

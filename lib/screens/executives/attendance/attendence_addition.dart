@@ -136,14 +136,14 @@ class AttendenceAddition extends StatelessWidget {
               children: [
                 Text(
                   "회원 이름을 검색해보세요",
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
                 ),
                 Image.asset(
                   "assets/images/search.png",
-                  color: Theme.of(context).textTheme.headline3!.color,
+                  color: Theme.of(context).textTheme.displaySmall!.color,
                   scale: 1.5,
                 ),
               ],
