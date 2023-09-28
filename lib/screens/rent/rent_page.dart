@@ -27,7 +27,7 @@ class RentPage extends StatelessWidget {
         },
       ),
       content: DefaultTabBar(tabs: [
-        DefaultTab(title: "대여하기", page: RentItenListView()),
+        DefaultTab(title: "대여하기", page: RentItemListView()),
         DefaultTab(title: "내가 대여한", page: RentedItemListView())
       ]),
     );

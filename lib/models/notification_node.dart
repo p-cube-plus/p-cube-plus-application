@@ -2,11 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 class NotificationNode {
+  final int id;
+  final int type;
   final String date;
   final String description;
-  final int id;
   final String name;
-  final int type;
 
   NotificationNode({
     required this.date,
@@ -18,19 +18,19 @@ class NotificationNode {
 
   factory NotificationNode.fromJson(Map<String, dynamic> json) {
     return NotificationNode(
+      id: json['id'],
+      type: json['type'],
       date: json['date'],
       description: json['description'],
-      id: json['id'],
       name: json['name'],
-      type: json['type'],
     );
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
+        'type': type,
         'date': date,
         'description': description,
-        'id': id,
         'name': name,
-        'type': type,
       };
 }

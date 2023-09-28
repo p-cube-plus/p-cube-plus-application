@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/rendering/editable.dart';
 
 class DefaultTextField extends StatelessWidget {
   const DefaultTextField(

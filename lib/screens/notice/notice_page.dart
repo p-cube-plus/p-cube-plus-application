@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/notice_provider.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:provider/provider.dart';
 
@@ -15,43 +16,39 @@ class NoticePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var noticeProvider = context.watch<NoticeProvider>();
 
-    if (!noticeProvider.loaded)
-      return Center(child: CircularProgressIndicator());
-
-    if (noticeProvider.fail)
-      return Center(child: Text(noticeProvider.errorMessage!));
-
-    return DefaultPage(
-      title: "알림",
-      action: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SettingNoticePage(),
-            ),
-          );
-        },
-        child: Icon(
-          Icons.settings,
-          color: Theme.of(context).textTheme.headline2!.color,
-        ),
-      ),
-      content: DefaultTabBar(tabs: [
-        DefaultTab(
-            title: "새 알림",
-            page: NoticeListView(
-              isNew: true,
-              noticeList: noticeProvider.curList!,
-            )),
-        DefaultTab(
-            title: "읽은 알림",
-            page: NoticeListView(
-              isNew: false,
-              noticeList: noticeProvider.curList!,
-            )),
-      ]),
-    );
+    return DefaultFutureBuilder(
+        future: noticeProvider.update(),
+        showFunction: (List<NotificationNode> data) => DefaultPage(
+              title: "알림",
+              action: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingNoticePage(),
+                    ),
+                  );
+                },
+                child: Icon(
+                  Icons.settings,
+                  color: Theme.of(context).textTheme.headline2!.color,
+                ),
+              ),
+              content: DefaultTabBar(tabs: [
+                DefaultTab(
+                    title: "새 알림",
+                    page: NoticeListView(
+                      isNew: true,
+                      noticeList: data,
+                    )),
+                DefaultTab(
+                    title: "읽은 알림",
+                    page: NoticeListView(
+                      isNew: false,
+                      noticeList: data,
+                    )),
+              ]),
+            ));
   }
 }
 
