@@ -107,10 +107,10 @@ class SettingPage extends StatelessWidget {
                               SizedBox(height: 8.0),
                               RoundedBorder(
                                 radius: 4.0,
-                                height: 150.0,
+                                height: 200.0,
                                 width: MediaQuery.of(context).size.width - 80,
                                 child: DefaultTextField(
-                                  minLine: 11,
+                                  minLine: 15,
                                   maxLength: 500,
                                   hintText: "내용을 입력하세요",
                                   inputController: contentController,

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/attendence/attendance_page.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
 import '../../widgets/common/rounded_border.dart';
@@ -153,79 +154,80 @@ class RentListView extends StatelessWidget {
   Widget build(BuildContext context) {
     var rentProvider = context.watch<RentProvider>();
 
-    return ContentSummaryView(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RentPage(),
-          ),
-        );
-      },
-      title: "대여한 물품",
-      titleFontSize: 16.0,
-      children: List.generate(
-        rentProvider.rentList?.length ?? 0,
-        (index) {
-          Rent? rent = rentProvider.getRent(index);
-          if (rent == null) return Container();
-
-          return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: RoundedBorder(
-              //height: 56.0,
-              hasShadow: true,
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          rent.product.name, // debug
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                        ),
-                        SizedBox(height: 2.5),
-                        Text(
-                          "${DateFormat("yyyy/MM/dd").format(rent.rentDay)} 에 대여함",
-                          style:
-                              Theme.of(context).textTheme.headline3!.copyWith(
-                                    fontSize: 11.0,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      rent.dDay == 0
-                          ? "D-Day"
-                          : "D${rent.dDay.sign == -1 ? "+" : "-"}${rent.dDay}",
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w700,
-                            color: rent.dDay > 7
-                                ? null
-                                : Theme.of(context).primaryColor,
-                          ),
-                    ),
-                  ],
+    return DefaultFutureBuilder(
+        future: rentProvider.update(),
+        showFunction: (List<Rent> data) => ContentSummaryView(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RentPage(),
                 ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
+              );
+            },
+            title: "대여한 물품",
+            titleFontSize: 16.0,
+            children: List.generate(
+              data.length,
+              (index) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: RoundedBorder(
+                    hasShadow: true,
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                data[index].product.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                              SizedBox(height: 2.5),
+                              Text(
+                                "${DateFormat("yyyy/MM/dd").format(data[index].rentDay)} 에 대여함",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline3!
+                                    .copyWith(
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            data[index].dDay == 0
+                                ? "D-Day"
+                                : "D${data[index].dDay.sign == -1 ? "+" : "-"}${data[index].dDay}",
+                            style:
+                                Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: data[index].dDay > 7
+                                          ? null
+                                          : Theme.of(context).primaryColor,
+                                    ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            )));
   }
 }
 

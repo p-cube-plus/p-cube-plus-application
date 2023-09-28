@@ -99,6 +99,10 @@ class _TestPageState extends State<TestPage> with WidgetsBindingObserver {
     await BeaconsPlugin.setForegroundScanPeriodForAndroid(
         foregroundScanPeriod: 2200, foregroundBetweenScanPeriod: 5);
 
+    // iOS 세팅
+    await BeaconsPlugin.addRegionForIOS(
+        "e2c56db5-dffb-48d2-b060-d0f5a71096e0", 40011, 32023, "Pcube+");
+
     // background 세팅
     // BeaconsPlugin.setBackgroundScanPeriodForAndroid(
     //     backgroundScanPeriod: 2200, backgroundBetweenScanPeriod: 5);
@@ -210,7 +214,7 @@ class _TestPageState extends State<TestPage> with WidgetsBindingObserver {
 
   Widget _buildResultsList() {
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
         shrinkWrap: true,

@@ -9,10 +9,8 @@ import '../models/caution.dart';
 import '../services/user_profile_api.dart';
 
 class UserDataProvider with ChangeNotifier {
-  late UserProfileApi _client;
-  bool loaded = false, fail = false;
-
-  User? _user = null;
+  UserProfileApi _client = new UserProfileApi();
+  User? _user;
   User? get user => _user;
 
   // mode = 0(경고), 1(주의)
@@ -30,35 +28,18 @@ class UserDataProvider with ChangeNotifier {
     return ret.abs();
   }
 
-  UserDataProvider() {
-    initialize();
-  }
-
-  Future initialize() async {
-    _user = await _getData();
-
-    loaded = true;
-    fail = _user != null;
-
+  Future<User?> update() async {
+    //_user = await _client.get();
+    _user = await _getDummy();
     notifyListeners();
+    return _user;
   }
 
-  Future<User?> _getData() async {
-    _client = UserProfileApi();
-    User? user = await _client.getUser();
-
-    /*
-    if (user == null) {
-      String js = jsonEncode(tempUser().toJson());
-      Map<String, dynamic> json = jsonDecode(js);
-      user = User.fromJson(json);
-    }
-    */
-
-    return user;
+  Future<User> _getDummy() async {
+    return _getDummyData();
   }
 
-  User tempUser() => User(
+  User _getDummyData() => User(
         id: 3,
         level: "정회원",
         name: "조승빈",
@@ -126,7 +107,7 @@ class UserDataProvider with ChangeNotifier {
         cautions: <Caution>[
           Caution(
             id: 0,
-            type: 2,
+            type: 0,
             amount: 1,
             description: "경고 부여 사유~~~~",
             date: DateTime(2022, 05, 27),
@@ -154,7 +135,7 @@ class UserDataProvider with ChangeNotifier {
           ),
           Seminar(
             id: 5,
-            type: 2,
+            type: 0,
             description: "",
             date: DateTime(2022, 05, 29),
           ),
@@ -175,12 +156,4 @@ class UserDataProvider with ChangeNotifier {
           vote: false,
         ),
       );
-
-  void update() async {
-    if (!loaded) return;
-
-    // 데이터 갱신
-    _user = await _getData();
-    notifyListeners();
-  }
 }

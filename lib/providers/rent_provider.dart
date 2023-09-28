@@ -1,84 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:p_cube_plus_application/models/product.dart';
 import 'dart:async';
 import '../services/rent_api.dart';
 import '../models/rent.dart';
 
 class RentProvider with ChangeNotifier {
-  late RentListApi _client;
-
-  bool loaded = false;
-  bool fail = false;
-  String? errorMessage;
-
-  late List<Rent>? _rentList;
-  List<Rent>? get rentList => loaded ? _rentList : null;
-
-  RentProvider() {
-    initialize();
-  }
-
-  Future<List<Rent>?> _getRents() async {
-    _client = RentListApi();
-    List<Rent>? _rentList = await _client.getRentList();
-
-    //_client = RentListApi(id: 1);
-    //Rent? _rent = await _client.getRentInformation();
-    //print(_rent!.toJson().toString());
-
-    return _rentList;
-  }
-
-  Future initialize() async {
-    fail = false;
-    loaded = false;
-    _rentList = await fetchRentList();
-    notifyListeners();
-  }
-
-  Future<List<Rent>?> fetchRentList() async {
-    final url = Uri.parse('http://p-cube-plus.com/proeuct/list');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200 && response.body.length > 0) {
-      try {
-        loaded = true;
-        return (json.decode(response.body) as List)
-            .map((data) => Rent.fromJson(data))
-            .toList();
-      } catch (e) {
-        fail = true;
-        errorMessage = "데이터 변환 실패";
-        return null;
-      }
-    } else {
-      fail = true;
-      errorMessage = "데이터 불러오기 실패";
-      return null;
-    }
-  }
+  RentListApi _client = new RentListApi();
+  List<Rent> _rentList = [];
 
   Future<List<Rent>>? searchRentList(String name) async {
-    return _rentList!
+    return _rentList
         .where((element) => element.product.name.contains(name))
         .toList();
   }
 
-  Rent? getRent(int index) {
-    if (!loaded) return null;
-    return _rentList![index];
+  Future<List<Rent>> update() async {
+    //_rentList = (await _client.get()) ?? [];
+    _rentList = await _getDummy();
+    notifyListeners();
+    return _rentList;
   }
 
-  void update() async {
-    // 데이터 갱신
-    _rentList = await _getRents();
-
-    fail = _rentList == null;
-    loaded = true;
-
-    //print(getRent(id: 1)!.toJson());
-
-    notifyListeners();
+  List<Rent> _getDummy() {
+    return <Rent>[
+      Rent(
+          product: Product(
+              code: 0,
+              isAvailable: true,
+              name: "판도라큐브의 은밀한 물품",
+              category: "책",
+              location: "123-123",
+              detailLocation: "456-789",
+              modelName: null,
+              status: ProductStatus(value: "0", rentUser: "권오민")),
+          deadline: DateTime(2024, 12, 12),
+          rentDay: DateTime(2022, 04, 04),
+          dDay:
+              DateTime(2024, 12, 12).difference(DateTime(2022, 04, 04)).inDays,
+          returnDay: null),
+      Rent(
+          product: Product(
+              code: 0,
+              isAvailable: true,
+              name: "운영체제 족보",
+              category: "책",
+              location: "123-123",
+              detailLocation: "456-789",
+              modelName: null,
+              status: ProductStatus(value: "0", rentUser: "권오민")),
+          deadline: DateTime(2024, 12, 12),
+          rentDay: DateTime(2023, 09, 12),
+          dDay:
+              DateTime(2024, 12, 12).difference(DateTime(2023, 09, 12)).inDays,
+          returnDay: null),
+      Rent(
+          product: Product(
+              code: 0,
+              isAvailable: true,
+              name: "Clean Code",
+              category: "책",
+              location: "123-123",
+              detailLocation: "456-789",
+              modelName: null,
+              status: ProductStatus(value: "0", rentUser: "권오민")),
+          deadline: DateTime(2024, 12, 12),
+          rentDay: DateTime(2023, 08, 21),
+          dDay:
+              DateTime(2024, 12, 12).difference(DateTime(2023, 08, 21)).inDays,
+          returnDay: null),
+    ];
   }
 }
