@@ -25,7 +25,7 @@ class CalendarDailySummaryView extends StatelessWidget {
     List<Widget> _widgets = List.generate(
       _schedules?.length ?? 0,
       (index) {
-        if (_schedules![index].hasSpan) return Container();
+        if (_schedules!.isEmpty) return Container();
         _hasSchedule = true;
 
         return Padding(
@@ -45,15 +45,15 @@ class CalendarDailySummaryView extends StatelessWidget {
                     selectedDate.day == _schedules[index].startDate?.day
                         ? _schedules[index].startDate ?? DateTime(0)
                         : DateTime(0)),
-                style: Theme.of(context).textTheme.headline2!.copyWith(
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
               ),
               SizedBox(width: 8.0),
               Text(
-                _schedules[index].name,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                _schedules[index].title,
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w500,
                     ),
@@ -75,7 +75,7 @@ class CalendarDailySummaryView extends StatelessWidget {
           children: [
             Text(
               DateFormat("yyyy.MM.dd").format(selectedDate),
-              style: Theme.of(context).textTheme.headline2!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w400,
                   ),
@@ -124,8 +124,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
       _schedules?.length ?? 0,
       (index) {
         Schedule _schedule = _schedules![index];
-        if (!_schedule.hasSpan && _schedule.startDate == null)
-          return Container();
+        if (_schedule.startDate == null) return Container();
 
         DateTime start = _schedule.startDate!;
         DateTime end = _schedule.endDate ?? start;
@@ -137,7 +136,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
         var weekLater = DateTime.now().add(Duration(days: 7));
         if (!start.difference(weekLater).isNegative) return Container();
 
-        bool span = _schedule.hasSpan &&
+        bool span =
             !(start.day == end.day && start.difference(end).inDays <= 0);
 
         _hasSchedule = true;
@@ -162,15 +161,15 @@ class CalendarMonthlySummaryView extends StatelessWidget {
                       (span
                           ? "\n~ ${DateFormat("yyyy.MM.dd").format(end)}"
                           : ""),
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontSize: 10.0,
                         fontWeight: FontWeight.w400,
                       ),
                 ),
                 SizedBox(width: 8.0),
                 Text(
-                  _schedule.name,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  _schedule.title,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w500,
                       ),
@@ -188,7 +187,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
       children: [
         Text(
           "다가오는 일정",
-          style: Theme.of(context).textTheme.headline1!.copyWith(
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w700,
               ),

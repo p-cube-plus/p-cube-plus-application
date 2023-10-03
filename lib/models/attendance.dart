@@ -1,44 +1,36 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:flutter/material.dart';
 
 @JsonSerializable()
-class Schedule {
+class Attendance {
   final int id;
-  final int type;
   final String title;
-  final String startTime;
-  final DateTime? startDate, endDate;
+  final DateTime startDate;
+  final DateTime startTime;
+  final DateTime? endDate;
 
-  Color getMarkColor() {
-    return [Color(0xCCDE2B13), Color(0xFF5EDCA7), Color(0xCC4813DE)][type];
-  }
-
-  Schedule({
+  Attendance({
     required this.id,
-    required this.type,
     required this.title,
     required this.startDate,
     required this.startTime,
     required this.endDate,
   });
 
-  factory Schedule.fromJson(Map<String, dynamic> json) {
-    return Schedule(
+  factory Attendance.fromJson(Map<String, dynamic> json) {
+    return Attendance(
       id: json['id'],
-      type: json['type'],
-      title: json['name'],
+      title: json['title'],
       startDate: DateTime.parse(json['start_date']),
-      startTime: json['start_time'],
+      startTime: DateTime.parse(json['start_time']),
       endDate: DateTime.parse(json['end_date']),
     );
   }
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'type': type,
         'title': title,
         'start_date': startDate.toString(),
-        'start_time': startTime,
+        'start_time': startTime.toString(),
         'end_date': endDate.toString(),
       };
 }

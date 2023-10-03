@@ -27,9 +27,9 @@ class DefaultAppBar extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 0.0,
-          color: backgroundColor ?? theme.backgroundColor,
+          color: backgroundColor ?? theme.colorScheme.background,
         ),
-        color: backgroundColor ?? theme.backgroundColor,
+        color: backgroundColor ?? theme.colorScheme.background,
       ),
       padding: EdgeInsets.only(
           left: 24.0,
@@ -47,7 +47,7 @@ class DefaultAppBar extends StatelessWidget {
               child: Icon(
                 Icons.arrow_back_ios_new,
                 size: 20.0,
-                color: contentColor ?? theme.textTheme.headline1!.color,
+                color: contentColor ?? theme.textTheme.displayLarge!.color,
               ),
             )
           else
@@ -55,10 +55,10 @@ class DefaultAppBar extends StatelessWidget {
           if (centerTitle != null)
             Text(
               centerTitle!,
-              style: theme.textTheme.headline1!.copyWith(
+              style: theme.textTheme.displayLarge!.copyWith(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w700,
-                color: contentColor ?? theme.textTheme.headline1!.color,
+                color: contentColor ?? theme.textTheme.displayLarge!.color,
               ),
             ),
           if (leftTitle != null)
@@ -68,10 +68,10 @@ class DefaultAppBar extends StatelessWidget {
                 children: [
                   Text(
                     leftTitle!,
-                    style: theme.textTheme.headline1!.copyWith(
+                    style: theme.textTheme.displayLarge!.copyWith(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
-                      color: contentColor ?? theme.textTheme.headline1!.color,
+                      color: contentColor ?? theme.textTheme.displayLarge!.color,
                     ),
                   ),
                   Padding(

@@ -27,7 +27,7 @@ class SwitchTile extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Text(title,
-                style: theme.textTheme.headline1!
+                style: theme.textTheme.displayLarge!
                     .copyWith(fontSize: 14.0, fontWeight: FontWeight.w400)),
           ),
           Padding(

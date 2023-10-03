@@ -185,7 +185,7 @@ class _AttendancePageState extends State<AttendancePage>
           children: [
             Text(
               "오늘의 출석체크",
-              style: theme.textTheme.headline5!.copyWith(
+              style: theme.textTheme.headlineSmall!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
               ),
@@ -206,7 +206,7 @@ class _AttendancePageState extends State<AttendancePage>
                     children: [
                       Text(
                         "오늘은 정기회의가 없어요.",
-                        style: theme.textTheme.headline2!.copyWith(
+                        style: theme.textTheme.displayMedium!.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                         ),
@@ -215,7 +215,7 @@ class _AttendancePageState extends State<AttendancePage>
                       Text(
                         "출석체크가 제대로 조회되지 않는 경우\n임원진에게 문의해주세요.",
                         textAlign: TextAlign.center,
-                        style: theme.textTheme.headline3!.copyWith(
+                        style: theme.textTheme.displaySmall!.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                         ),
@@ -227,7 +227,7 @@ class _AttendancePageState extends State<AttendancePage>
             SizedBox(height: 56),
             Text(
               "지난 출석",
-              style: theme.textTheme.headline5!.copyWith(
+              style: theme.textTheme.headlineSmall!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
               ),
@@ -268,7 +268,7 @@ class _AttendancePageState extends State<AttendancePage>
         children: [
           Text(
             "${curDate.month}월 ${curDate.day}일 정기회의",
-            style: theme.textTheme.headline1!.copyWith(
+            style: theme.textTheme.displayLarge!.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -302,7 +302,7 @@ class _AttendancePageState extends State<AttendancePage>
             children: [
               Text(
                 "${type + 1}차 인증",
-                style: theme.textTheme.headline3!.copyWith(
+                style: theme.textTheme.displaySmall!.copyWith(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
                 ),
@@ -362,7 +362,7 @@ class _AttendancePageState extends State<AttendancePage>
           ? theme.primaryColor
           : curStates[type] == StateType.positive
               ? MyThemes.secondary20
-              : theme.textTheme.headline3!.color!.withAlpha(102),
+              : theme.textTheme.displaySmall!.color!.withAlpha(102),
       child: Center(child: _getAttendanceText(theme, type)),
       onTap: () async {
         if (widget.startTimes[type] == null) return;
@@ -410,7 +410,7 @@ class _AttendancePageState extends State<AttendancePage>
     if (curStates[type] == StateType.off)
       return Text("출석하기",
           style: TextStyle(
-            color: isReady ? Colors.white : theme.textTheme.headline3!.color,
+            color: isReady ? Colors.white : theme.textTheme.displaySmall!.color,
             fontSize: 12,
             fontWeight: FontWeight.w700,
           ));
@@ -437,12 +437,12 @@ class _AttendancePageState extends State<AttendancePage>
         mainAxisSize: MainAxisSize.min,
         children: [
           Text("지각",
-              style: theme.textTheme.headline5!.copyWith(
+              style: theme.textTheme.headlineSmall!.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
               )),
           Text(DateFormat('hh시 mm분 ss초').format(checkTime[type]!),
-              style: theme.textTheme.headline5!.copyWith(
+              style: theme.textTheme.headlineSmall!.copyWith(
                 fontSize: 9,
                 fontWeight: FontWeight.w400,
               )),
@@ -450,7 +450,7 @@ class _AttendancePageState extends State<AttendancePage>
       );
     else if (curStates[type] == StateType.negative)
       return Text("출석 실패",
-          style: theme.textTheme.headline3!.copyWith(
+          style: theme.textTheme.displaySmall!.copyWith(
             fontSize: 12,
             fontWeight: FontWeight.w700,
           ));

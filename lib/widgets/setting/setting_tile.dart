@@ -26,7 +26,7 @@ class SettingTile extends StatelessWidget {
           children: [
             Text(
               title,
-              style: theme.textTheme.headline1!
+              style: theme.textTheme.displayLarge!
                   .copyWith(fontSize: 14.0, fontWeight: FontWeight.w400),
             ),
             Row(
@@ -37,7 +37,7 @@ class SettingTile extends StatelessWidget {
                 ),
                 hasIcon
                     ? Icon(Icons.chevron_right,
-                        size: 24.0, color: theme.textTheme.headline2!.color)
+                        size: 24.0, color: theme.textTheme.displayMedium!.color)
                     : SizedBox(width: 0.0),
               ],
             )

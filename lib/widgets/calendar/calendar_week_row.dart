@@ -16,7 +16,7 @@ class CalendarWeekRow extends StatelessWidget {
           child: Text(
             DateFormat('E', "ko_KR").dateSymbols.SHORTWEEKDAYS[(index) % 7],
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline3!.copyWith(
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   fontSize: 10,
                   fontWeight: FontWeight.w400,
                 ),

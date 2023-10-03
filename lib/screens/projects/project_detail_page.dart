@@ -62,7 +62,7 @@ class ProjectDetailPage extends StatelessWidget {
                     children: [
                       Text(
                         project.name,
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700,
                             ),
@@ -80,7 +80,7 @@ class ProjectDetailPage extends StatelessWidget {
                   SizedBox(height: 4.0),
                   Text(
                     projectProperty,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 10.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -90,7 +90,7 @@ class ProjectDetailPage extends StatelessWidget {
                     children: [
                       Text(
                         project.getStatus(),
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w400,
                             ),
@@ -98,7 +98,7 @@ class ProjectDetailPage extends StatelessWidget {
                       SizedBox(width: 8.0),
                       Text(
                         projectDate,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w400,
                             ),
@@ -187,7 +187,7 @@ class _ProjectDetailSectionView extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headline3!.copyWith(
+              style: Theme.of(context).textTheme.displaySmall!.copyWith(
                     fontSize: 10.0,
                     fontWeight: FontWeight.w500,
                   ),
@@ -199,14 +199,14 @@ class _ProjectDetailSectionView extends StatelessWidget {
                   children: [
                     Text(
                       "자세히 보기",
-                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 10.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
                     Icon(
                       Icons.chevron_right,
-                      color: Theme.of(context).textTheme.headline3!.color,
+                      color: Theme.of(context).textTheme.displaySmall!.color,
                       size: 16.0,
                     ),
                   ],
@@ -245,14 +245,14 @@ class _ProjectDetailMemeberView extends StatelessWidget {
                 children: [
                   Text(
                     member.name,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 11.0,
                           fontWeight: FontWeight.w700,
                         ),
                   ),
                   Text(
                     member.getPart() + "파트",
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 10.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -299,7 +299,7 @@ class _TagBorder extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(
         content,
-        style: Theme.of(context).textTheme.headline2!.copyWith(
+        style: Theme.of(context).textTheme.displayMedium!.copyWith(
               color: contentColor,
               fontSize: 9.0,
               fontWeight: FontWeight.w400,

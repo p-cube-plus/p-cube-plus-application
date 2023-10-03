@@ -46,7 +46,7 @@ class ExecutiveNotificationPage extends StatelessWidget {
         children: [
           Text(
             text,
-            style: Theme.of(context).textTheme.headline1!.copyWith(
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),

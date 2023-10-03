@@ -53,7 +53,7 @@ class _ButtonPageState extends State<ButtonPage> {
           }),
           child: Text(
             name,
-            style: theme.textTheme.headline1!
+            style: theme.textTheme.displayLarge!
                 .copyWith(fontSize: 12, fontWeight: FontWeight.w500),
           ),
           style: theme.outlinedButtonTheme.style!.copyWith(

@@ -34,7 +34,7 @@ class CalendarDayView extends StatelessWidget {
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                 )
-              : Theme.of(context).textTheme.headline1!.copyWith(
+              : Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
                   ),

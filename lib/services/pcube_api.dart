@@ -16,4 +16,15 @@ abstract class PCubeApi {
 
     return response;
   }
+
+  Future<http.Response> post(
+      {Map<String, String>? headers, Map<String, String>? body}) async {
+    var response = await http.post(
+      Uri.parse(_baseUrl + endPoint),
+      headers: headers,
+      body: body,
+    );
+
+    return response;
+  }
 }

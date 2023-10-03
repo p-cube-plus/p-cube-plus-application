@@ -87,7 +87,7 @@ class ProjectChatPage extends StatelessWidget {
               children: [
                 Text(
                   "아직 문의사항이 없네요.",
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w700,
                       ),
@@ -95,7 +95,7 @@ class ProjectChatPage extends StatelessWidget {
                 SizedBox(height: 8.0),
                 Text(
                   "문의사항을 작성해보세요!\n답변이 등록될 경우 알림을 보내드립니다.",
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w400,
                       ),
@@ -146,7 +146,7 @@ class _ProjectChatTextBarState extends State<_ProjectChatTextBar> {
             child: Icon(
               Icons.link_rounded,
               size: 24.0,
-              color: Theme.of(context).textTheme.headline1!.color,
+              color: Theme.of(context).textTheme.displayLarge!.color,
             ),
           ),
           Expanded(
@@ -169,7 +169,7 @@ class _ProjectChatTextBarState extends State<_ProjectChatTextBar> {
               Constants.Icons.send,
               color: _controller.text != ""
                   ? Theme.of(context).primaryColor
-                  : Theme.of(context).textTheme.headline3!.color,
+                  : Theme.of(context).textTheme.displaySmall!.color,
             ),
           ),
         ],
@@ -194,7 +194,7 @@ class _ChatBubble extends StatelessWidget {
       SizedBox(width: 8.0),
       Text(
         "22.5.7.(화)",
-        style: Theme.of(context).textTheme.headline3!.copyWith(
+        style: Theme.of(context).textTheme.displaySmall!.copyWith(
               fontSize: 11.0,
               fontWeight: FontWeight.w400,
             ),
@@ -232,7 +232,7 @@ class _ChatBubble extends StatelessWidget {
           if (!mine)
             Text(
               "김아무개",
-              style: Theme.of(context).textTheme.headline2!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w500,
                   ),
@@ -243,7 +243,7 @@ class _ChatBubble extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: Text(
               content,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 11.0,
                     fontWeight: FontWeight.w400,
                     color: mine ? Colors.white : null,

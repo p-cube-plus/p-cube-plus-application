@@ -85,8 +85,8 @@ class CautionListView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${type} ${mode == 1 ? "" : "차감"}",
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    "$type ${mode == 1 ? "" : "차감"}",
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w700,
                         ),
@@ -95,7 +95,7 @@ class CautionListView extends StatelessWidget {
                     "${caution.description}(으)로 인해 " +
                         "$type ${_autoFix(caution.amount.abs())}회" +
                         "${mode == 1 ? "" : "차감"}",
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -104,7 +104,7 @@ class CautionListView extends StatelessWidget {
               ),
               Text(
                 DateFormat('yyyy.MM.dd').format(caution.date),
-                style: Theme.of(context).textTheme.headline3!.copyWith(
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
@@ -122,7 +122,7 @@ class CautionListView extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline2!.copyWith(
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w400,
               ),
@@ -150,14 +150,14 @@ class CautionSummaryView extends StatelessWidget {
           children: [
             Text(
               "주의 및 경고",
-              style: Theme.of(context).textTheme.headline2!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
             ),
             Text(
               "${_autoFix(userProvider.totalCaution(2))}회",
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
@@ -170,14 +170,14 @@ class CautionSummaryView extends StatelessWidget {
           children: [
             Text(
               "경고 차감",
-              style: Theme.of(context).textTheme.headline2!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
             ),
             Text(
               "${_autoFix(userProvider.totalCaution(2, sign: -1))}회",
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
@@ -190,14 +190,14 @@ class CautionSummaryView extends StatelessWidget {
           children: [
             Text(
               "총",
-              style: Theme.of(context).textTheme.headline2!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),
             ),
             Text(
               "${_autoFix(userProvider.totalCaution(2) - userProvider.totalCaution(2, sign: -1))}회",
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),

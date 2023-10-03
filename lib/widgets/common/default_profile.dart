@@ -38,7 +38,7 @@ class DefaultProfile extends StatelessWidget {
               "+1",
               style: Theme.of(context)
                   .textTheme
-                  .headline3!
+                  .displaySmall!
                   .copyWith(fontSize: 12.0, fontWeight: FontWeight.w400),
             ))
           : null,

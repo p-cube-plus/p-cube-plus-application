@@ -42,13 +42,13 @@ class _RentSearchPageState extends State<RentSearchPage> {
                     });
                   },
                   textInputAction: TextInputAction.search,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w400,
                       ),
                   decoration: InputDecoration(
                     hintText: "물품 이름, 종류 등",
-                    hintStyle: Theme.of(context).textTheme.headline3!.copyWith(
+                    hintStyle: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -58,7 +58,7 @@ class _RentSearchPageState extends State<RentSearchPage> {
                       onTap: () => setState(() {}),
                       child: Image.asset(
                         "assets/images/search.png",
-                        color: Theme.of(context).textTheme.headline3!.color,
+                        color: Theme.of(context).textTheme.displaySmall!.color,
                         scale: 1.2,
                       ),
                     ),
@@ -70,7 +70,7 @@ class _RentSearchPageState extends State<RentSearchPage> {
                 Text(
                   "원하는 물품을 검색해서\n대여해보세요.",
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
                       ),

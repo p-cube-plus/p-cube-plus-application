@@ -131,7 +131,7 @@ class _SelectAttendenceDayState extends State<SelectAttendenceDay> {
                               child: Icon(Icons.chevron_left))),
                       Text(
                         DateFormat('M월 d일').format(_curDate),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       Padding(
@@ -171,7 +171,7 @@ class SelectAttendenceBox extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline1!.copyWith(
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
@@ -183,7 +183,7 @@ class SelectAttendenceBox extends StatelessWidget {
             child: Text(
               timeText,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
                   ),
@@ -214,7 +214,7 @@ class SelectAttendenceBox extends StatelessWidget {
             children: [
               Text(
                 "시작 시간",
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -224,7 +224,7 @@ class SelectAttendenceBox extends StatelessWidget {
               SizedBox(height: 16),
               Text(
                 "마감 시간",
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),

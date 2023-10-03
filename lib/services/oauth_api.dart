@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 
 import '../models/oauth_token.dart';
 import 'pcube_api.dart';
 
-class OAuthAPI extends PCubeApi {
-  OAuthAPI() : super(endPoint: "/oauth/naver/login");
+class OAuthApi extends PCubeApi {
+  OAuthApi() : super(endPoint: "/oauth/naver/login");
 
   Future<OAuthToken?> naver(String refreshToken, String identifier, String name,
       String phoneNumber) async {

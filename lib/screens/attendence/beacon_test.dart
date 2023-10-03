@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io' show Platform;
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:beacons_plugin/beacons_plugin.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +116,7 @@ class _TestPageState extends State<TestPage> with WidgetsBindingObserver {
             await StopMonitoring();
           } else {
             print(
-                "data: ${data.isNotEmpty}, isRunning: ${isRunning}, result: ${_results}");
+                "data: ${data.isNotEmpty}, isRunning: $isRunning, result: $_results");
           }
         },
         onDone: () {},
@@ -168,7 +167,7 @@ class _TestPageState extends State<TestPage> with WidgetsBindingObserver {
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('총 개수: ${_results == "" ? 0 : 1}',
-                  style: Theme.of(context).textTheme.headline4?.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontSize: 14,
                         color: Colors.red,
                         fontWeight: FontWeight.bold,
@@ -234,7 +233,7 @@ class _TestPageState extends State<TestPage> with WidgetsBindingObserver {
               title: Text(
                 "Time: $formattedDate\n$_results",
                 textAlign: TextAlign.justify,
-                style: Theme.of(context).textTheme.headline4?.copyWith(
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontSize: 14,
                       color: const Color(0xFF1A1B26),
                       fontWeight: FontWeight.normal,

@@ -75,7 +75,7 @@ class RentedDetailTile extends StatelessWidget {
         SizedBox(height: 32),
         Text(
           infoText,
-          style: theme.textTheme.headline3!.copyWith(
+          style: theme.textTheme.displaySmall!.copyWith(
             fontSize: 11,
             fontWeight: FontWeight.w400,
           ),
@@ -97,12 +97,12 @@ class RentedDetailTile extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text("반납까지 ",
-                                    style: theme.textTheme.headline1!.copyWith(
+                                    style: theme.textTheme.displayLarge!.copyWith(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                     )),
                                 Text(returnText! + "일",
-                                    style: theme.textTheme.headline1!.copyWith(
+                                    style: theme.textTheme.displayLarge!.copyWith(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,

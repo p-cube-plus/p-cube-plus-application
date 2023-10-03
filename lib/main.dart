@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:p_cube_plus_application/providers/fee_provider.dart';
@@ -8,17 +9,16 @@ import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/providers/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/theme_provider.dart';
 import 'package:p_cube_plus_application/providers/user_data_provider.dart';
-import 'package:p_cube_plus_application/screens/attendence/beacon_test.dart';
-import 'package:p_cube_plus_application/screens/main_page.dart';
+import 'package:p_cube_plus_application/screens/login_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/notice_provider.dart';
 
-void main() {
+void main() async {
   // beacon 설정
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NaverLoginProvider()),
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.type,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      home: MainPage(), //AttendencePage(), //ExecutivePage(),
+      home: LoginPage(), //AttendencePage(), //ExecutivePage(),
       scrollBehavior: _RemoveGlowEffect(),
     );
   }

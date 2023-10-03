@@ -27,7 +27,7 @@ class DefaultAlert extends StatelessWidget {
     var theme = Theme.of(context);
     bool isCenterTitle = description != null;
     return AlertDialog(
-        backgroundColor: backgroundColor ?? theme.backgroundColor,
+        backgroundColor: backgroundColor ?? theme.colorScheme.background,
         insetPadding: EdgeInsets.all(20),
         shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10.0))),
@@ -46,7 +46,7 @@ class DefaultAlert extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: theme.textTheme.headline1!.copyWith(
+                  style: theme.textTheme.displayLarge!.copyWith(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -56,7 +56,7 @@ class DefaultAlert extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0, bottom: 32.0),
                     child: Text(
                       description!,
-                      style: theme.textTheme.headline1!.copyWith(
+                      style: theme.textTheme.displayLarge!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w400,
                       ),
@@ -86,7 +86,7 @@ class DefaultAlert extends StatelessWidget {
                                 child: Text("취소",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline5!
+                                        .headlineSmall!
                                         .copyWith(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w700)),

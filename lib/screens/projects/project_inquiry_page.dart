@@ -41,7 +41,7 @@ class ProjectInquiryPage extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Text(
                     "상태 지정하기",
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
                           color: Colors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
@@ -90,20 +90,20 @@ class ProjectInquiryPage extends StatelessWidget {
                         child: Text("아직 문의사항이 없네요.",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(
                                     fontSize: 16, fontWeight: FontWeight.w700)),
                       ),
                       Text("문의사항을 작성해보세요!",
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(
                                   fontSize: 12, fontWeight: FontWeight.w400)),
                       Text("답변이 등록될 경우 알림을 보내드립니다.",
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(
                                   fontSize: 12, fontWeight: FontWeight.w400)),
                     ],
@@ -134,7 +134,7 @@ class _StatusTileState extends State<_StatusTile> {
           children: [
             Text(
               widget.optionText,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
                   ),

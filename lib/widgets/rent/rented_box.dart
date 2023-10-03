@@ -43,7 +43,7 @@ class RentedBox extends StatelessWidget {
                       rent.product.category,
                       style: Theme.of(context)
                           .textTheme
-                          .headline1!
+                          .displayLarge!
                           .copyWith(fontSize: 12, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 2.5),
@@ -54,7 +54,7 @@ class RentedBox extends StatelessWidget {
                             "." +
                             date.day.toString() +
                             " 에 대여함",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 11, fontWeight: FontWeight.w400))
                   ],
                 ),
@@ -64,7 +64,7 @@ class RentedBox extends StatelessWidget {
                   child: Text("D-" + rent.dDay.toString(),
                       style: Theme.of(context)
                           .textTheme
-                          .headline1!
+                          .displayLarge!
                           .copyWith(fontSize: 12, fontWeight: FontWeight.w700)))
             ],
           ),

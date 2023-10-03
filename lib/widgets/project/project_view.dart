@@ -37,9 +37,9 @@ class ProjectView extends StatelessWidget {
             children: [
               Text(
                 project.name, // debug
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       color: project.status == 0
-                          ? Theme.of(context).textTheme.headline3!.color
+                          ? Theme.of(context).textTheme.displaySmall!.color
                           : null,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
@@ -68,9 +68,9 @@ class ProjectView extends StatelessWidget {
           const SizedBox(height: 16.0),
           Text(
             "${["메인", "꼬꼬마"][project.type]} 프로젝트",
-            style: Theme.of(context).textTheme.headline1!.copyWith(
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   color: project.status == 0
-                      ? Theme.of(context).textTheme.headline3!.color
+                      ? Theme.of(context).textTheme.displaySmall!.color
                       : null,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w400,
@@ -84,7 +84,7 @@ class ProjectView extends StatelessWidget {
                 children: [
                   Text(
                     project.getStatus(),
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -95,7 +95,7 @@ class ProjectView extends StatelessWidget {
                         ? "${DateFormat("yyyy.MM.dd").format(project.startDate!)} ~ " +
                             "${project.status == 0 && project.endDate != null ? DateFormat("yyyy.MM.dd").format(project.startDate!) : ""}"
                         : "", // debug
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -105,7 +105,7 @@ class ProjectView extends StatelessWidget {
               if (project.status != 0)
                 Text(
                   project.isFindingMember ? "팀원 모집 마감" : "팀원 모집중",
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w700,
                       ),

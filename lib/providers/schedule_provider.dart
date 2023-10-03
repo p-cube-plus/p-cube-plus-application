@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/services/home_api.dart';
 import '../models/schedule.dart';
 
 // 개인 일정은 어떻게 불러올 것인가?
@@ -42,32 +43,36 @@ class ScheduleProvider with ChangeNotifier {
   List<Schedule> _getDummy() {
     return <Schedule>[
       Schedule(
+        id: 1,
         type: 0,
-        name: "즐거운 추석 보내세요.",
+        title: "즐거운 추석 보내세요.",
         startDate: DateTime(2023, 09, 28, 00, 00),
+        startTime: "",
         endDate: DateTime(2023, 10, 03, 23, 59),
-        hasSpan: false,
       ),
       Schedule(
+        id: 2,
         type: 0,
-        name: "그리고 또 열심히 일합시다.",
+        title: "그리고 또 열심히 일합시다.",
         startDate: DateTime(2023, 09, 28, 00, 00),
+        startTime: "",
         endDate: DateTime(2023, 10, 03, 23, 59),
-        hasSpan: false,
       ),
       Schedule(
+        id: 3,
         type: 0,
-        name: "가을에 일하기 좋습니다.",
+        title: "가을에 일하기 좋습니다.",
         startDate: DateTime(2023, 09, 28, 00, 00),
+        startTime: "",
         endDate: DateTime(2023, 10, 03, 23, 59),
-        hasSpan: false,
       ),
       Schedule(
+        id: 4,
         type: 1,
-        name: "20글자가한계에요. 20글자가한계에요.",
+        title: "20글자가한계에요. 20글자가한계에요.",
         startDate: DateTime(2022, 09, 24, 19, 00),
+        startTime: "",
         endDate: DateTime(2024, 10, 02, 21, 00),
-        hasSpan: false,
       ),
     ];
   }

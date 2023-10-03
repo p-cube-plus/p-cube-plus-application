@@ -25,7 +25,7 @@ class DefaultBottomsheet extends StatelessWidget {
           padding: const EdgeInsets.only(
               left: 20.0, right: 20.0, top: 36, bottom: 32),
           child: Text(title,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
                   )),

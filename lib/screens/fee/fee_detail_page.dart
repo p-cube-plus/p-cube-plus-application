@@ -48,7 +48,7 @@ class FeeDetailPage extends StatelessWidget {
                   : feeProvider.type == FeeType.Deposit
                       ? "입금"
                       : "출금",
-              style: Theme.of(context).textTheme.headline4!.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                   fontSize: 14.0),
@@ -95,7 +95,7 @@ class FeeDetailPage extends StatelessWidget {
                       : "출금",
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(fontSize: 16.0, fontWeight: FontWeight.w400),
             ),
             Radio(
@@ -124,7 +124,7 @@ class AccountInfo extends StatelessWidget {
                 "1,200,340원",
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(fontSize: 24, fontWeight: FontWeight.w500),
               ),
             ),
@@ -145,7 +145,7 @@ class AccountInfo extends StatelessWidget {
                     "회비계좌",
                     style: Theme.of(context)
                         .textTheme
-                        .headline3!
+                        .displaySmall!
                         .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -160,7 +160,7 @@ class AccountInfo extends StatelessWidget {
                           "카카오뱅크",
                           style: Theme.of(context)
                               .textTheme
-                              .headline5!
+                              .headlineSmall!
                               .copyWith(
                                   fontSize: 14, fontWeight: FontWeight.w400),
                         ),
@@ -171,7 +171,7 @@ class AccountInfo extends StatelessWidget {
                           "1234-5678-90 정성희",
                           style: Theme.of(context)
                               .textTheme
-                              .headline1!
+                              .displayLarge!
                               .copyWith(
                                   fontSize: 14, fontWeight: FontWeight.w500),
                         ),
@@ -287,12 +287,12 @@ class DuesDetail extends StatelessWidget {
                 ],
               ),
               Text(NumberFormat('###,###,###원').format(dueItemList[i].charge),
-                  style: theme.textTheme.headline1!.copyWith(
+                  style: theme.textTheme.displayLarge!.copyWith(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w400,
                     color: dueItemList[i].charge > 0
                         ? Colors.green
-                        : theme.textTheme.headline1!.color,
+                        : theme.textTheme.displayLarge!.color,
                   )),
             ],
           ),
