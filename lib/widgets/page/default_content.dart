@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 
 class DefaultContent extends StatelessWidget {
   const DefaultContent(
@@ -7,12 +8,14 @@ class DefaultContent extends StatelessWidget {
       this.bottomButtonText,
       this.bottomWidget,
       this.isReverse = false,
-      this.onTap});
+      this.onTap,
+      this.refreshFunction});
   final Widget? child;
   final bool isReverse;
   final double bottomPadding;
   final String? bottomButtonText;
   final Widget? bottomWidget;
+  final Future? refreshFunction;
   final void Function()? onTap;
 
   @override
@@ -31,7 +34,8 @@ class DefaultContent extends StatelessWidget {
           reverse: isReverse,
           // GlowingOverscrollIndicator: Android
           // physics: BouncingScrollPhysics() : IOS
-          physics: BouncingScrollPhysics(),
+          //physics: BouncingScrollPhysics(),
+          physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
               padding: EdgeInsets.only(
                   left: 20.0, right: 20.0, bottom: bottomPadding),
@@ -39,40 +43,43 @@ class DefaultContent extends StatelessWidget {
         ),
       ));
     }
-    return Stack(
-      children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: _children,
-              ),
-            ),
-          ],
-        ),
-        if (bottomButtonText != null)
-          Positioned(
-            bottom: 32.0,
-            left: 20.0,
-            right: 20.0,
-            child: Container(
-              width: double.infinity,
-              height: 48.0,
-              child: ElevatedButton(
-                onPressed: onTap ?? () {},
-                child: Text(
-                  bottomButtonText!,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w700),
+    return DefaultRefreshIndicator(
+      refreshFunction: refreshFunction,
+      child: Stack(
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: _children,
                 ),
               ),
-            ),
-          )
-      ],
+            ],
+          ),
+          if (bottomButtonText != null)
+            Positioned(
+              bottom: 32.0,
+              left: 20.0,
+              right: 20.0,
+              child: Container(
+                width: double.infinity,
+                height: 48.0,
+                child: ElevatedButton(
+                  onPressed: onTap ?? () {},
+                  child: Text(
+                    bottomButtonText!,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+            )
+        ],
+      ),
     );
   }
 }
