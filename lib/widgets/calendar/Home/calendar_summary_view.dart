@@ -124,8 +124,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
       _schedules?.length ?? 0,
       (index) {
         Schedule _schedule = _schedules![index];
-        if (!_schedule.hasSpan && _schedule.startDate == null)
-          return Container();
+        if (_schedule.startDate == null) return Container();
 
         DateTime start = _schedule.startDate!;
         DateTime end = _schedule.endDate ?? start;
@@ -137,7 +136,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
         var weekLater = DateTime.now().add(Duration(days: 7));
         if (!start.difference(weekLater).isNegative) return Container();
 
-        bool span = _schedule.hasSpan &&
+        bool span =
             !(start.day == end.day && start.difference(end).inDays <= 0);
 
         _hasSchedule = true;
@@ -169,7 +168,7 @@ class CalendarMonthlySummaryView extends StatelessWidget {
                 ),
                 SizedBox(width: 8.0),
                 Text(
-                  _schedule.name,
+                  _schedule.title,
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w500,
