@@ -189,20 +189,24 @@ class RentListView extends StatelessWidget {
                       children: [
                         Text(
                           rent.product.name, // debug
-                          style:
-                              Theme.of(context).textTheme.displayLarge!.copyWith(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w700,
+                              ),
                         ),
                         SizedBox(height: 2.5),
                         Text(
                           "${DateFormat("yyyy/MM/dd").format(rent.rentDay)} 에 대여함",
-                          style:
-                              Theme.of(context).textTheme.displaySmall!.copyWith(
-                                    fontSize: 11.0,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(
+                                fontSize: 11.0,
+                                fontWeight: FontWeight.w400,
+                              ),
                         ),
                       ],
                     ),

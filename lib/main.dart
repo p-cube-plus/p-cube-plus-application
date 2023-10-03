@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:p_cube_plus_application/providers/fee_provider.dart';
@@ -14,9 +15,10 @@ import 'package:provider/provider.dart';
 
 import 'providers/notice_provider.dart';
 
-void main() {
+void main() async {
   // beacon 설정
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NaverLoginProvider()),

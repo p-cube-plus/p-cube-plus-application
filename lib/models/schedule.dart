@@ -3,38 +3,42 @@ import 'package:flutter/material.dart';
 
 @JsonSerializable()
 class Schedule {
+  final int id;
   final int type;
-  final String name;
+  final String title;
+  final String startTime;
   final DateTime? startDate, endDate;
-  final bool hasSpan;
 
   Color getMarkColor() {
     return [Color(0xCCDE2B13), Color(0xFF5EDCA7), Color(0xCC4813DE)][type];
   }
 
   Schedule({
+    required this.id,
     required this.type,
-    required this.name,
+    required this.title,
     required this.startDate,
+    required this.startTime,
     required this.endDate,
-    this.hasSpan = false,
   });
 
   factory Schedule.fromJson(Map<String, dynamic> json) {
     return Schedule(
+      id: json['id'],
       type: json['type'],
-      name: json['name'],
+      title: json['name'],
       startDate: DateTime.parse(json['start_date']),
+      startTime: json['start_time'],
       endDate: DateTime.parse(json['end_date']),
-      hasSpan: json['has_span'] ?? false,
     );
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'type': type,
-        'name': name,
+        'title': title,
         'start_date': startDate.toString(),
+        'start_time': startTime,
         'end_date': endDate.toString(),
-        'has_span': hasSpan,
       };
 }

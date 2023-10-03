@@ -25,7 +25,7 @@ class CalendarDailySummaryView extends StatelessWidget {
     List<Widget> _widgets = List.generate(
       _schedules?.length ?? 0,
       (index) {
-        if (_schedules![index].hasSpan) return Container();
+        if (_schedules!.isEmpty) return Container();
         _hasSchedule = true;
 
         return Padding(
@@ -52,7 +52,7 @@ class CalendarDailySummaryView extends StatelessWidget {
               ),
               SizedBox(width: 8.0),
               Text(
-                _schedules[index].name,
+                _schedules[index].title,
                 style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w500,

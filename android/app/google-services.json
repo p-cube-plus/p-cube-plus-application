@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:367985551076:android:c0d964b0253118e4316ef1",
         "android_client_info": {
-          "package_name": "com.pandora_cube.p_cube_plus"
+          "package_name": "com.example.firebase_test"
         }
       },
       "oauth_client": [
@@ -37,6 +37,35 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:367985551076:android:cb1dff5427ebf034316ef1",
+        "android_client_info": {
+          "package_name": "com.example.ftest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH2pfe0kTKYGnNzVrOcd_9NmBW4tPTkLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367985551076:android:8d7d501b83b39f3b316ef1",
         "android_client_info": {
           "package_name": "com.pandora_cube.p_cube_plus"
         }

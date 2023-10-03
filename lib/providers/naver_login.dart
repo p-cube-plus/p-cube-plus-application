@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,6 +26,10 @@ class NaverLoginProvider with ChangeNotifier {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM);
 
+          debugPrint("Access Token: " + oAuthToken!.accessToken.toString());
+          debugPrint("Refresh Token: " + oAuthToken.accessToken.toString());
+          final fcmToken = await FirebaseMessaging.instance.getToken();
+          debugPrint('FCM Token: ' + fcmToken.toString());
           // Token 저장
           TokenManager().setAccessToken(oAuthToken!.accessToken.toString());
           TokenManager().setRefreshToken(oAuthToken.refreshToken.toString());
