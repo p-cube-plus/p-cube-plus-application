@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/providers/composite/home_provider.dart';
+import 'package:p_cube_plus_application/providers/schedule_provider.dart';
 import 'package:p_cube_plus_application/screens/attendence/attendance_page.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
@@ -20,20 +22,28 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme currentTheme = Theme.of(context).textTheme;
-    return DefaultPage(
-      title: "홈",
-      content: DefaultContent(
-        child: Column(
-          children: [
-            Attendence(),
-            HomeCalendar(
-              currentTheme: currentTheme,
-            ),
-            RentListView(),
-          ],
+    var homeProvider = HomeProvider(
+        context.watch<ScheduleProvider>(), context.watch<RentProvider>());
+
+    return DefaultFutureBuilder(
+      fetchData: homeProvider.fetch(),
+      refreshData: homeProvider.refresh(),
+      showFunction: (data) => DefaultPage(
+        title: "홈",
+        content: DefaultContent(
+          child: Column(
+            children: [
+              Attendence(),
+              HomeCalendar(
+                currentTheme: currentTheme,
+                scheduleProvider: data[0],
+              ),
+              RentListView(),
+            ],
+          ),
         ),
+        floatingActionButton: FloatingBarcodeButton(),
       ),
-      floatingActionButton: FloatingBarcodeButton(),
     );
   }
 }
@@ -102,9 +112,11 @@ class HomeCalendar extends StatefulWidget {
   const HomeCalendar({
     Key? key,
     required this.currentTheme,
+    required this.scheduleProvider,
   }) : super(key: key);
 
   final TextTheme currentTheme;
+  final ScheduleProvider scheduleProvider;
 
   @override
   State<HomeCalendar> createState() => _HomeCalendarState();
@@ -119,8 +131,8 @@ class _HomeCalendarState extends State<HomeCalendar> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CalendarMonthlySummaryView(
-          viewDate: _viewDate,
+        CalendarUpComingSummaryView(
+          scheduleList: widget.scheduleProvider.getUpcomingSchedule(),
         ),
         RoundedBorder(
           padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
@@ -131,12 +143,14 @@ class _HomeCalendarState extends State<HomeCalendar> {
               _viewDate = date;
             }),
             isHomeCalendar: true,
+            scheduleProvider: widget.scheduleProvider,
           ),
         ),
         if (_viewDate.month == _selectedDate.month &&
             _viewDate.difference(_selectedDate).inDays.abs() < 32)
-          CalendarDailySummaryView(
+          CalendarSelectedDateSummaryView(
             selectedDate: _selectedDate,
+            todaySchedule: widget.scheduleProvider.getTodaySchedule(),
           )
         else
           Container(),
@@ -155,7 +169,8 @@ class RentListView extends StatelessWidget {
     var rentProvider = context.watch<RentProvider>();
 
     return DefaultFutureBuilder(
-        future: rentProvider.update(),
+        fetchData: rentProvider.fetch(),
+        refreshData: rentProvider.refresh(),
         showFunction: (List<Rent> data) => ContentSummaryView(
             onTap: () {
               Navigator.push(

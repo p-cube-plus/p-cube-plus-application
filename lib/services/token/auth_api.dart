@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
-import '../models/oauth_token.dart';
-import 'pcube_api.dart';
+import '../../models/oauth_token.dart';
+import '../base/pcube_api.dart';
 
 class AuthApi extends PCubeApi {
   AuthApi() : super(endPoint: "/auth/token/");
@@ -12,7 +12,7 @@ class AuthApi extends PCubeApi {
     Map<String, String>? headers = {"Content-Type": "application/json"};
     Map<String, String>? body = {"refresh_token": refreshToken};
 
-    var response = await post(headers: headers, body: body);
+    var response = await post(additionalHeader: headers, body: body);
 
     switch (response.statusCode) {
       case 200:

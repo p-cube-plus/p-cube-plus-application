@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/models/user.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import '../../models/project.dart';
 import '../../providers/user_data_provider.dart';
 import '../../widgets/page/default_appbar.dart';
@@ -16,21 +18,25 @@ class ProjectListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultPage(
-      title: "참여 프로젝트",
-      appbar: DefaultAppBar(),
-      content: (userProvider.user!.projects.length == 0)
-          ? Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                "참여한 프로젝트가 없습니다.",
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            )
-          : DefaultContent(child: ProjectListView(userProvider: userProvider)),
+    return DefaultFutureBuilder(
+      refreshData: userProvider.refresh(),
+      fetchData: userProvider.fetch(),
+      showFunction: (user) => DefaultPage(
+        title: "참여 프로젝트",
+        appbar: DefaultAppBar(),
+        content: (user.projects.length == 0)
+            ? Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  "참여한 프로젝트가 없습니다.",
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                ),
+              )
+            : DefaultContent(child: ProjectListView(userData: user)),
+      ),
     );
   }
 }
@@ -38,19 +44,19 @@ class ProjectListPage extends StatelessWidget {
 class ProjectListView extends StatelessWidget {
   const ProjectListView({
     Key? key,
-    required this.userProvider,
+    required this.userData,
   }) : super(key: key);
 
-  final UserDataProvider userProvider;
+  final User userData;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        userProvider.user!.projects.length,
+        userData.projects.length,
         (index) {
-          Project project = userProvider.user!.projects[index];
+          Project project = userData.projects[index];
 
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),

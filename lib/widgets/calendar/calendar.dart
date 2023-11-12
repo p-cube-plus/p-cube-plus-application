@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+import 'package:p_cube_plus_application/models/schedule.dart';
 
 import '../../providers/schedule_provider.dart';
 import 'calendar_header.dart';
@@ -11,6 +10,7 @@ import 'calender_view.dart';
 class Calendar extends StatefulWidget {
   const Calendar({
     Key? key,
+    required this.scheduleProvider,
     this.onSelectedDateChanged,
     this.onViewDateChanged,
     this.isHomeCalendar = false,
@@ -19,6 +19,7 @@ class Calendar extends StatefulWidget {
   final Function(DateTime)? onSelectedDateChanged;
   final Function(DateTime)? onViewDateChanged;
   final bool isHomeCalendar;
+  final ScheduleProvider scheduleProvider;
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -27,25 +28,21 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   bool _initialized = false;
 
-  DateTime _selectedDate = DateTime.now(); // 클릭된 Day 정보
-  late DateTime _viewDate; // 현재 Year, Month 정보
-  late Map<String, CalendarView> _calendars;
-  CalendarView? _currentCalendar; // days view
+  DateTime _selectedDate = DateTime.now();
+  late DateTime _currentViewDate;
+  CalendarView? _currentCalendar;
 
   GlobalKey _headerKey = GlobalKey();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // 한국어 Localization 데이터 가져오기.
     initializeDateFormatting("ko_KR");
   }
 
   @override
   void initState() {
     super.initState();
-    _calendars = <String, CalendarView>{};
-    _initialized = false;
   }
 
   @override
@@ -67,13 +64,13 @@ class _CalendarState extends State<Calendar> {
           setState(() {
             if (endX - startX > 20.0) {
               _setDate(new DateTime(
-                _viewDate.year,
-                _viewDate.month - 1,
+                _currentViewDate.year,
+                _currentViewDate.month - 1,
               ));
             } else if (startX - endX > 20.0) {
               _setDate(new DateTime(
-                _viewDate.year,
-                _viewDate.month + 1,
+                _currentViewDate.year,
+                _currentViewDate.month + 1,
               ));
             }
           });
@@ -84,11 +81,11 @@ class _CalendarState extends State<Calendar> {
             children: [
               CalendarHeader(
                 key: _headerKey,
-                date: _viewDate,
+                date: _currentViewDate,
                 onArrowPressed: (delta) {
                   _setDate(new DateTime(
-                    _viewDate.year,
-                    _viewDate.month + delta,
+                    _currentViewDate.year,
+                    _currentViewDate.month + delta,
                   ));
                 },
               ),
@@ -98,30 +95,20 @@ class _CalendarState extends State<Calendar> {
             ]));
   }
 
-  // Year, Month를 받아 현재 Calender를 업데이트 하는 함수
   void _setDate(DateTime date) async {
-    if (_initialized && date.month == _viewDate.month) return;
-    _viewDate = date;
+    if (_initialized && date.month == _currentViewDate.month) return;
+    _currentViewDate = date;
 
-    await context.read<ScheduleProvider>().loadSchedules(_viewDate);
-    CalendarView result = await _getCalendar();
+    Map<int, List<Schedule>> monthSchedule =
+        await widget.scheduleProvider.getMonthSchedule(date.year, date.month);
+    CalendarView result = CalendarView(
+      currentYearMonth: _currentViewDate,
+      selectedDate: _selectedDate,
+      onSelectedDateChanged: widget.onSelectedDateChanged,
+      monthSchedule: monthSchedule,
+    );
 
     setState(() => _currentCalendar = result);
     widget.onViewDateChanged?.call(date);
-  }
-
-  // _viewDate(현재 Year, Month 정보)를 기반으로 CalenderView를 가져오는 함수
-  Future<CalendarView> _getCalendar() async {
-    String yMDate = DateFormat.yM().format(_viewDate);
-    if (_calendars.containsKey(yMDate)) return _calendars[yMDate]!;
-
-    _calendars[yMDate] = CalendarView(
-      date: _viewDate,
-      selectedDate: _selectedDate,
-      onSelectedDateChanged: widget.onSelectedDateChanged,
-      isHomeCalendar: widget.isHomeCalendar,
-    );
-
-    return _calendars[yMDate]!;
   }
 }

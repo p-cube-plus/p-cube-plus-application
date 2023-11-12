@@ -1,5 +1,5 @@
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:p_cube_plus_application/services/auth_api.dart';
+import 'package:p_cube_plus_application/services/token/auth_api.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
 class AuthorizationInterceptor implements InterceptorContract {

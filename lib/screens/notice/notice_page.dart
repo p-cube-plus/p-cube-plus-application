@@ -17,7 +17,8 @@ class NoticePage extends StatelessWidget {
     var noticeProvider = context.watch<NoticeProvider>();
 
     return DefaultFutureBuilder(
-        future: noticeProvider.update(),
+        fetchData: noticeProvider.fetch(),
+        refreshData: noticeProvider.refresh(),
         showFunction: (List<NotificationNode> data) => DefaultPage(
               title: "알림",
               action: GestureDetector(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/models/user.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 
 import '../../providers/user_data_provider.dart';
 import '../../widgets/common/list_divider.dart';
@@ -25,26 +27,30 @@ class CautionListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultPage(
-      title: "경고 현황",
-      appbar: DefaultAppBar(),
-      content: DefaultContent(
-        child: Column(
-          children: [
-            CautionSummaryView(userProvider: userProvider),
-            ListDivider(vertial: 24.0),
-            CautionListView(
-              title: "경고 및 주의 내역",
-              userProvider: userProvider,
-              mode: 1,
-            ),
-            SizedBox(height: 32.0),
-            CautionListView(
-              title: "경고 차감 내역",
-              userProvider: userProvider,
-              mode: -1,
-            ),
-          ],
+    return DefaultFutureBuilder(
+      refreshData: userProvider.refresh(),
+      fetchData: userProvider.fetch(),
+      showFunction: (user) => DefaultPage(
+        title: "경고 현황",
+        appbar: DefaultAppBar(),
+        content: DefaultContent(
+          child: Column(
+            children: [
+              CautionSummaryView(userProvider: userProvider),
+              ListDivider(vertial: 24.0),
+              CautionListView(
+                title: "경고 및 주의 내역",
+                userData: user,
+                mode: 1,
+              ),
+              SizedBox(height: 32.0),
+              CautionListView(
+                title: "경고 차감 내역",
+                userData: user,
+                mode: -1,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -54,22 +60,20 @@ class CautionListPage extends StatelessWidget {
 class CautionListView extends StatelessWidget {
   const CautionListView({
     Key? key,
-    required this.userProvider,
+    required this.userData,
     required this.mode,
     required this.title,
   }) : super(key: key);
 
   final String title;
   final int mode;
-  final UserDataProvider userProvider;
+  final User userData;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> _cautions = <Widget>[];
 
-    userProvider.update();
-    
-    for (var caution in userProvider.user!.cautions) {
+    for (var caution in userData.cautions) {
       if (mode != caution.amount.sign) continue;
       String type = ["경고", "주의"][caution.type];
 

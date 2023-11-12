@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/models/user.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 
 import '../../models/seminar.dart';
 import '../../providers/user_data_provider.dart';
@@ -18,21 +20,25 @@ class SeminarListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultPage(
-      title: "세미나 내역",
-      appbar: DefaultAppBar(),
-      content: (userProvider.user!.seminars.length == 0)
-          ? Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                "세미나 참여 내역이 존재하지 않습니다.",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            )
-          : DefaultContent(child: SeminarListView(userProvider: userProvider)),
+    return DefaultFutureBuilder(
+      fetchData: userProvider.fetch(),
+      refreshData: userProvider.refresh(),
+      showFunction: (user) => DefaultPage(
+        title: "세미나 내역",
+        appbar: DefaultAppBar(),
+        content: (user.seminars.length == 0)
+            ? Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  "세미나 참여 내역이 존재하지 않습니다.",
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                ),
+              )
+            : DefaultContent(child: SeminarListView(userData: user)),
+      ),
     );
   }
 }
@@ -40,19 +46,19 @@ class SeminarListPage extends StatelessWidget {
 class SeminarListView extends StatelessWidget {
   const SeminarListView({
     Key? key,
-    required this.userProvider,
+    required this.userData,
   }) : super(key: key);
 
-  final UserDataProvider userProvider;
+  final User userData;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        userProvider.user!.seminars.length,
+        userData.seminars.length,
         (index) {
-          Seminar seminar = userProvider.user!.seminars[index];
+          Seminar seminar = userData.seminars[index];
 
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 8.0),
@@ -93,15 +99,15 @@ class SeminarListView extends StatelessWidget {
 class SeminarSummaryView extends StatelessWidget {
   const SeminarSummaryView({
     Key? key,
-    required this.userProvider,
+    required this.userData,
   }) : super(key: key);
 
-  final UserDataProvider userProvider;
+  final User userData;
 
   @override
   Widget build(BuildContext context) {
     Map<int, int> _count = {};
-    for (var seminar in userProvider.user!.seminars) {
+    for (var seminar in userData.seminars) {
       _count[seminar.date.year] = (_count[seminar.date.year] ?? 0) + 1;
     }
 

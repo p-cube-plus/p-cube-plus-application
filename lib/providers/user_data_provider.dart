@@ -1,24 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/models/curriculum.dart';
 import 'package:p_cube_plus_application/models/member.dart';
+import 'package:p_cube_plus_application/services/user_api.dart';
 import '../models/promotion_progress.dart';
 import '../models/project.dart';
 import '../models/seminar.dart';
 import '../models/user.dart';
 import '../models/caution.dart';
-import '../services/user_profile_api.dart';
+import 'base/provider_base.dart';
 
-class UserDataProvider with ChangeNotifier {
-  UserProfileApi _client = new UserProfileApi();
-  User? _user;
-  User? get user => _user;
+class UserDataProvider extends ApiProviderBase<User> {
+  UserDataProvider() : super(client: new UserProfileApi());
 
   // mode = 0(경고), 1(주의)
   double totalCaution(int type, {int sign = 1}) {
     double ret = 0;
 
-    for (int i = 0; i < (_user?.cautions.length ?? 0); i++) {
-      Caution caution = _user!.cautions[i];
+    for (int i = 0; i < data.cautions.length; i++) {
+      Caution caution = data.cautions[i];
       if (type != 2 && type != caution.type) continue;
       if (sign != caution.amount.sign) continue;
 
@@ -26,17 +24,6 @@ class UserDataProvider with ChangeNotifier {
     }
 
     return ret.abs();
-  }
-
-  Future<User?> update() async {
-    //_user = await _client.get();
-    _user = await _getDummy();
-    notifyListeners();
-    return _user;
-  }
-
-  Future<User> _getDummy() async {
-    return _getDummyData();
   }
 
   User _getDummyData() => User(

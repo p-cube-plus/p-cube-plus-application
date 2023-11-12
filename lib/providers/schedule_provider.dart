@@ -1,46 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/services/home_api.dart';
 import '../models/schedule.dart';
+import 'base/provider_base.dart';
 
-// 개인 일정은 어떻게 불러올 것인가?
-class ScheduleProvider with ChangeNotifier {
-  Map<String, List<Schedule>> _dailySchedules = <String, List<Schedule>>{};
-  Map<String, List<Schedule>> _monthlySchedules = <String, List<Schedule>>{};
+class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
+  bool _isMonthRefresh = true;
+  int _cachedYear = -1, _cachedMonth = -1;
+  late Map<int, List<Schedule>> _monthSchedule;
 
-  Map<String, List<Schedule>> get dailySchedules => _dailySchedules;
-  Map<String, List<Schedule>> get monthlySchedules => _monthlySchedules;
+  bool _isUpcomingRefresh = true;
+  late List<Schedule> _upcomingSchedule;
 
-// Month 단위 데이터 가져오기
-  Future loadSchedules(DateTime date) async {
-    // 이전에 load 됐다면 종료
-    String yMDate = DateFormat.yM().format(date);
-    if (_monthlySchedules.containsKey(yMDate)) return;
+  bool _isTodayRefresh = true;
+  late List<Schedule> _todaySchedule;
 
-    // year, month로 현재 월 데이터 가져오기
-    _monthlySchedules.clear();
-    _dailySchedules.clear();
-    _monthlySchedules[yMDate] = await _getDummy();
-
-    // day 스케줄 초기화
-    for (int i = 0; i < _monthlySchedules[yMDate]!.length; i++) {
-      Schedule schedule = _monthlySchedules[yMDate]![i];
-      if (schedule.startDate == null) continue;
-
-      for (DateTime d = schedule.startDate!;
-          d.difference(schedule.endDate ?? schedule.startDate!).isNegative;
-          d = d.add(const Duration(days: 1))) {
-        String yMdDate = DateFormat.yMd().format(d);
-
-        _dailySchedules[yMdDate] ??= <Schedule>[];
-        _dailySchedules[yMdDate]!.add(schedule);
-      }
-    }
-
-    notifyListeners();
-  }
-
-  List<Schedule> _getDummy() {
+  @override
+  List<Schedule> getDummy({Object? parameter}) {
     return <Schedule>[
       Schedule(
         id: 1,
@@ -75,5 +48,74 @@ class ScheduleProvider with ChangeNotifier {
         endDate: DateTime(2024, 10, 02, 21, 00),
       ),
     ];
+  }
+
+  @override
+  Future<List<Schedule>> refresh({Object? parameter}) async {
+    _isMonthRefresh = true;
+    _isUpcomingRefresh = true;
+    _isTodayRefresh = true;
+    return await super.refresh(parameter: parameter);
+  }
+
+  Future<Map<int, List<Schedule>>> getMonthSchedule(int year, int month) async {
+    if (year != _cachedYear || month != _cachedMonth) {
+      await refresh();
+      _cachedMonth = month;
+      _cachedYear = year;
+    }
+
+    if (!_isMonthRefresh) return _monthSchedule;
+    _isUpcomingRefresh = false;
+
+    int daysInMonth = DateTime(year, month + 1, 0).day;
+
+    Map<int, List<Schedule>> result =
+        Map.from({for (int i = 0; i < daysInMonth; ++i) i: <Schedule>[]});
+
+    for (final schedule in data) {
+      final startDate = schedule.startDate!;
+      final endDate = schedule.endDate ?? startDate;
+
+      for (DateTime day = startDate;
+          day.isBefore(endDate);
+          day = day.add(const Duration(days: 1))) {
+        if (year == day.year && month == day.month) {
+          result[day]?.add(schedule);
+        }
+      }
+    }
+
+    _monthSchedule = result;
+    return result;
+  }
+
+  List<Schedule> getUpcomingSchedule() {
+    if (!_isUpcomingRefresh) return _upcomingSchedule;
+    _isUpcomingRefresh = false;
+
+    DateTime today = DateTime.now();
+    DateTime oneWeekLater = today.add(Duration(days: 7));
+
+    var result = data.where((schedule) {
+      return schedule.startDate!.isAfter(today) &&
+          schedule.startDate!.isBefore(oneWeekLater);
+    }).toList();
+
+    _upcomingSchedule = result;
+    return result;
+  }
+
+  List<Schedule> getTodaySchedule() {
+    if (!_isTodayRefresh) return _todaySchedule;
+    _isTodayRefresh = false;
+
+    var result = data.where((schedule) {
+      return DateTime.now().isAfter(schedule.startDate!) &&
+          DateTime.now().isBefore(schedule.endDate ?? schedule.startDate!);
+    }).toList();
+
+    _todaySchedule = result;
+    return result;
   }
 }

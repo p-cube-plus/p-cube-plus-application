@@ -2,74 +2,62 @@ import 'dart:convert';
 
 import 'package:p_cube_plus_application/models/attendance.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
-import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
 import '../models/rent.dart';
-import 'pcube_api.dart';
+import 'base/pcube_api.dart';
 
-class HomeApi extends PCubeApi {
-  HomeApi(String endPoint) : super(endPoint: "/home$endPoint");
+class HomeAttendanceApi extends PCubeApi {
+  HomeAttendanceApi() : super(endPoint: "/home/attendance");
 
-  Future<List<Attendance>?> getAttendanceInfo() async {
-    final token = TokenManager().getAccessToken();
+  @override
+  Future<List<Attendance>> get(
+          {Function(dynamic body)? successReturnFunction,
+          Map<String, String>? additionalHeader,
+          Map<String, String>? queryParams}) async =>
+      await super.get(
+        successReturnFunction: (body) => (jsonDecode(body) as List)
+            .map<Attendance>((data) => Attendance.fromJson(data))
+            .toList(),
+        additionalHeader: additionalHeader,
+        queryParams: queryParams,
+      );
+}
 
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
-    var response = await get(headers: headers);
+// TODO: API 개발 기다리는 중.
+// queryParams를 통해 스케줄의 일부분만 가져와야 함.
+// 년단위나 월단위 안 됨. 다가오는 일정이 일주일 이후까지 보여줘야 돼서
+// 2달치 가져오면 될 듯?
+class HomeScheduleApi extends PCubeApi {
+  HomeScheduleApi() : super(endPoint: "/home/product");
 
-    switch (response.statusCode) {
-      case 200:
-        List<dynamic> json = jsonDecode(response.body);
-        List<Attendance> attendanceList =
-            json.map<Attendance>((e) => Attendance.fromJson(e)).toList();
-        return attendanceList;
-      default:
-        return null;
-    }
+  @override
+  Future<List<Schedule>> get(
+      {Function(dynamic body)? successReturnFunction,
+      Map<String, String>? additionalHeader,
+      Map<String, String>? queryParams}) async {
+    return await super.get(
+      successReturnFunction: (body) => (jsonDecode(body) as List)
+          .map<Schedule>((data) => Schedule.fromJson(data))
+          .toList(),
+      additionalHeader: additionalHeader,
+      queryParams: queryParams,
+    );
   }
+}
 
-  Future<List<Schedule>?> getScheduleInfo() async {
-    final token = TokenManager().getAccessToken();
+class HomeProductApi extends PCubeApi {
+  HomeProductApi() : super(endPoint: "/home/schedule");
 
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
-
-    var response = await get(headers: headers);
-
-    switch (response.statusCode) {
-      case 200:
-        List<dynamic> json = jsonDecode(response.body);
-        List<Schedule> scheduleList =
-            json.map<Schedule>((e) => Schedule.fromJson(e)).toList();
-
-        return scheduleList;
-      default:
-        return null;
-    }
-  }
-
-  Future<List<Rent>?> getRentList() async {
-    final token = TokenManager().getAccessToken();
-
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
-
-    var response = await get(headers: headers);
-
-    switch (response.statusCode) {
-      case 200:
-        List<dynamic> json = jsonDecode(response.body);
-        List<Rent> rentList = json.map<Rent>((e) => Rent.fromJson(e)).toList();
-
-        return rentList;
-      default:
-        return null;
-    }
-  }
+  @override
+  Future<List<Rent>> get(
+          {Function(dynamic body)? successReturnFunction,
+          Map<String, String>? additionalHeader,
+          Map<String, String>? queryParams}) async =>
+      await super.get(
+        successReturnFunction: (body) => (jsonDecode(body) as List)
+            .map<Rent>((data) => Rent.fromJson(data))
+            .toList(),
+        additionalHeader: additionalHeader,
+        queryParams: queryParams,
+      );
 }

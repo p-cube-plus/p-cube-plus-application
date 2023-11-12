@@ -36,11 +36,12 @@ class _ProjectListView extends StatelessWidget {
 
     return DefaultContent(
       child: DefaultFutureBuilder(
-        future: projectProvider.getProjectListByType(type),
+        fetchData: projectProvider.fetch(),
+        refreshData: projectProvider.refresh(),
         showFunction: (data) => Column(
             mainAxisSize: MainAxisSize.min,
             children: List.generate(
-                data.length,
+                projectProvider.getProjectListByType(type).length,
                 (index) => Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: ProjectView(project: data[index]),

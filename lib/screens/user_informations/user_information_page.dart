@@ -57,7 +57,8 @@ class InformationList extends StatelessWidget {
     var userProvider = context.watch<UserDataProvider>();
 
     return DefaultFutureBuilder(
-        future: userProvider.update(),
+        fetchData: userProvider.fetch(),
+        refreshData: userProvider.refresh(),
         showFunction: (User data) => Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -86,7 +87,7 @@ class InformationList extends StatelessWidget {
                     ),
                     children: [
                       const SizedBox(height: 8),
-                      const ProfileView(),
+                      ProfileView(userData: data),
                       ListDivider(vertial: 20.0),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -304,20 +305,19 @@ class InformationList extends StatelessWidget {
 }
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({
-    Key? key,
-  }) : super(key: key);
+  ProfileView({Key? key, required this.userData}) : super(key: key);
+
+  User userData;
 
   @override
   Widget build(BuildContext context) {
-    User? user = context.watch<UserDataProvider>().user;
     bool _hasProfile = false;
     Widget profile = Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(
           onError: (exception, stackTrace) => _hasProfile = false,
-          image: Image.network(user!.profileImage ?? "").image,
+          image: Image.network(userData.profileImage ?? "").image,
           fit: BoxFit.fill,
         ),
       ),
@@ -334,7 +334,7 @@ class ProfileView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              user.name,
+              userData.name,
               style: Theme.of(context).textTheme.headline1!.copyWith(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w700,
@@ -344,7 +344,7 @@ class ProfileView extends StatelessWidget {
             GestureDetector(
               onTap: () {}, // 회원 목록 보기?
               child: Text(
-                user.level,
+                userData.level,
                 style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w700,

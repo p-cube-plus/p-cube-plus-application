@@ -13,7 +13,8 @@ class RentedItemListView extends StatelessWidget {
     final rentProvider = context.watch<RentProvider>();
 
     return DefaultFutureBuilder(
-        future: rentProvider.update(),
+        fetchData: rentProvider.fetch(),
+        refreshData: rentProvider.refresh(),
         showFunction: (List<Rent> data) => Column(
               children: [
                 Expanded(

@@ -1,44 +1,26 @@
-import 'package:flutter/material.dart';
 import '../models/member.dart';
-import '../services/project_api.dart';
 import '../models/project.dart';
+import 'base/provider_base.dart';
 
-class ProjectProvider with ChangeNotifier {
-  ProjectListApi _client = new ProjectListApi();
-  List<Project> _projectList = [];
-
-  Future<List<Project>> update() async {
-    //_projectList = (await _client.get()) ?? [];
-    _projectList = await _getDummy();
-    notifyListeners();
-    return _projectList;
-  }
-
-  Future<List<Project>> _getDummy() async {
-    _projectList = _getDummyProjects();
-    return _projectList;
-  }
-
-  Future<List<Project>> getProjectListByType(int type) async {
-    if (_projectList.length == 0) {
-      await update();
-    }
-    return _projectList.where((e) => e.type == type).toList();
+class ProjectProvider extends DummyProviderBase<List<Project>> {
+  List<Project> getProjectListByType(int type) {
+    return data.where((e) => e.type == type).toList();
   }
 
   Project? getProjectById(int id) {
-    return _projectList.firstWhere((e) => e.id == id);
+    return data.firstWhere((e) => e.id == id);
   }
 
   Project? getProjectByIndex(int index) {
-    if (index >= 0 && index < _projectList.length) {
-      return _projectList[index];
+    if (index >= 0 && index < data.length) {
+      return data[index];
     } else {
       return null;
     }
   }
 
-  List<Project> _getDummyProjects() {
+  @override
+  List<Project> getDummy({Object? parameter}) {
     return <Project>[
       Project(
         id: 0,
