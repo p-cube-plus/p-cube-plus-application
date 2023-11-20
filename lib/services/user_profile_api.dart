@@ -7,7 +7,8 @@ class UserProfileApi extends PCubeApi {
   @override
   Future<User?> get(
       {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers}) async {
+      Map<String, String>? headers,
+      Map<String, String>? queryParams}) async {
     return await super
         .get(decodeFunction: (jsonDecodeData) => User.fromJson(jsonDecodeData));
   }

@@ -7,10 +7,13 @@ class RentListApi extends PCubeApi {
   @override
   Future<List<Rent>?> get(
       {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers}) async {
+      Map<String, String>? headers,
+      Map<String, String>? queryParams}) async {
     return await super.get(
-        decodeFunction: (jsonDecodeData) => (jsonDecodeData as List)
-            .map((data) => Rent.fromJson(data))
-            .toList());
+      decodeFunction: (jsonDecodeData) =>
+          (jsonDecodeData as List).map((data) => Rent.fromJson(data)).toList(),
+      headers: headers,
+      queryParams: queryParams,
+    );
   }
 }

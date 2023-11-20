@@ -14,11 +14,11 @@ class RentProvider with ChangeNotifier {
         .toList();
   }
 
-  Future<List<Rent>> update() async {
+  Future<List<Rent>> update({int? count}) async {
     //_rentList = (await _client.get()) ?? [];
     _rentList = await _getDummy();
     notifyListeners();
-    return _rentList;
+    return count == null ? _rentList : _rentList;
   }
 
   List<Rent> _getDummy() {
