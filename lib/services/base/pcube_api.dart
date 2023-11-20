@@ -13,9 +13,11 @@ class PCubeApi {
 
   get(
       {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers}) async {
-    var response =
-        await http.get(Uri.parse(_baseUrl + endPoint), headers: headers);
+      Map<String, String>? headers,
+      Map<String, String>? queryParams}) async {
+    var response = await http.get(
+        Uri.parse(_baseUrl + endPoint).replace(queryParameters: queryParams),
+        headers: headers);
 
     if (response.statusCode == 200) {
       try {

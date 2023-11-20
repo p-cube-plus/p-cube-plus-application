@@ -11,24 +11,43 @@ class ScheduleProvider with ChangeNotifier {
   Map<String, List<Schedule>> get dailySchedules => _dailySchedules;
   Map<String, List<Schedule>> get monthlySchedules => _monthlySchedules;
 
+  Future initData() async {
+    if (_monthlySchedules.isNotEmpty) _monthlySchedules.clear();
+
+    List<Schedule>? scheduleList = await HomeSchueduleApi().getScheduleInfo();
+    scheduleList?.forEach((element) {
+      // 일정이 여러 month에 걸쳐 있으면 각 month에 모두 일정을 추가
+      // 여러 달에 걸쳐 있지 않으면 시작 month에만 추가
+      for (DateTime date = element.startDate;
+          date.isBefore(element.endDate ?? element.startDate) ||
+              date.isAtSameMomentAs(element.endDate ?? element.startDate);
+          date = DateTime(date.year, date.month + 1, 1)) {
+        String yMDate = DateFormat.yM().format(date);
+
+        _monthlySchedules[yMDate] ??= <Schedule>[];
+        _monthlySchedules[yMDate]?.add(element);
+      }
+    });
+  }
+
 // Month 단위 데이터 가져오기
   Future loadSchedules(DateTime date) async {
-    // 이전에 load 됐다면 종료
-    String yMDate = DateFormat.yM().format(date);
-    if (_monthlySchedules.containsKey(yMDate)) return;
-
     // year, month로 현재 월 데이터 가져오기
-    _monthlySchedules.clear();
-    _dailySchedules.clear();
-    _monthlySchedules[yMDate] = await _getDummy();
+    String yMDate = DateFormat.yM().format(date);
 
     // day 스케줄 초기화
+    _dailySchedules.clear();
+
+    // year, month에 해당하는 스케줄이 없는 경우
+    if (!_monthlySchedules.containsKey(yMDate)) return;
+
+    // daily 반영
     for (int i = 0; i < _monthlySchedules[yMDate]!.length; i++) {
       Schedule schedule = _monthlySchedules[yMDate]![i];
-      if (schedule.startDate == null) continue;
 
-      for (DateTime d = schedule.startDate!;
-          d.difference(schedule.endDate ?? schedule.startDate!).isNegative;
+      // 로직 점검 필요.
+      for (DateTime d = schedule.startDate;
+          d.difference(schedule.endDate ?? schedule.startDate) <= Duration.zero;
           d = d.add(const Duration(days: 1))) {
         String yMdDate = DateFormat.yMd().format(d);
 
@@ -38,42 +57,5 @@ class ScheduleProvider with ChangeNotifier {
     }
 
     notifyListeners();
-  }
-
-  List<Schedule> _getDummy() {
-    return <Schedule>[
-      Schedule(
-        id: 1,
-        type: 0,
-        title: "즐거운 추석 보내세요.",
-        startDate: DateTime(2023, 09, 28, 00, 00),
-        startTime: "",
-        endDate: DateTime(2023, 10, 03, 23, 59),
-      ),
-      Schedule(
-        id: 2,
-        type: 0,
-        title: "그리고 또 열심히 일합시다.",
-        startDate: DateTime(2023, 09, 28, 00, 00),
-        startTime: "",
-        endDate: DateTime(2023, 10, 03, 23, 59),
-      ),
-      Schedule(
-        id: 3,
-        type: 0,
-        title: "가을에 일하기 좋습니다.",
-        startDate: DateTime(2023, 09, 28, 00, 00),
-        startTime: "",
-        endDate: DateTime(2023, 10, 03, 23, 59),
-      ),
-      Schedule(
-        id: 4,
-        type: 1,
-        title: "20글자가한계에요. 20글자가한계에요.",
-        startDate: DateTime(2022, 09, 24, 19, 00),
-        startTime: "",
-        endDate: DateTime(2024, 10, 02, 21, 00),
-      ),
-    ];
   }
 }

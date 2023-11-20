@@ -1,25 +1,19 @@
-import 'dart:convert';
+import 'package:p_cube_plus_application/services/base/pcube_api.dart';
 
 import '../models/oauth_token.dart';
-import 'pcube_api.dart';
 
 class OAuthApi extends PCubeApi {
   OAuthApi() : super(endPoint: "/oauth/naver/login");
 
-  Future<OAuthToken?> naver(String refreshToken, String identifier, String name,
-      String phoneNumber) async {
-    Map<String, String>? headers = {"Content-Type": "application/json"};
-    Map<String, String>? queryParams = {
-      "refresh_token": refreshToken,
-      "identifier": identifier,
-      "name": name,
-      "phone_number": phoneNumber,
-    };
-    var response = await get(headers: headers, queryParams: queryParams);
-
-    Map<String, dynamic> json = jsonDecode(response.body);
-    OAuthToken user = OAuthToken.fromJson(json);
-
-    return user;
+  @override
+  Future<OAuthToken?> get(
+      {Function(dynamic jsonDecodeData)? decodeFunction,
+      Map<String, String>? headers,
+      Map<String, String>? queryParams}) async {
+    return await super.get(
+      decodeFunction: (jsonDecodeData) => OAuthToken.fromJson(jsonDecodeData),
+      headers: headers,
+      queryParams: queryParams,
+    );
   }
 }

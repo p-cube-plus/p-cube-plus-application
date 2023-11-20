@@ -7,7 +7,8 @@ class NoticeListApi extends PCubeApi {
   @override
   Future<List<NotificationNode>?> get(
       {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers}) async {
+      Map<String, String>? headers,
+      Map<String, String>? queryParams}) async {
     return await super.get(
         decodeFunction: (jsonDecodeData) => (jsonDecodeData as List)
             .map((data) => NotificationNode.fromJson(data))

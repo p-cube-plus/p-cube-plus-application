@@ -100,7 +100,8 @@ class _CalendarState extends State<Calendar> {
 
   // Year, Month를 받아 현재 Calender를 업데이트 하는 함수
   void _setDate(DateTime date) async {
-    if (_initialized && date.month == _viewDate.month) return;
+    if (!_initialized) await context.read<ScheduleProvider>().initData();
+    //if (_initialized && date.month == _viewDate.month) return;
     _viewDate = date;
 
     await context.read<ScheduleProvider>().loadSchedules(_viewDate);

@@ -7,7 +7,8 @@ class ProjectListApi extends PCubeApi {
   @override
   Future<List<Project>?> get(
       {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers}) async {
+      Map<String, String>? headers,
+      Map<String, String>? queryParams}) async {
     return await super.get(
         decodeFunction: (jsonDecodeData) =>
             jsonDecodeData.map((e) => Project.fromJson(e)).toList());
