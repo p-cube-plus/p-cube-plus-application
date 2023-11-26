@@ -46,7 +46,9 @@ class _ProjectListView extends StatelessWidget {
                   projectProvider.getProjectListByType(type).length,
                   (index) => Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: ProjectView(project: data[index]),
+                        child: ProjectView(
+                            project: projectProvider
+                                .getProjectListByType(type)[index]),
                       ),
                   growable: false)),
         ),
