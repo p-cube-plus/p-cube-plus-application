@@ -18,7 +18,7 @@ import '../../widgets/page/default_page.dart';
 import '../rent/scan_page.dart';
 import '../../models/rent.dart';
 import '../../widgets/calendar/calendar.dart';
-import '../../widgets/calendar/Home/calendar_summary_view.dart';
+import '../../widgets/calendar/home/calendar_summary_view.dart';
 
 class HomePage extends StatelessWidget {
   @override

@@ -17,8 +17,17 @@ class NaverLoginProvider with ChangeNotifier {
     switch (res.status) {
       case NaverLoginStatus.loggedIn:
         NaverAccessToken token = await FlutterNaverLogin.currentAccessToken;
-        OAuthToken? oAuthToken = await OAuthApi().naver(token.refreshToken,
-            res.account.id, res.account.name, res.account.mobile);
+
+        Map<String, String>? headers = {"Content-Type": "application/json"};
+        Map<String, String>? queryParams = {
+          "refresh_token": token.refreshToken,
+          "identifier": res.account.id,
+          "name": res.account.name,
+          "phone_number": res.account.mobile,
+        };
+
+        OAuthToken? oAuthToken =
+            await OAuthApi().get(headers: headers, queryParams: queryParams);
 
         if (oAuthToken?.accessToken != null) {
           Fluttertoast.showToast(
@@ -31,7 +40,7 @@ class NaverLoginProvider with ChangeNotifier {
           final fcmToken = await FirebaseMessaging.instance.getToken();
           debugPrint('FCM Token: ' + fcmToken.toString());
           // Token 저장
-          TokenManager().setAccessToken(oAuthToken!.accessToken.toString());
+          TokenManager().setAccessToken(oAuthToken.accessToken.toString());
           TokenManager().setRefreshToken(oAuthToken.refreshToken.toString());
 
           Navigator.pushReplacement(context,

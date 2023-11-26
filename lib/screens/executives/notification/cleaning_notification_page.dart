@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:p_cube_plus_application/widgets/calendar/calendar.dart';
 
-import '../../../widgets/calendar/Home/calendar_summary_view.dart';
+import '../../../widgets/calendar/home/calendar_summary_view.dart';
 import '../../../widgets/common/rounded_border.dart';
 import '../../../widgets/page/default_appbar.dart';
 import '../../../widgets/page/default_content.dart';

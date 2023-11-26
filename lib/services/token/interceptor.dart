@@ -23,10 +23,7 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
 
   @override
   Future<bool> shouldAttemptRetryOnResponse(ResponseData response) async {
-    if (response.statusCode == 401) {
-      await AuthApi().refresh();
-      return true;
-    }
+    if (response.statusCode == 401) return await AuthApi().refresh();
     return false;
   }
 }
