@@ -11,11 +11,7 @@ class Schedule {
   final DateTime? endDate;
 
   Color getMarkColor() {
-    return [
-      Color(0xCCDE2B13),
-      Color(0xFF5EDCA7),
-      Color(0xCC4813DE)
-    ][type == null ? 0 : type!];
+    return [Color(0xCCDE2B13), Color(0xFF5EDCA7), Color(0xCC4813DE)][type ?? 0];
   }
 
   Schedule({

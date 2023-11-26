@@ -76,7 +76,7 @@ class PCubeApi {
 
     if (response.statusCode == 200) {
       try {
-        return successReturnFunction!(json.decode(response.body));
+        return successReturnFunction!(response.body);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }
@@ -95,7 +95,7 @@ class PCubeApi {
 
     if (response.statusCode == 200) {
       try {
-        return decodeFsuccessReturnFunctionnction!(json.decode(response.body));
+        return decodeFsuccessReturnFunctionnction!(response.body);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }

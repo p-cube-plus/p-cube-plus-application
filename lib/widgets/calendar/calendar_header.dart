@@ -5,12 +5,12 @@ import '../../utilities/contants.dart' as Constants;
 class CalendarHeader extends StatelessWidget {
   const CalendarHeader({
     Key? key,
-    this.onArrowPressed,
+    required this.onArrowPressed,
     required this.date,
   }) : super(key: key);
 
   final DateTime date;
-  final Function(int)? onArrowPressed;
+  final Function(int) onArrowPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CalendarHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-              onTap: () => onArrowPressed?.call(-1),
+              onTap: () => onArrowPressed(date.month - 1),
               child: Container(
                 color: Colors.transparent,
                 height: arrowButtonSize,
@@ -61,7 +61,7 @@ class CalendarHeader extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => onArrowPressed?.call(1),
+              onTap: () => onArrowPressed(date.month + 1),
               child: Container(
                 height: arrowButtonSize,
                 width: arrowButtonSize * 3, // 원활한 터치를 위해 크기 키움

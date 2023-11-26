@@ -2,15 +2,8 @@ import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 
 class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
-  bool _isMonthRefresh = true;
   int _cachedYear = -1, _cachedMonth = -1;
-  late Map<int, List<Schedule>> _monthSchedule;
-
-  bool _isUpcomingRefresh = true;
-  late List<Schedule> _upcomingSchedule;
-
-  bool _isTodayRefresh = true;
-  late List<Schedule> _todaySchedule;
+  Map<int, List<Schedule>>? _cachedMonthSchedule;
 
   @override
   List<Schedule> getDummy({Object? parameter}) {
@@ -43,76 +36,88 @@ class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
         id: 4,
         type: 1,
         title: "20글자가한계에요. 20글자가한계에요.",
-        startDate: DateTime(2022, 09, 24, 19, 00),
+        startDate: DateTime(2023, 7, 25, 19, 00),
         startTime: "",
         endDate: DateTime.now(),
+      ),
+      Schedule(
+        id: 5,
+        type: 1,
+        title: "앞으로의 일",
+        startDate: DateTime.now().add(Duration(days: 1)),
+        startTime: "",
+        endDate: DateTime.now().add(Duration(days: 3)),
       ),
     ];
   }
 
   @override
   Future<List<Schedule>> refresh({Object? parameter}) async {
-    _isMonthRefresh = true;
-    _isUpcomingRefresh = true;
-    _isTodayRefresh = true;
     return await super.refresh(parameter: parameter);
   }
 
-  Future<Map<int, List<Schedule>>> getMonthSchedule(int year, int month) async {
-    if (year != _cachedYear || month != _cachedMonth) {
-      await refresh();
-      _cachedMonth = month;
-      _cachedYear = year;
+  Future<Map<int, List<Schedule>>> getMonthSchedule(
+      DateTime currentDate) async {
+    int year = currentDate.year;
+    int month = currentDate.month;
+
+    if (year == _cachedYear && month == _cachedMonth) {
+      return _cachedMonthSchedule!;
     }
 
-    if (!_isMonthRefresh) return _monthSchedule;
-    _isUpcomingRefresh = false;
+    _cachedMonth = month;
+    _cachedYear = year;
 
-    int daysInMonth = DateTime(year, month + 1, 0).day;
-
-    Map<int, List<Schedule>> result =
-        Map.from({for (int i = 0; i < daysInMonth; ++i) i: <Schedule>[]});
+    Map<int, List<Schedule>> result = {};
 
     for (final schedule in data) {
-      final startDate = schedule.startDate!;
+      final startDate = schedule.startDate;
       final endDate = schedule.endDate ?? startDate;
 
       for (DateTime day = startDate;
           day.isBefore(endDate);
           day = day.add(const Duration(days: 1))) {
-        if (year == day.year && month == day.month) {
-          result[day]?.add(schedule);
+        if (day.year == year && day.month == month) {
+          result[day.day] ??= <Schedule>[];
+          result[day.day]!.add(schedule);
         }
       }
     }
 
-    _monthSchedule = result;
+    _cachedMonthSchedule = result;
+
     return result;
   }
 
   List<Schedule> getUpcomingSchedule() {
-    if (!_isUpcomingRefresh) return _upcomingSchedule;
-    _isUpcomingRefresh = false;
-
     DateTime today = DateTime.now();
-    DateTime oneWeekLater = today.add(Duration(days: 7));
+    DateTime oneWeekLater = new DateTime(today.year, today.month, today.day + 1)
+        .add(Duration(days: 7));
 
-    var result = data.where((schedule) {
-      return schedule.startDate!.isAfter(today) &&
-          schedule.startDate!.isBefore(oneWeekLater);
-    }).toList();
-
-    _upcomingSchedule = result;
-    return result;
-  }
-
-  List<Schedule> getTodaySchedule(DateTime selectedDateTime) {
     return data
         .where((schedule) =>
-            schedule.startDate!.compareTo(selectedDateTime) <= 0 &&
-            (schedule.endDate ?? schedule.startDate!)
-                    .compareTo(selectedDateTime) >=
-                0)
+            schedule.startDate.isAfter(today) &&
+            schedule.startDate.isBefore(oneWeekLater))
         .toList();
+  }
+
+  List<Schedule> getSelectScheduleList(DateTime selectedDateTime) {
+    return data
+        .where((schedule) => isDateTimeInRange(selectedDateTime,
+            schedule.startDate, schedule.endDate ?? schedule.startDate))
+        .toList();
+  }
+
+  bool isDateTimeInRange(
+      DateTime selectedDateTime, DateTime startDate, DateTime endDate) {
+    startDate = DateTime(startDate.year, startDate.month, startDate.day);
+    endDate =
+        DateTime(endDate.year, endDate.month, endDate.day, 23, 59, 59, 999);
+
+    selectedDateTime = DateTime(
+        selectedDateTime.year, selectedDateTime.month, selectedDateTime.day);
+
+    return !selectedDateTime.isBefore(startDate) &&
+        !selectedDateTime.isAfter(endDate);
   }
 }

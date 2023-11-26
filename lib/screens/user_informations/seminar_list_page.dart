@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/models/user.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 
 import '../../models/seminar.dart';
 import '../../widgets/common/rounded_border.dart';
@@ -20,24 +21,26 @@ class SeminarListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultFutureBuilder(
-      fetchData: userProvider.fetch(),
-      refreshData: userProvider.refresh(),
-      showFunction: (user) => DefaultPage(
-        title: "세미나 내역",
-        appbar: DefaultAppBar(),
-        content: (user.seminars.length == 0)
-            ? Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Text(
-                  "세미나 참여 내역이 존재하지 않습니다.",
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                ),
-              )
-            : DefaultContent(child: SeminarListView(userData: user)),
+    return DefaultRefreshIndicator(
+      refreshFunction: userProvider.refresh(),
+      child: DefaultFutureBuilder(
+        fetchData: userProvider.fetch(),
+        showFunction: (user) => DefaultPage(
+          title: "세미나 내역",
+          appbar: DefaultAppBar(),
+          content: (user.seminars.length == 0)
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    "세미나 참여 내역이 존재하지 않습니다.",
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                  ),
+                )
+              : DefaultContent(child: SeminarListView(userData: user)),
+        ),
       ),
     );
   }

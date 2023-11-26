@@ -7,108 +7,114 @@ class CalendarSelectedDateSummaryView extends StatelessWidget {
   const CalendarSelectedDateSummaryView({
     Key? key,
     required this.selectedDate,
-    required this.selectedSchedule,
+    required this.todayScheduleList,
   }) : super(key: key);
 
   final DateTime selectedDate;
-  final List<Schedule> selectedSchedule;
+  final List<Schedule> todayScheduleList;
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _widgets = List.generate(
-      selectedSchedule.length,
-      (index) {
-        return Padding(
-          padding: EdgeInsets.only(top: 28.0 * index.sign),
-          child: Row(
+    if (todayScheduleList.length == 0) return SizedBox();
+
+    return Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: RoundedBorder(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 7.0,
-                width: 7.0,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedSchedule[index].getMarkColor()),
-              ),
-              SizedBox(width: 16.0),
               Text(
-                DateFormat("a hh:mm", "ko_KR").format(
-                    selectedDate.day == selectedSchedule[index].startDate?.day
-                        ? selectedSchedule[index].startDate ?? DateTime(0)
-                        : DateTime(0)),
+                DateFormat("yyyy.MM.dd").format(selectedDate),
                 style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
               ),
-              SizedBox(width: 8.0),
-              Text(
-                selectedSchedule[index].title,
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
+              SizedBox(height: 16.0),
+              Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  Positioned(
+                    left: 3,
+                    top: 9,
+                    child: Container(
+                      color: Theme.of(context).dialogBackgroundColor,
+                      height: (todayScheduleList.length - 1) * 42.0,
+                      width: 1,
                     ),
+                  ),
+                  Column(
+                      children: List.generate(
+                    todayScheduleList.length,
+                    (index) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 28.0 * index.sign),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 7.0,
+                              width: 7.0,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color:
+                                      todayScheduleList[index].getMarkColor()),
+                            ),
+                            SizedBox(width: 16.0),
+                            Text(
+                              DateFormat("a hh:mm", "ko_KR").format(
+                                  selectedDate.day ==
+                                          todayScheduleList[index].startDate.day
+                                      ? todayScheduleList[index].startDate
+                                      : DateTime(0)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                            ),
+                            SizedBox(width: 8.0),
+                            Text(
+                              todayScheduleList[index].title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )),
+                ],
               ),
             ],
           ),
-        );
-      },
-    );
-
-    if (selectedSchedule.isEmpty) return Container();
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: RoundedBorder(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              DateFormat("yyyy.MM.dd").format(selectedDate),
-              style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-            ),
-            SizedBox(height: 16.0),
-            Stack(
-              alignment: Alignment.topLeft,
-              children: [
-                Positioned(
-                  left: 3,
-                  top: 9,
-                  child: Container(
-                    color: Theme.of(context).dialogBackgroundColor,
-                    height: (selectedSchedule.length - 1) * 42.0,
-                    width: 1,
-                  ),
-                ),
-                Column(children: _widgets),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+        ));
   }
 }
 
 class CalendarUpComingSummaryView extends StatelessWidget {
   const CalendarUpComingSummaryView({
     Key? key,
-    required this.scheduleList,
+    required this.upCommingScheduleList,
   }) : super(key: key);
 
-  final List<Schedule> scheduleList;
+  final List<Schedule> upCommingScheduleList;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = List.generate(
-      scheduleList.length,
+      upCommingScheduleList.length,
       (index) {
-        Schedule _schedule = scheduleList[index];
-        DateTime start = _schedule.startDate!;
+        Schedule _schedule = upCommingScheduleList[index];
+        DateTime start = _schedule.startDate;
         DateTime end = _schedule.endDate ?? start;
 
         bool isMoreThanOneDay =
@@ -126,7 +132,7 @@ class CalendarUpComingSummaryView extends StatelessWidget {
                   width: 7.0,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: scheduleList[index].getMarkColor()),
+                      color: upCommingScheduleList[index].getMarkColor()),
                 ),
                 SizedBox(width: 12.0),
                 Text(
@@ -154,7 +160,7 @@ class CalendarUpComingSummaryView extends StatelessWidget {
       },
     );
 
-    if (scheduleList.isEmpty) return Container();
+    if (upCommingScheduleList.isEmpty) return Container();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

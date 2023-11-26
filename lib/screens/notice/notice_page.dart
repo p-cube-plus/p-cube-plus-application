@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/api_provider/notice_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:provider/provider.dart';
 
@@ -32,23 +33,25 @@ class NoticePage extends StatelessWidget {
             color: Theme.of(context).textTheme.headline2!.color,
           ),
         ),
-        content: DefaultFutureBuilder(
-          fetchData: noticeProvider.fetch(),
-          refreshData: noticeProvider.refresh(),
-          showFunction: (data) => DefaultTabBar(tabs: [
-            DefaultTab(
-                title: "새 알림",
-                page: NoticeListView(
-                  isNew: true,
-                  noticeList: data,
-                )),
-            DefaultTab(
-                title: "읽은 알림",
-                page: NoticeListView(
-                  isNew: false,
-                  noticeList: data,
-                )),
-          ]),
+        content: DefaultRefreshIndicator(
+          refreshFunction: noticeProvider.refresh(),
+          child: DefaultFutureBuilder(
+            fetchData: noticeProvider.fetch(),
+            showFunction: (data) => DefaultTabBar(tabs: [
+              DefaultTab(
+                  title: "새 알림",
+                  page: NoticeListView(
+                    isNew: true,
+                    noticeList: data,
+                  )),
+              DefaultTab(
+                  title: "읽은 알림",
+                  page: NoticeListView(
+                    isNew: false,
+                    noticeList: data,
+                  )),
+            ]),
+          ),
         ));
   }
 }

@@ -8,7 +8,9 @@ import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dar
 import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
 import 'package:p_cube_plus_application/screens/attendence/attendance_page.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
+import 'package:p_cube_plus_application/widgets/calendar/home_calendar.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
 import '../../widgets/common/rounded_border.dart';
@@ -17,31 +19,29 @@ import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
 import '../rent/scan_page.dart';
 import '../../models/rent.dart';
-import '../../widgets/calendar/calendar.dart';
-import '../../widgets/calendar/home/calendar_summary_view.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TextTheme currentTheme = Theme.of(context).textTheme;
     var homeProvider = HomeProvider(
         context.watch<ScheduleProvider>(), context.watch<RentProvider>());
 
     return DefaultPage(
       title: "홈",
-      content: DefaultFutureBuilder(
-        fetchData: homeProvider.fetch(),
-        refreshData: homeProvider.refresh(),
-        showFunction: (data) => DefaultContent(
-          child: Column(
-            children: [
-              Attendence(),
-              HomeCalendar(
-                currentTheme: currentTheme,
-                scheduleProvider: data[#ScheduleProvider],
-              ),
-              RentListView(rentList: data[#RentProvider].data),
-            ],
+      content: DefaultRefreshIndicator(
+        refreshFunction: homeProvider.refresh(),
+        child: DefaultFutureBuilder(
+          fetchData: homeProvider.fetch(),
+          showFunction: (data) => DefaultContent(
+            child: Column(
+              children: [
+                Attendence(),
+                HomeCalendar(
+                  scheduleProvider: data[#ScheduleProvider],
+                ),
+                RentListView(rentList: data[#RentProvider].data),
+              ],
+            ),
           ),
         ),
       ),
@@ -106,50 +106,6 @@ class Attendence extends StatelessWidget {
               ),
             )
           ]),
-    );
-  }
-}
-
-class HomeCalendar extends StatefulWidget {
-  const HomeCalendar({
-    Key? key,
-    required this.currentTheme,
-    required this.scheduleProvider,
-  }) : super(key: key);
-
-  final TextTheme currentTheme;
-  final ScheduleProvider scheduleProvider;
-
-  @override
-  State<HomeCalendar> createState() => _HomeCalendarState();
-}
-
-class _HomeCalendarState extends State<HomeCalendar> {
-  @override
-  Widget build(BuildContext context) {
-    DateTime _selectedDate = DateTime.now();
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CalendarUpComingSummaryView(
-          scheduleList: widget.scheduleProvider.getUpcomingSchedule(),
-        ),
-        RoundedBorder(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
-          child: Calendar(
-            onSelectedDateChanged: (date) =>
-                setState(() => _selectedDate = date),
-            isHomeCalendar: true,
-            scheduleProvider: widget.scheduleProvider,
-          ),
-        ),
-        CalendarSelectedDateSummaryView(
-          selectedDate: _selectedDate,
-          selectedSchedule:
-              widget.scheduleProvider.getTodaySchedule(_selectedDate),
-        )
-      ]..add(SizedBox(height: 20.0)),
     );
   }
 }

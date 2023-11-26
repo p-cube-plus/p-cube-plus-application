@@ -5,11 +5,13 @@ class UserProfileApi extends PCubeApi {
   UserProfileApi() : super(endPoint: "/user/profile");
 
   @override
-  Future<User?> get(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
-      Map<String, String>? queryParams}) async {
-    return await super
-        .get(decodeFunction: (jsonDecodeData) => User.fromJson(jsonDecodeData));
+  Future<User?> get({
+    Function(dynamic body)? successReturnFunction,
+    Map<String, String>? additionalHeader,
+    Map<String, String>? queryParams,
+  }) async {
+    return await super.get(
+        successReturnFunction: (jsonDecodeData) =>
+            User.fromJson(jsonDecodeData));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/api_provider/project_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:p_cube_plus_application/widgets/project/project_view.dart';
 import 'package:provider/provider.dart';
@@ -35,18 +36,20 @@ class _ProjectListView extends StatelessWidget {
     var projectProvider = context.watch<ProjectProvider>();
 
     return DefaultContent(
-      child: DefaultFutureBuilder(
-        fetchData: projectProvider.fetch(),
-        refreshData: projectProvider.refresh(),
-        showFunction: (data) => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: List.generate(
-                projectProvider.getProjectListByType(type).length,
-                (index) => Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: ProjectView(project: data[index]),
-                    ),
-                growable: false)),
+      child: DefaultRefreshIndicator(
+        refreshFunction: projectProvider.refresh(),
+        child: DefaultFutureBuilder(
+          fetchData: projectProvider.fetch(),
+          showFunction: (data) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(
+                  projectProvider.getProjectListByType(type).length,
+                  (index) => Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ProjectView(project: data[index]),
+                      ),
+                  growable: false)),
+        ),
       ),
     );
   }
