@@ -7,16 +7,16 @@ class CalendarSelectedDateSummaryView extends StatelessWidget {
   const CalendarSelectedDateSummaryView({
     Key? key,
     required this.selectedDate,
-    required this.todaySchedule,
+    required this.selectedSchedule,
   }) : super(key: key);
 
   final DateTime selectedDate;
-  final List<Schedule> todaySchedule;
+  final List<Schedule> selectedSchedule;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgets = List.generate(
-      todaySchedule.length,
+      selectedSchedule.length,
       (index) {
         return Padding(
           padding: EdgeInsets.only(top: 28.0 * index.sign),
@@ -27,13 +27,13 @@ class CalendarSelectedDateSummaryView extends StatelessWidget {
                 width: 7.0,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: todaySchedule[index].getMarkColor()),
+                    color: selectedSchedule[index].getMarkColor()),
               ),
               SizedBox(width: 16.0),
               Text(
                 DateFormat("a hh:mm", "ko_KR").format(
-                    selectedDate.day == todaySchedule[index].startDate?.day
-                        ? todaySchedule[index].startDate ?? DateTime(0)
+                    selectedDate.day == selectedSchedule[index].startDate?.day
+                        ? selectedSchedule[index].startDate ?? DateTime(0)
                         : DateTime(0)),
                 style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 12.0,
@@ -42,7 +42,7 @@ class CalendarSelectedDateSummaryView extends StatelessWidget {
               ),
               SizedBox(width: 8.0),
               Text(
-                todaySchedule[index].title,
+                selectedSchedule[index].title,
                 style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w500,
@@ -54,7 +54,7 @@ class CalendarSelectedDateSummaryView extends StatelessWidget {
       },
     );
 
-    if (todaySchedule.isEmpty) return Container();
+    if (selectedSchedule.isEmpty) return Container();
 
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
@@ -80,7 +80,7 @@ class CalendarSelectedDateSummaryView extends StatelessWidget {
                   top: 9,
                   child: Container(
                     color: Theme.of(context).dialogBackgroundColor,
-                    height: (todaySchedule.length - 1) * 42.0,
+                    height: (selectedSchedule.length - 1) * 42.0,
                     width: 1,
                   ),
                 ),

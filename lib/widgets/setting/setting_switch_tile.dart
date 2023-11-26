@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:p_cube_plus_application/providers/setting_provider.dart';
+import 'package:p_cube_plus_application/providers/view_provider/setting_provider.dart';
 import 'package:provider/provider.dart';
 
 class SwitchTile extends StatelessWidget {

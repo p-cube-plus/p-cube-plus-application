@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
+import 'package:p_cube_plus_application/widgets/common/default_scrollView.dart';
 
 class DefaultContent extends StatelessWidget {
   const DefaultContent(
@@ -30,12 +31,8 @@ class DefaultContent extends StatelessWidget {
       _children.add(Expanded(child: bottomWidget!));
     } else {
       _children.add(Expanded(
-        child: SingleChildScrollView(
-          reverse: isReverse,
-          // GlowingOverscrollIndicator: Android
-          // physics: BouncingScrollPhysics() : IOS
-          //physics: BouncingScrollPhysics(),
-          physics: AlwaysScrollableScrollPhysics(),
+        child: DefaultScrollView(
+          isReverse: isReverse,
           child: Padding(
               padding: EdgeInsets.only(
                   left: 20.0, right: 20.0, bottom: bottomPadding),
@@ -43,43 +40,40 @@ class DefaultContent extends StatelessWidget {
         ),
       ));
     }
-    return DefaultRefreshIndicator(
-      refreshFunction: refreshFunction,
-      child: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: _children,
+    return Stack(
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: _children,
+              ),
+            ),
+          ],
+        ),
+        if (bottomButtonText != null)
+          Positioned(
+            bottom: 32.0,
+            left: 20.0,
+            right: 20.0,
+            child: Container(
+              width: double.infinity,
+              height: 48.0,
+              child: ElevatedButton(
+                onPressed: onTap ?? () {},
+                child: Text(
+                  bottomButtonText!,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
-            ],
-          ),
-          if (bottomButtonText != null)
-            Positioned(
-              bottom: 32.0,
-              left: 20.0,
-              right: 20.0,
-              child: Container(
-                width: double.infinity,
-                height: 48.0,
-                child: ElevatedButton(
-                  onPressed: onTap ?? () {},
-                  child: Text(
-                    bottomButtonText!,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-              ),
-            )
-        ],
-      ),
+            ),
+          )
+      ],
     );
   }
 }

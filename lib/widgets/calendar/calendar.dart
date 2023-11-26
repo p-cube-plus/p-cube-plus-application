@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
+import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
 
-import '../../providers/schedule_provider.dart';
 import 'calendar_header.dart';
 import 'calendar_week_row.dart';
 import 'calender_view.dart';
@@ -12,12 +12,10 @@ class Calendar extends StatefulWidget {
     Key? key,
     required this.scheduleProvider,
     this.onSelectedDateChanged,
-    this.onViewDateChanged,
     this.isHomeCalendar = false,
   }) : super(key: key);
 
   final Function(DateTime)? onSelectedDateChanged;
-  final Function(DateTime)? onViewDateChanged;
   final bool isHomeCalendar;
   final ScheduleProvider scheduleProvider;
 
@@ -109,6 +107,5 @@ class _CalendarState extends State<Calendar> {
     );
 
     setState(() => _currentCalendar = result);
-    widget.onViewDateChanged?.call(date);
   }
 }

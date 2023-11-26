@@ -1,5 +1,5 @@
-import '../models/schedule.dart';
-import 'base/provider_base.dart';
+import 'package:p_cube_plus_application/models/schedule.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 
 class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
   bool _isMonthRefresh = true;
@@ -45,7 +45,7 @@ class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
         title: "20글자가한계에요. 20글자가한계에요.",
         startDate: DateTime(2022, 09, 24, 19, 00),
         startTime: "",
-        endDate: DateTime(2024, 10, 02, 21, 00),
+        endDate: DateTime.now(),
       ),
     ];
   }
@@ -106,16 +106,13 @@ class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
     return result;
   }
 
-  List<Schedule> getTodaySchedule() {
-    if (!_isTodayRefresh) return _todaySchedule;
-    _isTodayRefresh = false;
-
-    var result = data.where((schedule) {
-      return DateTime.now().isAfter(schedule.startDate!) &&
-          DateTime.now().isBefore(schedule.endDate ?? schedule.startDate!);
-    }).toList();
-
-    _todaySchedule = result;
-    return result;
+  List<Schedule> getTodaySchedule(DateTime selectedDateTime) {
+    return data
+        .where((schedule) =>
+            schedule.startDate!.compareTo(selectedDateTime) <= 0 &&
+            (schedule.endDate ?? schedule.startDate!)
+                    .compareTo(selectedDateTime) >=
+                0)
+        .toList();
   }
 }

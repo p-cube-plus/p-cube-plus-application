@@ -1,7 +1,6 @@
+import 'package:p_cube_plus_application/models/notification_node.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'package:p_cube_plus_application/services/user_api.dart';
-
-import '../models/notification_node.dart';
-import 'base/provider_base.dart';
 
 enum SortType {
   Ascending,

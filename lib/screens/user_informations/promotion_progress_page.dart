@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
-import '../../providers/user_data_provider.dart';
 import '../../utilities/contants.dart' as Constants;
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';

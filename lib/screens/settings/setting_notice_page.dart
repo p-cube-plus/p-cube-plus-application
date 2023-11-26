@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/setting_provider.dart';
+import '../../providers/view_provider/setting_provider.dart';
 import '../../widgets/common/list_divider.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_page.dart';

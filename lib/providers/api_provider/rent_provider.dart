@@ -1,7 +1,7 @@
 import 'package:p_cube_plus_application/models/product.dart';
+import 'package:p_cube_plus_application/models/rent.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'dart:async';
-import '../models/rent.dart';
-import 'base/provider_base.dart';
 
 class RentProvider extends DummyProviderBase<List<Rent>> {
   Future<List<Rent>>? searchRentList(String name) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
 import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
 import 'package:p_cube_plus_application/screens/user_informations/promotion_progress_page.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
@@ -15,7 +16,6 @@ import '../user_informations/project_list_page.dart';
 import '../../models/project.dart';
 
 import '../../models/seminar.dart';
-import '../../providers/user_data_provider.dart';
 import '../../models/user.dart';
 
 import '../settings/setting_page.dart';

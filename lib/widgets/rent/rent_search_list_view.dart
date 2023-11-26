@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/providers/rent_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:provider/provider.dart';
 import '../../models/rent.dart';
 import '../../screens/rent/rent_detail_page.dart';

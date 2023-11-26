@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/utilities/error_message.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
+import 'package:p_cube_plus_application/widgets/common/default_scrollView.dart';
 
-class DefaultFutureBuilder extends StatelessWidget {
+class DefaultFutureBuilder extends StatefulWidget {
   DefaultFutureBuilder(
       {required this.refreshData,
       required this.fetchData,
@@ -14,34 +16,46 @@ class DefaultFutureBuilder extends StatelessWidget {
   final Function showFunction;
 
   @override
-  Widget build(BuildContext context) {
-    Object? refreshError;
+  State<DefaultFutureBuilder> createState() => _DefaultFutureBuilderState();
+}
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        try {
-          await refreshData.timeout(Duration(seconds: 5));
-          refreshError = null;
-        } catch (error) {
-          refreshError = error;
-        }
-      },
+class _DefaultFutureBuilderState extends State<DefaultFutureBuilder> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultRefreshIndicator(
+      refreshFunction: widget.refreshData.timeout(Duration(seconds: 5)),
       child: FutureBuilder(
-          future: fetchData.timeout(Duration(seconds: 5)),
+          future: widget.fetchData.timeout(Duration(seconds: 5)),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Center(child: Text("${DataLoadTimeout().message}"));
-            }
-            if (refreshError != null) {
-              return Center(child: Text("$refreshError"));
+              if (snapshot.error is TimeoutException)
+                return _ErrorWidget(DataLoadTimeout().message);
+              else
+                return _ErrorWidget(snapshot.error.toString());
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              // 스켈레톤 이미지 들어갈 자리
               return Center(child: CircularProgressIndicator());
-            } else {
-              return showFunction(snapshot.data);
             }
+
+            return widget.showFunction(snapshot.data);
           }),
     );
+  }
+}
+
+class _ErrorWidget extends StatelessWidget {
+  _ErrorWidget(this.message);
+  String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultScrollView(
+        child: Container(
+            height: MediaQuery.of(context).size.height - 250,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
+            child: Center(
+              child: Text("$message"),
+            )));
   }
 }

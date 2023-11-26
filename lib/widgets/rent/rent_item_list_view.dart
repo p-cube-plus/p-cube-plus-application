@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/models/rent.dart';
-import 'package:p_cube_plus_application/providers/rent_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:provider/provider.dart';

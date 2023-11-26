@@ -3,6 +3,7 @@ import 'default_appbar.dart';
 
 class DefaultPage extends StatelessWidget {
   const DefaultPage({
+    Key? key,
     this.appbar,
     this.title,
     this.subtitle,
@@ -15,7 +16,7 @@ class DefaultPage extends StatelessWidget {
     this.contentColor,
     this.backgroundColor,
     this.bottomPadding = 20.0,
-  });
+  }) : super(key: key);
 
   final DefaultAppBar? appbar;
   final String? title;
@@ -46,11 +47,14 @@ class DefaultPage extends StatelessWidget {
           if (appbar != null) appbar!,
           Container(
             decoration: BoxDecoration(
-                color: backgroundColor ?? contentColor ?? theme.colorScheme.background,
+                color: backgroundColor ??
+                    contentColor ??
+                    theme.colorScheme.background,
                 border: Border.all(
                   width: 0.0,
-                  color:
-                      backgroundColor ?? contentColor ?? theme.colorScheme.background,
+                  color: backgroundColor ??
+                      contentColor ??
+                      theme.colorScheme.background,
                 )),
             child: Padding(
               padding: EdgeInsets.only(
@@ -95,7 +99,6 @@ class DefaultPage extends StatelessWidget {
           bottomContent ?? SizedBox(),
         ],
       ),
-      
       resizeToAvoidBottomInset: false,
       floatingActionButton: floatingActionButton,
     );

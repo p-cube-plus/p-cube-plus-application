@@ -4,7 +4,7 @@ import 'package:p_cube_plus_application/widgets/common/default_profile.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/theme_provider.dart';
+import '../../providers/view_provider/theme_provider.dart';
 import '../../widgets/common/default_alert.dart';
 import '../../widgets/common/default_bottomsheet.dart';
 import '../../widgets/common/default_textField.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/models/due.dart';
 import 'package:provider/provider.dart';
-import '../../providers/fee_provider.dart';
+import '../../providers/view_provider/fee_provider.dart';
 import '../../utilities/contants.dart' as Constants;
 import '../../widgets/common/default_bottomsheet.dart';
 import '../../widgets/common/list_divider.dart';

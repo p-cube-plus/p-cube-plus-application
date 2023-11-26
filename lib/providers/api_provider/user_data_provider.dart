@@ -1,12 +1,12 @@
+import 'package:p_cube_plus_application/models/caution.dart';
 import 'package:p_cube_plus_application/models/curriculum.dart';
 import 'package:p_cube_plus_application/models/member.dart';
+import 'package:p_cube_plus_application/models/project.dart';
+import 'package:p_cube_plus_application/models/promotion_progress.dart';
+import 'package:p_cube_plus_application/models/seminar.dart';
+import 'package:p_cube_plus_application/models/user.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'package:p_cube_plus_application/services/user_api.dart';
-import '../models/promotion_progress.dart';
-import '../models/project.dart';
-import '../models/seminar.dart';
-import '../models/user.dart';
-import '../models/caution.dart';
-import 'base/provider_base.dart';
 
 class UserDataProvider extends ApiProviderBase<User> {
   UserDataProvider() : super(client: new UserProfileApi());

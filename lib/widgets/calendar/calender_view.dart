@@ -70,6 +70,13 @@ class _CalendarViewState extends State<CalendarView> {
 
     // 한 달의 날짜들을 얻기
     while (itr.month == widget.currentYearMonth.month) {
+      Color selectedColor = itr.year == DateTime.now().year &&
+              itr.month == DateTime.now().month &&
+              itr.day == DateTime.now().day &&
+              itr.difference(_selectedDate).inDays != 0
+          ? Theme.of(context).dialogBackgroundColor
+          : MyThemes.primary80;
+
       days.add(CalendarDayView(
           date: itr,
           // 선택: 현재 날짜 + 클릭된 날짜
@@ -80,11 +87,7 @@ class _CalendarViewState extends State<CalendarView> {
                   itr.difference(_selectedDate).inDays == 0,
           // 현재 날짜: 회색
           // 클릭 날짜: 붉은색
-          selectedColor: itr != widget.currentYearMonth ||
-                  (itr.day == _selectedDate.day &&
-                      itr.difference(_selectedDate).inDays == 0)
-              ? MyThemes.primary80
-              : Theme.of(context).dialogBackgroundColor,
+          selectedColor: selectedColor,
           onTap: (date) {
             setState(() {
               _selectedDate = date;

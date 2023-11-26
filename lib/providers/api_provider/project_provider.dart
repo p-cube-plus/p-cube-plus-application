@@ -1,6 +1,7 @@
-import '../models/member.dart';
-import '../models/project.dart';
-import 'base/provider_base.dart';
+import 'package:p_cube_plus_application/models/member.dart';
+import 'package:p_cube_plus_application/models/project.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
+
 
 class ProjectProvider extends DummyProviderBase<List<Project>> {
   List<Project> getProjectListByType(int type) {

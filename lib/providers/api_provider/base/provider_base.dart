@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/services/base/pcube_api.dart';
 
@@ -49,26 +51,26 @@ abstract class DummyProviderBase<dataType>
 }
 
 class CompositeProviderBase implements RefreshableProvider {
-  CompositeProviderBase({required this.providerList});
+  CompositeProviderBase({required this.providerMap});
 
-  List<RefreshableProvider> providerList;
-
-  @override
-  List<RefreshableProvider> get data => providerList;
+  Map<Symbol, RefreshableProvider> providerMap;
 
   @override
-  Future<List<RefreshableProvider>> fetch() async {
-    for (int i = 0; i < providerList.length; ++i) {
-      await providerList[i].fetch();
-    }
-    return providerList;
+  Map<Symbol, RefreshableProvider> get data => providerMap;
+
+  @override
+  Future<Map<Symbol, RefreshableProvider>> fetch() async {
+    providerMap.forEach((key, value) async {
+      await providerMap[key]!.fetch();
+    });
+    return providerMap;
   }
 
   @override
-  Future<List<RefreshableProvider>> refresh() async {
-    for (int i = 0; i < providerList.length; ++i) {
-      await providerList[i].refresh();
-    }
-    return providerList;
+  Future<Map<Symbol, RefreshableProvider>> refresh() async {
+    providerMap.forEach((key, value) async {
+      await providerMap[key]!.refresh();
+    });
+    return providerMap;
   }
 }

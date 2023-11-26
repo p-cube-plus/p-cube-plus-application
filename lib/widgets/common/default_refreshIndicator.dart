@@ -10,13 +10,12 @@ class DefaultRefreshIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (refreshFunction == null)
-      return child;
-    else
-      return RefreshIndicator(
-        color: Theme.of(context).primaryColor,
-        onRefresh: () async => await refreshFunction,
-        child: child,
-      );
+    return RefreshIndicator(
+      triggerMode: RefreshIndicatorTriggerMode.onEdge,
+      edgeOffset: -60,
+      color: Theme.of(context).primaryColor,
+      onRefresh: () async => await refreshFunction,
+      child: child,
+    );
   }
 }

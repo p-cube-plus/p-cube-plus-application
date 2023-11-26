@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/providers/api_provider/naver_login.dart';
 import 'package:p_cube_plus_application/screens/main_page.dart';
 import 'package:provider/provider.dart';
 import '../utilities/contants.dart' as Constants;
 
 // 임시
-import '../providers/naver_login.dart';
 
 class LoginPage extends StatelessWidget {
   @override
