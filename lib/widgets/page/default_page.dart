@@ -12,6 +12,7 @@ class DefaultPage extends StatelessWidget {
     this.action,
     this.decorate,
     this.floatingActionButton,
+    this.bottomNavigationBar,
     this.textColor,
     this.contentColor,
     this.backgroundColor,
@@ -26,6 +27,7 @@ class DefaultPage extends StatelessWidget {
   final Widget? action;
   final Widget? decorate;
   final Widget? floatingActionButton;
+  final Widget? bottomNavigationBar;
   final Color? textColor;
   final Color? contentColor;
   final Color? backgroundColor;
@@ -101,6 +103,7 @@ class DefaultPage extends StatelessWidget {
       ),
       resizeToAvoidBottomInset: false,
       floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
