@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/screens/guest/guest_main_page.dart';
+import 'package:p_cube_plus_application/screens/guest/guest_notion_webview_page.dart';
 import 'package:p_cube_plus_application/screens/login/authentication_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
-import 'package:p_cube_plus_application/widgets/common/default_alert.dart';
 import 'package:p_cube_plus_application/widgets/page/default_page.dart';
 import '../../utilities/contants.dart' as Constants;
 
@@ -70,17 +71,21 @@ class LoginPage extends StatelessWidget {
                   ),
                   onPressed: () => showDialog(
                     context: context,
-                    builder: (context) => DefaultAlert(
-                      title: "로그인에 실패했어요.",
-                      description: "다시 시도해주세요.",
-                      messageType: MessageType.OK,
-                    ),
+                    builder: (context) => AuthenticationPage(),
+                    //DefaultAlert(
+                    //  title: "로그인에 실패했어요.",
+                    //  description: "다시 시도해주세요.",
+                    //  messageType: MessageType.OK,
+                    //),
                   ),
                 ),
               ),
               const SizedBox(height: 8),
               TextButton(
-                onPressed: () {},
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GuestMainPage()),
+                ),
                 child: Text(
                   "Guest 모드로 로그인",
                   style: TextStyle(color: theme.textTheme.headlineSmall!.color),
@@ -90,7 +95,7 @@ class LoginPage extends StatelessWidget {
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AuthenticationPage(),
+                    builder: (context) => GuestWebViewPage(),
                   ),
                 ),
                 child: Text(
