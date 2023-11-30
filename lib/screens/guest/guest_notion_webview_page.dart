@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/page/default_appbar.dart';
 import 'package:p_cube_plus_application/widgets/page/default_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class GuestWebViewPage extends StatelessWidget {
@@ -9,16 +12,27 @@ class GuestWebViewPage extends StatelessWidget {
     ..setBackgroundColor(const Color(0x00000000))
     ..setNavigationDelegate(
       NavigationDelegate(
-        onProgress: (int progress) {
-          // Update loading bar.
-        },
-        onPageStarted: (String url) {},
-        onPageFinished: (String url) {},
-        onWebResourceError: (WebResourceError error) {},
-        onNavigationRequest: (NavigationRequest request) {
-          if (!request.url.startsWith('https://p-cube.notion.site/')) {
+        onNavigationRequest: (NavigationRequest request) async {
+          if (Platform.isAndroid &&
+              request.url.startsWith("https://play.google.com/")) {
+            await launchApp(request.url);
             return NavigationDecision.prevent;
           }
+
+          if (Platform.isIOS &&
+              request.url.startsWith("https://apps.apple.com/")) {
+            await launchApp(request.url);
+            return NavigationDecision.prevent;
+          }
+
+          if (request.url.startsWith("https://pf.kakao.com/")) {
+            await launchApp(request.url);
+            return NavigationDecision.prevent;
+          }
+
+          if (request.url.startsWith("intent"))
+            return NavigationDecision.prevent;
+
           return NavigationDecision.navigate;
         },
       ),
@@ -32,7 +46,24 @@ class GuestWebViewPage extends StatelessWidget {
       appbar: DefaultAppBar(
         bottomPadding: 0,
       ),
-      content: WebViewWidget(controller: controller),
+      content: WillPopScope(
+          onWillPop: () async {
+            if (await controller.canGoBack()) {
+              controller.goBack();
+              return false;
+            } else {
+              return true;
+            }
+          },
+          child: WebViewWidget(controller: controller)),
     );
+  }
+
+  static Future<bool> launchApp(String url) async {
+    final appUrl = Uri.parse(url);
+    if (await canLaunchUrl(appUrl)) {
+      return await launchUrl(appUrl);
+    }
+    return false;
   }
 }

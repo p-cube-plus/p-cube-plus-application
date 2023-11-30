@@ -5,8 +5,6 @@
     <!-- 소켓 연결 이슈-->
     <uses-permission android:name="android.permission.INTERNET"/>
 
-
-
     <!-- 예약 알림과 진동을 통한 알림을 이용-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -26,9 +24,9 @@
 
    <application
         android:label="p_cube_plus_application"
-        android:icon="@mipmap/launcher_icon">
-        <!-- webView -->
+        android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true"
+        >
         <!-- naver login을 위한 meta-data -->
         <meta-data
             android:name="com.naver.sdk.clientId"
@@ -46,7 +44,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/LaunchTheme"
+            android:theme="@style/Theme.AppCompat"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
