@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/providers/project_provider.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
+import 'package:provider/provider.dart';
 import '../../models/project.dart';
 import '../../providers/user_data_provider.dart';
 import '../../widgets/page/default_appbar.dart';
@@ -9,17 +12,26 @@ import '../../widgets/project/project_view.dart';
 class ProjectListPage extends StatelessWidget {
   const ProjectListPage({
     Key? key,
-    required this.userProvider,
   }) : super(key: key);
-
-  final UserDataProvider userProvider;
 
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
       title: "참여 프로젝트",
       appbar: DefaultAppBar(),
-      content: (userProvider.user!.projects.length == 0)
+      content: ProjectInformation(),
+    );
+  }
+}
+
+class ProjectInformation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var projectProvider = context.watch<ProjectProvider>();
+
+    return DefaultFutureBuilder(
+      future: projectProvider.update(),
+      showFunction: (List<Project> projectList) => (projectList.length == 0)
           ? Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
@@ -30,7 +42,8 @@ class ProjectListPage extends StatelessWidget {
                     ),
               ),
             )
-          : DefaultContent(child: ProjectListView(userProvider: userProvider)),
+          : DefaultContent(
+              child: ProjectListView(projectProvider: projectProvider)),
     );
   }
 }
@@ -38,20 +51,19 @@ class ProjectListPage extends StatelessWidget {
 class ProjectListView extends StatelessWidget {
   const ProjectListView({
     Key? key,
-    required this.userProvider,
+    required this.projectProvider,
   }) : super(key: key);
 
-  final UserDataProvider userProvider;
+  final ProjectProvider projectProvider;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        userProvider.user!.projects.length,
+        projectProvider.projectList!.length,
         (index) {
-          Project project = userProvider.user!.projects[index];
-
+          Project project = projectProvider.projectList![index];
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),
             child: ProjectView(project: project),

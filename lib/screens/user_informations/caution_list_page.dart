@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/providers/warning_provider.dart';
 
-import '../../providers/user_data_provider.dart';
 import '../../widgets/common/list_divider.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
@@ -18,30 +17,29 @@ String _autoFix(double d) {
 class CautionListPage extends StatelessWidget {
   const CautionListPage({
     Key? key,
-    required this.userProvider,
   }) : super(key: key);
-
-  final UserDataProvider userProvider;
 
   @override
   Widget build(BuildContext context) {
+    var warningProvider = WarningProvider();
+
     return DefaultPage(
       title: "경고 현황",
       appbar: DefaultAppBar(),
       content: DefaultContent(
         child: Column(
           children: [
-            CautionSummaryView(userProvider: userProvider),
+            CautionSummaryView(warningProvider: warningProvider),
             ListDivider(vertial: 24.0),
             CautionListView(
               title: "경고 및 주의 내역",
-              userProvider: userProvider,
+              warningProvider: warningProvider,
               mode: 1,
             ),
             SizedBox(height: 32.0),
             CautionListView(
               title: "경고 차감 내역",
-              userProvider: userProvider,
+              warningProvider: warningProvider,
               mode: -1,
             ),
           ],
@@ -54,24 +52,27 @@ class CautionListPage extends StatelessWidget {
 class CautionListView extends StatelessWidget {
   const CautionListView({
     Key? key,
-    required this.userProvider,
+    required this.warningProvider,
     required this.mode,
     required this.title,
   }) : super(key: key);
 
   final String title;
   final int mode;
-  final UserDataProvider userProvider;
+  final WarningProvider warningProvider;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> _cautions = <Widget>[];
 
-    userProvider.update();
-    
-    for (var caution in userProvider.user!.cautions) {
-      if (mode != caution.amount.sign) continue;
-      String type = ["경고", "주의"][caution.type];
+    warningProvider.update();
+    var warningList = mode == 1
+        ? warningProvider.warning?.warningAddList
+        : warningProvider.warning?.warningRemoveList;
+
+    for (var warning in warningList!) {
+      String type =
+          warningProvider.warning!.warningCategory[warning.category].toString();
 
       _cautions.add(SizedBox(height: 8.0));
       _cautions.add(
@@ -85,16 +86,14 @@ class CautionListView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "$type ${mode == 1 ? "" : "차감"}",
+                    "$type",
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w700,
                         ),
                   ),
                   Text(
-                    "${caution.description}(으)로 인해 " +
-                        "$type ${_autoFix(caution.amount.abs())}회" +
-                        "${mode == 1 ? "" : "차감"}",
+                    "$type 사유: ${warning.description}",
                     style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
@@ -103,7 +102,7 @@ class CautionListView extends StatelessWidget {
                 ],
               ),
               Text(
-                DateFormat('yyyy.MM.dd').format(caution.date),
+                "${warning.date}",
                 style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
@@ -135,10 +134,10 @@ class CautionListView extends StatelessWidget {
 class CautionSummaryView extends StatelessWidget {
   const CautionSummaryView({
     Key? key,
-    required this.userProvider,
+    required this.warningProvider,
   }) : super(key: key);
 
-  final UserDataProvider userProvider;
+  final WarningProvider warningProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +155,7 @@ class CautionSummaryView extends StatelessWidget {
                   ),
             ),
             Text(
-              "${_autoFix(userProvider.totalCaution(2))}회",
+              "${_autoFix(warningProvider.warningAddCount)}회",
               style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -176,7 +175,7 @@ class CautionSummaryView extends StatelessWidget {
                   ),
             ),
             Text(
-              "${_autoFix(userProvider.totalCaution(2, sign: -1))}회",
+              "${_autoFix(warningProvider.warningRemoveCount)}회",
               style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -196,7 +195,7 @@ class CautionSummaryView extends StatelessWidget {
                   ),
             ),
             Text(
-              "${_autoFix(userProvider.totalCaution(2) - userProvider.totalCaution(2, sign: -1))}회",
+              "${_autoFix(warningProvider.warning!.warningTotal)}회",
               style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,

@@ -2,18 +2,21 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 class Member {
-  final int id;
   final bool isSigned; // 가입 여부
   final String name;
   final int level; // 정회원, 수습, 졸업, 탈퇴
 
   final int partIdx;
-  String getPart() => "${["디자인", "프로그래밍", "아트"][partIdx]}";
+  String getPart() {
+    if (partIdx == -1)
+      return "파트 정보 없음";
+    else
+      return "${["탈퇴자", "정회원", "수습회원", "명예회원", "수습회원(휴학)", "졸업생"][partIdx]}";
+  }
 
   final String? profileImage;
 
   Member({
-    required this.id,
     required this.isSigned,
     required this.name,
     required this.level,
@@ -23,21 +26,19 @@ class Member {
 
   factory Member.fromJson(Map<String, dynamic> json) {
     return Member(
-      id: json['id'],
       isSigned: json['is_signed'],
       name: json['name'],
       level: json['level'],
-      partIdx: json['part_idx'],
+      partIdx: json['part_index'],
       profileImage: json['profile_image'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'is_signed': isSigned,
         'name': name,
         'level': level,
-        'part_idx': partIdx,
+        'part_index': partIdx,
         'profile_image': profileImage,
       };
 }

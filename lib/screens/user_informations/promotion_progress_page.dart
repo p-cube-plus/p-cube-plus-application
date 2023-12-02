@@ -24,7 +24,7 @@ class PromotionProgressPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 16),
                   child: Text(
-                    "${(userProvider.user!.promotionProgress.progress * 100).round()}%", // debug
+                    "", // debug
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           color: Theme.of(context).primaryColor,
                           fontSize: 16.0,
@@ -44,22 +44,14 @@ class PromotionProgressPage extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          flex: (userProvider.user!.promotionProgress.progress *
-                                  100)
-                              .toInt(),
+                          flex: (100).toInt(),
                           child: RoundedBorder(
                             radius: 8.0,
                             height: 16.0,
                             color: const Color(0xCCDE2B13),
                           ),
                         ),
-                        Expanded(
-                            flex: ((1 -
-                                        userProvider
-                                            .user!.promotionProgress.progress) *
-                                    100)
-                                .toInt(),
-                            child: Container()),
+                        Expanded(flex: (100).toInt(), child: Container()),
                       ],
                     ),
                   ],

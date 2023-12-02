@@ -1,25 +1,25 @@
+import 'package:p_cube_plus_application/models/warning.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
 import '../models/project.dart';
 import 'base/pcube_api.dart';
 
-class ProjectApi extends PCubeApi {
-  ProjectApi({int? id}) : super(endPoint: "/project");
+class WarningApi extends PCubeApi {
+  WarningApi({int? id}) : super(endPoint: "/warning");
 
   @override
-  Future<List<Project>?> get(
+  Future<Warning?> get(
       {Function(dynamic jsonDecodeData)? decodeFunction,
       Map<String, String>? headers,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      decodeFunction: (jsonDecodeData) =>
-          jsonDecodeData.map((e) => Project.fromJson(e)).toList(),
+      decodeFunction: (jsonDecodeData) => Warning.fromJson(jsonDecodeData),
       headers: headers,
       queryParams: queryParams,
     );
   }
 
-  Future<List<Project>?> getProjects() async {
+  Future<Warning?> getWarningList() async {
     String? token = await TokenManager().getAccessToken();
 
     Map<String, String>? headers = {
