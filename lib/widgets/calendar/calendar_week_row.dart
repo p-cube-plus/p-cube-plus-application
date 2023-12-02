@@ -11,18 +11,20 @@ class CalendarWeekRow extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(7, (index) {
-        return Expanded(
-          child: Text(
-            DateFormat('E', "ko_KR").dateSymbols.SHORTWEEKDAYS[(index) % 7],
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
+      children: List.generate(
+          7,
+          (index) => Expanded(
+                child: Text(
+                  DateFormat('E', "ko_KR")
+                      .dateSymbols
+                      .SHORTWEEKDAYS[(index) % 7],
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
-          ),
-        );
-      }),
+              )),
     );
   }
 }

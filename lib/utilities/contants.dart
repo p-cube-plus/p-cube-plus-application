@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class Icons {
   static String naver = "assets/images/icons/naver.svg";
   static String main_logo = "assets/images/icons/main_logo.svg";
+  static String main_text_logo = "assets/images/icons/pcube_text_logo.svg";
   static String input = "assets/images/icons/input.svg";
+  static String cancle = "assets/images/icons/cancle.svg";
 
   static String projects = "assets/images/icons/projects.svg";
   static String fee = "assets/images/icons/fee.svg";
@@ -30,6 +32,7 @@ class Icons {
   static String pcube_logo = "assets/images/icons/pcube_logo.svg";
 
   static String filter = "assets/images/icons/filter.svg";
+  static String watch = "assets/images/icons/watch.svg";
 
   static Widget GetIcon(String icon, {Color? color}) =>
       SvgPicture.asset(icon, color: color);

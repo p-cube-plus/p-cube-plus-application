@@ -1,19 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:p_cube_plus_application/providers/fee_provider.dart';
-import 'package:p_cube_plus_application/providers/naver_login.dart';
-import 'package:p_cube_plus_application/providers/project_provider.dart';
-import 'package:p_cube_plus_application/providers/rent_provider.dart';
-import 'package:p_cube_plus_application/providers/schedule_provider.dart';
-import 'package:p_cube_plus_application/providers/setting_provider.dart';
-import 'package:p_cube_plus_application/providers/theme_provider.dart';
-import 'package:p_cube_plus_application/providers/user_data_provider.dart';
-import 'package:p_cube_plus_application/screens/login_page.dart';
+import 'package:p_cube_plus_application/providers/api_provider/naver_login.dart';
+import 'package:p_cube_plus_application/providers/api_provider/notice_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/project_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
+import 'package:p_cube_plus_application/providers/view_provider/fee_provider.dart';
+import 'package:p_cube_plus_application/providers/view_provider/setting_provider.dart';
+import 'package:p_cube_plus_application/providers/view_provider/theme_provider.dart';
+import 'package:p_cube_plus_application/screens/login/login_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
-
-import 'providers/notice_provider.dart';
 
 void main() async {
   // beacon 설정
@@ -35,6 +34,7 @@ void main() async {
   ));
 }
 
+// TODO: home 이 LoginPage인지 MainPage인지 확인하는 로직 추가 필요
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

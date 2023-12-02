@@ -11,6 +11,7 @@ class DefaultAlert extends StatelessWidget {
     required this.title,
     required this.messageType,
     this.description,
+    this.descriptionColor,
     this.children,
     this.onTap,
   });
@@ -18,6 +19,7 @@ class DefaultAlert extends StatelessWidget {
   final Color? backgroundColor;
   final String title;
   final String? description;
+  final Color? descriptionColor;
   final MessageType messageType;
   final List<Widget>? children;
   final void Function()? onTap;
@@ -59,6 +61,8 @@ class DefaultAlert extends StatelessWidget {
                       style: theme.textTheme.displayLarge!.copyWith(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w400,
+                        color: descriptionColor ??
+                            theme.textTheme.displayLarge!.color,
                       ),
                     ),
                   ),

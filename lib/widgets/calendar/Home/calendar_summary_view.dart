@@ -1,145 +1,124 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
-import 'package:provider/provider.dart';
-
-import '../../../providers/schedule_provider.dart';
 import '../../common/rounded_border.dart';
 
-// 클린된 날짜 일정 타임라인을 보여주는 위젯
-class CalendarDailySummaryView extends StatelessWidget {
-  const CalendarDailySummaryView({
+class CalendarSelectedDateSummaryView extends StatelessWidget {
+  const CalendarSelectedDateSummaryView({
     Key? key,
     required this.selectedDate,
+    required this.todayScheduleList,
   }) : super(key: key);
 
-  final DateTime selectedDate; // 클릭된 Day 정보
+  final DateTime selectedDate;
+  final List<Schedule> todayScheduleList;
 
   @override
   Widget build(BuildContext context) {
-    List<Schedule>? _schedules = context
-        .watch<ScheduleProvider>()
-        .dailySchedules[DateFormat.yMd().format(selectedDate)];
+    if (todayScheduleList.length == 0) return SizedBox();
 
-    bool _hasSchedule = false;
-    List<Widget> _widgets = List.generate(
-      _schedules?.length ?? 0,
-      (index) {
-        if (_schedules!.isEmpty) return Container();
-        _hasSchedule = true;
-
-        return Padding(
-          padding: EdgeInsets.only(top: 28.0 * index.sign),
-          child: Row(
+    return Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: RoundedBorder(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 7.0,
-                width: 7.0,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _schedules[index].getMarkColor()),
-              ),
-              SizedBox(width: 16.0),
               Text(
-                DateFormat("a hh:mm", "ko_KR").format(
-                    selectedDate.day == _schedules[index].startDate?.day
-                        ? _schedules[index].startDate ?? DateTime(0)
-                        : DateTime(0)),
+                DateFormat("yyyy.MM.dd").format(selectedDate),
                 style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
               ),
-              SizedBox(width: 8.0),
-              Text(
-                _schedules[index].title,
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
+              SizedBox(height: 16.0),
+              Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  Positioned(
+                    left: 3,
+                    top: 9,
+                    child: Container(
+                      color: Theme.of(context).dialogBackgroundColor,
+                      height: (todayScheduleList.length - 1) * 42.0,
+                      width: 1,
                     ),
+                  ),
+                  Column(
+                      children: List.generate(
+                    todayScheduleList.length,
+                    (index) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 28.0 * index.sign),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 7.0,
+                              width: 7.0,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color:
+                                      todayScheduleList[index].getMarkColor()),
+                            ),
+                            SizedBox(width: 16.0),
+                            Text(
+                              DateFormat("a hh:mm", "ko_KR").format(
+                                  selectedDate.day ==
+                                          todayScheduleList[index].startDate.day
+                                      ? todayScheduleList[index].startDate
+                                      : DateTime(0)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                            ),
+                            SizedBox(width: 8.0),
+                            Text(
+                              todayScheduleList[index].title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )),
+                ],
               ),
             ],
           ),
-        );
-      },
-    );
-
-    if (!_hasSchedule) return Container();
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: RoundedBorder(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              DateFormat("yyyy.MM.dd").format(selectedDate),
-              style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-            ),
-            SizedBox(height: 16.0),
-            Stack(
-              alignment: Alignment.topLeft,
-              children: [
-                Positioned(
-                  left: 3,
-                  top: 9,
-                  child: Container(
-                    color: Theme.of(context).dialogBackgroundColor,
-                    height: (_schedules!.length - 1) * 42.0,
-                    width: 1,
-                  ),
-                ),
-                Column(children: _widgets),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+        ));
   }
 }
 
-// 이번달 일주일 후까지의 정보를 가져옴
-// => 마지막 주일 때 다음달 정보 가져오는 예외처리 안 함
-class CalendarMonthlySummaryView extends StatelessWidget {
-  const CalendarMonthlySummaryView({
+class CalendarUpComingSummaryView extends StatelessWidget {
+  const CalendarUpComingSummaryView({
     Key? key,
-    required this.viewDate,
+    required this.upCommingScheduleList,
   }) : super(key: key);
 
-  final DateTime viewDate;
+  final List<Schedule> upCommingScheduleList;
 
   @override
   Widget build(BuildContext context) {
-    List<Schedule>? _schedules = context
-        .watch<ScheduleProvider>()
-        .monthlySchedules[DateFormat.yM().format(viewDate)];
-
-    bool _hasSchedule = false;
     List<Widget> widgets = List.generate(
-      _schedules?.length ?? 0,
+      upCommingScheduleList.length,
       (index) {
-        Schedule _schedule = _schedules![index];
-        if (_schedule.startDate == null) return Container();
-
-        DateTime start = _schedule.startDate!;
+        Schedule _schedule = upCommingScheduleList[index];
+        DateTime start = _schedule.startDate;
         DateTime end = _schedule.endDate ?? start;
 
-        // 이전 정보는 버림
-        if (DateTime.now().isAfter(end)) return Container();
-
-        // 일주일 후까지의 정보만 가져옴
-        var weekLater = DateTime.now().add(Duration(days: 7));
-        if (!start.difference(weekLater).isNegative) return Container();
-
-        bool span =
+        bool isMoreThanOneDay =
             !(start.day == end.day && start.difference(end).inDays <= 0);
-
-        _hasSchedule = true;
 
         return Padding(
           padding: EdgeInsets.only(bottom: 10.0),
@@ -153,12 +132,12 @@ class CalendarMonthlySummaryView extends StatelessWidget {
                   width: 7.0,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _schedules[index].getMarkColor()),
+                      color: upCommingScheduleList[index].getMarkColor()),
                 ),
                 SizedBox(width: 12.0),
                 Text(
                   "${DateFormat("yyyy.MM.dd").format(start)}" +
-                      (span
+                      (isMoreThanOneDay
                           ? "\n~ ${DateFormat("yyyy.MM.dd").format(end)}"
                           : ""),
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
@@ -180,7 +159,8 @@ class CalendarMonthlySummaryView extends StatelessWidget {
         );
       },
     );
-    if (!_hasSchedule) return Container();
+
+    if (upCommingScheduleList.isEmpty) return Container();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

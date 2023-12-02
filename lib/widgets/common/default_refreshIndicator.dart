@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 
 class DefaultRefreshIndicator extends StatelessWidget {
   DefaultRefreshIndicator({
-    this.refreshFunction,
+    required this.refreshFunction,
     required this.child,
   });
-  final Future? refreshFunction;
+  final Future refreshFunction;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    if (refreshFunction == null)
-      return child;
-    else
-      return RefreshIndicator(
-        color: Theme.of(context).primaryColor,
-        onRefresh: () async => await refreshFunction,
-        child: child,
-      );
+    return RefreshIndicator(
+      triggerMode: RefreshIndicatorTriggerMode.onEdge,
+      edgeOffset: -60,
+      color: Theme.of(context).primaryColor,
+      onRefresh: () async => await refreshFunction.timeout(Duration(seconds: 5)),
+      child: child,
+    );
   }
 }

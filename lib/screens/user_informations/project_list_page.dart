@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/providers/project_provider.dart';
+import 'package:p_cube_plus_application/models/user.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
-import 'package:provider/provider.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import '../../models/project.dart';
-import '../../providers/user_data_provider.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
@@ -16,34 +16,27 @@ class ProjectListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultPage(
-      title: "참여 프로젝트",
-      appbar: DefaultAppBar(),
-      content: ProjectInformation(),
-    );
-  }
-}
-
-class ProjectInformation extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var projectProvider = context.watch<ProjectProvider>();
-
-    return DefaultFutureBuilder(
-      future: projectProvider.update(),
-      showFunction: (List<Project> projectList) => (projectList.length == 0)
-          ? Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                "참여한 프로젝트가 없습니다.",
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            )
-          : DefaultContent(
-              child: ProjectListView(projectProvider: projectProvider)),
+    return DefaultRefreshIndicator(
+      refreshFunction: userProvider.refresh(),
+      child: DefaultFutureBuilder(
+        fetchData: userProvider.fetch(),
+        showFunction: (user) => DefaultPage(
+          title: "참여 프로젝트",
+          appbar: DefaultAppBar(),
+          content: (user.projects.length == 0)
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    "참여한 프로젝트가 없습니다.",
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                  ),
+                )
+              : DefaultContent(child: ProjectListView(userData: user)),
+        ),
+      ),
     );
   }
 }
@@ -51,19 +44,20 @@ class ProjectInformation extends StatelessWidget {
 class ProjectListView extends StatelessWidget {
   const ProjectListView({
     Key? key,
-    required this.projectProvider,
+    required this.userData,
   }) : super(key: key);
 
-  final ProjectProvider projectProvider;
+  final User userData;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        projectProvider.projectList!.length,
+        userData.projects.length,
         (index) {
-          Project project = projectProvider.projectList![index];
+          Project project = userData.projects[index];
+
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),
             child: ProjectView(project: project),

@@ -1,34 +1,45 @@
-import 'package:p_cube_plus_application/utilities/token_manager.dart';
+import 'dart:convert';
 
 import '../models/project.dart';
 import 'base/pcube_api.dart';
 
-class ProjectApi extends PCubeApi {
-  ProjectApi({int? id}) : super(endPoint: "/project");
+class ProjectListApi extends PCubeApi {
+  ProjectListApi() : super(endPoint: "/project/list");
 
   @override
-  Future<List<Project>?> get(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
-      Map<String, String>? queryParams}) async {
-    return await super.get(
-      decodeFunction: (jsonDecodeData) =>
-          jsonDecodeData.map((e) => Project.fromJson(e)).toList(),
-      headers: headers,
-      queryParams: queryParams,
-    );
-  }
+  Future<List<Project>> get(
+          {Function(dynamic body)? successReturnFunction,
+          Map<String, String>? additionalHeader,
+          Map<String, String>? queryParams}) async =>
+      await super.get(
+        successReturnFunction: (body) => jsonDecode(body)
+            .map<Project>((data) => Project.fromJson(data))
+            .toList(),
+        additionalHeader: additionalHeader,
+        queryParams: queryParams,
+      );
+}
 
-  Future<List<Project>?> getProjects() async {
-    String? token = await TokenManager().getAccessToken();
+class ProjectDetailApi extends PCubeApi {
+  ProjectDetailApi(int id) : super(endPoint: "/project/${id.toString()}");
 
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
+  @override
+  Future<List<Project>> get(
+          {Function(dynamic body)? successReturnFunction,
+          Map<String, String>? additionalHeader,
+          Map<String, String>? queryParams}) async =>
+      await super.get();
+}
 
-    var response = await get(headers: headers);
+class ProjectModifyApi extends PCubeApi {
+  ProjectModifyApi(int id)
+      : super(endPoint: "/project/${id.toString()}/modify");
 
-    return response;
-  }
+  @override
+  Future<List<Project>> post(
+          {Function(dynamic body)? successReturnFunction,
+          Map<String, String>? additionalHeader,
+          Object? body,
+          Encoding? encoding}) async =>
+      await super.post();
 }

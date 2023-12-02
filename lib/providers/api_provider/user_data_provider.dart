@@ -1,19 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:p_cube_plus_application/models/caution.dart';
 import 'package:p_cube_plus_application/models/curriculum.dart';
 import 'package:p_cube_plus_application/models/member.dart';
-import 'package:p_cube_plus_application/models/user/user_profile.dart';
-import 'package:p_cube_plus_application/models/user/user_project.dart';
-import 'package:p_cube_plus_application/models/user/user_warning.dart';
-import '../models/promotion_progress.dart';
-import '../models/project.dart';
-import '../models/seminar.dart';
-import '../models/caution.dart';
-import '../services/user_api.dart';
+import 'package:p_cube_plus_application/models/project.dart';
+import 'package:p_cube_plus_application/models/promotion_progress.dart';
+import 'package:p_cube_plus_application/models/seminar.dart';
+import 'package:p_cube_plus_application/models/user.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
+import 'package:p_cube_plus_application/services/user_api.dart';
 
-class UserDataProvider with ChangeNotifier {
-  UserProfileApi _profileApi = new UserProfileApi();
-  UserProjectApi _projectApi = new UserProjectApi();
-  UserWarningApi _warningApi = new UserWarningApi();
+class UserDataProvider extends ApiProviderBase<User> {
+  UserDataProvider() : super(client: new UserProfileApi());
 
   UserProfile? _profile;
   UserProfile? get profile => _profile;
@@ -28,6 +24,9 @@ class UserDataProvider with ChangeNotifier {
     return _profile;
   }
 
+  // mode = 0(경고), 1(주의)
+  double totalCaution(int type, {int sign = 1}) {
+    double ret = 0;
   Future<List<UserProject>?> updateProject() async {
     _project = await _projectApi.getProjectInfo();
     notifyListeners();

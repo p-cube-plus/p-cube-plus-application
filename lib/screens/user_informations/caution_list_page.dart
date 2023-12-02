@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/models/user.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:p_cube_plus_application/providers/warning_provider.dart';
 
 import '../../widgets/common/list_divider.dart';
@@ -21,28 +26,32 @@ class CautionListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var warningProvider = WarningProvider();
-
-    return DefaultPage(
-      title: "경고 현황",
-      appbar: DefaultAppBar(),
-      content: DefaultContent(
-        child: Column(
-          children: [
-            CautionSummaryView(warningProvider: warningProvider),
-            ListDivider(vertial: 24.0),
-            CautionListView(
-              title: "경고 및 주의 내역",
-              warningProvider: warningProvider,
-              mode: 1,
+    return DefaultRefreshIndicator(
+      refreshFunction: userProvider.refresh(),
+      child: DefaultFutureBuilder(
+        fetchData: userProvider.fetch(),
+        showFunction: (user) => DefaultPage(
+          title: "경고 현황",
+          appbar: DefaultAppBar(),
+          content: DefaultContent(
+            child: Column(
+              children: [
+                CautionSummaryView(userProvider: userProvider),
+                ListDivider(vertial: 24.0),
+                CautionListView(
+                  title: "경고 및 주의 내역",
+                  userData: user,
+                  mode: 1,
+                ),
+                SizedBox(height: 32.0),
+                CautionListView(
+                  title: "경고 차감 내역",
+                  userData: user,
+                  mode: -1,
+                ),
+              ],
             ),
-            SizedBox(height: 32.0),
-            CautionListView(
-              title: "경고 차감 내역",
-              warningProvider: warningProvider,
-              mode: -1,
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -52,14 +61,14 @@ class CautionListPage extends StatelessWidget {
 class CautionListView extends StatelessWidget {
   const CautionListView({
     Key? key,
-    required this.warningProvider,
+    required this.userData,
     required this.mode,
     required this.title,
   }) : super(key: key);
 
   final String title;
   final int mode;
-  final WarningProvider warningProvider;
+  final User userData;
 
   @override
   Widget build(BuildContext context) {

@@ -2,11 +2,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:p_cube_plus_application/models/oauth_token.dart';
+import 'package:p_cube_plus_application/screens/main_page.dart';
+import 'package:p_cube_plus_application/services/oauth_api.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
-
-import '../models/oauth_token.dart';
-import '../services/oauth_api.dart';
-import '../screens/main_page.dart';
 
 class NaverLoginProvider with ChangeNotifier {
   late String nName, nGender, nBirth;
@@ -16,18 +15,7 @@ class NaverLoginProvider with ChangeNotifier {
 
     switch (res.status) {
       case NaverLoginStatus.loggedIn:
-        NaverAccessToken token = await FlutterNaverLogin.currentAccessToken;
-
-        Map<String, String>? headers = {"Content-Type": "application/json"};
-        Map<String, String>? queryParams = {
-          "refresh_token": token.refreshToken,
-          "identifier": res.account.id,
-          "name": res.account.name,
-          "phone_number": res.account.mobile,
-        };
-
-        OAuthToken? oAuthToken =
-            await OAuthApi().get(headers: headers, queryParams: queryParams);
+        OAuthToken? oAuthToken = await OAuthApi(loginResult: res).naver();
 
         if (oAuthToken?.accessToken != null) {
           Fluttertoast.showToast(

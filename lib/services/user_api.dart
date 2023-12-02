@@ -1,36 +1,38 @@
+import 'dart:convert';
+
 import 'package:p_cube_plus_application/models/user/user_project.dart';
 import 'package:p_cube_plus_application/models/user/user_warning.dart';
-import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
+import '../models/notification_node.dart';
 import '../models/user/user_profile.dart';
 import 'base/pcube_api.dart';
+
+class NoticeListApi extends PCubeApi {
+  NoticeListApi() : super(endPoint: "/user/notification");
+
+  @override
+  Future<List<NotificationNode>> get(
+          {Function(dynamic body)? successReturnFunction,
+          Map<String, String>? additionalHeader,
+          Map<String, String>? queryParams}) async =>
+      await super.get(
+        successReturnFunction: (body) => (jsonDecode(body) as List)
+            .map<NotificationNode>((data) => NotificationNode.fromJson(data))
+            .toList(),
+      );
+}
 
 class UserProfileApi extends PCubeApi {
   UserProfileApi() : super(endPoint: "/user/profile");
 
   @override
-  Future<UserProfile?> get(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
+  Future<UserProfile> get(
+      {Function(dynamic body)? successReturnFunction,
+      Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      decodeFunction: (jsonDecodeData) => UserProfile.fromJson(jsonDecodeData),
-      headers: headers,
-      queryParams: queryParams,
+      successReturnFunction: (body) => UserProfile.fromJson(jsonDecode(body)),
     );
-  }
-
-  Future<UserProfile?> getProfileInfo() async {
-    String? token = await TokenManager().getAccessToken();
-
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
-
-    var response = await get(headers: headers);
-
-    return response;
   }
 }
 
@@ -38,30 +40,15 @@ class UserProjectApi extends PCubeApi {
   UserProjectApi() : super(endPoint: "/user/project");
 
   @override
-  Future<List<UserProject>?> get(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
+  Future<UserProject> get(
+      {Function(dynamic body)? successReturnFunction,
+      Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      decodeFunction: (jsonDecodeData) => (jsonDecodeData as List)
-          .map((data) => UserProject.fromJson(data))
+      successReturnFunction: (body) => (jsonDecode(body) as List)
+          .map<UserProject>((data) => UserProject.fromJson(data))
           .toList(),
-      headers: headers,
-      queryParams: queryParams,
     );
-  }
-
-  Future<List<UserProject>?> getProjectInfo() async {
-    String? token = await TokenManager().getAccessToken();
-
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
-
-    var response = await get(headers: headers);
-
-    return response;
   }
 }
 
@@ -69,27 +56,12 @@ class UserWarningApi extends PCubeApi {
   UserWarningApi() : super(endPoint: "/user/warning");
 
   @override
-  Future<UserWarning?> get(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
+  Future<UserWarning> get(
+      {Function(dynamic body)? successReturnFunction,
+      Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      decodeFunction: (jsonDecodeData) => UserWarning.fromJson(jsonDecodeData),
-      headers: headers,
-      queryParams: queryParams,
+      successReturnFunction: (body) => UserWarning.fromJson(jsonDecode(body)),
     );
-  }
-
-  Future<UserWarning?> getWarningInfo() async {
-    String? token = await TokenManager().getAccessToken();
-
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
-
-    var response = await get(headers: headers);
-
-    return response;
   }
 }

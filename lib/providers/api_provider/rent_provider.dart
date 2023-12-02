@@ -1,27 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/models/product.dart';
+import 'package:p_cube_plus_application/models/rent.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'dart:async';
-import '../services/rent_api.dart';
-import '../models/rent.dart';
 
-class RentProvider with ChangeNotifier {
-  RentListApi _client = new RentListApi();
-  List<Rent> _rentList = [];
-
+class RentProvider extends DummyProviderBase<List<Rent>> {
   Future<List<Rent>>? searchRentList(String name) async {
-    return _rentList
+    return data
         .where((element) => element.product.name.contains(name))
         .toList();
   }
 
-  Future<List<Rent>> update({int? count}) async {
-    //_rentList = (await _client.get()) ?? [];
-    _rentList = await _getDummy();
-    notifyListeners();
-    return count == null ? _rentList : _rentList;
-  }
-
-  List<Rent> _getDummy() {
+  @override
+  List<Rent> getDummy({Object? parameter}) {
     return <Rent>[
       Rent(
           product: Product(

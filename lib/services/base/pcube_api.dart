@@ -1,92 +1,106 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/utilities/error_message.dart';
+import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
 const String _baseUrl = "http://p-cube-plus.com";
 
 class PCubeApi {
-  PCubeApi({required this.endPoint});
+  PCubeApi({required this.endPoint, this.isExternalApi = false});
+
   final String endPoint;
+  final bool isExternalApi;
 
-  IErrorMessage _errorMessage = new UnknownError();
-  String get errorMessage => _errorMessage.message;
+  Uri _getUrl() => Uri.parse(_baseUrl + endPoint);
 
-  get(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
-      Map<String, String>? queryParams}) async {
+  Map<String, String> _getHeader(Map<String, String>? additionalHeader) {
+    var headers = {
+      "Content-Type": "application/json",
+    };
+    if (!isExternalApi) {
+      headers.addAll(
+          {"Authorization": "Bearer ${TokenManager().getAccessToken()}"});
+    }
+    if (additionalHeader != null) {
+      headers.addAll(additionalHeader);
+    }
+    return headers;
+  }
+
+  get({
+    Function(dynamic body)? successReturnFunction,
+    Map<String, String>? additionalHeader,
+    Map<String, String>? queryParams,
+  }) async {
     var response = await http.get(
-        Uri.parse(_baseUrl + endPoint).replace(queryParameters: queryParams),
-        headers: headers);
+        _getUrl().replace(queryParameters: queryParams),
+        headers: _getHeader(additionalHeader));
 
     if (response.statusCode == 200) {
       try {
-        return decodeFunction!(json.decode(response.body));
+        return successReturnFunction!(response.body);
       } catch (e) {
-        throw Exception(FailedToConvertJSONData().message);
+        throw new Exception(FailedToConvertJSONData().message);
       }
     } else {
-      throw Exception(FailedToGetServerData().message);
+      throw new Exception(FailedToGetServerData().message);
     }
   }
 
   post(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
+      {Function(dynamic body)? successReturnFunction,
+      Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
-    var response = await http.post(Uri.parse(_baseUrl + endPoint),
-        headers: headers, body: body, encoding: encoding);
+    var response = await http.post(_getUrl(),
+        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
-        return decodeFunction!(json.decode(response.body));
+        return successReturnFunction!(response.body);
       } catch (e) {
-        _errorMessage = new FailedToConvertJSONData();
+        throw new Exception(FailedToConvertJSONData().message);
       }
     } else {
-      _errorMessage = new FailedToGetServerData();
+      throw new Exception(FailedToGetServerData().message);
     }
-    return null;
   }
 
   put(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
+      {Function(dynamic body)? successReturnFunction,
+      Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
-    var response = await http.put(Uri.parse(_baseUrl + endPoint),
-        headers: headers, body: body, encoding: encoding);
+    var response = await http.put(_getUrl(),
+        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
-        return decodeFunction!(json.decode(response.body));
+        return successReturnFunction!(response.body);
       } catch (e) {
-        _errorMessage = new FailedToConvertJSONData();
+        throw new Exception(FailedToConvertJSONData().message);
       }
     } else {
-      _errorMessage = new FailedToGetServerData();
+      throw new Exception(FailedToGetServerData().message);
     }
-    return null;
   }
 
   delete(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
+      {Function(dynamic body)? decodeFsuccessReturnFunctionnction,
+      Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
-    var response = await http.delete(Uri.parse(_baseUrl + endPoint),
-        headers: headers, body: body, encoding: encoding);
+    var response = await http.delete(_getUrl(),
+        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
-        return decodeFunction!(json.decode(response.body));
+        return decodeFsuccessReturnFunctionnction!(response.body);
       } catch (e) {
-        _errorMessage = new FailedToConvertJSONData();
+        throw new Exception(FailedToConvertJSONData().message);
       }
     } else {
-      _errorMessage = new FailedToGetServerData();
+      throw new Exception(FailedToGetServerData().message);
     }
-    return null;
   }
 }

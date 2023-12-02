@@ -1,9 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/providers/api_provider/composite/home_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
 import 'package:p_cube_plus_application/screens/attendence/attendance_page.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
+import 'package:p_cube_plus_application/widgets/calendar/home_calendar.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
+import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:provider/provider.dart';
 import 'package:scan/scan.dart';
 import '../../widgets/common/rounded_border.dart';
@@ -12,25 +19,30 @@ import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
 import '../rent/scan_page.dart';
 import '../../models/rent.dart';
-import '../../providers/rent_provider.dart';
-import '../../widgets/calendar/calendar.dart';
-import '../../widgets/calendar/home/calendar_summary_view.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TextTheme currentTheme = Theme.of(context).textTheme;
+    var homeProvider = HomeProvider(
+        context.watch<ScheduleProvider>(), context.watch<RentProvider>());
+
     return DefaultPage(
       title: "홈",
-      content: DefaultContent(
-        child: Column(
-          children: [
-            Attendence(),
-            HomeCalendar(
-              currentTheme: currentTheme,
+      content: DefaultRefreshIndicator(
+        refreshFunction: homeProvider.refresh(),
+        child: DefaultFutureBuilder(
+          fetchData: homeProvider.fetch(),
+          showFunction: (data) => DefaultContent(
+            child: Column(
+              children: [
+                Attendence(),
+                HomeCalendar(
+                  scheduleProvider: data[#ScheduleProvider],
+                ),
+                RentListView(rentList: data[#RentProvider].data),
+              ],
             ),
-            RentListView(),
-          ],
+          ),
         ),
       ),
       floatingActionButton: FloatingBarcodeButton(),
@@ -98,136 +110,83 @@ class Attendence extends StatelessWidget {
   }
 }
 
-class HomeCalendar extends StatefulWidget {
-  const HomeCalendar({
-    Key? key,
-    required this.currentTheme,
-  }) : super(key: key);
-
-  final TextTheme currentTheme;
-
-  @override
-  State<HomeCalendar> createState() => _HomeCalendarState();
-}
-
-class _HomeCalendarState extends State<HomeCalendar> {
-  DateTime _selectedDate = DateTime.now();
-  DateTime _viewDate = DateTime.now();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CalendarMonthlySummaryView(
-          viewDate: _viewDate,
-        ),
-        RoundedBorder(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
-          child: Calendar(
-            onSelectedDateChanged: (date) =>
-                setState(() => _selectedDate = date),
-            onViewDateChanged: (date) => setState(() {
-              _viewDate = date;
-            }),
-            isHomeCalendar: true,
-          ),
-        ),
-        if (_viewDate.month == _selectedDate.month &&
-            _viewDate.difference(_selectedDate).inDays.abs() < 32)
-          CalendarDailySummaryView(
-            selectedDate: _selectedDate,
-          )
-        else
-          Container(),
-      ]..add(SizedBox(height: 20.0)),
-    );
-  }
-}
-
 class RentListView extends StatelessWidget {
-  const RentListView({
+  RentListView({
     Key? key,
+    required this.rentList,
   }) : super(key: key);
+
+  final List<Rent> rentList;
 
   @override
   Widget build(BuildContext context) {
-    var rentProvider = context.watch<RentProvider>();
-
-    return DefaultFutureBuilder(
-        future: rentProvider.update(),
-        showFunction: (List<Rent> data) => ContentSummaryView(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RentPage(),
-                ),
-              );
-            },
-            title: "대여한 물품",
-            titleFontSize: 16.0,
-            children: List.generate(
-              data.length,
-              (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: RoundedBorder(
-                    hasShadow: true,
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ContentSummaryView(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RentPage(),
+            ),
+          );
+        },
+        title: "대여한 물품",
+        titleFontSize: 16.0,
+        children: List.generate(
+          rentList.length,
+          (index) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: RoundedBorder(
+                hasShadow: true,
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                data[index].product.name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                              SizedBox(height: 2.5),
-                              Text(
-                                "${DateFormat("yyyy/MM/dd").format(data[index].rentDay)} 에 대여함",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                              ),
-                            ],
-                          ),
                           Text(
-                            data[index].dDay == 0
-                                ? "D-Day"
-                                : "D${data[index].dDay.sign == -1 ? "+" : "-"}${data[index].dDay}",
+                            rentList[index].product.name,
                             style:
                                 Theme.of(context).textTheme.headline1!.copyWith(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w700,
-                                      color: data[index].dDay > 7
-                                          ? null
-                                          : Theme.of(context).primaryColor,
+                                    ),
+                          ),
+                          SizedBox(height: 2.5),
+                          Text(
+                            "${DateFormat("yyyy/MM/dd").format(rentList[index].rentDay)} 에 대여함",
+                            style:
+                                Theme.of(context).textTheme.headline3!.copyWith(
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.w400,
                                     ),
                           ),
                         ],
                       ),
-                    ),
+                      Text(
+                        rentList[index].dDay == 0
+                            ? "D-Day"
+                            : "D${rentList[index].dDay.sign == -1 ? "+" : "-"}${rentList[index].dDay}",
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w700,
+                              color: rentList[index].dDay > 7
+                                  ? null
+                                  : Theme.of(context).primaryColor,
+                            ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            )));
+                ),
+              ),
+            );
+          },
+        ));
   }
 }
 

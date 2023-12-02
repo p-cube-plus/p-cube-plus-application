@@ -5,13 +5,16 @@ class NoticeListApi extends PCubeApi {
   NoticeListApi({int? id}) : super(endPoint: "/user/notification");
 
   @override
-  Future<List<NotificationNode>?> get(
-      {Function(dynamic jsonDecodeData)? decodeFunction,
-      Map<String, String>? headers,
-      Map<String, String>? queryParams}) async {
+  Future<List<NotificationNode>?> get({
+    Function(dynamic body)? successReturnFunction,
+    Map<String, String>? additionalHeader,
+    Map<String, String>? queryParams,
+  }) async {
     return await super.get(
-        decodeFunction: (jsonDecodeData) => (jsonDecodeData as List)
-            .map((data) => NotificationNode.fromJson(data))
-            .toList());
+      successReturnFunction: (jsonDecodeData) => (jsonDecodeData as List)
+          .map((data) => NotificationNode.fromJson(data))
+          .toList(),
+      queryParams: queryParams,
+    );
   }
 }

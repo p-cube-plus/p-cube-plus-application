@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import '../services/project_api.dart';
-import '../models/project.dart';
+import 'package:p_cube_plus_application/models/member.dart';
+import 'package:p_cube_plus_application/models/project.dart';
+import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 
-class ProjectProvider with ChangeNotifier {
+
+class ProjectProvider extends DummyProviderBase<List<Project>> {
   ProjectApi _projectListApi = new ProjectApi();
   List<Project>? _projectList;
   List<Project>? get projectList => _projectList;

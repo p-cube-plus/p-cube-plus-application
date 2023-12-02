@@ -47,7 +47,7 @@ class _MainPageState extends State<MainPage> {
           _getBar("회비", Constants.Icons.fee, Constants.Icons.selected_fee),
           _getBar("홈", Constants.Icons.home, Constants.Icons.selected_home),
           _getBar("알림", Constants.Icons.bell, Constants.Icons.selected_bell),
-          _getBar("마이", Constants.Icons.user, Constants.Icons.selected_user),
+          _getBar("내 정보", Constants.Icons.user, Constants.Icons.selected_user),
         ],
         onTap: (int index) {
           _pageController.jumpToPage(index);
@@ -57,7 +57,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  _getBar(String lebel, String icon, String selectedIcon) {
+  _getBar(String label, String icon, String selectedIcon) {
     final theme = Theme.of(context);
     return BottomNavigationBarItem(
       icon: Container(
@@ -74,7 +74,7 @@ class _MainPageState extends State<MainPage> {
           color: theme.bottomNavigationBarTheme.selectedItemColor,
         ),
       ),
-      label: lebel,
+      label: label,
     );
   }
 }
