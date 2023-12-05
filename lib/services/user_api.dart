@@ -40,7 +40,7 @@ class UserProjectApi extends PCubeApi {
   UserProjectApi() : super(endPoint: "/user/project");
 
   @override
-  Future<UserProject> get(
+  Future<List<UserProject>> get(
       {Function(dynamic body)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
