@@ -6,12 +6,16 @@ class Warning {
   final List<WarningInfo> warningAddList;
   final List<WarningInfo> warningRemoveList;
   final double warningTotal;
+  final double warningAddTotal;
+  final double warningRemoveTotal;
 
   Warning({
     required this.warningCategory,
     required this.warningAddList,
     required this.warningRemoveList,
     required this.warningTotal,
+    required this.warningAddTotal,
+    required this.warningRemoveTotal,
   });
 
   factory Warning.fromJson(Map<String, dynamic> json) {
@@ -20,6 +24,8 @@ class Warning {
       warningAddList: json['warning_add_list'],
       warningRemoveList: json['warning_remove_list'],
       warningTotal: json['warning_total'],
+      warningAddTotal: json['warning_add_total'],
+      warningRemoveTotal: json['warning_remove_total'],
     );
   }
 
@@ -28,12 +34,14 @@ class Warning {
         'warning_add_list': warningAddList,
         'warning_remove_list': warningRemoveList,
         'warning_total': warningTotal,
+        'warning_add_total': warningAddTotal,
+        'warning_remove_total': warningRemoveTotal,
       };
 }
 
 @JsonSerializable()
 class WarningInfo {
-  final String category;
+  final int category;
   final DateTime? date;
   final String? description;
   final String? comment;
