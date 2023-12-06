@@ -5,17 +5,17 @@ class Warning {
   final Map<int, String> warningCategory;
   final List<WarningInfo> warningAddList;
   final List<WarningInfo> warningRemoveList;
-  final double warningTotal;
-  final double warningAddTotal;
-  final double warningRemoveTotal;
+  final double totalWarning;
+  final double totalAddWarning;
+  final double totalRemoveWarning;
 
   Warning({
     required this.warningCategory,
     required this.warningAddList,
     required this.warningRemoveList,
-    required this.warningTotal,
-    required this.warningAddTotal,
-    required this.warningRemoveTotal,
+    required this.totalWarning,
+    required this.totalAddWarning,
+    required this.totalRemoveWarning,
   });
 
   factory Warning.fromJson(Map<String, dynamic> json) {
@@ -23,9 +23,9 @@ class Warning {
       warningCategory: json['warning_category'],
       warningAddList: json['warning_add_list'],
       warningRemoveList: json['warning_remove_list'],
-      warningTotal: json['warning_total'],
-      warningAddTotal: json['warning_add_total'],
-      warningRemoveTotal: json['warning_remove_total'],
+      totalWarning: json['total_warning'],
+      totalAddWarning: json['total_add_warning'],
+      totalRemoveWarning: json['total_remove_warning'],
     );
   }
 
@@ -33,9 +33,9 @@ class Warning {
         'warning_category': warningCategory,
         'warning_add_list': warningAddList,
         'warning_remove_list': warningRemoveList,
-        'warning_total': warningTotal,
-        'warning_add_total': warningAddTotal,
-        'warning_remove_total': warningRemoveTotal,
+        'total_warning': totalWarning,
+        'total_add_warning': totalAddWarning,
+        'total_remove_warning': totalRemoveWarning,
       };
 }
 
