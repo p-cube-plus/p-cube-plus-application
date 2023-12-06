@@ -162,7 +162,7 @@ class CautionSummaryView extends StatelessWidget {
                   ),
             ),
             Text(
-              "${_autoFix(warning.warningAddTotal)}회",
+              "${_autoFix(warning.totalAddWarning)}회",
               style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -182,7 +182,7 @@ class CautionSummaryView extends StatelessWidget {
                   ),
             ),
             Text(
-              "${_autoFix(warning.warningRemoveTotal)}회",
+              "${_autoFix(warning.totalRemoveWarning)}회",
               style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -202,7 +202,7 @@ class CautionSummaryView extends StatelessWidget {
                   ),
             ),
             Text(
-              "${_autoFix(warning.warningTotal)}회",
+              "${_autoFix(warning.totalWarning)}회",
               style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
