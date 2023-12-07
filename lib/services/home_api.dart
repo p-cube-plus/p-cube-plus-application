@@ -28,7 +28,7 @@ class HomeAttendanceApi extends PCubeApi {
 // 년단위나 월단위 안 됨. 다가오는 일정이 일주일 이후까지 보여줘야 돼서
 // 2달치 가져오면 될 듯?
 class HomeScheduleApi extends PCubeApi {
-  HomeScheduleApi() : super(endPoint: "/home/product");
+  HomeScheduleApi() : super(endPoint: "/home/schedule");
 
   @override
   Future<List<Schedule>> get(
@@ -46,7 +46,7 @@ class HomeScheduleApi extends PCubeApi {
 }
 
 class HomeProductApi extends PCubeApi {
-  HomeProductApi() : super(endPoint: "/home/schedule");
+  HomeProductApi() : super(endPoint: "/home/product");
 
   @override
   Future<List<Rent>> get(
