@@ -1,59 +1,16 @@
+import 'package:p_cube_plus_application/models/home_schedule.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
+import 'package:p_cube_plus_application/services/home_api.dart';
 
-class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
+class ScheduleProvider extends ApiProviderBase<HomeSchedule> {
+  ScheduleProvider() : super(client: new HomeScheduleApi());
   int _cachedYear = -1, _cachedMonth = -1;
   Map<int, List<Schedule>>? _cachedMonthSchedule;
 
   @override
-  List<Schedule> getDummy({Object? parameter}) {
-    return <Schedule>[
-      Schedule(
-        id: 1,
-        type: 0,
-        title: "즐거운 추석 보내세요.",
-        startDate: DateTime(2023, 09, 28, 00, 00),
-        startTime: "",
-        endDate: DateTime(2023, 10, 03, 23, 59),
-      ),
-      Schedule(
-        id: 2,
-        type: 0,
-        title: "그리고 또 열심히 일합시다.",
-        startDate: DateTime(2023, 09, 28, 00, 00),
-        startTime: "",
-        endDate: DateTime(2023, 10, 03, 23, 59),
-      ),
-      Schedule(
-        id: 3,
-        type: 0,
-        title: "가을에 일하기 좋습니다.",
-        startDate: DateTime(2023, 09, 28, 00, 00),
-        startTime: "",
-        endDate: DateTime(2023, 10, 03, 23, 59),
-      ),
-      Schedule(
-        id: 4,
-        type: 1,
-        title: "20글자가한계에요. 20글자가한계에요.",
-        startDate: DateTime(2023, 7, 25, 19, 00),
-        startTime: "",
-        endDate: DateTime.now(),
-      ),
-      Schedule(
-        id: 5,
-        type: 1,
-        title: "앞으로의 일",
-        startDate: DateTime.now().add(Duration(days: 1)),
-        startTime: "",
-        endDate: DateTime.now().add(Duration(days: 3)),
-      ),
-    ];
-  }
-
-  @override
-  Future<List<Schedule>> refresh({Object? parameter}) async {
-    return await super.refresh(parameter: parameter);
+  Future<HomeSchedule> refresh({Map<String, String>? queryParams}) async {
+    return await super.refresh(queryParams: queryParams);
   }
 
   Future<Map<int, List<Schedule>>> getMonthSchedule(
@@ -70,7 +27,7 @@ class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
 
     Map<int, List<Schedule>> result = {};
 
-    for (final schedule in data) {
+    for (final schedule in data.allList) {
       final startDate = schedule.startDate;
       final endDate = schedule.endDate ?? startDate;
 
@@ -90,19 +47,11 @@ class ScheduleProvider extends DummyProviderBase<List<Schedule>> {
   }
 
   List<Schedule> getUpcomingSchedule() {
-    DateTime today = DateTime.now();
-    DateTime oneWeekLater = new DateTime(today.year, today.month, today.day + 1)
-        .add(Duration(days: 7));
-
-    return data
-        .where((schedule) =>
-            schedule.startDate.isAfter(today) &&
-            schedule.startDate.isBefore(oneWeekLater))
-        .toList();
+    return data.upcomingList;
   }
 
   List<Schedule> getSelectScheduleList(DateTime selectedDateTime) {
-    return data
+    return data.allList
         .where((schedule) => isDateTimeInRange(selectedDateTime,
             schedule.startDate, schedule.endDate ?? schedule.startDate))
         .toList();
