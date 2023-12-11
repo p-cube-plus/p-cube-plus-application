@@ -6,7 +6,9 @@ import 'package:p_cube_plus_application/providers/api_provider/notice_provider.d
 import 'package:p_cube_plus_application/providers/api_provider/project_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_profile_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_project_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_warning_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/fee_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/theme_provider.dart';
@@ -28,7 +30,10 @@ void main() async {
       ChangeNotifierProvider(create: (_) => ScheduleProvider()),
       ChangeNotifierProvider(create: (_) => SettingProvider()),
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
-      ChangeNotifierProvider(create: (_) => UserDataProvider()),
+      ChangeNotifierProvider(create: (_) => UserProfileProvider()),
+      ChangeNotifierProvider(create: (_) => UserProjectProvider()),
+      ChangeNotifierProvider(create: (_) => UserWarningProvider()),
+      ChangeNotifierProvider(create: (_) => UserProjectListProvider()),
     ],
     child: MyApp(),
   ));

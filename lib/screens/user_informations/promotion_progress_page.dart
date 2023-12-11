@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/composite/user_data_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import '../../utilities/contants.dart' as Constants;
@@ -52,8 +52,8 @@ class PromotionProgressPage extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              flex:
-                                  (user.promotionProgress.progress * 100).toInt(),
+                              flex: (user.promotionProgress.progress * 100)
+                                  .toInt(),
                               child: RoundedBorder(
                                 radius: 8.0,
                                 height: 16.0,
@@ -61,9 +61,9 @@ class PromotionProgressPage extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                                flex:
-                                    ((1 - user.promotionProgress.progress) * 100)
-                                        .toInt(),
+                                flex: ((1 - user.promotionProgress.progress) *
+                                        100)
+                                    .toInt(),
                                 child: Container()),
                           ],
                         ),

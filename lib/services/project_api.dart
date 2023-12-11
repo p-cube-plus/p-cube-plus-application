@@ -4,7 +4,10 @@ import '../models/project.dart';
 import 'base/pcube_api.dart';
 
 class ProjectListApi extends PCubeApi {
-  ProjectListApi() : super(endPoint: "/project/list");
+  ProjectListApi({bool? isAll})
+      : super(
+            endPoint:
+                "/project${(isAll != null) ? (isAll ? "/all" : "") : ""}");
 
   @override
   Future<List<Project>> get(

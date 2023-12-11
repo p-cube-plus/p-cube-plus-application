@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/models/user.dart';
-import 'package:p_cube_plus_application/providers/api_provider/user_data_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/user_project_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
+import 'package:provider/provider.dart';
 import '../../models/project.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_content.dart';
@@ -12,21 +12,20 @@ import '../../widgets/project/project_view.dart';
 class ProjectListPage extends StatelessWidget {
   const ProjectListPage({
     Key? key,
-    required this.userProvider,
   }) : super(key: key);
-
-  final UserDataProvider userProvider;
 
   @override
   Widget build(BuildContext context) {
+    var projectProvider = context.watch<UserProjectListProvider>();
+
     return DefaultRefreshIndicator(
-      refreshFunction: userProvider.refresh(),
+      refreshFunction: projectProvider.refresh(),
       child: DefaultFutureBuilder(
-        fetchData: userProvider.fetch(),
-        showFunction: (user) => DefaultPage(
+        fetchData: projectProvider.fetch(),
+        showFunction: (List<Project> projects) => DefaultPage(
           title: "참여 프로젝트",
           appbar: DefaultAppBar(),
-          content: (user.projects.length == 0)
+          content: (projects.length == 0)
               ? Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Text(
@@ -37,7 +36,7 @@ class ProjectListPage extends StatelessWidget {
                         ),
                   ),
                 )
-              : DefaultContent(child: ProjectListView(userData: user)),
+              : DefaultContent(child: ProjectListView(projects: projects)),
         ),
       ),
     );
@@ -47,19 +46,19 @@ class ProjectListPage extends StatelessWidget {
 class ProjectListView extends StatelessWidget {
   const ProjectListView({
     Key? key,
-    required this.userData,
+    required this.projects,
   }) : super(key: key);
 
-  final User userData;
+  final List<Project> projects;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        userData.projects.length,
+        projects.length,
         (index) {
-          Project project = userData.projects[index];
+          Project project = projects[index];
 
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),

@@ -32,6 +32,8 @@ class ProjectDetailPage extends StatelessWidget {
     if (project.status == 0 && project.endDate != null)
       projectDate += DateFormat('yyyy.MM.dd').format(project.endDate!);
 
+    var members = [project.pm] + project.members;
+
     return DefaultPage(
       textColor: Colors.white,
       appbar: DefaultAppBar(
@@ -62,10 +64,11 @@ class ProjectDetailPage extends StatelessWidget {
                     children: [
                       Text(
                         project.name,
-                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayLarge!.copyWith(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
                       ),
                       Text(
                         "팀원 모집 중", // 이 부분에 대한 json 수정 필요
@@ -90,18 +93,20 @@ class ProjectDetailPage extends StatelessWidget {
                     children: [
                       Text(
                         project.getStatus(),
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayMedium!.copyWith(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
                       ),
                       SizedBox(width: 8.0),
                       Text(
                         projectDate,
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayMedium!.copyWith(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
                       ),
                     ],
                   ),
@@ -128,8 +133,8 @@ class ProjectDetailPage extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: _ProjectDetailMemeberView(
-                            member: project.members[index],
-                            pm: project.members[index].id == project.pm.id,
+                            member: members[index],
+                            pm: (members.length > 0) ? (index == 0) : false,
                           ),
                         );
                       },
