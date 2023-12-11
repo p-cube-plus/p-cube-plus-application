@@ -13,8 +13,12 @@ class HomeSchedule {
 
   factory HomeSchedule.fromJson(Map<String, dynamic> json) {
     return HomeSchedule(
-      allList: json['all_list'] as List<Schedule>,
-      upcomingList: json['upcoming_list'] as List<Schedule>,
+      allList: (json['all_list'] as List)
+          .map<Schedule>((data) => Schedule.fromJson(data))
+          .toList(),
+      upcomingList: (json['upcoming_list'] as List)
+          .map<Schedule>((data) => Schedule.fromJson(data))
+          .toList(),
     );
   }
 
