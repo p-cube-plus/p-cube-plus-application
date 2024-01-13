@@ -25,7 +25,7 @@ class ProjectInquiryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultPage(
         title: project.name,
-        subtitle: project.getType() + "프로젝트",
+        subtitle: project.type,
         appbar: DefaultAppBar(
           centerTitle: "프로젝트에 문의하기",
         ),

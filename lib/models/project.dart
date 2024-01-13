@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,12 +10,12 @@ class Project {
   final int id;
   final String name;
 
-  final int type;
-  String getType() => "${["메인", "꼬꼬마"][type]}";
+  final String type;
+  //String getType() => "${["메인", "꼬꼬마"][type]}";
 
-  final int status;
-  String getStatus() =>
-      "${["종료(완성)", "진행중", "준비중", "동결", "종료 임박", "종료(미완성)"][status]}";
+  final String status;
+  //String getStatus() =>
+  //    "${["종료(완성)", "진행중", "준비중", "동결", "종료 임박", "종료(미완성)"][status]}";
 
   final DateTime? startDate;
   final DateTime? endDate;
@@ -21,8 +23,8 @@ class Project {
   final List<String> platforms; // tag
   final bool isFindingMember;
   final bool isAbleInquiry; // 문의 가능한지
-  final List<Member> members;
   final Member pm;
+  final List<Member> members;
 
   Project({
     required this.id,
@@ -35,11 +37,20 @@ class Project {
     required this.platforms,
     required this.isFindingMember,
     required this.isAbleInquiry,
-    required this.members,
     required this.pm,
+    required this.members,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
+    var platformList = json['platform']
+        .toString()
+        .replaceAll('[', '')
+        .replaceAll(']', '')
+        .split(',')
+        .map<String>((e) {
+      return e.replaceAll(" ", "");
+    }).toList();
+
     return Project(
       id: json['id'],
       name: json['name'],
@@ -51,15 +62,13 @@ class Project {
       endDate:
           json['end_date'] == null ? null : DateTime.parse(json['end_date']),
       graphic: json['graphic'],
-      platforms: (json['platform'] as List<dynamic>)
-          .map<String>((e) => e.toString())
-          .toList(),
+      platforms: platformList,
       isFindingMember: json['is_finding_member'],
       isAbleInquiry: json['is_able_inquiry'],
-      members: (json['members'] as List<dynamic>)
-          .map<Member>((e) => Member.fromJson(e))
-          .toList(),
       pm: Member.fromJson(json['pm']),
+      members: (json['members'] as List)
+          .map<Member>((data) => Member.fromJson(data))
+          .toList(),
     );
   }
 
@@ -77,7 +86,7 @@ class Project {
         'platforms': platforms,
         'is_finding_member': isFindingMember,
         'is_able_inquiry': isAbleInquiry,
-        'members': members,
         'pm': pm,
+        'members': members,
       };
 }

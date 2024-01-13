@@ -16,8 +16,8 @@ class ProjectsPage extends StatelessWidget {
       title: "프로젝트",
       content: DefaultTabBar(
         tabs: [
-          DefaultTab(title: "메인", page: _ProjectListView(type: 0)),
-          DefaultTab(title: "꼬꼬마", page: _ProjectListView(type: 1)),
+          DefaultTab(title: "메인", page: _ProjectListView(type: "메인 프로젝트")),
+          DefaultTab(title: "꼬꼬마", page: _ProjectListView(type: "꼬꼬마 프로젝트")),
         ],
       ),
     );
@@ -29,7 +29,7 @@ class _ProjectListView extends StatelessWidget {
     Key? key,
     required this.type,
   }) : super(key: key);
-  final int type;
+  final String type;
 
   @override
   Widget build(BuildContext context) {

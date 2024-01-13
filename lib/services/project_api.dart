@@ -15,7 +15,7 @@ class ProjectListApi extends PCubeApi {
           Map<String, String>? additionalHeader,
           Map<String, String>? queryParams}) async =>
       await super.get(
-        successReturnFunction: (body) => jsonDecode(body)
+        successReturnFunction: (body) => (jsonDecode(body) as List)
             .map<Project>((data) => Project.fromJson(data))
             .toList(),
         additionalHeader: additionalHeader,

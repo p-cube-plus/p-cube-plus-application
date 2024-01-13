@@ -5,15 +5,7 @@ class Member {
   final bool isSigned; // 가입 여부
   final String name;
   final int level; // 정회원, 수습, 졸업, 탈퇴
-
   final int partIdx;
-  String getPart() {
-    if (partIdx == -1)
-      return "파트 정보 없음";
-    else
-      return "${["탈퇴자", "정회원", "수습회원", "명예회원", "수습회원(휴학)", "졸업생"][partIdx]}";
-  }
-
   final String? profileImage;
 
   Member({

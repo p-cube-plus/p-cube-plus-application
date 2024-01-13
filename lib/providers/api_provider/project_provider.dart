@@ -10,7 +10,7 @@ class ProjectProvider extends ApiProviderBase<List<Project>> {
     return await super.refresh(queryParams: queryParams);
   }
 
-  List<Project> getProjectListByType(int type) {
+  List<Project> getProjectListByType(String type) {
     return data.where((element) => element.type == type).toList();
   }
 }

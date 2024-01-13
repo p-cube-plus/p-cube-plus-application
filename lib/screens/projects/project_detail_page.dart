@@ -20,7 +20,7 @@ class ProjectDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var projectName = project.name;
-    var projectType = project.getType() + "프로젝트";
+    var projectType = project.type;
     var projectProperty = project.platforms.join(", ");
     if (project.graphic != null) {
       projectProperty += " / " + project.graphic!;
@@ -92,7 +92,7 @@ class ProjectDetailPage extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        project.getStatus(),
+                        project.status,
                         style:
                             Theme.of(context).textTheme.displayMedium!.copyWith(
                                   fontSize: 12.0,
@@ -256,7 +256,7 @@ class _ProjectDetailMemeberView extends StatelessWidget {
                         ),
                   ),
                   Text(
-                    member.getPart() + "파트",
+                    member.partIdx.toString(),
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 10.0,
                           fontWeight: FontWeight.w400,
