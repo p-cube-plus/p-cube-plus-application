@@ -67,7 +67,7 @@ class ProjectView extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           Text(
-            "${["메인", "꼬꼬마"][project.type]} 프로젝트",
+            project.type,
             style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   color: project.status == 0
                       ? Theme.of(context).textTheme.displaySmall!.color
@@ -83,7 +83,7 @@ class ProjectView extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    project.getStatus(),
+                    project.status,
                     style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
