@@ -1,28 +1,25 @@
 import 'dart:convert';
-import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:p_cube_plus_application/models/login/user_info.dart';
 import 'package:p_cube_plus_application/services/base/pcube_api.dart';
 import '../models/oauth_token.dart';
 
-class OAuthApi extends PCubeApi {
-  OAuthApi({required this.loginResult})
-      : super(endPoint: "/oauth/naver/login", isExternalApi: true);
+class OAuthUserApi extends PCubeApi {
+  OAuthUserApi({required this.userInfo})
+      : super(endPoint: "/oauth/user", isExternalApi: true);
 
-  final NaverLoginResult loginResult;
+  final UserInfo userInfo;
 
-  Future<OAuthToken?> naver() async {
-    NaverAccessToken token = await FlutterNaverLogin.currentAccessToken;
-
-    Map<String, String>? queryParams = {
-      "refresh_token": token.refreshToken,
-      "identifier": loginResult.account.id,
-      "name": loginResult.account.name,
-      "phone_number": loginResult.account.mobile,
-    };
-
-    return await get(
-      queryParams: queryParams,
-      successReturnFunction: (body) =>
-          OAuthToken.fromJson(jsonDecode(body) as Map<String, dynamic>),
-    );
-  }
+  @override
+  Future<UserInfo> post({
+    Function(dynamic body)? successReturnFunction,
+    Map<String, String>? additionalHeader,
+    Object? body,
+    Encoding? encoding,
+  }) async =>
+      await super.post(
+        successReturnFunction: successReturnFunction,
+        additionalHeader: additionalHeader,
+        body: body,
+        encoding: encoding,
+      );
 }

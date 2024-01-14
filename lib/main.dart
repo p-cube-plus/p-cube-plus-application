@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:p_cube_plus_application/providers/api_provider/naver_login.dart';
 import 'package:p_cube_plus_application/providers/api_provider/notice_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/project_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
@@ -22,7 +21,6 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => NaverLoginProvider()),
       ChangeNotifierProvider(create: (_) => FeeProvider()),
       ChangeNotifierProvider(create: (_) => NoticeProvider()),
       ChangeNotifierProvider(create: (_) => ProjectProvider()),
