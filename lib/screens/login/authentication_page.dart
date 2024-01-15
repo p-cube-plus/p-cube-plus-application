@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:p_cube_plus_application/models/login/confirm_info.dart';
 import 'package:p_cube_plus_application/models/login/request_info.dart';
 import 'package:p_cube_plus_application/models/login/user_info.dart';
 import 'package:p_cube_plus_application/screens/main_page.dart';
@@ -122,6 +123,11 @@ class InputPhoneNumberPage extends StatelessWidget {
                       return;
                     }
 
+                    Fluttertoast.showToast(
+                      msg: "인증번호를 발송하고 있어요 :)",
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+
                     RequestInfo requestInfo = await requestApi
                         .post(body: {"phone_number": phoneNumber});
                     if (requestInfo.isValid)
@@ -194,9 +200,20 @@ class _AuthenticationPhoneNumberPageState
 
     var confirmApi = OAuthConfirmApi();
     _controller.addListener(
-      () {
-        if (_controller.text.length == 6)
-          confirmApi.post(body: {"code": _controller.text.trim()});
+      () async {
+        if (_controller.text.length == 6) {
+          ConfirmInfo confirmInfo =
+              await confirmApi.post(body: {"code": _controller.text.trim()});
+
+          if (!confirmInfo.isVerified) {
+            Fluttertoast.showToast(
+              msg: "본인 인증에 실패했어요 :(",
+              toastLength: Toast.LENGTH_SHORT,
+            );
+            return;
+          }
+          widget.authenticationSuccess();
+        }
       },
     );
   }
@@ -275,10 +292,7 @@ class _AuthenticationPhoneNumberPageState
                   padding: const EdgeInsets.only(left: 16.0),
                   child: ElevatedButton(
                       onPressed: () => isAvailRequest
-                          ? {
-                              widget.authenticationSuccess(),
-                              setState(() => _controller.text = "")
-                            }
+                          ? setState(() => _controller.text = "")
                           : null,
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
