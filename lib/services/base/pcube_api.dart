@@ -53,10 +53,14 @@ class PCubeApi {
       Object? body,
       Encoding? encoding}) async {
     var response = await http.post(_getUrl(),
-        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
+        headers: _getHeader(additionalHeader),
+        body: jsonEncode(body),
+        encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
+        print("TEST api" + response.body.toString());
+        print("TEST data api" + body.toString());
         return successReturnFunction!(response.body);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
