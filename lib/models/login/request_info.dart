@@ -10,11 +10,11 @@ class RequestInfo {
 
   factory RequestInfo.fromJson(Map<String, dynamic> json) {
     return RequestInfo(
-      isValid: json['is_valid'],
+      isValid: json['is_success'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'is_valid': isValid,
+        'is_success': isValid,
       };
 }
