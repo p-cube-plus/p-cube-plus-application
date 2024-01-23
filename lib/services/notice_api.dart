@@ -1,4 +1,5 @@
 import 'package:p_cube_plus_application/models/notification_node.dart';
+import 'package:http/http.dart' as http;
 import 'base/pcube_api.dart';
 
 class NoticeListApi extends PCubeApi {
@@ -6,12 +7,12 @@ class NoticeListApi extends PCubeApi {
 
   @override
   Future<List<NotificationNode>?> get({
-    Function(dynamic body)? successReturnFunction,
+    Function(http.Response response)? successReturnFunction,
     Map<String, String>? additionalHeader,
     Map<String, String>? queryParams,
   }) async {
     return await super.get(
-      successReturnFunction: (jsonDecodeData) => (jsonDecodeData as List)
+      successReturnFunction: (response) => (response.body as List)
           .map((data) => NotificationNode.fromJson(data))
           .toList(),
       queryParams: queryParams,

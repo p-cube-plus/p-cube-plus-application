@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/models/attendance.dart';
 import 'package:p_cube_plus_application/models/home_schedule.dart';
 
@@ -11,11 +12,11 @@ class HomeAttendanceApi extends PCubeApi {
 
   @override
   Future<List<Attendance>> get(
-          {Function(dynamic body)? successReturnFunction,
+          {Function(http.Response response)? successReturnFunction,
           Map<String, String>? additionalHeader,
           Map<String, String>? queryParams}) async =>
       await super.get(
-        successReturnFunction: (body) => (jsonDecode(body) as List)
+        successReturnFunction: (response) => (jsonDecode(response.body) as List)
             .map<Attendance>((data) => Attendance.fromJson(data))
             .toList(),
         additionalHeader: additionalHeader,
@@ -28,11 +29,12 @@ class HomeScheduleApi extends PCubeApi {
 
   @override
   Future<HomeSchedule> get(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      successReturnFunction: (body) => HomeSchedule.fromJson(jsonDecode(body)),
+      successReturnFunction: (response) =>
+          HomeSchedule.fromJson(jsonDecode(response.body)),
       additionalHeader: additionalHeader,
       queryParams: queryParams,
     );
@@ -44,11 +46,11 @@ class HomeProductApi extends PCubeApi {
 
   @override
   Future<List<Rent>> get(
-          {Function(dynamic body)? successReturnFunction,
+          {Function(http.Response response)? successReturnFunction,
           Map<String, String>? additionalHeader,
           Map<String, String>? queryParams}) async =>
       await super.get(
-        successReturnFunction: (body) => (jsonDecode(body) as List)
+        successReturnFunction: (response) => (jsonDecode(response.body) as List)
             .map<Rent>((data) => Rent.fromJson(data))
             .toList(),
         additionalHeader: additionalHeader,

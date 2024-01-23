@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/models/login/confirm_info.dart';
 import 'package:p_cube_plus_application/models/login/request_info.dart';
 import 'package:p_cube_plus_application/models/login/user_info.dart';
@@ -9,13 +10,14 @@ class OAuthUserApi extends PCubeApi {
 
   @override
   Future<UserInfo> post({
-    Function(dynamic body)? successReturnFunction,
+    Function(http.Response response)? successReturnFunction,
     Map<String, String>? additionalHeader,
     Object? body,
     Encoding? encoding,
   }) async =>
       await super.post(
-        successReturnFunction: (data) => UserInfo.fromJson(jsonDecode(data)),
+        successReturnFunction: (response) =>
+            UserInfo.fromJson(jsonDecode(response.body)),
         body: body,
         encoding: encoding,
       );
@@ -27,13 +29,14 @@ class OAuthRequestApi extends PCubeApi {
 
   @override
   Future<RequestInfo> post({
-    Function(dynamic body)? successReturnFunction,
+    Function(http.Response response)? successReturnFunction,
     Map<String, String>? additionalHeader,
     Object? body,
     Encoding? encoding,
   }) async =>
       await super.post(
-        successReturnFunction: (data) => RequestInfo.fromJson(jsonDecode(data)),
+        successReturnFunction: (response) =>
+            RequestInfo.fromJson(jsonDecode(response.body)),
         body: body,
         encoding: encoding,
       );
@@ -45,13 +48,14 @@ class OAuthConfirmApi extends PCubeApi {
 
   @override
   Future<ConfirmInfo> post({
-    Function(dynamic body)? successReturnFunction,
+    Function(http.Response response)? successReturnFunction,
     Map<String, String>? additionalHeader,
     Object? body,
     Encoding? encoding,
   }) async =>
       await super.post(
-        successReturnFunction: (data) => ConfirmInfo.fromJson(jsonDecode(data)),
+        successReturnFunction: (response) =>
+            ConfirmInfo.fromJson(jsonDecode(response.body)),
         body: body,
         encoding: encoding,
       );

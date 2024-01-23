@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/models/warning.dart';
 
 import 'base/pcube_api.dart';
@@ -9,11 +10,12 @@ class WarningApi extends PCubeApi {
 
   @override
   Future<Warning> get(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      successReturnFunction: (body) => Warning.fromJson(jsonDecode(body)),
+      successReturnFunction: (response) =>
+          Warning.fromJson(jsonDecode(response.body)),
     );
   }
 }

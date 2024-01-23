@@ -28,7 +28,7 @@ class PCubeApi {
   }
 
   get({
-    Function(dynamic body)? successReturnFunction,
+    Function(http.Response response)? successReturnFunction,
     Map<String, String>? additionalHeader,
     Map<String, String>? queryParams,
   }) async {
@@ -38,7 +38,7 @@ class PCubeApi {
 
     if (response.statusCode == 200) {
       try {
-        return successReturnFunction!(response.body);
+        return successReturnFunction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }
@@ -48,7 +48,7 @@ class PCubeApi {
   }
 
   post(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
@@ -59,9 +59,7 @@ class PCubeApi {
 
     if (response.statusCode == 200) {
       try {
-        print("TEST api" + response.body.toString());
-        print("TEST data api" + body.toString());
-        return successReturnFunction!(response.body);
+        return successReturnFunction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }
@@ -71,7 +69,7 @@ class PCubeApi {
   }
 
   put(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
@@ -80,7 +78,7 @@ class PCubeApi {
 
     if (response.statusCode == 200) {
       try {
-        return successReturnFunction!(response.body);
+        return successReturnFunction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }
@@ -90,7 +88,7 @@ class PCubeApi {
   }
 
   delete(
-      {Function(dynamic body)? decodeFsuccessReturnFunctionnction,
+      {Function(http.Response response)? decodeFsuccessReturnFunctionnction,
       Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
@@ -99,7 +97,7 @@ class PCubeApi {
 
     if (response.statusCode == 200) {
       try {
-        return decodeFsuccessReturnFunctionnction!(response.body);
+        return decodeFsuccessReturnFunctionnction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }

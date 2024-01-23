@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/models/user/user_project.dart';
 import 'package:p_cube_plus_application/models/user/user_warning.dart';
 
@@ -12,11 +13,11 @@ class NoticeListApi extends PCubeApi {
 
   @override
   Future<List<NotificationNode>> get(
-          {Function(dynamic body)? successReturnFunction,
+          {Function(http.Response response)? successReturnFunction,
           Map<String, String>? additionalHeader,
           Map<String, String>? queryParams}) async =>
       await super.get(
-        successReturnFunction: (body) => (jsonDecode(body) as List)
+        successReturnFunction: (response) => (jsonDecode(response.body) as List)
             .map<NotificationNode>((data) => NotificationNode.fromJson(data))
             .toList(),
       );
@@ -27,11 +28,12 @@ class UserProfileApi extends PCubeApi {
 
   @override
   Future<UserProfile> get(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      successReturnFunction: (body) => UserProfile.fromJson(jsonDecode(body)),
+      successReturnFunction: (response) =>
+          UserProfile.fromJson(jsonDecode(response.body)),
     );
   }
 }
@@ -41,11 +43,11 @@ class UserProjectApi extends PCubeApi {
 
   @override
   Future<List<UserProject>> get(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      successReturnFunction: (body) => (jsonDecode(body) as List)
+      successReturnFunction: (response) => (jsonDecode(response.body) as List)
           .map<UserProject>((data) => UserProject.fromJson(data))
           .toList(),
     );
@@ -57,11 +59,12 @@ class UserWarningApi extends PCubeApi {
 
   @override
   Future<UserWarning> get(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Map<String, String>? queryParams}) async {
     return await super.get(
-      successReturnFunction: (body) => UserWarning.fromJson(jsonDecode(body)),
+      successReturnFunction: (response) =>
+          UserWarning.fromJson(jsonDecode(response.body)),
     );
   }
 }
