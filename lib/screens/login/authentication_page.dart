@@ -25,7 +25,7 @@ class AuthenticationPage extends StatefulWidget {
 class _AuthenticationPageState extends State<AuthenticationPage> {
   bool isReadyPhoneNumber = false;
   bool isAuthenticatedPhoneNumber = false;
-  String? phoneNumber;
+  String? phoneNumber, cookie;
 
   @override
   void initState() {
@@ -38,11 +38,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         ? isAuthenticatedPhoneNumber
             ? InputNamePage(phoneNumber: phoneNumber)
             : AuthenticationPhoneNumberPage(
+                cookie: cookie,
                 authenticationSuccess: () =>
                     setState(() => isAuthenticatedPhoneNumber = true))
-        : InputPhoneNumberPage(clickAuthentication: (_phoneNumber) {
+        : InputPhoneNumberPage(clickAuthentication: (_phoneNumber, _cookie) {
             setState(() => isReadyPhoneNumber = true);
             phoneNumber = _phoneNumber;
+            cookie = _cookie;
           });
   }
 }
@@ -91,7 +93,7 @@ class InputPhoneNumberPage extends StatelessWidget {
                 RoundedBorder(
                   color: theme.scaffoldBackgroundColor,
                   child: DefaultTextField(
-                    maxLength: 12,
+                    maxLength: 14,
                     minLine: 1,
                     maxLine: 1,
                     fontSize: 16.0,
@@ -131,7 +133,7 @@ class InputPhoneNumberPage extends StatelessWidget {
                     RequestInfo requestInfo = await requestApi
                         .post(body: {"phone_number": phoneNumber});
                     if (requestInfo.isValid)
-                      clickAuthentication(phoneNumber);
+                      clickAuthentication(phoneNumber, requestInfo.cookie);
                     else
                       Fluttertoast.showToast(
                         msg: "인증번호 발송에 실패했어요 :(",
@@ -162,8 +164,12 @@ class InputPhoneNumberPage extends StatelessWidget {
 }
 
 class AuthenticationPhoneNumberPage extends StatefulWidget {
-  const AuthenticationPhoneNumberPage({required this.authenticationSuccess});
+  const AuthenticationPhoneNumberPage({
+    required this.authenticationSuccess,
+    required this.cookie,
+  });
   final Function authenticationSuccess;
+  final String? cookie;
   @override
   State<AuthenticationPhoneNumberPage> createState() =>
       _AuthenticationPhoneNumberPageState();
@@ -202,8 +208,10 @@ class _AuthenticationPhoneNumberPageState
     _controller.addListener(
       () async {
         if (_controller.text.length == 6) {
-          ConfirmInfo confirmInfo =
-              await confirmApi.post(body: {"code": _controller.text.trim()});
+          ConfirmInfo confirmInfo = await confirmApi.post(
+            additionalHeader: {"cookie": widget.cookie.toString()},
+            body: {"code": _controller.text.trim()},
+          );
 
           if (!confirmInfo.isVerified) {
             Fluttertoast.showToast(

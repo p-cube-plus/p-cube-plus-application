@@ -35,8 +35,10 @@ class OAuthRequestApi extends PCubeApi {
     Encoding? encoding,
   }) async =>
       await super.post(
-        successReturnFunction: (response) =>
-            RequestInfo.fromJson(jsonDecode(response.body)),
+        successReturnFunction: (response) => RequestInfo.fromJson(
+          response.headers,
+          jsonDecode(response.body),
+        ),
         body: body,
         encoding: encoding,
       );
