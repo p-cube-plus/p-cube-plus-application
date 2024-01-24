@@ -16,6 +16,8 @@ class WarningApi extends PCubeApi {
     return await super.get(
       successReturnFunction: (response) =>
           Warning.fromJson(jsonDecode(response.body)),
+      additionalHeader: additionalHeader,
+      queryParams: queryParams,
     );
   }
 }

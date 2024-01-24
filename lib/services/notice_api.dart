@@ -15,6 +15,7 @@ class NoticeListApi extends PCubeApi {
       successReturnFunction: (response) => (response.body as List)
           .map((data) => NotificationNode.fromJson(data))
           .toList(),
+      additionalHeader: additionalHeader,
       queryParams: queryParams,
     );
   }

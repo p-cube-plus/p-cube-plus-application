@@ -20,6 +20,8 @@ class NoticeListApi extends PCubeApi {
         successReturnFunction: (response) => (jsonDecode(response.body) as List)
             .map<NotificationNode>((data) => NotificationNode.fromJson(data))
             .toList(),
+        additionalHeader: additionalHeader,
+        queryParams: queryParams,
       );
 }
 
@@ -34,6 +36,8 @@ class UserProfileApi extends PCubeApi {
     return await super.get(
       successReturnFunction: (response) =>
           UserProfile.fromJson(jsonDecode(response.body)),
+      additionalHeader: additionalHeader,
+      queryParams: queryParams,
     );
   }
 }
@@ -50,6 +54,8 @@ class UserProjectApi extends PCubeApi {
       successReturnFunction: (response) => (jsonDecode(response.body) as List)
           .map<UserProject>((data) => UserProject.fromJson(data))
           .toList(),
+      additionalHeader: additionalHeader,
+      queryParams: queryParams,
     );
   }
 }
@@ -65,6 +71,8 @@ class UserWarningApi extends PCubeApi {
     return await super.get(
       successReturnFunction: (response) =>
           UserWarning.fromJson(jsonDecode(response.body)),
+      additionalHeader: additionalHeader,
+      queryParams: queryParams,
     );
   }
 }

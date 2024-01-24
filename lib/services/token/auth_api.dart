@@ -18,6 +18,9 @@ class AuthApi extends PCubeApi {
       successReturnFunction: (response) => OAuthToken.fromJson(
         jsonDecode(response.body),
       ),
+      additionalHeader: additionalHeader,
+      body: body,
+      encoding: encoding,
     );
   }
 

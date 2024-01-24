@@ -15,6 +15,7 @@ class RentListApi extends PCubeApi {
     return await super.get(
       successReturnFunction: (response) =>
           (response.body as List).map((data) => Rent.fromJson(data)).toList(),
+      additionalHeader: additionalHeader,
       queryParams: queryParams,
     );
   }

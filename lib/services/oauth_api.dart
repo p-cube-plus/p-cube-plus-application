@@ -18,6 +18,7 @@ class OAuthUserApi extends PCubeApi {
       await super.post(
         successReturnFunction: (response) =>
             UserInfo.fromJson(jsonDecode(response.body)),
+        additionalHeader: additionalHeader,
         body: body,
         encoding: encoding,
       );
@@ -39,6 +40,7 @@ class OAuthRequestApi extends PCubeApi {
           response.headers,
           jsonDecode(response.body),
         ),
+        additionalHeader: additionalHeader,
         body: body,
         encoding: encoding,
       );
@@ -58,6 +60,7 @@ class OAuthConfirmApi extends PCubeApi {
       await super.post(
         successReturnFunction: (response) =>
             ConfirmInfo.fromJson(jsonDecode(response.body)),
+        additionalHeader: additionalHeader,
         body: body,
         encoding: encoding,
       );

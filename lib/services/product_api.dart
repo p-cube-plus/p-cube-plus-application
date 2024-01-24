@@ -14,8 +14,10 @@ class ProductListApi extends PCubeApi {
     Map<String, String>? queryParams,
   }) async =>
       await super.get(
-          successReturnFunction: (response) =>
-              (jsonDecode(response.body) as List)
-                  .map((data) => Rent.fromJson(data))
-                  .toList());
+        successReturnFunction: (response) => (jsonDecode(response.body) as List)
+            .map((data) => Rent.fromJson(data))
+            .toList(),
+        additionalHeader: additionalHeader,
+        queryParams: queryParams,
+      );
 }
