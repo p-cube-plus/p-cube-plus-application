@@ -220,6 +220,7 @@ class _AuthenticationPhoneNumberPageState
             );
             return;
           }
+          // TODO: timer memory leak issue
           widget.authenticationSuccess();
         }
       },
@@ -389,8 +390,9 @@ class InputNamePage extends StatelessWidget {
                     UserInfo userInfo = await userApi.post(
                       body: {
                         "name": _controller.text.trim(),
-                        "phone_number": phoneNumber,
-                        "fcm_token": FirebaseMessaging.instance.getToken(),
+                        "phone_number": phoneNumber.toString(),
+                        "fcm_token":
+                            await FirebaseMessaging.instance.getToken(),
                       },
                     );
                     if (!userInfo.isMember) {

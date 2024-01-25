@@ -13,13 +13,14 @@ class PCubeApi {
 
   Uri _getUrl() => Uri.parse(_baseUrl + endPoint);
 
-  Map<String, String> _getHeader(Map<String, String>? additionalHeader) {
+  Future<Map<String, String>> _getHeader(
+      Map<String, String>? additionalHeader) async {
     var headers = {
       "Content-Type": "application/json",
     };
     if (!isExternalApi) {
       headers.addAll(
-          {"Authorization": "Bearer ${TokenManager().getAccessToken()}"});
+          {"Authorization": "Bearer ${await TokenManager().getAccessToken()}"});
     }
     if (additionalHeader != null) {
       headers.addAll(additionalHeader);
@@ -34,7 +35,7 @@ class PCubeApi {
   }) async {
     var response = await http.get(
         _getUrl().replace(queryParameters: queryParams),
-        headers: _getHeader(additionalHeader));
+        headers: await _getHeader(additionalHeader));
 
     if (response.statusCode == 200) {
       try {
@@ -53,7 +54,7 @@ class PCubeApi {
       Object? body,
       Encoding? encoding}) async {
     var response = await http.post(_getUrl(),
-        headers: _getHeader(additionalHeader),
+        headers: await _getHeader(additionalHeader),
         body: jsonEncode(body),
         encoding: encoding);
 
@@ -74,7 +75,9 @@ class PCubeApi {
       Object? body,
       Encoding? encoding}) async {
     var response = await http.put(_getUrl(),
-        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
+        headers: await _getHeader(additionalHeader),
+        body: body,
+        encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
@@ -93,7 +96,9 @@ class PCubeApi {
       Object? body,
       Encoding? encoding}) async {
     var response = await http.delete(_getUrl(),
-        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
+        headers: await _getHeader(additionalHeader),
+        body: body,
+        encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
