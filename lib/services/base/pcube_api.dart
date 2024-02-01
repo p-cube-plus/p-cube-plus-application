@@ -13,13 +13,14 @@ class PCubeApi {
 
   Uri _getUrl() => Uri.parse(_baseUrl + endPoint);
 
-  Map<String, String> _getHeader(Map<String, String>? additionalHeader) {
+  Future<Map<String, String>> _getHeader(
+      Map<String, String>? additionalHeader) async {
     var headers = {
       "Content-Type": "application/json",
     };
     if (!isExternalApi) {
       headers.addAll(
-          {"Authorization": "Bearer ${TokenManager().getAccessToken()}"});
+          {"Authorization": "Bearer ${await TokenManager().getAccessToken()}"});
     }
     if (additionalHeader != null) {
       headers.addAll(additionalHeader);
@@ -28,17 +29,17 @@ class PCubeApi {
   }
 
   get({
-    Function(dynamic body)? successReturnFunction,
+    Function(http.Response response)? successReturnFunction,
     Map<String, String>? additionalHeader,
     Map<String, String>? queryParams,
   }) async {
     var response = await http.get(
         _getUrl().replace(queryParameters: queryParams),
-        headers: _getHeader(additionalHeader));
+        headers: await _getHeader(additionalHeader));
 
     if (response.statusCode == 200) {
       try {
-        return successReturnFunction!(response.body);
+        return successReturnFunction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }
@@ -48,16 +49,18 @@ class PCubeApi {
   }
 
   post(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
     var response = await http.post(_getUrl(),
-        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
+        headers: await _getHeader(additionalHeader),
+        body: jsonEncode(body),
+        encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
-        return successReturnFunction!(response.body);
+        return successReturnFunction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }
@@ -67,16 +70,18 @@ class PCubeApi {
   }
 
   put(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
     var response = await http.put(_getUrl(),
-        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
+        headers: await _getHeader(additionalHeader),
+        body: body,
+        encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
-        return successReturnFunction!(response.body);
+        return successReturnFunction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }
@@ -86,16 +91,18 @@ class PCubeApi {
   }
 
   delete(
-      {Function(dynamic body)? decodeFsuccessReturnFunctionnction,
+      {Function(http.Response response)? decodeFsuccessReturnFunctionnction,
       Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
     var response = await http.delete(_getUrl(),
-        headers: _getHeader(additionalHeader), body: body, encoding: encoding);
+        headers: await _getHeader(additionalHeader),
+        body: body,
+        encoding: encoding);
 
     if (response.statusCode == 200) {
       try {
-        return decodeFsuccessReturnFunctionnction!(response.body);
+        return decodeFsuccessReturnFunctionnction!(response);
       } catch (e) {
         throw new Exception(FailedToConvertJSONData().message);
       }

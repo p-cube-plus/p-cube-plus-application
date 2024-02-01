@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/services/base/pcube_api.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
@@ -9,13 +10,18 @@ class AuthApi extends PCubeApi {
 
   @override
   Future<OAuthToken?> post(
-      {Function(dynamic body)? successReturnFunction,
+      {Function(http.Response response)? successReturnFunction,
       Map<String, String>? additionalHeader,
       Object? body,
       Encoding? encoding}) async {
     return await super.post(
-        successReturnFunction: (jsonDecodeData) =>
-            OAuthToken.fromJson(jsonDecodeData));
+      successReturnFunction: (response) => OAuthToken.fromJson(
+        jsonDecode(response.body),
+      ),
+      additionalHeader: additionalHeader,
+      body: body,
+      encoding: encoding,
+    );
   }
 
   Future<bool> refresh() async {

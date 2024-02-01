@@ -1,8 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:p_cube_plus_application/models/login/confirm_info.dart';
+import 'package:p_cube_plus_application/models/login/request_info.dart';
+import 'package:p_cube_plus_application/models/login/user_info.dart';
 import 'package:p_cube_plus_application/screens/main_page.dart';
+import 'package:p_cube_plus_application/services/oauth_api.dart';
+import 'package:p_cube_plus_application/utilities/phone_number_tool.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
+import 'package:p_cube_plus_application/utilities/token_manager.dart';
 import 'package:p_cube_plus_application/widgets/common/default_textField.dart';
 import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';
 import 'package:p_cube_plus_application/widgets/page/default_appbar.dart';
@@ -17,6 +25,7 @@ class AuthenticationPage extends StatefulWidget {
 class _AuthenticationPageState extends State<AuthenticationPage> {
   bool isReadyPhoneNumber = false;
   bool isAuthenticatedPhoneNumber = false;
+  String? phoneNumber, cookie;
 
   @override
   void initState() {
@@ -27,13 +36,16 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   Widget build(BuildContext context) {
     return isReadyPhoneNumber
         ? isAuthenticatedPhoneNumber
-            ? InputNamePage()
+            ? InputNamePage(phoneNumber: phoneNumber)
             : AuthenticationPhoneNumberPage(
+                cookie: cookie,
                 authenticationSuccess: () =>
                     setState(() => isAuthenticatedPhoneNumber = true))
-        : InputPhoneNumberPage(
-            clickAuthentication: () =>
-                setState(() => isReadyPhoneNumber = true));
+        : InputPhoneNumberPage(clickAuthentication: (_phoneNumber, _cookie) {
+            setState(() => isReadyPhoneNumber = true);
+            phoneNumber = _phoneNumber;
+            cookie = _cookie;
+          });
   }
 }
 
@@ -46,6 +58,7 @@ class InputPhoneNumberPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var requestApi = new OAuthRequestApi();
 
     return GestureDetector(
       onTap: () => _focusNode.unfocus(),
@@ -80,7 +93,7 @@ class InputPhoneNumberPage extends StatelessWidget {
                 RoundedBorder(
                   color: theme.scaffoldBackgroundColor,
                   child: DefaultTextField(
-                    maxLength: 12,
+                    maxLength: 14,
                     minLine: 1,
                     maxLine: 1,
                     fontSize: 16.0,
@@ -100,7 +113,33 @@ class InputPhoneNumberPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () => clickAuthentication(),
+                  onPressed: () async {
+                    var phoneNumber = _controller.text.trim();
+                    var isPhoneNumber =
+                        PhoneNumberTool.isPhoneNumber(phoneNumber);
+                    if (!isPhoneNumber) {
+                      Fluttertoast.showToast(
+                        msg: "올바른 전화번호를 입력해주세요 :)",
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+                      return;
+                    }
+
+                    Fluttertoast.showToast(
+                      msg: "인증번호를 발송하고 있어요 :)",
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+
+                    RequestInfo requestInfo = await requestApi
+                        .post(body: {"phone_number": phoneNumber});
+                    if (requestInfo.isValid)
+                      clickAuthentication(phoneNumber, requestInfo.cookie);
+                    else
+                      Fluttertoast.showToast(
+                        msg: "인증번호 발송에 실패했어요 :(",
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+                  },
                   child: SizedBox(
                     width: double.infinity,
                     child: Padding(
@@ -125,8 +164,12 @@ class InputPhoneNumberPage extends StatelessWidget {
 }
 
 class AuthenticationPhoneNumberPage extends StatefulWidget {
-  const AuthenticationPhoneNumberPage({required this.authenticationSuccess});
+  const AuthenticationPhoneNumberPage({
+    required this.authenticationSuccess,
+    required this.cookie,
+  });
   final Function authenticationSuccess;
+  final String? cookie;
   @override
   State<AuthenticationPhoneNumberPage> createState() =>
       _AuthenticationPhoneNumberPageState();
@@ -138,6 +181,7 @@ class _AuthenticationPhoneNumberPageState
   Duration timeoutCount = Duration(minutes: 3);
   String timeoutText = "";
   bool isInvalidInput = false;
+  bool isAvailRequest = false;
 
   @override
   void initState() {
@@ -150,11 +194,37 @@ class _AuthenticationPhoneNumberPageState
       timeoutCount -= const Duration(seconds: 1);
       setState(() => timeoutText = getTimeoutText());
 
+      if (!isAvailRequest)
+        setState(() => isAvailRequest =
+            timeoutCount <= const Duration(minutes: 2, seconds: 45));
+
       if (timeoutCount == const Duration(minutes: 0, seconds: 0)) {
-        setState(() => timeoutText = "인증시간이 초과했습니다.");
+        setState(() => timeoutText = "인증 시간이 만료되었어요 :(");
         timer.cancel();
       }
     });
+
+    var confirmApi = OAuthConfirmApi();
+    _controller.addListener(
+      () async {
+        if (_controller.text.length == 6) {
+          ConfirmInfo confirmInfo = await confirmApi.post(
+            additionalHeader: {"cookie": widget.cookie.toString()},
+            body: {"code": _controller.text.trim()},
+          );
+
+          if (!confirmInfo.isVerified) {
+            Fluttertoast.showToast(
+              msg: "본인 인증에 실패했어요 :(",
+              toastLength: Toast.LENGTH_SHORT,
+            );
+            return;
+          }
+          // TODO: timer memory leak issue
+          widget.authenticationSuccess();
+        }
+      },
+    );
   }
 
   String getTimeoutText() =>
@@ -162,7 +232,7 @@ class _AuthenticationPhoneNumberPageState
 
   void invalidAuthentication() {
     isInvalidInput = true;
-    setState(() => timeoutText = "잘못된 인증번호에요.");
+    setState(() => timeoutText = "잘못된 인증번호에요 :(");
   }
 
   @override
@@ -230,7 +300,9 @@ class _AuthenticationPhoneNumberPageState
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: ElevatedButton(
-                      onPressed: () => widget.authenticationSuccess(),
+                      onPressed: () => isAvailRequest
+                          ? setState(() => _controller.text = "")
+                          : null,
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
@@ -254,11 +326,14 @@ class _AuthenticationPhoneNumberPageState
 class InputNamePage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+  final String? phoneNumber;
+
+  InputNamePage({required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-
+    var userApi = OAuthUserApi();
     return GestureDetector(
       onTap: () => _focusNode.unfocus(),
       child: Scaffold(
@@ -311,11 +386,42 @@ class InputNamePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushReplacement(
+                  onPressed: () async {
+                    Fluttertoast.showToast(
+                      msg: "로그인을 시도하고 있어요 :)",
+                      toastLength: Toast.LENGTH_LONG,
+                    );
+                    UserInfo userInfo = await userApi.post(
+                      body: {
+                        "name": _controller.text.trim(),
+                        "phone_number": phoneNumber.toString(),
+                        "fcm_token":
+                            await FirebaseMessaging.instance.getToken(),
+                      },
+                    );
+                    if (!userInfo.isMember) {
+                      Fluttertoast.cancel();
+                      Fluttertoast.showToast(
+                        msg: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
+                            "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
+                        toastLength: Toast.LENGTH_LONG,
+                      );
+                      return;
+                    }
+
+                    await TokenManager()
+                        .setAccessToken(userInfo.accessToken.toString());
+                    await TokenManager()
+                        .setRefreshToken(userInfo.refreshToken.toString());
+
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (context) => MainPage(),
-                      )),
+                      ),
+                      (route) => false,
+                    );
+                  },
                   child: SizedBox(
                     width: double.infinity,
                     child: Padding(

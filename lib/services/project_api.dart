@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../models/project.dart';
 import 'base/pcube_api.dart';
+import 'package:http/http.dart' as http;
 
 class ProjectListApi extends PCubeApi {
   ProjectListApi({bool? isAll})
@@ -11,11 +12,11 @@ class ProjectListApi extends PCubeApi {
 
   @override
   Future<List<Project>> get(
-          {Function(dynamic body)? successReturnFunction,
+          {Function(http.Response response)? successReturnFunction,
           Map<String, String>? additionalHeader,
           Map<String, String>? queryParams}) async =>
       await super.get(
-        successReturnFunction: (body) => (jsonDecode(body) as List)
+        successReturnFunction: (response) => (jsonDecode(response.body) as List)
             .map<Project>((data) => Project.fromJson(data))
             .toList(),
         additionalHeader: additionalHeader,
@@ -28,7 +29,7 @@ class ProjectDetailApi extends PCubeApi {
 
   @override
   Future<List<Project>> get(
-          {Function(dynamic body)? successReturnFunction,
+          {Function(http.Response response)? successReturnFunction,
           Map<String, String>? additionalHeader,
           Map<String, String>? queryParams}) async =>
       await super.get();
@@ -40,7 +41,7 @@ class ProjectModifyApi extends PCubeApi {
 
   @override
   Future<List<Project>> post(
-          {Function(dynamic body)? successReturnFunction,
+          {Function(http.Response response)? successReturnFunction,
           Map<String, String>? additionalHeader,
           Object? body,
           Encoding? encoding}) async =>

@@ -42,7 +42,6 @@ dependencies:
   flutter_settings_screens: ^0.3.2-null-safety
   package_info_plus: any
   flutter_app_badger: ^1.4.0
-  flutter_naver_login: ^1.8.0
   intl: ^0.17.0
   flutter_svg: ^1.1.1+1
   http: ^0.13.5
