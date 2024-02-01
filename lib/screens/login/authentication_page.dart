@@ -387,6 +387,10 @@ class InputNamePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () async {
+                    Fluttertoast.showToast(
+                      msg: "로그인을 시도하고 있어요 :)",
+                      toastLength: Toast.LENGTH_LONG,
+                    );
                     UserInfo userInfo = await userApi.post(
                       body: {
                         "name": _controller.text.trim(),
@@ -396,6 +400,7 @@ class InputNamePage extends StatelessWidget {
                       },
                     );
                     if (!userInfo.isMember) {
+                      Fluttertoast.cancel();
                       Fluttertoast.showToast(
                         msg: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
                             "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
@@ -404,16 +409,17 @@ class InputNamePage extends StatelessWidget {
                       return;
                     }
 
-                    TokenManager()
+                    await TokenManager()
                         .setAccessToken(userInfo.accessToken.toString());
-                    TokenManager()
+                    await TokenManager()
                         .setRefreshToken(userInfo.refreshToken.toString());
 
-                    Navigator.pushReplacement(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (context) => MainPage(),
                       ),
+                      (route) => false,
                     );
                   },
                   child: SizedBox(
