@@ -188,7 +188,7 @@ class _AuthenticationPhoneNumberPageState
     super.initState();
     setState(() => timeoutText = getTimeoutText());
 
-    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    var timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (isInvalidInput) timer.cancel();
 
       timeoutCount -= const Duration(seconds: 1);
@@ -221,6 +221,7 @@ class _AuthenticationPhoneNumberPageState
             return;
           }
           // TODO: timer memory leak issue
+          timer.cancel();
           widget.authenticationSuccess();
         }
       },
