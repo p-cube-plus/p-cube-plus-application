@@ -132,9 +132,15 @@ class InputPhoneNumberPage extends StatelessWidget {
 
                     RequestInfo requestInfo = await requestApi
                         .post(body: {"phone_number": phoneNumber});
-                    if (requestInfo.isValid)
+
+                    Fluttertoast.cancel();
+                    if (requestInfo.isValid) {
+                      Fluttertoast.showToast(
+                        msg: "인증번호가 발송되었어요 :)",
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                       clickAuthentication(phoneNumber, requestInfo.cookie);
-                    else
+                    } else
                       Fluttertoast.showToast(
                         msg: "인증번호 발송에 실패했어요 :(",
                         toastLength: Toast.LENGTH_SHORT,
@@ -400,8 +406,9 @@ class InputNamePage extends StatelessWidget {
                             await FirebaseMessaging.instance.getToken(),
                       },
                     );
+
+                    Fluttertoast.cancel();
                     if (!userInfo.isMember) {
-                      Fluttertoast.cancel();
                       Fluttertoast.showToast(
                         msg: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
                             "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
@@ -414,6 +421,11 @@ class InputNamePage extends StatelessWidget {
                         .setAccessToken(userInfo.accessToken.toString());
                     await TokenManager()
                         .setRefreshToken(userInfo.refreshToken.toString());
+
+                    Fluttertoast.showToast(
+                      msg: "로그인에 성공했어요 :)",
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
 
                     Navigator.pushAndRemoveUntil(
                       context,
