@@ -1,12 +1,11 @@
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:p_cube_plus_application/services/token/auth_api.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
 class AuthorizationInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
-    String accessToken = TokenManager().getAccessToken().toString();
-    data.headers['Authorization'] = 'Bearer ' + accessToken;
+    String? accessToken = await TokenManager().getAccessToken();
+    data.headers['Authorization'] = 'Bearer $accessToken';
     data.headers['Content-Type'] = 'application/json';
     return data;
   }
@@ -23,7 +22,7 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
 
   @override
   Future<bool> shouldAttemptRetryOnResponse(ResponseData response) async {
-    if (response.statusCode == 401) return await AuthApi().refresh();
+    if (response.statusCode == 401) return true; // TODO: refresh 로직 적용 예정
     return false;
   }
 }
