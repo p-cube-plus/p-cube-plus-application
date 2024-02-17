@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:multi_masked_formatter/multi_masked_formatter.dart';
 import 'package:p_cube_plus_application/models/login/confirm_info.dart';
 import 'package:p_cube_plus_application/models/login/request_info.dart';
 import 'package:p_cube_plus_application/models/login/user_info.dart';
@@ -101,6 +102,13 @@ class InputPhoneNumberPage extends StatelessWidget {
                     hintText: "전화번호를 입력해주세요.",
                     textType: TextInputType.number,
                     inputController: _controller,
+                    inputFormatters: [
+                      MultiMaskedTextInputFormatter(
+                        masks: ['xxx-xxxx-xxxx', 'xxx-xxx-xxxx'],
+                        separator: '-',
+                      )
+                    ],
+                    autofocus: true,
                     focusNode: _focusNode,
                   ),
                 ),
@@ -313,6 +321,7 @@ class _AuthenticationPhoneNumberPageState
                       hintText: "인증번호 입력",
                       textType: TextInputType.number,
                       inputController: _controller,
+                      autofocus: true,
                     ),
                   ),
                 ),
@@ -393,6 +402,7 @@ class InputNamePage extends StatelessWidget {
                     contentPadding: 16,
                     hintText: "이름를 입력해주세요.",
                     inputController: _controller,
+                    autofocus: true,
                     focusNode: _focusNode,
                   ),
                 ),
