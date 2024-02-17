@@ -184,17 +184,19 @@ class AuthenticationPhoneNumberPage extends StatefulWidget {
 class _AuthenticationPhoneNumberPageState
     extends State<AuthenticationPhoneNumberPage> {
   final TextEditingController _controller = TextEditingController();
+  Timer? _timer;
   Duration timeoutCount = Duration(minutes: 3);
   String timeoutText = "";
   bool isInvalidInput = false;
   bool isAvailRequest = false;
+  OAuthConfirmApi confirmApi = OAuthConfirmApi();
 
   @override
   void initState() {
     super.initState();
     setState(() => timeoutText = getTimeoutText());
 
-    var timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (isInvalidInput) timer.cancel();
 
       timeoutCount -= const Duration(seconds: 1);
@@ -210,28 +212,38 @@ class _AuthenticationPhoneNumberPageState
       }
     });
 
-    var confirmApi = OAuthConfirmApi();
     _controller.addListener(
-      () async {
-        if (_controller.text.length == 6) {
-          ConfirmInfo confirmInfo = await confirmApi.post(
-            additionalHeader: {"cookie": widget.cookie.toString()},
-            body: {"code": _controller.text.trim()},
-          );
-
-          if (!confirmInfo.isVerified) {
-            Fluttertoast.showToast(
-              msg: "본인 인증에 실패했어요 :(",
-              toastLength: Toast.LENGTH_SHORT,
-            );
-            return;
-          }
-          // TODO: timer memory leak issue
-          timer.cancel();
-          widget.authenticationSuccess();
-        }
-      },
+      editController,
     );
+  }
+
+  void editController() async {
+    if (_controller.text.length == 6) {
+      ConfirmInfo confirmInfo = await confirmApi.post(
+        additionalHeader: {"cookie": widget.cookie.toString()},
+        body: {"code": _controller.text.trim()},
+      );
+
+      if (!confirmInfo.isVerified) {
+        Fluttertoast.showToast(
+          msg: "본인 인증에 실패했어요 :(",
+          toastLength: Toast.LENGTH_SHORT,
+        );
+        return;
+      }
+      Fluttertoast.cancel();
+      Fluttertoast.showToast(
+        msg: "본인 인증에 성공했어요 :)",
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      widget.authenticationSuccess();
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   String getTimeoutText() =>
