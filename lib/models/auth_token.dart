@@ -1,19 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
-class OAuthToken {
+class AuthToken {
   final String? accessToken;
   final String? refreshToken;
   final String? message;
 
-  OAuthToken({
+  AuthToken({
     required this.accessToken,
     required this.refreshToken,
     required this.message,
   });
 
-  factory OAuthToken.fromJson(Map<String, dynamic> json) {
-    return OAuthToken(
+  factory AuthToken.fromJson(Map<String, dynamic> json) {
+    return AuthToken(
       accessToken: json['access_token'],
       refreshToken: json['refresh_token'],
       message: json['message'],

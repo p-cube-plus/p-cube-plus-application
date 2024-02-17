@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:multi_masked_formatter/multi_masked_formatter.dart';
 import 'package:p_cube_plus_application/models/login/confirm_info.dart';
 import 'package:p_cube_plus_application/models/login/request_info.dart';
 import 'package:p_cube_plus_application/models/login/user_info.dart';
@@ -101,6 +102,13 @@ class InputPhoneNumberPage extends StatelessWidget {
                     hintText: "전화번호를 입력해주세요.",
                     textType: TextInputType.number,
                     inputController: _controller,
+                    inputFormatters: [
+                      MultiMaskedTextInputFormatter(
+                        masks: ['xxx-xxxx-xxxx', 'xxx-xxx-xxxx'],
+                        separator: '-',
+                      )
+                    ],
+                    autofocus: true,
                     focusNode: _focusNode,
                   ),
                 ),
@@ -132,9 +140,15 @@ class InputPhoneNumberPage extends StatelessWidget {
 
                     RequestInfo requestInfo = await requestApi
                         .post(body: {"phone_number": phoneNumber});
-                    if (requestInfo.isValid)
+
+                    Fluttertoast.cancel();
+                    if (requestInfo.isValid) {
+                      Fluttertoast.showToast(
+                        msg: "인증번호가 발송되었어요 :)",
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                       clickAuthentication(phoneNumber, requestInfo.cookie);
-                    else
+                    } else
                       Fluttertoast.showToast(
                         msg: "인증번호 발송에 실패했어요 :(",
                         toastLength: Toast.LENGTH_SHORT,
@@ -178,17 +192,19 @@ class AuthenticationPhoneNumberPage extends StatefulWidget {
 class _AuthenticationPhoneNumberPageState
     extends State<AuthenticationPhoneNumberPage> {
   final TextEditingController _controller = TextEditingController();
+  Timer? _timer;
   Duration timeoutCount = Duration(minutes: 3);
   String timeoutText = "";
   bool isInvalidInput = false;
   bool isAvailRequest = false;
+  OAuthConfirmApi confirmApi = OAuthConfirmApi();
 
   @override
   void initState() {
     super.initState();
     setState(() => timeoutText = getTimeoutText());
 
-    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (isInvalidInput) timer.cancel();
 
       timeoutCount -= const Duration(seconds: 1);
@@ -204,27 +220,38 @@ class _AuthenticationPhoneNumberPageState
       }
     });
 
-    var confirmApi = OAuthConfirmApi();
     _controller.addListener(
-      () async {
-        if (_controller.text.length == 6) {
-          ConfirmInfo confirmInfo = await confirmApi.post(
-            additionalHeader: {"cookie": widget.cookie.toString()},
-            body: {"code": _controller.text.trim()},
-          );
-
-          if (!confirmInfo.isVerified) {
-            Fluttertoast.showToast(
-              msg: "본인 인증에 실패했어요 :(",
-              toastLength: Toast.LENGTH_SHORT,
-            );
-            return;
-          }
-          // TODO: timer memory leak issue
-          widget.authenticationSuccess();
-        }
-      },
+      editController,
     );
+  }
+
+  void editController() async {
+    if (_controller.text.length == 6) {
+      ConfirmInfo confirmInfo = await confirmApi.post(
+        additionalHeader: {"cookie": widget.cookie.toString()},
+        body: {"code": _controller.text.trim()},
+      );
+
+      if (!confirmInfo.isVerified) {
+        Fluttertoast.showToast(
+          msg: "본인 인증에 실패했어요 :(",
+          toastLength: Toast.LENGTH_SHORT,
+        );
+        return;
+      }
+      Fluttertoast.cancel();
+      Fluttertoast.showToast(
+        msg: "본인 인증에 성공했어요 :)",
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      widget.authenticationSuccess();
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   String getTimeoutText() =>
@@ -294,6 +321,7 @@ class _AuthenticationPhoneNumberPageState
                       hintText: "인증번호 입력",
                       textType: TextInputType.number,
                       inputController: _controller,
+                      autofocus: true,
                     ),
                   ),
                 ),
@@ -374,6 +402,7 @@ class InputNamePage extends StatelessWidget {
                     contentPadding: 16,
                     hintText: "이름를 입력해주세요.",
                     inputController: _controller,
+                    autofocus: true,
                     focusNode: _focusNode,
                   ),
                 ),
@@ -399,8 +428,9 @@ class InputNamePage extends StatelessWidget {
                             await FirebaseMessaging.instance.getToken(),
                       },
                     );
+
+                    Fluttertoast.cancel();
                     if (!userInfo.isMember) {
-                      Fluttertoast.cancel();
                       Fluttertoast.showToast(
                         msg: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
                             "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
@@ -413,6 +443,11 @@ class InputNamePage extends StatelessWidget {
                         .setAccessToken(userInfo.accessToken.toString());
                     await TokenManager()
                         .setRefreshToken(userInfo.refreshToken.toString());
+
+                    Fluttertoast.showToast(
+                      msg: "로그인에 성공했어요 :)",
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
 
                     Navigator.pushAndRemoveUntil(
                       context,
