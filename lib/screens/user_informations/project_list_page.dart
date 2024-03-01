@@ -19,7 +19,7 @@ class ProjectListPage extends StatelessWidget {
     var projectProvider = context.watch<UserProjectListProvider>();
 
     return DefaultRefreshIndicator(
-      refreshFunction: projectProvider.refresh(),
+      refreshFunction: projectProvider.refresh,
       child: DefaultFutureBuilder(
         fetchData: projectProvider.fetch(),
         showFunction: (List<Project> projects) => DefaultPage(

@@ -28,7 +28,7 @@ class CautionListPage extends StatelessWidget {
     var warningProvider = context.watch<WarningProvider>();
 
     return DefaultRefreshIndicator(
-      refreshFunction: warningProvider.refresh(),
+      refreshFunction: warningProvider.refresh,
       child: DefaultFutureBuilder(
         fetchData: warningProvider.fetch(),
         showFunction: (Warning warning) => DefaultPage(

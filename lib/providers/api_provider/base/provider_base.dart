@@ -60,17 +60,17 @@ class CompositeProviderBase implements RefreshableProvider {
 
   @override
   Future<Map<Symbol, RefreshableProvider>> fetch() async {
-    providerMap.forEach((key, value) async {
+    for (var key in providerMap.keys) {
       await providerMap[key]!.fetch();
-    });
+    }
     return providerMap;
   }
 
   @override
   Future<Map<Symbol, RefreshableProvider>> refresh() async {
-    providerMap.forEach((key, value) async {
+    for (var key in providerMap.keys) {
       await providerMap[key]!.refresh();
-    });
+    }
     return providerMap;
   }
 }

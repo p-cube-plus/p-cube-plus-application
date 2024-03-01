@@ -27,7 +27,7 @@ class RentItemView extends StatelessWidget {
     final rentProvider = context.watch<RentProvider>();
 
     return DefaultRefreshIndicator(
-      refreshFunction: rentProvider.refresh(),
+      refreshFunction: rentProvider.refresh,
       child: DefaultFutureBuilder(
           fetchData: rentProvider.fetch(),
           showFunction: (List<Rent> data) => Column(

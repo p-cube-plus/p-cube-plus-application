@@ -34,7 +34,7 @@ class NoticePage extends StatelessWidget {
           ),
         ),
         content: DefaultRefreshIndicator(
-          refreshFunction: noticeProvider.refresh(),
+          refreshFunction: noticeProvider.refresh,
           child: DefaultFutureBuilder(
             fetchData: noticeProvider.fetch(),
             showFunction: (data) => DefaultTabBar(tabs: [

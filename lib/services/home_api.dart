@@ -7,23 +7,6 @@ import 'package:p_cube_plus_application/models/home_schedule.dart';
 import '../models/rent.dart';
 import 'base/pcube_api.dart';
 
-class HomeAttendanceApi extends PCubeApi {
-  HomeAttendanceApi() : super(endPoint: "/home/attendance");
-
-  @override
-  Future<List<Attendance>> get(
-          {Function(http.Response response)? successReturnFunction,
-          Map<String, String>? additionalHeader,
-          Map<String, String>? queryParams}) async =>
-      await super.get(
-        successReturnFunction: (response) => (jsonDecode(response.body) as List)
-            .map<Attendance>((data) => Attendance.fromJson(data))
-            .toList(),
-        additionalHeader: additionalHeader,
-        queryParams: queryParams,
-      );
-}
-
 class HomeScheduleApi extends PCubeApi {
   HomeScheduleApi() : super(endPoint: "/home/schedule");
 
@@ -39,6 +22,23 @@ class HomeScheduleApi extends PCubeApi {
       queryParams: queryParams,
     );
   }
+}
+
+class HomeAttendanceApi extends PCubeApi {
+  HomeAttendanceApi() : super(endPoint: "/home/attendance");
+
+  @override
+  Future<List<Attendance>> get(
+          {Function(http.Response response)? successReturnFunction,
+          Map<String, String>? additionalHeader,
+          Map<String, String>? queryParams}) async =>
+      await super.get(
+        successReturnFunction: (response) => (jsonDecode(response.body) as List)
+            .map<Attendance>((data) => Attendance.fromJson(data))
+            .toList(),
+        additionalHeader: additionalHeader,
+        queryParams: queryParams,
+      );
 }
 
 class HomeProductApi extends PCubeApi {

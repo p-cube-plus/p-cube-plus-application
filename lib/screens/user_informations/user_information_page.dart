@@ -63,7 +63,7 @@ class InformationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultRefreshIndicator(
-      refreshFunction: userProvider.refresh(),
+      refreshFunction: userProvider.refresh,
       child: DefaultFutureBuilder(
           fetchData: userProvider.fetch(),
           showFunction: (data) => Container(

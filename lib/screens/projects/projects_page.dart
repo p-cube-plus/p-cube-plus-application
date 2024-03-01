@@ -37,7 +37,7 @@ class _ProjectListView extends StatelessWidget {
 
     return DefaultContent(
       child: DefaultRefreshIndicator(
-        refreshFunction: projectProvider.refresh(),
+        refreshFunction: projectProvider.refresh,
         child: DefaultFutureBuilder(
           fetchData: projectProvider.fetch(),
           showFunction: (data) => Column(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/utilities/error_message.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
@@ -19,8 +20,13 @@ class PCubeApi {
       "Content-Type": "application/json",
     };
     if (!isExternalApi) {
-      headers.addAll(
-          {"Authorization": "Bearer ${await TokenManager().getAccessToken()}"});
+      String? token = await TokenManager().getAccessToken();
+      if (kDebugMode) {
+        token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwODE2NjE2MiwianRpIjoiZDBlYjE2NTgtOTQzNC00MjM2LWFkZmQtMDRhM2EyOTExNzBiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MDgxNjYxNjIsImV4cCI6MTcxMDc1ODE2Mn0.Sc1gWSjuIyYYuis_qOfG_jXtBVRcQj87coZ3N0XSaQo";
+      }
+
+      headers.addAll({"Authorization": "Bearer ${token}"});
     }
     if (additionalHeader != null) {
       headers.addAll(additionalHeader);

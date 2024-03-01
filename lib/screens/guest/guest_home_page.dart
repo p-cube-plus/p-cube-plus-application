@@ -17,7 +17,7 @@ class GuestHomePage extends StatelessWidget {
     return DefaultPage(
       title: "홈",
       content: DefaultRefreshIndicator(
-        refreshFunction: scheduleProvider.refresh(),
+        refreshFunction: scheduleProvider.refresh,
         child: DefaultFutureBuilder(
           fetchData: scheduleProvider.fetch(),
           showFunction: (data) => DefaultContent(

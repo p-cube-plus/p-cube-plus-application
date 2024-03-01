@@ -16,7 +16,7 @@ class PromotionProgressPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultRefreshIndicator(
-      refreshFunction: userProvider.refresh(),
+      refreshFunction: userProvider.refresh,
       child: DefaultFutureBuilder(
         fetchData: userProvider.fetch(),
         showFunction: (user) => DefaultPage(

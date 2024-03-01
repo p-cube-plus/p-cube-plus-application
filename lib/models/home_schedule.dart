@@ -23,7 +23,7 @@ class HomeSchedule {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': allList,
-        'type': upcomingList,
+        'all_list': allList,
+        'upcoming_list': upcomingList,
       };
 }

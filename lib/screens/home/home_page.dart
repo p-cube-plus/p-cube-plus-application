@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
     return DefaultPage(
       title: "홈",
       content: DefaultRefreshIndicator(
-        refreshFunction: homeProvider.refresh(),
+        refreshFunction: homeProvider.refresh,
         child: DefaultFutureBuilder(
           fetchData: homeProvider.fetch(),
           showFunction: (data) => DefaultContent(
