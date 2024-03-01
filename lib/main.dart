@@ -8,11 +8,10 @@ import 'package:p_cube_plus_application/providers/api_provider/schedule_provider
 import 'package:p_cube_plus_application/providers/api_provider/user_profile_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_project_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_warning_provider.dart';
+import 'package:p_cube_plus_application/providers/token_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/fee_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/theme_provider.dart';
-import 'package:p_cube_plus_application/screens/home/home_page.dart';
-import 'package:p_cube_plus_application/screens/login/login_page.dart';
 import 'package:p_cube_plus_application/screens/main_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +22,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (_) => TokenProvider()),
       ChangeNotifierProvider(create: (_) => FeeProvider()),
       ChangeNotifierProvider(create: (_) => NoticeProvider()),
       ChangeNotifierProvider(create: (_) => ProjectProvider()),
@@ -39,7 +39,6 @@ void main() async {
   ));
 }
 
-// TODO: home 이 LoginPage인지 MainPage인지 확인하는 로직 추가 필요
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

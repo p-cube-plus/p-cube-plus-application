@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DefaultTextField extends StatelessWidget {
   const DefaultTextField({
@@ -12,6 +13,8 @@ class DefaultTextField extends StatelessWidget {
     this.contentPadding = 8.0,
     this.textType,
     required this.inputController,
+    this.inputFormatters,
+    this.autofocus,
     this.focusNode,
   });
 
@@ -23,6 +26,8 @@ class DefaultTextField extends StatelessWidget {
   final double contentPadding;
   final TextInputType? textType;
   final TextEditingController inputController;
+  final List<TextInputFormatter>? inputFormatters;
+  final bool? autofocus;
   final FocusNode? focusNode;
 
   @override
@@ -54,6 +59,8 @@ class DefaultTextField extends StatelessWidget {
               borderSide: BorderSide(width: 0.0, style: BorderStyle.none))),
       //toolbarOptions: ToolbarOptions(copy: true),
       controller: inputController,
+      autofocus: autofocus == null ? false : autofocus!,
+      inputFormatters: inputFormatters,
       selectionControls: CustomTextSelectionControls(),
     );
   }
