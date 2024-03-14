@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:p_cube_plus_application/models/message.dart';
 import 'package:p_cube_plus_application/screens/logout_page.dart';
+import 'package:p_cube_plus_application/services/auth_api.dart';
+import 'package:p_cube_plus_application/utilities/token_manager.dart';
 import 'package:p_cube_plus_application/widgets/common/default_profile.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +26,8 @@ class SettingPage extends StatelessWidget {
     final theme = Theme.of(context);
     TextEditingController nameController = TextEditingController();
     TextEditingController contentController = TextEditingController();
+
+    final logoutApi = AuthLogoutApi();
 
     return DefaultPage(
       title: "설정",
@@ -213,8 +219,8 @@ class SettingPage extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     "프로그래밍",
-                                                    style: theme
-                                                        .textTheme.headlineSmall!
+                                                    style: theme.textTheme
+                                                        .headlineSmall!
                                                         .copyWith(
                                                       fontSize: 12,
                                                       fontWeight:
@@ -222,8 +228,8 @@ class SettingPage extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Text("졸업회원",
-                                                      style: theme
-                                                          .textTheme.displaySmall!
+                                                      style: theme.textTheme
+                                                          .displaySmall!
                                                           .copyWith(
                                                         fontSize: 11,
                                                         fontWeight:
@@ -254,14 +260,25 @@ class SettingPage extends StatelessWidget {
                             title: "로그아웃",
                             messageType: MessageType.OKCancel,
                             description: "정말 로그아웃 하시겠습니까?",
-                            onTap: () => Navigator.pushAndRemoveUntil(context,
-                                PageRouteBuilder(
-                              pageBuilder: (BuildContext context,
-                                  Animation animation,
-                                  Animation secondaryAnimation) {
-                                return LogoutPage();
-                              },
-                            ), (Route route) => false),
+                            onTap: () async {
+                              Message? message = await logoutApi.delete();
+
+                              if (message != null) {
+                                var tokenManager = TokenManager();
+                                tokenManager.deleteAccessToken();
+                                tokenManager.deleteRefreshToken();
+
+                                Navigator.pushAndRemoveUntil(context,
+                                    PageRouteBuilder(
+                                  pageBuilder: (BuildContext context,
+                                      Animation animation,
+                                      Animation secondaryAnimation) {
+                                    return LogoutPage();
+                                  },
+                                ), (Route route) => false);
+                              } else
+                                Fluttertoast.showToast(msg: "로그아웃에 실패했어요 :(");
+                            },
                           )))
             ],
           ),
