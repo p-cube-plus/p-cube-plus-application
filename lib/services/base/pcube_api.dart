@@ -23,7 +23,7 @@ class PCubeApi {
       String? token = await TokenManager().getAccessToken();
       if (kDebugMode) {
         token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwODE2NjE2MiwianRpIjoiZDBlYjE2NTgtOTQzNC00MjM2LWFkZmQtMDRhM2EyOTExNzBiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MDgxNjYxNjIsImV4cCI6MTcxMDc1ODE2Mn0.Sc1gWSjuIyYYuis_qOfG_jXtBVRcQj87coZ3N0XSaQo";
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMDY3NjI5NSwianRpIjoiZjczMTg0YmMtM2U1Ny00ZDY2LTlhNWItZGVkMTcyZjZjMTJmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MTA2NzYyOTUsImV4cCI6MTcxMzI2ODI5NX0.bw42kNba84m2p_Z-njQmBT7Zesow-KLCrE8FR7oBpXU";
       }
 
       headers.addAll({"Authorization": "Bearer ${token}"});
