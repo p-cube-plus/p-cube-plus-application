@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:p_cube_plus_application/models/message.dart';
 import 'package:p_cube_plus_application/services/base/pcube_api.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
@@ -29,14 +30,24 @@ class AuthTokenRefreshApi extends PCubeApi {
       queryParams: queryParams,
     );
   }
+}
 
-  /*Future<bool> refresh() async {
-    String refreshToken = TokenManager().getRefreshToken().toString();
-    Map<String, String>? headers = {"Content-Type": "application/json"};
-    Map<String, String>? body = {"refresh_token": refreshToken};
+class AuthLogoutApi extends PCubeApi {
+  AuthLogoutApi() : super(endPoint: "/auth/logout", isExternalApi: false);
 
-    var response = await post(additionalHeader: headers, body: body);
-
-    return response != null;
-  }*/
+  @override
+  Future<Message?> delete({
+    Function(http.Response response)? decodeFsuccessReturnFunctionnction,
+    Map<String, String>? additionalHeader,
+    Object? body,
+    Encoding? encoding,
+  }) async {
+    return await super.delete(
+      decodeFsuccessReturnFunctionnction: (response) =>
+          Message.fromJson(jsonDecode(response.body)),
+      additionalHeader: additionalHeader,
+      body: body,
+      encoding: encoding,
+    );
+  }
 }

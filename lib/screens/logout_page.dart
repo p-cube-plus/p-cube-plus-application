@@ -25,11 +25,17 @@ class LogoutPage extends StatelessWidget {
                                   fontSize: 20, fontWeight: FontWeight.w700)),
                     ),
                     Text('다시 로그인 하시려면',
-                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                            fontSize: 12, fontWeight: FontWeight.w400)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                fontSize: 12, fontWeight: FontWeight.w400)),
                     Text('홈으로 돌아가기를 눌러주세요.',
-                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                            fontSize: 12, fontWeight: FontWeight.w400)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                fontSize: 12, fontWeight: FontWeight.w400)),
                   ],
                 ),
               ),
@@ -38,11 +44,12 @@ class LogoutPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 48, horizontal: 20),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (context) => LoginPage(),
-                    ),
-                  );
+                  Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
+                    pageBuilder: (BuildContext context, Animation animation,
+                        Animation secondaryAnimation) {
+                      return LoginPage();
+                    },
+                  ), (Route route) => false);
                 },
                 child: Text('홈으로 돌아가기'),
                 style: ElevatedButton.styleFrom(
