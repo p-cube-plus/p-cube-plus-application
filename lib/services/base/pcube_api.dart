@@ -1,119 +1,84 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:p_cube_plus_application/utilities/error_message.dart';
+import 'package:http/http.dart';
+import 'package:p_cube_plus_application/services/base/rest_api.dart';
+import 'package:p_cube_plus_application/utilities/api_util.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
 const String _baseUrl = "http://p-cube-plus.com";
 
 class PCubeApi {
-  PCubeApi({required this.endPoint, this.isExternalApi = false});
+  const PCubeApi(this.endPoint);
+  final endPoint;
 
-  final String endPoint;
-  final bool isExternalApi;
-
-  Uri _getUrl() => Uri.parse(_baseUrl + endPoint);
-
-  Future<Map<String, String>> _getHeader(
-      Map<String, String>? additionalHeader) async {
-    var headers = {
+  Future<Map<String, String>> _getTokenHeader() async {
+    String? token = await TokenManager().getAccessToken();
+    return {
       "Content-Type": "application/json",
+      "Authorization": "Bearer $token",
     };
-    if (!isExternalApi) {
-      String? token = await TokenManager().getAccessToken();
-      if (kDebugMode) {
-        token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMDY3NjI5NSwianRpIjoiZjczMTg0YmMtM2U1Ny00ZDY2LTlhNWItZGVkMTcyZjZjMTJmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MTA2NzYyOTUsImV4cCI6MTcxMzI2ODI5NX0.bw42kNba84m2p_Z-njQmBT7Zesow-KLCrE8FR7oBpXU";
-      }
-
-      headers.addAll({"Authorization": "Bearer ${token}"});
-    }
-    if (additionalHeader != null) {
-      headers.addAll(additionalHeader);
-    }
-    return headers;
   }
 
-  get({
-    Function(http.Response response)? successReturnFunction,
-    Map<String, String>? additionalHeader,
-    Map<String, String>? queryParams,
-  }) async {
-    var response = await http.get(
-        _getUrl().replace(queryParameters: queryParams),
-        headers: await _getHeader(additionalHeader));
-
-    if (response.statusCode == 200) {
-      try {
-        return successReturnFunction!(response);
-      } catch (e) {
-        throw new Exception(FailedToConvertJSONData().message);
-      }
-    } else {
-      throw new Exception(FailedToGetServerData().message);
-    }
+  Future<Response> post(
+      {Object? body,
+      Map<String, String>? queryParams,
+      Map<String, String>? additionalHeader}) async {
+    var header = await _getTokenHeader();
+    header.addAll(additionalHeader ?? {});
+    return RestApi.instance.post(
+        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        header,
+        body: body);
   }
 
-  post(
-      {Function(http.Response response)? successReturnFunction,
-      Map<String, String>? additionalHeader,
-      Object? body,
-      Encoding? encoding}) async {
-    var response = await http.post(_getUrl(),
-        headers: await _getHeader(additionalHeader),
-        body: jsonEncode(body),
-        encoding: encoding);
-
-    if (response.statusCode == 200) {
-      try {
-        return successReturnFunction!(response);
-      } catch (e) {
-        throw new Exception(FailedToConvertJSONData().message);
-      }
-    } else {
-      throw new Exception(FailedToGetServerData().message);
-    }
+  Future<Response> get(
+      {Map<String, String>? queryParams,
+      Map<String, String>? additionalHeader}) async {
+    var header = await _getTokenHeader();
+    header.addAll(additionalHeader ?? {});
+    return RestApi.instance.get(
+        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        header);
   }
 
-  put(
-      {Function(http.Response response)? successReturnFunction,
-      Map<String, String>? additionalHeader,
-      Object? body,
-      Encoding? encoding}) async {
-    var response = await http.put(_getUrl(),
-        headers: await _getHeader(additionalHeader),
-        body: body,
-        encoding: encoding);
-
-    if (response.statusCode == 200) {
-      try {
-        return successReturnFunction!(response);
-      } catch (e) {
-        throw new Exception(FailedToConvertJSONData().message);
-      }
-    } else {
-      throw new Exception(FailedToGetServerData().message);
-    }
+  Future<Response> put(
+      {Object? body,
+      Map<String, String>? queryParams,
+      Map<String, String>? additionalHeader}) async {
+    var header = await _getTokenHeader();
+    header.addAll(additionalHeader ?? {});
+    return RestApi.instance.put(
+        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        header,
+        body: body);
   }
 
-  delete(
-      {Function(http.Response response)? decodeFsuccessReturnFunctionnction,
-      Map<String, String>? additionalHeader,
-      Object? body,
-      Encoding? encoding}) async {
-    var response = await http.delete(_getUrl(),
-        headers: await _getHeader(additionalHeader),
-        body: body,
-        encoding: encoding);
+  Future<Response> delete(
+      {Object? body,
+      Map<String, String>? queryParams,
+      Map<String, String>? additionalHeader}) async {
+    var header = await _getTokenHeader();
+    header.addAll(additionalHeader ?? {});
+    return RestApi.instance.delete(
+        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        header,
+        body: body);
+  }
 
-    if (response.statusCode == 200) {
-      try {
-        return decodeFsuccessReturnFunctionnction!(response);
-      } catch (e) {
-        throw new Exception(FailedToConvertJSONData().message);
-      }
-    } else {
-      throw new Exception(FailedToGetServerData().message);
-    }
+  Map<String, String> _getJsonContentHeader() =>
+      {"Content-Type": "application/json"};
+
+  Future<Response> getExceptToken(
+      {Map<String, String>? additionalHeader}) async {
+    var header = _getJsonContentHeader();
+    header.addAll(additionalHeader ?? {});
+    return RestApi.instance
+        .get(ApiUtil.instance.getUrl(_baseUrl, endPoint), header);
+  }
+
+  Future<Response> deleteExceptToken(
+      {Map<String, String>? additionalHeader}) async {
+    var header = _getJsonContentHeader();
+    header.addAll(additionalHeader ?? {});
+    return RestApi.instance
+        .delete(ApiUtil.instance.getUrl(_baseUrl, endPoint), header);
   }
 }

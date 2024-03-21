@@ -138,8 +138,8 @@ class InputPhoneNumberPage extends StatelessWidget {
                       toastLength: Toast.LENGTH_SHORT,
                     );
 
-                    RequestInfo requestInfo = await requestApi
-                        .post(body: {"phone_number": phoneNumber});
+                    RequestInfo requestInfo =
+                        await requestApi.post(phoneNumber);
 
                     Fluttertoast.cancel();
                     if (requestInfo.isValid) {
@@ -227,10 +227,8 @@ class _AuthenticationPhoneNumberPageState
 
   void editController() async {
     if (_controller.text.length == 6) {
-      ConfirmInfo confirmInfo = await confirmApi.post(
-        additionalHeader: {"cookie": widget.cookie.toString()},
-        body: {"code": _controller.text.trim()},
-      );
+      ConfirmInfo confirmInfo =
+          await confirmApi.post(widget.cookie, _controller.text);
 
       if (!confirmInfo.isVerified) {
         Fluttertoast.showToast(
@@ -421,13 +419,9 @@ class InputNamePage extends StatelessWidget {
                       toastLength: Toast.LENGTH_LONG,
                     );
                     UserInfo userInfo = await userApi.post(
-                      body: {
-                        "name": _controller.text.trim(),
-                        "phone_number": phoneNumber.toString(),
-                        "fcm_token":
-                            await FirebaseMessaging.instance.getToken(),
-                      },
-                    );
+                        _controller.text.trim(),
+                        phoneNumber,
+                        await FirebaseMessaging.instance.getToken());
 
                     Fluttertoast.cancel();
                     if (!userInfo.isMember) {

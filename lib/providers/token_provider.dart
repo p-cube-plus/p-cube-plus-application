@@ -9,11 +9,6 @@ class TokenProvider with ChangeNotifier {
   Future<AuthToken?> refreshToken() async {
     String? refreshToken = await TokenManager().getRefreshToken();
     if (refreshToken == null) return null;
-
-    Map<String, String>? headers = {
-      'Authorization': 'Bearer $refreshToken',
-      'Content-Type': 'application/json',
-    };
-    return await authTokenRefreshApi.get(additionalHeader: headers);
+    return await authTokenRefreshApi.get(refreshToken);
   }
 }

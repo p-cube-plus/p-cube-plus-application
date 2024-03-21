@@ -1,67 +1,38 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/models/login/confirm_info.dart';
 import 'package:p_cube_plus_application/models/login/request_info.dart';
 import 'package:p_cube_plus_application/models/login/user_info.dart';
 import 'package:p_cube_plus_application/services/base/pcube_api.dart';
+import 'package:p_cube_plus_application/utilities/api_util.dart';
 
-class OAuthUserApi extends PCubeApi {
-  OAuthUserApi() : super(endPoint: "/oauth/user", isExternalApi: true);
+class OAuthUserApi {
+  Future<UserInfo> post(
+      String name, String? phoneNumber, String? messageToken) async {
+    var response = await PCubeApi("/oauth/user").post(body: {
+      "name": name,
+      "phone_number": phoneNumber ?? "",
+      "fcm_token": messageToken ?? "",
+    });
 
-  @override
-  Future<UserInfo> post({
-    Function(http.Response response)? successReturnFunction,
-    Map<String, String>? additionalHeader,
-    Object? body,
-    Encoding? encoding,
-  }) async =>
-      await super.post(
-        successReturnFunction: (response) =>
-            UserInfo.fromJson(jsonDecode(response.body)),
-        additionalHeader: additionalHeader,
-        body: body,
-        encoding: encoding,
-      );
+    return ApiUtil.instance.convertTo<UserInfo>(UserInfo.fromJson, response);
+  }
 }
 
-class OAuthRequestApi extends PCubeApi {
-  OAuthRequestApi()
-      : super(endPoint: "/oauth/code/request", isExternalApi: true);
+class OAuthRequestApi {
+  Future<RequestInfo> post(String phoneNumber) async {
+    var response = await PCubeApi("/oauth/code/request")
+        .post(body: {"phone_number": phoneNumber});
 
-  @override
-  Future<RequestInfo> post({
-    Function(http.Response response)? successReturnFunction,
-    Map<String, String>? additionalHeader,
-    Object? body,
-    Encoding? encoding,
-  }) async =>
-      await super.post(
-        successReturnFunction: (response) => RequestInfo.fromJson(
-          response.headers,
-          jsonDecode(response.body),
-        ),
-        additionalHeader: additionalHeader,
-        body: body,
-        encoding: encoding,
-      );
+    return ApiUtil.instance
+        .convertToWithHeader<RequestInfo>(RequestInfo.fromJson, response);
+  }
 }
 
-class OAuthConfirmApi extends PCubeApi {
-  OAuthConfirmApi()
-      : super(endPoint: "/oauth/code/confirm", isExternalApi: true);
+class OAuthConfirmApi {
+  Future<ConfirmInfo> post(String? cookie, String code) async {
+    var response = await PCubeApi("/oauth/code/confirm")
+        .post(additionalHeader: {"cookie": cookie ?? ""}, body: {"code": code});
 
-  @override
-  Future<ConfirmInfo> post({
-    Function(http.Response response)? successReturnFunction,
-    Map<String, String>? additionalHeader,
-    Object? body,
-    Encoding? encoding,
-  }) async =>
-      await super.post(
-        successReturnFunction: (response) =>
-            ConfirmInfo.fromJson(jsonDecode(response.body)),
-        additionalHeader: additionalHeader,
-        body: body,
-        encoding: encoding,
-      );
+    return ApiUtil.instance
+        .convertTo<ConfirmInfo>(ConfirmInfo.fromJson, response);
+  }
 }
