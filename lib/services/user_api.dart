@@ -1,78 +1,35 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:p_cube_plus_application/models/user/user_project.dart';
 import 'package:p_cube_plus_application/models/user/user_warning.dart';
+import 'package:p_cube_plus_application/utilities/api_util.dart';
 
 import '../models/notification_node.dart';
 import '../models/user/user_profile.dart';
 import 'base/pcube_api.dart';
 
-class NoticeListApi extends PCubeApi {
-  NoticeListApi() : super(endPoint: "/user/notification");
-
-  @override
-  Future<List<NotificationNode>> get(
-          {Function(http.Response response)? successReturnFunction,
-          Map<String, String>? additionalHeader,
-          Map<String, String>? queryParams}) async =>
-      await super.get(
-        successReturnFunction: (response) => (jsonDecode(response.body) as List)
-            .map<NotificationNode>((data) => NotificationNode.fromJson(data))
-            .toList(),
-        additionalHeader: additionalHeader,
-        queryParams: queryParams,
-      );
-}
-
-class UserProfileApi extends PCubeApi {
-  UserProfileApi() : super(endPoint: "/user/profile");
-
-  @override
-  Future<UserProfile> get(
-      {Function(http.Response response)? successReturnFunction,
-      Map<String, String>? additionalHeader,
-      Map<String, String>? queryParams}) async {
-    return await super.get(
-      successReturnFunction: (response) =>
-          UserProfile.fromJson(jsonDecode(response.body)),
-      additionalHeader: additionalHeader,
-      queryParams: queryParams,
-    );
+class NoticeListApi {
+  Future<List<NotificationNode>> get() async {
+    var response = await PCubeApi("/user/notification").get();
+    return ApiUtil.instance.convertToList<NotificationNode>(NotificationNode.fromJson, response);
   }
 }
 
-class UserProjectApi extends PCubeApi {
-  UserProjectApi() : super(endPoint: "/user/project");
-
-  @override
-  Future<List<UserProject>> get(
-      {Function(http.Response response)? successReturnFunction,
-      Map<String, String>? additionalHeader,
-      Map<String, String>? queryParams}) async {
-    return await super.get(
-      successReturnFunction: (response) => (jsonDecode(response.body) as List)
-          .map<UserProject>((data) => UserProject.fromJson(data))
-          .toList(),
-      additionalHeader: additionalHeader,
-      queryParams: queryParams,
-    );
+class UserProfileApi {
+  Future<UserProfile> get() async {
+    var response = await PCubeApi("/user/profile").get();
+    return ApiUtil.instance.convertTo<UserProfile>(UserProfile.fromJson, response);
   }
 }
 
-class UserWarningApi extends PCubeApi {
-  UserWarningApi() : super(endPoint: "/user/warning");
+class UserProjectApi {
+  Future<List<UserProject>> get() async {
+    var response = await PCubeApi("/user/project").get();
+    return ApiUtil.instance.convertToList<UserProject>(UserProject.fromJson, response);
+  }
+}
 
-  @override
-  Future<UserWarning> get(
-      {Function(http.Response response)? successReturnFunction,
-      Map<String, String>? additionalHeader,
-      Map<String, String>? queryParams}) async {
-    return await super.get(
-      successReturnFunction: (response) =>
-          UserWarning.fromJson(jsonDecode(response.body)),
-      additionalHeader: additionalHeader,
-      queryParams: queryParams,
-    );
+class UserWarningApi {
+  Future<UserWarning> get() async {
+    var response = await PCubeApi("/user/warning").get();
+    return ApiUtil.instance.convertTo<UserWarning>(UserWarning.fromJson, response);
   }
 }

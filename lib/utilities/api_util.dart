@@ -37,8 +37,8 @@ class ApiUtil {
   }
 
   List<T> convertToList<T>(
-      T Function(Map<String, dynamic> map) fromJson, String response) {
-    return (jsonDecode(response) as List)
+      T Function(Map<String, dynamic> map) fromJson, Response response) {
+    return (jsonDecode(response.body) as List)
         .map((e) => fromJson((e as Map).cast()))
         .toList();
   }

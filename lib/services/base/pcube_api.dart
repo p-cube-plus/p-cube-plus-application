@@ -7,7 +7,7 @@ const String _baseUrl = "http://p-cube-plus.com";
 
 class PCubeApi {
   const PCubeApi(this.endPoint);
-  final endPoint;
+  final String endPoint;
 
   Future<Map<String, String>> _getTokenHeader() async {
     String? token = await TokenManager().getAccessToken();
