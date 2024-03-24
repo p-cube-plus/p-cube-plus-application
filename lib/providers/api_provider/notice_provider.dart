@@ -8,7 +8,7 @@ enum SortType {
 }
 
 class NoticeProvider extends ApiProviderBase<List<NotificationNode>> {
-  NoticeProvider() : super(client: new NoticeListApi());
+  NoticeProvider() : super(getFunction: NoticeListApi().get);
 
   SortType _sortType = SortType.Ascending;
 

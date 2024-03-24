@@ -4,7 +4,7 @@ import 'package:p_cube_plus_application/providers/api_provider/base/provider_bas
 import 'package:p_cube_plus_application/services/home_api.dart';
 
 class ScheduleProvider extends ApiProviderBase<HomeSchedule> {
-  ScheduleProvider() : super(client: new HomeScheduleApi());
+  ScheduleProvider() : super(getFunction: HomeScheduleApi().get);
   int _cachedYear = -1, _cachedMonth = -1;
   Map<int, List<Schedule>>? _cachedMonthSchedule;
 

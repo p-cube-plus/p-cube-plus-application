@@ -3,7 +3,7 @@ import 'package:p_cube_plus_application/providers/api_provider/base/provider_bas
 import 'package:p_cube_plus_application/services/warning_api.dart';
 
 class WarningProvider extends ApiProviderBase<Warning> {
-  WarningProvider() : super(client: new WarningApi());
+  WarningProvider() : super(getFunction: WarningApi().get);
 
   @override
   Future<Warning> refresh({Map<String, String>? queryParams}) async {

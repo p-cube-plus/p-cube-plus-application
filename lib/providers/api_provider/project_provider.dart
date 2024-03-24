@@ -3,7 +3,7 @@ import 'package:p_cube_plus_application/providers/api_provider/base/provider_bas
 import 'package:p_cube_plus_application/services/project_api.dart';
 
 class ProjectProvider extends ApiProviderBase<List<Project>> {
-  ProjectProvider() : super(client: new ProjectListApi(isAll: true));
+  ProjectProvider() : super(getFunction: ProjectListApi().get);
 
   @override
   Future<List<Project>> refresh({Map<String, String>? queryParams}) async {

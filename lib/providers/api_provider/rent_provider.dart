@@ -3,15 +3,15 @@ import 'package:p_cube_plus_application/models/rent.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'dart:async';
 
-class RentProvider extends DummyProviderBase<List<Rent>> {
+class RentProvider extends ApiProviderBase<List<Rent>> {
+  RentProvider() : super(getFunction: getDummy);
   Future<List<Rent>>? searchRentList(String name) async {
     return data
         .where((element) => element.product.name.contains(name))
         .toList();
   }
 
-  @override
-  List<Rent> getDummy({Object? parameter}) {
+  static List<Rent> getDummy() {
     return <Rent>[
       Rent(
           product: Product(

@@ -3,7 +3,7 @@ import 'package:p_cube_plus_application/providers/api_provider/base/provider_bas
 import 'package:p_cube_plus_application/services/user_api.dart';
 
 class UserProfileProvider extends ApiProviderBase<UserProfile> {
-  UserProfileProvider() : super(client: new UserProfileApi());
+  UserProfileProvider() : super(getFunction: UserProfileApi().get);
 
   @override
   Future<UserProfile> refresh({Map<String, String>? queryParams}) async {

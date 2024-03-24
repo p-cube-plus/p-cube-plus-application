@@ -5,7 +5,7 @@ import 'package:p_cube_plus_application/services/project_api.dart';
 import 'package:p_cube_plus_application/services/user_api.dart';
 
 class UserProjectProvider extends ApiProviderBase<List<UserProject>> {
-  UserProjectProvider() : super(client: new UserProjectApi());
+  UserProjectProvider() : super(getFunction: UserProjectApi().get);
 
   @override
   Future<List<UserProject>> refresh({Map<String, String>? queryParams}) async {
@@ -14,7 +14,7 @@ class UserProjectProvider extends ApiProviderBase<List<UserProject>> {
 }
 
 class UserProjectListProvider extends ApiProviderBase<List<Project>> {
-  UserProjectListProvider() : super(client: new ProjectListApi(isAll: false));
+  UserProjectListProvider() : super(getFunction: ProjectListApi().get);
 
   @override
   Future<List<Project>> refresh({
