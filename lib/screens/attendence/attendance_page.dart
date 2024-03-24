@@ -3,6 +3,11 @@ import 'dart:io' show Platform;
 import 'package:beacons_plugin/beacons_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/extensions/StringExtension.dart';
+import 'package:p_cube_plus_application/models/attendanceCheck.dart';
+import 'package:p_cube_plus_application/models/enum/state_type.dart';
+import 'package:p_cube_plus_application/services/attendance_api.dart';
+import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/list_divider.dart';
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,9 +16,11 @@ import '../../widgets/common/default_alert.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_page.dart';
-import '../fee/fee_page.dart';
 
 class AttendancePage extends StatefulWidget {
+  AttendancePage(this.attendanceId);
+  final int attendanceId;
+
   // 출석 체크 기간인지 확인
   bool shouldCheck = true;
 
@@ -175,86 +182,76 @@ class _AttendancePageState extends State<AttendancePage>
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return DefaultPage(
-      title: "출석체크",
-      appbar: DefaultAppBar(),
-      content: DefaultContent(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "오늘의 출석체크",
-              style: theme.textTheme.headlineSmall!.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(height: 8),
-            // 출석체크 기간일 때
-            if (widget.shouldCheck)
-              _shouldCheckWidget(theme)
-            // 출석체크 기간이 아닐 때
-            else
-              RoundedBorder(
-                height: 270,
-                color: theme.dialogBackgroundColor,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "오늘은 정기회의가 없어요.",
-                        style: theme.textTheme.displayMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        "출석체크가 제대로 조회되지 않는 경우\n임원진에게 문의해주세요.",
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.displaySmall!.copyWith(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )
-                    ],
-                  ),
+    return DefaultFutureBuilder(
+      fetchData: AttendanceCheckApi(widget.attendanceId).get(),
+      showFunction: (AttendanceCheck data) => DefaultPage(
+        title: "출석체크",
+        appbar: DefaultAppBar(),
+        content: DefaultContent(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "오늘의 출석체크",
+                style: theme.textTheme.headlineSmall!.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-            SizedBox(height: 56),
-            Text(
-              "지난 출석",
-              style: theme.textTheme.headlineSmall!.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
+              SizedBox(height: 8),
+              // 출석체크 기간일 때
+              if (widget.shouldCheck)
+                _shouldCheckWidget(theme)
+              // 출석체크 기간이 아닐 때
+              else
+                RoundedBorder(
+                  height: 270,
+                  color: theme.dialogBackgroundColor,
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "오늘은 정기회의가 없어요.",
+                          style: theme.textTheme.displayMedium!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          "출석체크가 제대로 조회되지 않는 경우\n임원진에게 문의해주세요.",
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.displaySmall!.copyWith(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              SizedBox(height: 56),
+              Text(
+                "지난 출석",
+                style: theme.textTheme.headlineSmall!.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            RoundedBorder(
-              padding: const EdgeInsets.all(24),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _getPreviousAttendance(
-                      widget.lastAttendance.subtract(const Duration(days: 21)),
-                      theme),
-                  _getPreviousAttendance(
-                      widget.lastAttendance.subtract(const Duration(days: 14)),
-                      theme),
-                  _getPreviousAttendance(
-                      widget.lastAttendance.subtract(const Duration(days: 7)),
-                      theme),
-                  _getPreviousAttendance(
-                      widget.lastAttendance.subtract(const Duration(days: 0)),
-                      theme),
-                ],
+              SizedBox(height: 8),
+              RoundedBorder(
+                padding: const EdgeInsets.all(24),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _getPreviousAttendance(theme, data.recordList),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -458,21 +455,38 @@ class _AttendancePageState extends State<AttendancePage>
       return Text("");
   }
 
-  _getPreviousAttendance(DateTime date, theme) {
-    String dateString = DateFormat.yMd().format(date);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          DateFormat('M월 d일').format(date),
-          style: theme.textTheme.headline3!.copyWith(
-            fontSize: 11.0,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        SizedBox(height: 8),
-        _getImage(widget.prevStates[dateString]!, 64.0),
-      ],
-    );
+  List<Widget> _getPreviousAttendance(theme, List<AttendanceState> data) {
+    List<Widget> result = [];
+    for (int i = 0; i < 4; ++i) {
+      if (data.length > i) {
+        result.add(Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Column(
+              children: [
+                Text(
+                  DateFormat('M월 d일').format(data[i].date),
+                  style: theme.textTheme.headline3!.copyWith(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 8),
+              ],
+            ),
+            _getImage(data[i].state.toStateType(), 64.0),
+          ],
+        ));
+      } else {
+        result.add(Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 16),
+            _getImage(StateType.none, 64.0),
+          ],
+        ));
+      }
+    }
+    return result;
   }
 }

@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/extensions/DateTimeExtension.dart';
+import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:p_cube_plus_application/providers/api_provider/composite/home_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
+import 'package:p_cube_plus_application/screens/attendence/attendance_history.dart';
 import 'package:p_cube_plus_application/screens/attendence/attendance_page.dart';
 import 'package:p_cube_plus_application/screens/rent/rent_page.dart';
+import 'package:p_cube_plus_application/services/home_api.dart';
 import 'package:p_cube_plus_application/widgets/calendar/home_calendar.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
@@ -53,59 +57,75 @@ class HomePage extends StatelessWidget {
 class Attendence extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return DefaultFutureBuilder(
+      fetchData: HomeAttendanceApi().get(),
+      showFunction: (List<Schedule> data) => Padding(
+        padding: const EdgeInsets.only(bottom: 40.0),
+        child: ContentSummaryView(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AttendanceHistoryPage(),
+                ),
+              );
+            },
+            title: "출석체크",
+            titleFontSize: 16.0,
+            children: List.generate(data.length,
+                (index) => _getAttendanceContent(context, data, index))),
+      ),
+    );
+  }
+
+  _getAttendanceContent(BuildContext context, List<Schedule> data, int index) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 40),
-      child: ContentSummaryView(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AttendancePage(),
-              ),
-            );
-          },
-          title: "출석체크",
-          titleFontSize: 16.0,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: RoundedBorder(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AttendancePage(),
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 18.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: const EdgeInsets.only(top: 8.0),
+      child: RoundedBorder(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AttendancePage(data[index].id),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 18.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 7.0,
+                    width: 7.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: data[index].getMarkColor()),
+                  ),
+                  SizedBox(width: 12),
+                  Column(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 7.0,
-                            width: 7.0,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFFE55542)),
-                          ),
-                          SizedBox(width: 12),
-                          Text("2022.08.17"),
-                          SizedBox(width: 8),
-                          Text("판도라큐브 정기회의"),
-                        ],
-                      ),
-                      Icon(Icons.chevron_right),
+                      Text(DateFormat('yyyy.MM.dd')
+                          .format(data[index].startDate)),
+                      if (data[index].endDate != null &&
+                          !data[index]
+                              .startDate
+                              .isMatchDay(data[index].endDate!))
+                        Text(DateFormat('~yyyy.MM.dd')
+                            .format(data[index].endDate!)),
                     ],
                   ),
-                ),
+                  SizedBox(width: 8),
+                  Text(data[index].title),
+                ],
               ),
-            )
-          ]),
+              Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

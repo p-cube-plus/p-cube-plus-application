@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/models/enum/state_type.dart';
 import '../../widgets/common/list_divider.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_content.dart';
@@ -8,7 +9,6 @@ import '../../widgets/page/default_page.dart';
 import 'fee_detail_page.dart';
 import '../../utilities/contants.dart' as Constants;
 
-enum StateType { none, positive, late, negative, off }
 
 _getImage(StateType type, double size) {
   return Image.asset("assets/images/${type.toString().split('.').last}.png",

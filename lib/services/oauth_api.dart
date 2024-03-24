@@ -2,7 +2,7 @@ import 'package:p_cube_plus_application/models/login/confirm_info.dart';
 import 'package:p_cube_plus_application/models/login/request_info.dart';
 import 'package:p_cube_plus_application/models/login/user_info.dart';
 import 'package:p_cube_plus_application/services/base/pcube_api.dart';
-import 'package:p_cube_plus_application/utilities/api_util.dart';
+import 'package:p_cube_plus_application/utilities/json_util.dart';
 
 class OAuthUserApi {
   Future<UserInfo> post(
@@ -13,7 +13,8 @@ class OAuthUserApi {
       "fcm_token": messageToken ?? "",
     });
 
-    return ApiUtil.instance.convertTo<UserInfo>(UserInfo.fromJson, response);
+    return JsonUtil.instance
+        .convertTo<UserInfo>(UserInfo.fromJson, response.body);
   }
 }
 
@@ -22,7 +23,7 @@ class OAuthRequestApi {
     var response = await PCubeApi("/oauth/code/request")
         .post(body: {"phone_number": phoneNumber});
 
-    return ApiUtil.instance
+    return JsonUtil.instance
         .convertToWithHeader<RequestInfo>(RequestInfo.fromJson, response);
   }
 }
@@ -32,7 +33,7 @@ class OAuthConfirmApi {
     var response = await PCubeApi("/oauth/code/confirm")
         .post(additionalHeader: {"cookie": cookie ?? ""}, body: {"code": code});
 
-    return ApiUtil.instance
-        .convertTo<ConfirmInfo>(ConfirmInfo.fromJson, response);
+    return JsonUtil.instance
+        .convertTo<ConfirmInfo>(ConfirmInfo.fromJson, response.body);
   }
 }

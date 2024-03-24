@@ -1,6 +1,5 @@
 import 'package:http/http.dart';
 import 'package:p_cube_plus_application/services/base/rest_api.dart';
-import 'package:p_cube_plus_application/utilities/api_util.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
 
 const String _baseUrl = "http://p-cube-plus.com";
@@ -24,7 +23,7 @@ class PCubeApi {
     var header = await _getTokenHeader();
     header.addAll(additionalHeader ?? {});
     return RestApi.instance.post(
-        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        RestApi.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
         header,
         body: body);
   }
@@ -35,7 +34,7 @@ class PCubeApi {
     var header = await _getTokenHeader();
     header.addAll(additionalHeader ?? {});
     return RestApi.instance.get(
-        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        RestApi.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
         header);
   }
 
@@ -46,7 +45,7 @@ class PCubeApi {
     var header = await _getTokenHeader();
     header.addAll(additionalHeader ?? {});
     return RestApi.instance.put(
-        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        RestApi.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
         header,
         body: body);
   }
@@ -58,7 +57,7 @@ class PCubeApi {
     var header = await _getTokenHeader();
     header.addAll(additionalHeader ?? {});
     return RestApi.instance.delete(
-        ApiUtil.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
+        RestApi.instance.getUrl(_baseUrl, endPoint, queryParams: queryParams),
         header,
         body: body);
   }
@@ -71,7 +70,7 @@ class PCubeApi {
     var header = _getJsonContentHeader();
     header.addAll(additionalHeader ?? {});
     return RestApi.instance
-        .get(ApiUtil.instance.getUrl(_baseUrl, endPoint), header);
+        .get(RestApi.instance.getUrl(_baseUrl, endPoint), header);
   }
 
   Future<Response> deleteExceptToken(
@@ -79,6 +78,6 @@ class PCubeApi {
     var header = _getJsonContentHeader();
     header.addAll(additionalHeader ?? {});
     return RestApi.instance
-        .delete(ApiUtil.instance.getUrl(_baseUrl, endPoint), header);
+        .delete(RestApi.instance.getUrl(_baseUrl, endPoint), header);
   }
 }
