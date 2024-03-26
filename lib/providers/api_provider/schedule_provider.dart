@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:p_cube_plus_application/models/home_schedule.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
@@ -6,15 +7,14 @@ import 'package:p_cube_plus_application/services/home_api.dart';
 class ScheduleProvider extends ApiProviderBase<HomeSchedule> {
   ScheduleProvider() : super(getFunction: HomeScheduleApi().get);
   int _cachedYear = -1, _cachedMonth = -1;
-  Map<int, List<Schedule>>? _cachedMonthSchedule;
+  Map<int, Color>? _cachedMonthSchedule;
 
   @override
   Future<HomeSchedule> refresh({Map<String, String>? queryParams}) async {
     return await super.refresh(queryParams: queryParams);
   }
 
-  Future<Map<int, List<Schedule>>> getMonthSchedule(
-      DateTime currentDate) async {
+  Map<int, Color> getMonthSchedule(DateTime currentDate) {
     int year = currentDate.year;
     int month = currentDate.month;
 
@@ -25,24 +25,22 @@ class ScheduleProvider extends ApiProviderBase<HomeSchedule> {
     _cachedMonth = month;
     _cachedYear = year;
 
-    Map<int, List<Schedule>> result = {};
+    Map<int, Color> result = {};
 
     for (final schedule in data.allList) {
       final startDate = schedule.startDate;
       final endDate = schedule.endDate ?? startDate;
 
-      for (DateTime day = startDate;
-          day.isBefore(endDate);
-          day = day.add(const Duration(days: 1))) {
-        if (day.year == year && day.month == month) {
-          result[day.day] ??= <Schedule>[];
-          result[day.day]!.add(schedule);
+      for (DateTime iterDate = startDate;
+          iterDate.compareTo(endDate) <= 0;
+          iterDate = iterDate.add(const Duration(days: 1))) {
+        if (iterDate.year == year && iterDate.month == month && !result.containsKey(iterDate.day)) {
+          result[iterDate.day] = schedule.getMarkColor();
         }
       }
     }
 
     _cachedMonthSchedule = result;
-
     return result;
   }
 

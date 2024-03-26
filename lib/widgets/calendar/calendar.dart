@@ -3,9 +3,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';
 
-import 'calendar_header.dart';
-import 'calendar_week_row.dart';
-import 'calender_view.dart';
+import 'calendar_components/calendar_header.dart';
+import 'calendar_components/calendar_week_row.dart';
+import 'calendar_components/calender_view.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({
@@ -13,10 +13,12 @@ class Calendar extends StatefulWidget {
     required this.scheduleProvider,
     required this.selectedDate,
     required this.selectFunction,
+    this.colorByDay = const {},
   }) : super(key: key);
 
   final DateTime selectedDate;
   final ScheduleProvider scheduleProvider;
+  final Map<int, Color> colorByDay;
   final Function(DateTime) selectFunction;
 
   @override

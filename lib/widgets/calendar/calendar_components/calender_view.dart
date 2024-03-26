@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/models/schedule.dart';
-import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
-import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
-import 'calendar_day_view.dart';
+import 'calendar_day_cell.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({
     Key? key,
-    required this.scheduleProvider,
+    required this.colorByDay,
     required this.currentDate,
     required this.selectedDate,
     required this.selectFunction,
   }) : super(key: key);
 
-  final ScheduleProvider scheduleProvider;
+  final Map<int, Color> colorByDay;
   final DateTime currentDate;
   final DateTime selectedDate;
   final Function(DateTime) selectFunction;
@@ -31,14 +28,11 @@ class _CalendarViewState extends State<CalendarView> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultFutureBuilder(
-        fetchData: widget.scheduleProvider.getMonthSchedule(widget.currentDate),
-        showFunction: (Map<int, List<Schedule>> data) => _getCalendarView(data),
-        skeletonLoader: _getCalendarView(null));
+    return _getCalendarView();
   }
 
-  Widget _getCalendarView(Map<int, List<Schedule>>? data) {
-    var calendarCellWidgetList = _getCalendarCellWidgetList(data);
+  Widget _getCalendarView() {
+    var calendarCellWidgetList = _getCalendarCellWidgetList();
     int rowCount = calendarCellWidgetList.length ~/ 7;
 
     return Column(
@@ -56,13 +50,13 @@ class _CalendarViewState extends State<CalendarView> {
     );
   }
 
-  List<Widget> _getCalendarCellWidgetList(Map<int, List<Schedule>>? data) {
+  List<Widget> _getCalendarCellWidgetList() {
     List<Widget> result = <Widget>[];
     DateTime startDate =
         DateTime(widget.currentDate.year, widget.currentDate.month, 1);
 
     result.addAll(_getStartBlankWidgets(startDate));
-    result.addAll(_getCalendarCellWidgets(startDate, data));
+    result.addAll(_getCalendarCellWidgets(startDate));
     result.addAll(_getEndBlankWidgets(result));
 
     return result;
@@ -76,8 +70,7 @@ class _CalendarViewState extends State<CalendarView> {
     return result;
   }
 
-  List<Widget> _getCalendarCellWidgets(
-      DateTime startDate, Map<int, List<Schedule>>? data) {
+  List<Widget> _getCalendarCellWidgets(DateTime startDate) {
     List<Widget> result = [];
 
     while (startDate.month == widget.currentDate.month) {
@@ -97,7 +90,7 @@ class _CalendarViewState extends State<CalendarView> {
                   startDate.difference(widget.selectedDate).inDays == 0,
           selectedColor: selectedColor,
           onTap: (date) => widget.selectFunction(date),
-          decorateColor: data?[startDate.day]?[0].getMarkColor()));
+          decorateColor: widget.colorByDay[startDate.day]));
       startDate = startDate.add(const Duration(days: 1));
     }
 
