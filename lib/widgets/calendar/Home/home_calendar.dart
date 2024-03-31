@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
+import 'package:p_cube_plus_application/widgets/calendar/Home/calendar_summary_view.dart';
 import 'package:p_cube_plus_application/widgets/calendar/calendar.dart';
-
-import 'Home/calendar_summary_view.dart';
 
 class HomeCalendar extends StatefulWidget {
   const HomeCalendar({
@@ -28,7 +27,7 @@ class _HomeCalendarState extends State<HomeCalendar> {
           upCommingScheduleList: widget.scheduleProvider.getUpcomingSchedule(),
         ),
         Calendar(
-          scheduleProvider: widget.scheduleProvider,
+            colorByDay: widget.scheduleProvider.getMonthSchedule(_selectedDate),
             selectedDate: _selectedDate,
             selectFunction: (newDate) =>
                 setState(() => _selectedDate = newDate)),

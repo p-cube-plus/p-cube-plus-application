@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
 import 'package:p_cube_plus_application/screens/guest/guest_notion_webview_page.dart';
-import 'package:p_cube_plus_application/widgets/calendar/home_calendar.dart';
+import 'package:p_cube_plus_application/widgets/calendar/Home/home_calendar.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';

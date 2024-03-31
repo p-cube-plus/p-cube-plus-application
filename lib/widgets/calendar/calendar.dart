@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';
 
 import 'calendar_components/calendar_header.dart';
@@ -10,14 +9,12 @@ import 'calendar_components/calender_view.dart';
 class Calendar extends StatefulWidget {
   const Calendar({
     Key? key,
-    required this.scheduleProvider,
     required this.selectedDate,
     required this.selectFunction,
     this.colorByDay = const {},
   }) : super(key: key);
 
   final DateTime selectedDate;
-  final ScheduleProvider scheduleProvider;
   final Map<int, Color> colorByDay;
   final Function(DateTime) selectFunction;
 
@@ -27,7 +24,6 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   DateTime _currentDate = DateTime.now();
-  //GlobalKey _headerKey = GlobalKey();
 
   @override
   void didChangeDependencies() {
@@ -60,7 +56,7 @@ class _CalendarState extends State<Calendar> {
                     CalendarWeekRow(),
                     SizedBox(height: 8),
                     CalendarView(
-                      scheduleProvider: widget.scheduleProvider,
+                      colorByDay: widget.colorByDay,
                       currentDate: _currentDate,
                       selectedDate: widget.selectedDate,
                       selectFunction: widget.selectFunction,
@@ -76,11 +72,13 @@ class _CalendarState extends State<Calendar> {
             _currentDate.year,
             _currentDate.month - 1,
           ));
+      widget.selectFunction(_currentDate);
     } else if (startX - endX > scrollSensitivity) {
       setState(() => _currentDate = new DateTime(
             _currentDate.year,
             _currentDate.month + 1,
           ));
+      widget.selectFunction(_currentDate);
     }
   }
 }

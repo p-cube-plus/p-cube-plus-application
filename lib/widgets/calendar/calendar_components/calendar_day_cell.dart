@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../utilities/theme.dart';
+import 'package:p_cube_plus_application/utilities/theme.dart';
 
 class CalendarDayView extends StatelessWidget {
   const CalendarDayView({
