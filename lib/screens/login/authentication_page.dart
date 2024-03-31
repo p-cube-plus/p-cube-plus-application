@@ -12,6 +12,7 @@ import 'package:p_cube_plus_application/services/oauth_api.dart';
 import 'package:p_cube_plus_application/utilities/phone_number_tool.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:p_cube_plus_application/utilities/token_manager.dart';
+import 'package:p_cube_plus_application/widgets/common/default_alert.dart';
 import 'package:p_cube_plus_application/widgets/common/default_textField.dart';
 import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';
 import 'package:p_cube_plus_application/widgets/page/default_appbar.dart';
@@ -126,9 +127,13 @@ class InputPhoneNumberPage extends StatelessWidget {
                     var isPhoneNumber =
                         PhoneNumberTool.isPhoneNumber(phoneNumber);
                     if (!isPhoneNumber) {
-                      Fluttertoast.showToast(
-                        msg: "올바른 전화번호를 입력해주세요 :)",
-                        toastLength: Toast.LENGTH_SHORT,
+                      showDialog(
+                        context: context,
+                        builder: (context) => DefaultAlert(
+                          title: "인증 요청에 실패했어요 :(",
+                          description: "올바른 전화번호를 입력해주세요 :)",
+                          messageType: MessageType.OK,
+                        ),
                       );
                       return;
                     }
@@ -148,11 +153,16 @@ class InputPhoneNumberPage extends StatelessWidget {
                         toastLength: Toast.LENGTH_SHORT,
                       );
                       clickAuthentication(phoneNumber, requestInfo.cookie);
-                    } else
-                      Fluttertoast.showToast(
-                        msg: "인증번호 발송에 실패했어요 :(",
-                        toastLength: Toast.LENGTH_SHORT,
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => DefaultAlert(
+                          title: "인증번호 발송에 실패했어요 :(",
+                          description: "다시 시도해주세요 :)",
+                          messageType: MessageType.OK,
+                        ),
                       );
+                    }
                   },
                   child: SizedBox(
                     width: double.infinity,
@@ -231,13 +241,17 @@ class _AuthenticationPhoneNumberPageState
           await confirmApi.post(widget.cookie, _controller.text);
 
       if (!confirmInfo.isVerified) {
-        Fluttertoast.showToast(
-          msg: "본인 인증에 실패했어요 :(",
-          toastLength: Toast.LENGTH_SHORT,
+        showDialog(
+          context: context,
+          builder: (context) => DefaultAlert(
+            title: "본인 인증에 실패했어요 :(",
+            description: "다시 시도해주세요 :)",
+            messageType: MessageType.OK,
+          ),
         );
         return;
       }
-      Fluttertoast.cancel();
+
       Fluttertoast.showToast(
         msg: "본인 인증에 성공했어요 :)",
         toastLength: Toast.LENGTH_SHORT,
@@ -425,10 +439,14 @@ class InputNamePage extends StatelessWidget {
 
                     Fluttertoast.cancel();
                     if (!userInfo.isMember) {
-                      Fluttertoast.showToast(
-                        msg: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
-                            "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
-                        toastLength: Toast.LENGTH_LONG,
+                      showDialog(
+                        context: context,
+                        builder: (context) => DefaultAlert(
+                          title: "인증에 실패했어요 :(",
+                          description: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
+                              "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
+                          messageType: MessageType.OK,
+                        ),
                       );
                       return;
                     }
