@@ -8,6 +8,10 @@ class Icons {
   static String input = "assets/images/icons/input.svg";
   static String cancle = "assets/images/icons/cancle.svg";
 
+  static String check_circle = "assets/images/icons/check_circle.svg";
+  static String selected_check_circle =
+      "assets/images/icons/check_circle_selected.svg";
+
   static String projects = "assets/images/icons/projects.svg";
   static String fee = "assets/images/icons/fee.svg";
   static String home = "assets/images/icons/home.svg";
