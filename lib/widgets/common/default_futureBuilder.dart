@@ -23,7 +23,7 @@ class _DefaultFutureBuilderState extends State<DefaultFutureBuilder> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: widget.fetchData.timeout(Duration(seconds: 5)),
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             if (widget.skeletonLoader == null)
               return SizedBox(height: 600);
@@ -42,7 +42,7 @@ class _DefaultFutureBuilderState extends State<DefaultFutureBuilder> {
             return widget.showFunction(snapshot.data);
           }
 
-          return SizedBox();
+          return widget.showFunction(null);
         });
   }
 }

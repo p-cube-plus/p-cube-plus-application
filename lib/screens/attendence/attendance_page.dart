@@ -3,7 +3,9 @@ import 'dart:io' show Platform;
 import 'package:beacons_plugin/beacons_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:p_cube_plus_application/extensions/DateTimeExtension.dart';
 import 'package:p_cube_plus_application/extensions/StringExtension.dart';
+import 'package:p_cube_plus_application/models/attendance.dart';
 import 'package:p_cube_plus_application/models/attendanceCheck.dart';
 import 'package:p_cube_plus_application/models/enum/state_type.dart';
 import 'package:p_cube_plus_application/services/attendance_api.dart';
@@ -184,7 +186,7 @@ class _AttendancePageState extends State<AttendancePage>
     var theme = Theme.of(context);
     return DefaultFutureBuilder(
       fetchData: AttendanceCheckApi(widget.attendanceId).get(),
-      showFunction: (AttendanceCheck data) => DefaultPage(
+      showFunction: (AttendanceCheck? data) => DefaultPage(
         title: "출석체크",
         appbar: DefaultAppBar(),
         content: DefaultContent(
@@ -202,7 +204,7 @@ class _AttendancePageState extends State<AttendancePage>
               SizedBox(height: 8),
               // 출석체크 기간일 때
               if (widget.shouldCheck)
-                _shouldCheckWidget(theme)
+                _shouldCheckWidget(theme, data?.attendance)
               // 출석체크 기간이 아닐 때
               else
                 RoundedBorder(
@@ -247,7 +249,7 @@ class _AttendancePageState extends State<AttendancePage>
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _getPreviousAttendance(theme, data.recordList),
+                  children: _getPreviousAttendance(theme, data?.recordList),
                 ),
               ),
             ],
@@ -257,7 +259,7 @@ class _AttendancePageState extends State<AttendancePage>
     );
   }
 
-  Widget _shouldCheckWidget(ThemeData theme) {
+  Widget _shouldCheckWidget(ThemeData theme, Attendance? attendance) {
     return RoundedBorder(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Column(
@@ -455,38 +457,54 @@ class _AttendancePageState extends State<AttendancePage>
       return Text("");
   }
 
-  List<Widget> _getPreviousAttendance(theme, List<AttendanceState> data) {
+  /// 출석일은 주단위로 체크.
+  /// 출석날이 해당 주에 없다면 오늘을 기준으로 몇 주 전인지 보여준다.
+  /// 출석날이 있다면 해당 날짜로 보여준다.
+  List<Widget> _getPreviousAttendance(
+      ThemeData theme, List<AttendanceState>? data) {
     List<Widget> result = [];
-    for (int i = 0; i < 4; ++i) {
-      if (data.length > i) {
-        result.add(Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Column(
-              children: [
-                Text(
-                  DateFormat('M월 d일').format(data[i].date),
-                  style: theme.textTheme.headline3!.copyWith(
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 8),
-              ],
-            ),
-            _getImage(data[i].state.toStateType(), 64.0),
-          ],
-        ));
-      } else {
-        result.add(Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 16),
-            _getImage(StateType.none, 64.0),
-          ],
-        ));
+    List<DateTime> validDateList = [
+      DateTime.now(),
+      DateTime.now().subtract(Duration(days: 7)),
+      DateTime.now().subtract(Duration(days: 14)),
+      DateTime.now().subtract(Duration(days: 21)),
+    ];
+    List<StateType> stateTypeList = [
+      StateType.none,
+      StateType.none,
+      StateType.none,
+      StateType.none,
+    ];
+    data ??= [];
+
+    data.forEach((element) {
+      int weeksAgo = element.date.getWeeksAgo();
+      if (weeksAgo >= 0 && weeksAgo < 4) {
+        validDateList[weeksAgo] = element.date;
+        stateTypeList[weeksAgo] = element.state.toStateType();
       }
+    });
+
+    for (int i = 0; i < 4; ++i) {
+      result.add(Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Column(
+            children: [
+              Text(
+                DateFormat('M월 d일').format(validDateList[i]),
+                style: theme.textTheme.headline3!.copyWith(
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 8),
+            ],
+          ),
+          _getImage(stateTypeList[i], 64.0),
+        ],
+      ));
     }
-    return result;
+    return result.reversed.toList();
   }
 }

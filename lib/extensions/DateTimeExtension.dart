@@ -8,4 +8,6 @@ extension DateTimeExtension on DateTime {
         this.month == date.month &&
         this.day == date.day;
   }
+
+  int getWeeksAgo() => DateTime.now().difference(this).inDays ~/ 7;
 }
