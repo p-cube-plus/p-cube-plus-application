@@ -51,11 +51,37 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   }
 }
 
-class InputPhoneNumberPage extends StatelessWidget {
+class InputPhoneNumberPage extends StatefulWidget {
   InputPhoneNumberPage({required this.clickAuthentication});
+  final Function clickAuthentication;
+
+  @override
+  State<InputPhoneNumberPage> createState() =>
+      _InputPhoneNumberPage(clickAuthentication: clickAuthentication);
+}
+
+class _InputPhoneNumberPage extends State<InputPhoneNumberPage> {
+  _InputPhoneNumberPage({required this.clickAuthentication});
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final Function clickAuthentication;
+  String phoneNumber = "";
+  bool isPhoneNumber = false;
+
+  @override
+  void initState() {
+    _controller.addListener(
+      savePhoneNumber,
+    );
+    super.initState();
+  }
+
+  void savePhoneNumber() async {
+    setState(() {
+      phoneNumber = _controller.text.trim();
+      isPhoneNumber = PhoneNumberTool.isPhoneNumber(phoneNumber);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,48 +148,49 @@ class InputPhoneNumberPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () async {
-                    var phoneNumber = _controller.text.trim();
-                    var isPhoneNumber =
-                        PhoneNumberTool.isPhoneNumber(phoneNumber);
-                    if (!isPhoneNumber) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => DefaultAlert(
-                          title: "인증 요청에 실패했어요 :(",
-                          description: "올바른 전화번호를 입력해주세요 :)",
-                          messageType: MessageType.OK,
-                        ),
-                      );
-                      return;
-                    }
+                  onPressed: isPhoneNumber
+                      ? () async {
+                          if (!isPhoneNumber) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DefaultAlert(
+                                title: "인증 요청에 실패했어요 :(",
+                                description: "올바른 전화번호를 입력해주세요 :)",
+                                messageType: MessageType.OK,
+                              ),
+                            );
+                            return;
+                          }
 
-                    Fluttertoast.showToast(
-                      msg: "인증번호를 발송하고 있어요 :)",
-                      toastLength: Toast.LENGTH_SHORT,
-                    );
+                          Fluttertoast.showToast(
+                            msg: "인증번호를 발송하고 있어요 :)",
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
 
-                    RequestInfo requestInfo =
-                        await requestApi.post(phoneNumber);
+                          RequestInfo requestInfo =
+                              await requestApi.post(phoneNumber);
 
-                    Fluttertoast.cancel();
-                    if (requestInfo.isValid) {
-                      Fluttertoast.showToast(
-                        msg: "인증번호가 발송되었어요 :)",
-                        toastLength: Toast.LENGTH_SHORT,
-                      );
-                      clickAuthentication(phoneNumber, requestInfo.cookie);
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => DefaultAlert(
-                          title: "인증번호 발송에 실패했어요 :(",
-                          description: "다시 시도해주세요 :)",
-                          messageType: MessageType.OK,
-                        ),
-                      );
-                    }
-                  },
+                          Fluttertoast.cancel();
+                          if (requestInfo.isValid) {
+                            Fluttertoast.showToast(
+                              msg: "인증번호가 발송되었어요 :)",
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
+                            clickAuthentication(
+                                phoneNumber, requestInfo.cookie);
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DefaultAlert(
+                                title: "인증번호 발송에 실패했어요 :(",
+                                description: "다시 시도해주세요 :)",
+                                messageType: MessageType.OK,
+                              ),
+                            );
+                          }
+                        }
+                      : null,
+                  onLongPress: null,
                   child: SizedBox(
                     width: double.infinity,
                     child: Padding(
