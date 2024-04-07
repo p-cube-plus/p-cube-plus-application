@@ -368,7 +368,9 @@ class _AuthenticationPhoneNumberPageState
                   padding: const EdgeInsets.only(left: 16.0),
                   child: ElevatedButton(
                       onPressed: isAvailRequest
-                          ? () => setState(() => _controller.text = "")
+                          ? () {
+                              setState(() => _controller.text = "");
+                            }
                           : null,
                       onLongPress: null,
                       child: Padding(
@@ -391,12 +393,34 @@ class _AuthenticationPhoneNumberPageState
   }
 }
 
-class InputNamePage extends StatelessWidget {
+class InputNamePage extends StatefulWidget {
+  final String? phoneNumber;
+  const InputNamePage({required this.phoneNumber});
+
+  @override
+  State<InputNamePage> createState() =>
+      _InputNamePageState(phoneNumber: phoneNumber);
+}
+
+class _InputNamePageState extends State<InputNamePage> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final String? phoneNumber;
+  bool isNameAvailable = false;
 
-  InputNamePage({required this.phoneNumber});
+  _InputNamePageState({required this.phoneNumber});
+
+  @override
+  void initState() {
+    _controller.addListener(
+      checkNameAvailable,
+    );
+    super.initState();
+  }
+
+  void checkNameAvailable() {
+    setState(() => isNameAvailable = _controller.text.length >= 2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -455,48 +479,51 @@ class InputNamePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () async {
-                    Fluttertoast.showToast(
-                      msg: "로그인을 시도하고 있어요 :)",
-                      toastLength: Toast.LENGTH_LONG,
-                    );
-                    UserInfo userInfo = await userApi.post(
-                        _controller.text.trim(),
-                        phoneNumber,
-                        await FirebaseMessaging.instance.getToken());
+                  onPressed: isNameAvailable
+                      ? () async {
+                          Fluttertoast.showToast(
+                            msg: "로그인을 시도하고 있어요 :)",
+                            toastLength: Toast.LENGTH_LONG,
+                          );
+                          UserInfo userInfo = await userApi.post(
+                              _controller.text.trim(),
+                              phoneNumber,
+                              await FirebaseMessaging.instance.getToken());
 
-                    Fluttertoast.cancel();
-                    if (!userInfo.isMember) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => DefaultAlert(
-                          title: "인증에 실패했어요 :(",
-                          description: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
-                              "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
-                          messageType: MessageType.OK,
-                        ),
-                      );
-                      return;
-                    }
+                          Fluttertoast.cancel();
+                          if (!userInfo.isMember) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DefaultAlert(
+                                title: "인증에 실패했어요 :(",
+                                description: "판도라큐브 회원만 로그인 할 수 있어요 :(\n" +
+                                    "회원이어도 지속적으로 실패한다면 문의해주세요 :)",
+                                messageType: MessageType.OK,
+                              ),
+                            );
+                            return;
+                          }
 
-                    await TokenManager()
-                        .setAccessToken(userInfo.accessToken.toString());
-                    await TokenManager()
-                        .setRefreshToken(userInfo.refreshToken.toString());
+                          await TokenManager()
+                              .setAccessToken(userInfo.accessToken.toString());
+                          await TokenManager().setRefreshToken(
+                              userInfo.refreshToken.toString());
 
-                    Fluttertoast.showToast(
-                      msg: "로그인에 성공했어요 :)",
-                      toastLength: Toast.LENGTH_SHORT,
-                    );
+                          Fluttertoast.showToast(
+                            msg: "로그인에 성공했어요 :)",
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
 
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainPage(),
-                      ),
-                      (route) => false,
-                    );
-                  },
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainPage(),
+                            ),
+                            (route) => false,
+                          );
+                        }
+                      : null,
+                  onLongPress: null,
                   child: SizedBox(
                     width: double.infinity,
                     child: Padding(
