@@ -367,9 +367,10 @@ class _AuthenticationPhoneNumberPageState
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: ElevatedButton(
-                      onPressed: () => isAvailRequest
-                          ? setState(() => _controller.text = "")
+                      onPressed: isAvailRequest
+                          ? () => setState(() => _controller.text = "")
                           : null,
+                      onLongPress: null,
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
