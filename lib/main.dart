@@ -13,6 +13,7 @@ import 'package:p_cube_plus_application/providers/view_provider/fee_provider.dar
 import 'package:p_cube_plus_application/providers/view_provider/setting_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/theme_provider.dart';
 import 'package:p_cube_plus_application/screens/main_page.dart';
+import 'package:p_cube_plus_application/screens/splash_page.dart';
 import 'package:p_cube_plus_application/utilities/theme.dart';
 import 'package:provider/provider.dart';
 

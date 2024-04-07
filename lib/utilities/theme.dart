@@ -48,6 +48,7 @@ class MyThemes {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFFE45441),
+        disabledBackgroundColor: const Color(0xFFE9E9E9),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         minimumSize: const Size(0.0, 35.0),
@@ -59,7 +60,8 @@ class MyThemes {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: const Color(0xFFFFFF), side: const BorderSide(width: 0.0, style: BorderStyle.none),
+        foregroundColor: const Color(0xFFFFFF),
+        side: const BorderSide(width: 0.0, style: BorderStyle.none),
         backgroundColor: const Color(0xFFE9E9E9),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -68,7 +70,8 @@ class MyThemes {
     ),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-      foregroundColor: const Color(0xFF2E2E2E), splashFactory: NoSplash.splashFactory,
+      foregroundColor: const Color(0xFF2E2E2E),
+      splashFactory: NoSplash.splashFactory,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     )),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -78,7 +81,9 @@ class MyThemes {
       selectionColor: const Color(0xCCE45441),
       cursorColor: const Color(0xCCE45441),
       selectionHandleColor: const Color(0xCCE45441),
-    ), colorScheme: const ColorScheme.light().copyWith(background: const Color(0xFFFBFBFB)),
+    ),
+    colorScheme:
+        const ColorScheme.light().copyWith(background: const Color(0xFFFBFBFB)),
   );
 
   static final darkTheme = ThemeData(
@@ -117,6 +122,7 @@ class MyThemes {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFBA2916),
+          disabledBackgroundColor: const Color(0xFFE9E9E9),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           textStyle: const TextStyle(
@@ -126,7 +132,8 @@ class MyThemes {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: const Color(0xFF101010), side: const BorderSide(width: 0.0, style: BorderStyle.none),
+        foregroundColor: const Color(0xFF101010),
+        side: const BorderSide(width: 0.0, style: BorderStyle.none),
         backgroundColor: const Color(0xFF202020),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -135,7 +142,8 @@ class MyThemes {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: const Color(0xFFFBFBFB), splashFactory: NoSplash.splashFactory,
+        foregroundColor: const Color(0xFFFBFBFB),
+        splashFactory: NoSplash.splashFactory,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
@@ -147,6 +155,8 @@ class MyThemes {
       selectionColor: const Color(0xCCE45441),
       cursorColor: const Color(0xCCE45441),
       selectionHandleColor: const Color(0xCCBA2916),
-    ), colorScheme: const ColorScheme.dark().copyWith(background: const Color(0xFF242424)),
+    ),
+    colorScheme:
+        const ColorScheme.dark().copyWith(background: const Color(0xFF242424)),
   );
 }
