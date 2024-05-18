@@ -24,13 +24,13 @@ class AttendancePage extends StatefulWidget {
   final int attendanceId;
 
   // 출석 체크 기간인지 확인
-  bool shouldCheck = true;
+  final bool shouldCheck = true;
 
   // 더미 데이터. 마지막 출석날짜를 확인해야함.
-  DateTime lastAttendance = DateTime.now();
+  final DateTime lastAttendance = DateTime.now();
 
   // 더미 데이터. 이전 출석체크 기록을 가져야함.
-  Map<String, StateType> prevStates = {
+  final Map<String, StateType> prevStates = {
     DateFormat.yMd().format(DateTime.now().subtract(Duration(days: 21))):
         StateType.negative,
     DateFormat.yMd().format(DateTime.now().subtract(Duration(days: 14))):
@@ -42,11 +42,11 @@ class AttendancePage extends StatefulWidget {
   };
 
   // 1, 2차 인증 기간
-  List<DateTime?> startTimes = [
+  final List<DateTime?> startTimes = [
     DateTime(2023, 08, 01, 13),
     DateTime(2023, 08, 01, 13)
   ];
-  List<DateTime?> endTimes = [
+  final List<DateTime?> endTimes = [
     DateTime(2023, 08, 30, 23),
     DateTime(2023, 08, 30, 23)
   ];
@@ -102,54 +102,52 @@ class _AttendancePageState extends State<AttendancePage>
 
   Future<void> initPlatformState() async {
     await [
-      Permission.location,
+      Permission.locationWhenInUse,
       Permission.bluetoothScan,
       Permission.bluetoothConnect,
       Permission.bluetooth
-    ].request();
+    ].request().then((statuses) async {
+      bool isAllGranted = statuses.values.every((status) => status.isGranted);
+      if (!isAllGranted) {
+        await showDialog(
+            context: context,
+            builder: (context) => DefaultAlert(
+                  title: "권한 요청",
+                  description:
+                      "해당 앱은 블루투스를 찾기 위해 위치 정보를 사용합니다.\n위치 권한을 허용해주세요.",
+                  messageType: MessageType.OK,
+                ));
 
-    // 명시적으로 권한부여 메시지를 띄움
+        await openAppSettings();
+        Navigator.pop(context);
+      }
+    });
+
     if (Platform.isAndroid) {
-      await BeaconsPlugin.setDisclosureDialogMessage(
-          title: "권한 요청", message: "해당 앱은 블루투스를 찾기 위해 위치 정보를 사용합니다.");
+      BeaconsPlugin.addRegion("Pcube+", "e2c56db5-dffb-48d2-b060-d0f5a71096e0")
+          .then((value) => print("비콘 등록 완료"));
+      BeaconsPlugin.addBeaconLayoutForAndroid(
+          "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
 
-      await BeaconsPlugin.clearDisclosureDialogShowFlag(true);
+      BeaconsPlugin.setForegroundScanPeriodForAndroid(
+          foregroundScanPeriod: 1100, foregroundBetweenScanPeriod: 100);
+
+      BeaconsPlugin.setBackgroundScanPeriodForAndroid(
+          backgroundScanPeriod: 1100, backgroundBetweenScanPeriod: 100);
+
+      //   BeaconsPlugin.channel.setMethodCallHandler((call) async {
+      //     print("함수: ${call.method}");
+      //     if (call.method == 'scannerReady') {
+      //       print("준비됨");
+      //     }
+      //   });
+    } else if (Platform.isIOS) {
+      BeaconsPlugin.addRegionForIOS(
+          "e2c56db5-dffb-48d2-b060-d0f5a71096e0", 40011, 32023, "Pcube+");
     }
 
-    if (Platform.isAndroid) {
-      BeaconsPlugin.channel.setMethodCallHandler((call) async {
-        print("함수: ${call.method}");
-        if (call.method == 'scannerReady') {
-          print("준비됨");
-        }
-      });
-    }
-
-    print("모니터링 시작");
     BeaconsPlugin.setDebugLevel(2);
-
-    // 스캔 시 함수 호출 세팅
     BeaconsPlugin.listenToBeacons(beaconEventsController);
-
-    // UUID 변경 금지
-    print("비콘 등록중");
-    await BeaconsPlugin.addRegion(
-            "Pcube+", "e2c56db5-dffb-48d2-b060-d0f5a71096e0")
-        .then((value) => print("비콘 등록 완료"));
-
-    // iBeacon은 Andriod에서 필요
-    print("레이아웃 등록");
-    await BeaconsPlugin.addBeaconLayoutForAndroid(
-        "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
-
-    // foreground 세팅
-    print("시간 세팅 등록");
-    await BeaconsPlugin.setForegroundScanPeriodForAndroid(
-        foregroundScanPeriod: 1100, foregroundBetweenScanPeriod: 100);
-
-    // background 세팅
-    BeaconsPlugin.setBackgroundScanPeriodForAndroid(
-        backgroundScanPeriod: 1100, backgroundBetweenScanPeriod: 100);
 
     // 스캔 시 지속적으로 불리는 함수
     beaconEventsController.stream.listen(
@@ -158,7 +156,6 @@ class _AttendancePageState extends State<AttendancePage>
             setState(() {
               _beaconResult = data;
             });
-            //await BeaconsPlugin.stopMonitoring();
           }
 
           if (!_isInForeground) {
@@ -184,75 +181,77 @@ class _AttendancePageState extends State<AttendancePage>
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return DefaultFutureBuilder(
-      fetchData: AttendanceCheckApi(widget.attendanceId).get(),
-      showFunction: (AttendanceCheck? data) => DefaultPage(
-        title: "출석체크",
-        appbar: DefaultAppBar(),
-        content: DefaultContent(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "오늘의 출석체크",
-                style: theme.textTheme.headlineSmall!.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              SizedBox(height: 8),
-              // 출석체크 기간일 때
-              if (widget.shouldCheck)
-                _shouldCheckWidget(theme, data?.attendance)
-              // 출석체크 기간이 아닐 때
-              else
-                RoundedBorder(
-                  height: 270,
-                  color: theme.dialogBackgroundColor,
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "오늘은 정기회의가 없어요.",
-                          style: theme.textTheme.displayMedium!.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "출석체크가 제대로 조회되지 않는 경우\n임원진에게 문의해주세요.",
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.displaySmall!.copyWith(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )
-                      ],
-                    ),
+    return DefaultPage(
+      content: DefaultFutureBuilder(
+        fetchData: AttendanceCheckApi(widget.attendanceId).get(),
+        showFunction: (AttendanceCheck? data) => DefaultPage(
+          title: "출석체크",
+          appbar: DefaultAppBar(),
+          content: DefaultContent(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "오늘의 출석체크",
+                  style: theme.textTheme.headlineSmall!.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-              SizedBox(height: 56),
-              Text(
-                "지난 출석",
-                style: theme.textTheme.headlineSmall!.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+                SizedBox(height: 8),
+                // 출석체크 기간일 때
+                if (widget.shouldCheck)
+                  _shouldCheckWidget(theme, data?.attendance)
+                // 출석체크 기간이 아닐 때
+                else
+                  RoundedBorder(
+                    height: 270,
+                    color: theme.dialogBackgroundColor,
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "오늘은 정기회의가 없어요.",
+                            style: theme.textTheme.displayMedium!.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            "출석체크가 제대로 조회되지 않는 경우\n임원진에게 문의해주세요.",
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.displaySmall!.copyWith(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                SizedBox(height: 56),
+                Text(
+                  "지난 출석",
+                  style: theme.textTheme.headlineSmall!.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              RoundedBorder(
-                padding: const EdgeInsets.all(24),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _getPreviousAttendance(theme, data?.recordList),
+                SizedBox(height: 8),
+                RoundedBorder(
+                  padding: const EdgeInsets.all(24),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _getPreviousAttendance(theme, data?.recordList),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

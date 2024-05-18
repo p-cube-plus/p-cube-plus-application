@@ -26,7 +26,7 @@ class _DefaultFutureBuilderState extends State<DefaultFutureBuilder> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             if (widget.skeletonLoader == null)
-              return SizedBox(height: 600);
+              return SizedBox();
             else
               return widget.skeletonLoader!;
           }

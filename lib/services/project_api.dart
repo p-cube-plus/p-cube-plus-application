@@ -3,10 +3,10 @@ import '../models/project.dart';
 import 'base/pcube_api.dart';
 
 class ProjectListApi {
-  Future<Project> get() async {
+  Future<List<Project>> get() async {
     var response = await PCubeApi("/project").get();
     return JsonUtil.instance
-        .convertTo<Project>(Project.fromJson, response.body);
+        .convertToList<Project>(Project.fromJson, response.body);
   }
 }
 

@@ -8,6 +8,7 @@ import 'package:p_cube_plus_application/providers/api_provider/schedule_provider
 import 'package:p_cube_plus_application/providers/api_provider/user_profile_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_project_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_warning_provider.dart';
+import 'package:p_cube_plus_application/providers/api_provider/warning_provider.dart';
 import 'package:p_cube_plus_application/providers/token_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/fee_provider.dart';
 import 'package:p_cube_plus_application/providers/view_provider/setting_provider.dart';
@@ -24,6 +25,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => TokenProvider()),
+      ChangeNotifierProvider(create: (_) => WarningProvider()),
       ChangeNotifierProvider(create: (_) => FeeProvider()),
       ChangeNotifierProvider(create: (_) => NoticeProvider()),
       ChangeNotifierProvider(create: (_) => ProjectProvider()),

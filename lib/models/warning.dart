@@ -2,12 +2,12 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 class Warning {
-  final Map<int, String> warningCategory;
+  final Map<String, String> warningCategory;
   final List<WarningInfo> warningAddList;
   final List<WarningInfo> warningRemoveList;
-  final double totalWarning;
-  final double totalAddWarning;
-  final double totalRemoveWarning;
+  final int totalWarning;
+  final int totalAddWarning;
+  final int totalRemoveWarning;
 
   Warning({
     required this.warningCategory,
@@ -20,9 +20,13 @@ class Warning {
 
   factory Warning.fromJson(Map<String, dynamic> json) {
     return Warning(
-      warningCategory: json['warning_category'],
-      warningAddList: json['warning_add_list'],
-      warningRemoveList: json['warning_remove_list'],
+      warningCategory: Map<String, String>.from(json['warning_category']),
+      warningAddList: (json['warning_add_list'] as List)
+          .map<WarningInfo>((data) => WarningInfo.fromJson(data))
+          .toList(),
+      warningRemoveList: (json['warning_remove_list'] as List)
+          .map<WarningInfo>((data) => WarningInfo.fromJson(data))
+          .toList(),
       totalWarning: json['total_warning'],
       totalAddWarning: json['total_add_warning'],
       totalRemoveWarning: json['total_remove_warning'],
