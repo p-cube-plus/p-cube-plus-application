@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/project.dart';
-import '../../utilities/contants.dart' as Constants;
+import '../../remote/models/project_dto.dart';
+import '../../common/utils/contants.dart' as Constants;
 import '../../widgets/common/default_profile.dart';
 import '../../widgets/common/default_textField.dart';
 import '../../widgets/common/rounded_border.dart';
@@ -13,7 +13,7 @@ class ProjectChatPage extends StatelessWidget {
     Key? key,
     required this.project,
   }) : super(key: key);
-  final Project project;
+  final ProjectDTO project;
   final bool hasContent = true;
 
   @override
@@ -165,8 +165,8 @@ class _ProjectChatTextBarState extends State<_ProjectChatTextBar> {
               // send chat
               _controller.text = "";
             },
-            child: Constants.Icons.GetIcon(
-              Constants.Icons.send,
+            child: Constants.Constants.GetIcon(
+              Constants.Constants.send,
               color: _controller.text != ""
                   ? Theme.of(context).primaryColor
                   : Theme.of(context).textTheme.displaySmall!.color,

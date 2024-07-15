@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/guest/guest_home_page.dart';
 import 'package:p_cube_plus_application/screens/guest/guest_information_page.dart';
 import 'package:p_cube_plus_application/widgets/common/default_alert.dart';
-import '../../utilities/contants.dart' as Constants;
+import '../../common/utils/contants.dart' as Constants;
 
 class GuestMainPage extends StatefulWidget {
   @override
@@ -52,8 +52,10 @@ class _GuestMainPageState extends State<GuestMainPage> {
         selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
         backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
         items: [
-          _getBar("홈", Constants.Icons.home, Constants.Icons.selected_home),
-          _getBar("내 정보", Constants.Icons.user, Constants.Icons.selected_user),
+          _getBar(
+              "홈", Constants.Constants.home, Constants.Constants.selected_home),
+          _getBar("내 정보", Constants.Constants.user,
+              Constants.Constants.selected_user),
         ],
         onTap: (int index) {
           _pageController.jumpToPage(index);
@@ -68,14 +70,14 @@ class _GuestMainPageState extends State<GuestMainPage> {
     return BottomNavigationBarItem(
       icon: Container(
         padding: EdgeInsets.only(bottom: 4),
-        child: Constants.Icons.GetIcon(
+        child: Constants.Constants.GetIcon(
           icon,
           color: theme.bottomNavigationBarTheme.unselectedItemColor,
         ),
       ),
       activeIcon: Container(
         padding: EdgeInsets.only(bottom: 4),
-        child: Constants.Icons.GetIcon(
+        child: Constants.Constants.GetIcon(
           selectedIcon,
           color: theme.bottomNavigationBarTheme.selectedItemColor,
         ),

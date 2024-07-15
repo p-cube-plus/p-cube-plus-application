@@ -118,3 +118,12 @@ class DefaultAlert extends StatelessWidget {
         ));
   }
 }
+
+class DialogBuilder {
+  build(BuildContext context, DefaultAlert alert) {
+    return showDialog(
+      context: context,
+      builder: (context) => alert,
+    );
+  }
+}

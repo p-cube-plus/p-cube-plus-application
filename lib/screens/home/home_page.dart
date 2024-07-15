@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/extensions/DateTimeExtension.dart';
+import 'package:p_cube_plus_application/common/extensions/DateTimeExtension.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:p_cube_plus_application/providers/api_provider/composite/home_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
@@ -22,7 +22,7 @@ import '../../widgets/home/content_summary_view.dart';
 import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
 import '../rent/scan_page.dart';
-import '../../models/rent.dart';
+import '../../remote/models/rent_dto.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -136,7 +136,7 @@ class RentListView extends StatelessWidget {
     required this.rentList,
   }) : super(key: key);
 
-  final List<Rent> rentList;
+  final List<RentDTO> rentList;
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../utilities/contants.dart' as Constants;
+import '../../common/utils/contants.dart' as Constants;
 import '../common/default_profile.dart';
 import '../common/rounded_border.dart';
 
@@ -82,11 +82,13 @@ class InquiryTile extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: Text("1월 1일",
-                          style:
-                              Theme.of(context).textTheme.displaySmall!.copyWith(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400,
-                                  )),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400,
+                              )),
                     ),
                     if (showChat)
                       Stack(children: [
@@ -95,8 +97,8 @@ class InquiryTile extends StatelessWidget {
                             child: Container(
                                 height: 24,
                                 width: 24,
-                                child: Constants.Icons.GetIcon(
-                                    Constants.Icons.general))),
+                                child: Constants.Constants.GetIcon(
+                                    Constants.Constants.general))),
                         if (chatCount != 0)
                           Positioned(
                             left: 16,

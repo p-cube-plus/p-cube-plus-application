@@ -1,80 +1,58 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:p_cube_plus_application/providers/api_provider/notice_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/project_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/schedule_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/user_profile_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/user_project_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/user_warning_provider.dart';
-import 'package:p_cube_plus_application/providers/api_provider/warning_provider.dart';
-import 'package:p_cube_plus_application/providers/token_provider.dart';
-import 'package:p_cube_plus_application/providers/view_provider/fee_provider.dart';
-import 'package:p_cube_plus_application/providers/view_provider/setting_provider.dart';
-import 'package:p_cube_plus_application/providers/view_provider/theme_provider.dart';
-import 'package:p_cube_plus_application/screens/main_page.dart';
-import 'package:p_cube_plus_application/screens/splash_page.dart';
-import 'package:p_cube_plus_application/utilities/theme.dart';
+import 'package:p_cube_plus_application/local/shared_preferences_util.dart';
+import 'package:p_cube_plus_application/presentation/screens/splash_page/splash_page.dart';
+import 'package:p_cube_plus_application/common/utils/theme.dart';
 import 'package:provider/provider.dart';
 
+import 'presentation/models/auth_model.dart';
+
 void main() async {
-  // beacon 설정
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  var themeMode = await SharedPreferencesUtil().getThemeMode();
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => TokenProvider()),
-      ChangeNotifierProvider(create: (_) => WarningProvider()),
-      ChangeNotifierProvider(create: (_) => FeeProvider()),
-      ChangeNotifierProvider(create: (_) => NoticeProvider()),
-      ChangeNotifierProvider(create: (_) => ProjectProvider()),
-      ChangeNotifierProvider(create: (_) => RentProvider()),
-      ChangeNotifierProvider(create: (_) => ScheduleProvider()),
-      ChangeNotifierProvider(create: (_) => SettingProvider()),
-      ChangeNotifierProvider(create: (_) => ThemeProvider()),
-      ChangeNotifierProvider(create: (_) => UserProfileProvider()),
-      ChangeNotifierProvider(create: (_) => UserProjectProvider()),
-      ChangeNotifierProvider(create: (_) => UserWarningProvider()),
-      ChangeNotifierProvider(create: (_) => UserProjectListProvider()),
+      ChangeNotifierProvider(create: (context) => AuthModel()),
     ],
-    child: MyApp(),
+    child: AppStartWidget(themeMode),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class AppStartWidget extends StatelessWidget {
+  final theme;
+  const AppStartWidget(this.theme);
+
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    SystemChrome.setSystemUIOverlayStyle(
-        themeProvider.brightness == Brightness.light
-            ? SystemUiOverlayStyle.dark.copyWith(
-                systemStatusBarContrastEnforced: false,
-                systemNavigationBarContrastEnforced: false,
-                statusBarColor: Colors.transparent,
-              )
-            : SystemUiOverlayStyle.light.copyWith(
-                systemStatusBarContrastEnforced: false,
-                systemNavigationBarContrastEnforced: false,
-                statusBarColor: Colors.transparent,
-              ));
-
+    _setStatusBarTransparent();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'PCube+', // 탭 이름
-      themeMode: themeProvider.type,
+      title: 'PCube+',
+      themeMode: theme,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      home: MainPage(), //AttendencePage(), //ExecutivePage(),
-      scrollBehavior: _RemoveGlowEffect(),
+      scrollBehavior: _RemoveScrollGlowEffect(),
+      home: SplashPage(),
     );
+  }
+
+  void _setStatusBarTransparent() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemStatusBarContrastEnforced: false,
+      systemNavigationBarContrastEnforced: false,
+      statusBarColor: Colors.transparent,
+    ));
   }
 }
 
-class _RemoveGlowEffect extends MaterialScrollBehavior {
+class _RemoveScrollGlowEffect extends MaterialScrollBehavior {
   @override
   Widget buildOverscrollIndicator(
-          BuildContext context, Widget child, ScrollableDetails details) =>
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) =>
       child;
 }

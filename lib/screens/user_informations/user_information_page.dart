@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/models/user/user_profile.dart';
-import 'package:p_cube_plus_application/models/user/user_project.dart';
+import 'package:p_cube_plus_application/remote/models/user_profile_dto.dart';
+import 'package:p_cube_plus_application/remote/models/user_project_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/composite/user_data_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_profile_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_project_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_warning_provider.dart';
 import 'package:p_cube_plus_application/screens/user_informations/caution_list_page.dart';
-import 'package:p_cube_plus_application/utilities/num_tools.dart';
+import 'package:p_cube_plus_application/common/utils/num_tools.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:provider/provider.dart';
@@ -135,7 +135,7 @@ class InformationList extends StatelessWidget {
                       children: List.generate(
                         data[#UserProjectProvider].data.length,
                         (index) {
-                          UserProject project =
+                          UserProjectDTO project =
                               data[#UserProjectProvider].data[index];
 
                           return Padding(
@@ -189,7 +189,7 @@ class InformationList extends StatelessWidget {
 class ProfileView extends StatelessWidget {
   ProfileView({Key? key, required this.userData}) : super(key: key);
 
-  UserProfile userData;
+  UserProfileDTO userData;
 
   @override
   Widget build(BuildContext context) {

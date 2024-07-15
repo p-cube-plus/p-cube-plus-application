@@ -1,30 +1,31 @@
-import 'package:p_cube_plus_application/models/project.dart';
-import 'package:p_cube_plus_application/models/user/user_project.dart';
+import 'package:p_cube_plus_application/remote/models/project_dto.dart';
+import 'package:p_cube_plus_application/remote/models/user_project_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'package:p_cube_plus_application/services/project_api.dart';
 import 'package:p_cube_plus_application/services/user_api.dart';
 
-class UserProjectProvider extends ApiProviderBase<List<UserProject>> {
+class UserProjectProvider extends ApiProviderBase<List<UserProjectDTO>> {
   UserProjectProvider() : super(getFunction: UserProjectApi().get);
 
   @override
-  Future<List<UserProject>> refresh({Map<String, String>? queryParams}) async {
+  Future<List<UserProjectDTO>> refresh(
+      {Map<String, String>? queryParams}) async {
     return await super.refresh(queryParams: queryParams);
   }
 }
 
-class UserProjectListProvider extends ApiProviderBase<List<Project>> {
+class UserProjectListProvider extends ApiProviderBase<List<ProjectDTO>> {
   UserProjectListProvider() : super(getFunction: ProjectListApi().get);
 
   @override
-  Future<List<Project>> refresh({
+  Future<List<ProjectDTO>> refresh({
     Map<String, String>? queryParams,
     bool? isAll,
   }) async {
     return await super.refresh(queryParams: queryParams);
   }
 
-  List<Project> getProjectListByType(int type) {
+  List<ProjectDTO> getProjectListByType(int type) {
     return data.where((element) => element.type == type).toList();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/models/warning.dart';
+import 'package:p_cube_plus_application/remote/models/warning_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/warning_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
@@ -31,7 +31,7 @@ class CautionListPage extends StatelessWidget {
       refreshFunction: warningProvider.refresh,
       child: DefaultFutureBuilder(
         fetchData: warningProvider.fetch(),
-        showFunction: (Warning warning) => DefaultPage(
+        showFunction: (WarningDTO warning) => DefaultPage(
           title: "경고 현황",
           appbar: DefaultAppBar(),
           content: DefaultContent(
@@ -69,7 +69,7 @@ class CautionListView extends StatelessWidget {
 
   final String title;
   final int mode;
-  final Warning warning;
+  final WarningDTO warning;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,7 @@ class CautionSummaryView extends StatelessWidget {
     required this.warning,
   }) : super(key: key);
 
-  final Warning warning;
+  final WarningDTO warning;
 
   @override
   Widget build(BuildContext context) {

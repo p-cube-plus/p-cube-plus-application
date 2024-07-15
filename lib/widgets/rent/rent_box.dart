@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/rent.dart';
+import '../../remote/models/rent_dto.dart';
 import '../common/rounded_border.dart';
 
 class RentBox extends StatelessWidget {
@@ -9,7 +9,7 @@ class RentBox extends StatelessWidget {
     required this.rent,
   }) : super(key: key);
 
-  final Rent rent;
+  final RentDTO rent;
 
   @override
   Widget build(BuildContext context) {

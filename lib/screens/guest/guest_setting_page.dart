@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/view_provider/theme_provider.dart';
-import 'package:p_cube_plus_application/screens/login/login_page.dart';
+import 'package:p_cube_plus_application/view/login_page/login_page.dart';
 import 'package:p_cube_plus_application/screens/settings/setting_page.dart';
 import 'package:p_cube_plus_application/widgets/common/default_bottomsheet.dart';
 import 'package:p_cube_plus_application/widgets/common/default_profile.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/utilities/theme.dart';
+import 'package:p_cube_plus_application/common/utils/theme.dart';
 import 'calendar_day_cell.dart';
 
 class CalendarView extends StatefulWidget {

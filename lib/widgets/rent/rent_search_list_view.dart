@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:provider/provider.dart';
-import '../../models/rent.dart';
+import '../../remote/models/rent_dto.dart';
 import '../../screens/rent/rent_detail_page.dart';
 import 'rent_box.dart';
 
@@ -12,7 +12,7 @@ class RentSearchListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rentProvider = context.read<RentProvider>();
-    return FutureBuilder<List<Rent>>(
+    return FutureBuilder<List<RentDTO>>(
       future: rentProvider.searchRentList(productName),
       builder: (context, snapshot) {
         if (snapshot.hasData) {

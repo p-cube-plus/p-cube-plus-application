@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login/login_page.dart';
+import '../view/login_page/login_page.dart';
 
 class LogoutPage extends StatelessWidget {
   @override

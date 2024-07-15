@@ -6,7 +6,7 @@ import 'package:p_cube_plus_application/widgets/rent/rent_button.dart';
 import 'package:p_cube_plus_application/widgets/rent/rented_box.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/rent.dart';
+import '../../remote/models/rent_dto.dart';
 
 class RentedItemListView extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class RentedItemListView extends StatelessWidget {
       refreshFunction: rentProvider.refresh,
       child: DefaultFutureBuilder(
           fetchData: rentProvider.fetch(),
-          showFunction: (List<Rent> data) => Column(
+          showFunction: (List<RentDTO> data) => Column(
                 children: [
                   Expanded(
                     child: ListView.builder(

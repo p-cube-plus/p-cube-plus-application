@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../models/rent.dart';
+import '../../remote/models/rent_dto.dart';
 import '../common/rounded_border.dart';
 import '../page/default_appbar.dart';
 import '../page/default_page.dart';
 
 class RentedDetail extends StatelessWidget {
   const RentedDetail({required this.rent});
-  final Rent rent;
+  final RentDTO rent;
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
@@ -97,12 +97,14 @@ class RentedDetailTile extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text("반납까지 ",
-                                    style: theme.textTheme.displayLarge!.copyWith(
+                                    style:
+                                        theme.textTheme.displayLarge!.copyWith(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                     )),
                                 Text(returnText! + "일",
-                                    style: theme.textTheme.displayLarge!.copyWith(
+                                    style:
+                                        theme.textTheme.displayLarge!.copyWith(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:p_cube_plus_application/models/message.dart';
+import 'package:p_cube_plus_application/remote/models/message_dto.dart';
 import 'package:p_cube_plus_application/screens/logout_page.dart';
 import 'package:p_cube_plus_application/services/auth_api.dart';
-import 'package:p_cube_plus_application/utilities/token_manager.dart';
+import 'package:p_cube_plus_application/remote/utils/token_manager.dart';
 import 'package:p_cube_plus_application/widgets/common/default_profile.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -261,7 +261,7 @@ class SettingPage extends StatelessWidget {
                             messageType: MessageType.OKCancel,
                             description: "정말 로그아웃 하시겠습니까?",
                             onTap: () async {
-                              Message? message = await logoutApi.delete();
+                              MessageDTO? message = await logoutApi.delete();
 
                               if (message != null) {
                                 var tokenManager = TokenManager();

@@ -3,17 +3,17 @@ import 'dart:io' show Platform;
 import 'package:beacons_plugin/beacons_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/extensions/DateTimeExtension.dart';
-import 'package:p_cube_plus_application/extensions/StringExtension.dart';
-import 'package:p_cube_plus_application/models/attendance.dart';
-import 'package:p_cube_plus_application/models/attendanceCheck.dart';
+import 'package:p_cube_plus_application/common/extensions/DateTimeExtension.dart';
+import 'package:p_cube_plus_application/common/extensions/StringExtension.dart';
+import 'package:p_cube_plus_application/remote/models/attendance.dart';
+import 'package:p_cube_plus_application/remote/models/attendance_dto.dart';
 import 'package:p_cube_plus_application/models/enum/state_type.dart';
 import 'package:p_cube_plus_application/services/attendance_api.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/list_divider.dart';
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../utilities/theme.dart';
+import '../../common/utils/theme.dart';
 import '../../widgets/common/default_alert.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
@@ -184,7 +184,7 @@ class _AttendancePageState extends State<AttendancePage>
     return DefaultPage(
       content: DefaultFutureBuilder(
         fetchData: AttendanceCheckApi(widget.attendanceId).get(),
-        showFunction: (AttendanceCheck? data) => DefaultPage(
+        showFunction: (AttendanceCheckDTO? data) => DefaultPage(
           title: "출석체크",
           appbar: DefaultAppBar(),
           content: DefaultContent(
@@ -258,7 +258,7 @@ class _AttendancePageState extends State<AttendancePage>
     );
   }
 
-  Widget _shouldCheckWidget(ThemeData theme, Attendance? attendance) {
+  Widget _shouldCheckWidget(ThemeData theme, AttendanceDTO? attendance) {
     return RoundedBorder(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Column(
@@ -460,7 +460,7 @@ class _AttendancePageState extends State<AttendancePage>
   /// 출석날이 해당 주에 없다면 오늘을 기준으로 몇 주 전인지 보여준다.
   /// 출석날이 있다면 해당 날짜로 보여준다.
   List<Widget> _getPreviousAttendance(
-      ThemeData theme, List<AttendanceState>? data) {
+      ThemeData theme, List<AttendanceStateDTO>? data) {
     List<Widget> result = [];
     List<DateTime> validDateList = [
       DateTime.now(),

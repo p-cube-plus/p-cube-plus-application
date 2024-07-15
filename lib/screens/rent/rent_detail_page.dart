@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../models/rent.dart';
+import '../../remote/models/rent_dto.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_page.dart';
@@ -10,7 +10,7 @@ class RentDetailPage extends StatelessWidget {
     Key? key,
     required this.rent,
   }) : super(key: key);
-  final Rent rent;
+  final RentDTO rent;
 
   Widget _defaultText(BuildContext context, String text) {
     return Text(

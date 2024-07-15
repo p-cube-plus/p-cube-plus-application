@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:p_cube_plus_application/models/due.dart';
+import 'package:p_cube_plus_application/viewmodel/models/due.dart';
 import 'package:provider/provider.dart';
 import '../../providers/view_provider/fee_provider.dart';
-import '../../utilities/contants.dart' as Constants;
+import '../../common/utils/contants.dart' as Constants;
 import '../../widgets/common/default_bottomsheet.dart';
 import '../../widgets/common/list_divider.dart';
 import '../../widgets/common/rounded_border.dart';
@@ -176,7 +176,7 @@ class AccountInfo extends StatelessWidget {
                                   fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      Constants.Icons.GetIcon(Constants.Icons.copy)
+                      Constants.Constants.GetIcon(Constants.Constants.copy)
                     ],
                   ),
                 )
@@ -281,7 +281,8 @@ class DuesDetail extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(right: 16),
-                    child: Constants.Icons.GetIcon(Constants.Icons.pcube_logo),
+                    child: Constants.Constants.GetIcon(
+                        Constants.Constants.pcube_logo),
                   ),
                   Text(dueItemList[i].name),
                 ],

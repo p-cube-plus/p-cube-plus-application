@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/utilities/error_message.dart';
+import 'package:p_cube_plus_application/common/utils/error_message.dart';
 import 'package:p_cube_plus_application/widgets/common/default_scrollView.dart';
 
 class DefaultFutureBuilder extends StatefulWidget {

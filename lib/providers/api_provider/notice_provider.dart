@@ -1,4 +1,4 @@
-import 'package:p_cube_plus_application/models/notification_node.dart';
+import 'package:p_cube_plus_application/remote/models/notification_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'package:p_cube_plus_application/services/user_api.dart';
 
@@ -7,12 +7,12 @@ enum SortType {
   Descending,
 }
 
-class NoticeProvider extends ApiProviderBase<List<NotificationNode>> {
+class NoticeProvider extends ApiProviderBase<List<NotificationDTO>> {
   NoticeProvider() : super(getFunction: NoticeListApi().get);
 
   SortType _sortType = SortType.Ascending;
 
-  void addNotice(NotificationNode notice) async {
+  void addNotice(NotificationDTO notice) async {
     // TODO: DB에 알림 추가
 
     _sort();

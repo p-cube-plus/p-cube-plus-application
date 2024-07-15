@@ -7,8 +7,7 @@ import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
 import 'fee_detail_page.dart';
-import '../../utilities/contants.dart' as Constants;
-
+import '../../common/utils/contants.dart' as Constants;
 
 _getImage(StateType type, double size) {
   return Image.asset("assets/images/${type.toString().split('.').last}.png",
@@ -156,7 +155,8 @@ class MonthFee extends StatelessWidget {
                                         fontWeight: FontWeight.w500),
                               ),
                             ),
-                            Constants.Icons.GetIcon(Constants.Icons.copy)
+                            Constants.Constants.GetIcon(
+                                Constants.Constants.copy)
                           ],
                         ),
                       )
@@ -262,8 +262,11 @@ class _YearCalenderState extends State<YearCalender> {
                               child: Icon(Icons.chevron_left))),
                       Text(
                         _curYear.toString() + "년",
-                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(
+                                fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       Padding(
                           padding: EdgeInsets.only(right: 22.5),
@@ -339,8 +342,11 @@ class FeeInfo extends StatelessWidget {
                 Row(
                   children: [
                     Text("자세히 보기",
-                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                            fontSize: 12, fontWeight: FontWeight.w500)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                fontSize: 12, fontWeight: FontWeight.w500)),
                     Icon(Icons.chevron_right)
                   ],
                 )

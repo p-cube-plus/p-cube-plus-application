@@ -3,7 +3,7 @@ import 'package:p_cube_plus_application/providers/api_provider/user_project_prov
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:provider/provider.dart';
-import '../../models/project.dart';
+import '../../remote/models/project_dto.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
@@ -22,7 +22,7 @@ class ProjectListPage extends StatelessWidget {
       refreshFunction: projectProvider.refresh,
       child: DefaultFutureBuilder(
         fetchData: projectProvider.fetch(),
-        showFunction: (List<Project> projects) => DefaultPage(
+        showFunction: (List<ProjectDTO> projects) => DefaultPage(
           title: "참여 프로젝트",
           appbar: DefaultAppBar(),
           content: (projects.length == 0)
@@ -49,7 +49,7 @@ class ProjectListView extends StatelessWidget {
     required this.projects,
   }) : super(key: key);
 
-  final List<Project> projects;
+  final List<ProjectDTO> projects;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class ProjectListView extends StatelessWidget {
       children: List.generate(
         projects.length,
         (index) {
-          Project project = projects[index];
+          ProjectDTO project = projects[index];
 
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),

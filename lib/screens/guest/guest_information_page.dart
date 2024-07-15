@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/guest/guest_notion_webview_page.dart';
 import 'package:p_cube_plus_application/screens/guest/guest_setting_page.dart';
-import 'package:p_cube_plus_application/screens/login/authentication_page.dart';
+import 'package:p_cube_plus_application/view/authentication_page/authentication_page.dart';
 import 'package:p_cube_plus_application/widgets/common/default_profile.dart';
 import 'package:p_cube_plus_application/widgets/common/list_divider.dart';
 import 'package:p_cube_plus_application/widgets/page/default_page.dart';

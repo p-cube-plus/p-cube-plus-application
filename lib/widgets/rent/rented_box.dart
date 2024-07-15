@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/widgets/rent/rented_detail.dart';
 
-import '../../models/rent.dart';
+import '../../remote/models/rent_dto.dart';
 import '../common/rounded_border.dart';
 
 class RentedBox extends StatelessWidget {
@@ -10,7 +10,7 @@ class RentedBox extends StatelessWidget {
     required this.rent,
   }) : super(key: key);
 
-  final Rent rent;
+  final RentDTO rent;
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,11 @@ class RentedBox extends StatelessWidget {
                             "." +
                             date.day.toString() +
                             " 에 대여함",
-                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                            fontSize: 11, fontWeight: FontWeight.w400))
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                fontSize: 11, fontWeight: FontWeight.w400))
                   ],
                 ),
               ),

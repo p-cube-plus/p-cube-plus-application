@@ -1,16 +1,16 @@
 import 'package:flutter/services.dart';
-import 'package:p_cube_plus_application/models/home_schedule.dart';
+import 'package:p_cube_plus_application/remote/models/home_schedule_dto.dart';
 import 'package:p_cube_plus_application/models/schedule.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'package:p_cube_plus_application/services/home_api.dart';
 
-class ScheduleProvider extends ApiProviderBase<HomeSchedule> {
+class ScheduleProvider extends ApiProviderBase<HomeScheduleDTO> {
   ScheduleProvider() : super(getFunction: HomeScheduleApi().get);
   int _cachedYear = -1, _cachedMonth = -1;
   Map<int, Color>? _cachedMonthSchedule;
 
   @override
-  Future<HomeSchedule> refresh({Map<String, String>? queryParams}) async {
+  Future<HomeScheduleDTO> refresh({Map<String, String>? queryParams}) async {
     return await super.refresh(queryParams: queryParams);
   }
 
@@ -34,7 +34,9 @@ class ScheduleProvider extends ApiProviderBase<HomeSchedule> {
       for (DateTime iterDate = startDate;
           iterDate.compareTo(endDate) <= 0;
           iterDate = iterDate.add(const Duration(days: 1))) {
-        if (iterDate.year == year && iterDate.month == month && !result.containsKey(iterDate.day)) {
+        if (iterDate.year == year &&
+            iterDate.month == month &&
+            !result.containsKey(iterDate.day)) {
           result[iterDate.day] = schedule.getMarkColor();
         }
       }
@@ -44,11 +46,11 @@ class ScheduleProvider extends ApiProviderBase<HomeSchedule> {
     return result;
   }
 
-  List<Schedule> getUpcomingSchedule() {
+  List<ScheduleDTO> getUpcomingSchedule() {
     return data.upcomingList;
   }
 
-  List<Schedule> getSelectScheduleList(DateTime selectedDateTime) {
+  List<ScheduleDTO> getSelectScheduleList(DateTime selectedDateTime) {
     return data.allList
         .where((schedule) => isDateTimeInRange(selectedDateTime,
             schedule.startDate, schedule.endDate ?? schedule.startDate))

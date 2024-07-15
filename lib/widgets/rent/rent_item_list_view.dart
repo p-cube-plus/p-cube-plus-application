@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/models/rent.dart';
+import 'package:p_cube_plus_application/remote/models/rent_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
@@ -30,7 +30,7 @@ class RentItemView extends StatelessWidget {
       refreshFunction: rentProvider.refresh,
       child: DefaultFutureBuilder(
           fetchData: rentProvider.fetch(),
-          showFunction: (List<Rent> data) => Column(
+          showFunction: (List<RentDTO> data) => Column(
               mainAxisSize: MainAxisSize.min,
               children: List.generate(
                 data.length,

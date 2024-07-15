@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../models/project.dart';
+import '../../remote/models/project_dto.dart';
 import '../../screens/projects/project_detail_page.dart';
 import '../common/default_profile.dart';
 import '../common/rounded_border.dart';
@@ -13,7 +13,7 @@ class ProjectView extends StatelessWidget {
     this.showState,
   }) : super(key: key);
 
-  final Project project;
+  final ProjectDTO project;
   final bool? showState;
 
   @override

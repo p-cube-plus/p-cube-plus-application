@@ -6,7 +6,7 @@ import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/notification_node.dart';
+import '../../remote/models/notification_dto.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_page.dart';
 import '../../widgets/page/default_tabbar.dart';
@@ -63,7 +63,7 @@ class NoticeListView extends StatelessWidget {
     required this.noticeList,
   }) : super(key: key);
 
-  final List<NotificationNode> noticeList;
+  final List<NotificationDTO> noticeList;
   final bool isNew;
 
   @override
@@ -84,7 +84,7 @@ class NoticeListView extends StatelessWidget {
 class NoticeBoxWidget extends StatelessWidget {
   const NoticeBoxWidget({required this.isNew, required this.box});
 
-  final NotificationNode box;
+  final NotificationDTO box;
   final bool isNew;
 
   @override

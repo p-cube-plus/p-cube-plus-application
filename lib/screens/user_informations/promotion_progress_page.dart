@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/providers/api_provider/composite/user_data_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
-import '../../utilities/contants.dart' as Constants;
+import '../../common/utils/contants.dart' as Constants;
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_content.dart';
@@ -116,7 +116,7 @@ class PromotionRequirement extends StatelessWidget {
                       ),
                     ),
                     if (requirement.isDone)
-                      Constants.Icons.GetIcon(Constants.Icons.check),
+                      Constants.Constants.GetIcon(Constants.Constants.check),
                   ],
                 ),
                 if (requirement.description != null)

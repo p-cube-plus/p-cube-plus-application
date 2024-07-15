@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../utilities/contants.dart' as Constants;
+import '../../../common/utils/contants.dart' as Constants;
 
 class CalendarHeader extends StatelessWidget {
   const CalendarHeader({
@@ -32,8 +32,8 @@ class CalendarHeader extends StatelessWidget {
                 child: SizedBox(
                   height: 12.0,
                   width: 12.0,
-                  child: Constants.Icons.GetIcon(
-                    Constants.Icons.left_arrow,
+                  child: Constants.Constants.GetIcon(
+                    Constants.Constants.left_arrow,
                     color: theme.textTheme.displaySmall!.color,
                   ),
                 ),
@@ -71,8 +71,8 @@ class CalendarHeader extends StatelessWidget {
                 child: SizedBox(
                   height: 12.0,
                   width: 12.0,
-                  child: Constants.Icons.GetIcon(
-                    Constants.Icons.right_arrow,
+                  child: Constants.Constants.GetIcon(
+                    Constants.Constants.right_arrow,
                     color: theme.textTheme.displaySmall!.color,
                   ),
                 ),

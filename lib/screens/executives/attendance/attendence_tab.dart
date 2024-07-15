@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:p_cube_plus_application/utilities/theme.dart';
+import 'package:p_cube_plus_application/common/utils/theme.dart';
 import 'package:p_cube_plus_application/widgets/common/rounded_border.dart';
-import '../../../utilities/contants.dart' as Constants;
+import '../../../common/utils/contants.dart' as Constants;
 import '../../../widgets/common/default_bottomsheet.dart';
 
 class AttendenceAll extends StatelessWidget {
@@ -27,10 +27,11 @@ class AttendenceAll extends StatelessWidget {
                     children: [
                       Text(
                         "회원 이름을 검색해보세요",
-                        style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displaySmall!.copyWith(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                       ),
                       Image.asset(
                         "assets/images/search.png",
@@ -56,7 +57,7 @@ class AttendenceAll extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Constants.Icons.GetIcon(Constants.Icons.filter),
+                    Constants.Constants.GetIcon(Constants.Constants.filter),
                     SizedBox(width: 8),
                     Text(
                       "필터",
@@ -311,10 +312,11 @@ class AttendenceAll extends StatelessWidget {
                     onPressed: () {},
                     child: Text(
                       "필터 적용하기",
-                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                      style:
+                          Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
                     )),
               ),
             ],

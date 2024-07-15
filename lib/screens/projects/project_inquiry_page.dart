@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/projects/project_chat_page.dart';
-import '../../models/project.dart';
+import '../../remote/models/project_dto.dart';
 import '../../widgets/common/default_bottomsheet.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
 import '../../widgets/project/inquiry_tile.dart';
-import '../../utilities/contants.dart' as Constants;
+import '../../common/utils/contants.dart' as Constants;
 
 class ProjectInquiryPage extends StatelessWidget {
   const ProjectInquiryPage({
@@ -17,7 +17,7 @@ class ProjectInquiryPage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final Project project;
+  final ProjectDTO project;
   final int inquiryCount;
   final bool isPM;
 
@@ -154,7 +154,7 @@ class _StatusTileState extends State<_StatusTile> {
 
 class _FloatingInquiryButton extends StatelessWidget {
   const _FloatingInquiryButton({required this.project});
-  final Project project;
+  final ProjectDTO project;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +174,7 @@ class _FloatingInquiryButton extends StatelessWidget {
         highlightElevation: 7.68,
         child: Padding(
           padding: EdgeInsets.all(16),
-          child: Constants.Icons.GetIcon(Constants.Icons.pencil),
+          child: Constants.Constants.GetIcon(Constants.Constants.pencil),
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),

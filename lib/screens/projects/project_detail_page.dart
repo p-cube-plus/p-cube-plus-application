@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/projects/project_inquiry_page.dart';
-import '../../models/member.dart';
-import '../../models/project.dart';
+import '../../remote/models/member_dto.dart';
+import '../../remote/models/project_dto.dart';
 import '../../widgets/common/default_profile.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
@@ -15,7 +15,7 @@ class ProjectDetailPage extends StatelessWidget {
     Key? key,
     required this.project,
   }) : super(key: key);
-  final Project project;
+  final ProjectDTO project;
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +230,7 @@ class _ProjectDetailMemeberView extends StatelessWidget {
     required this.member,
     this.pm,
   }) : super(key: key);
-  final Member member;
+  final MemberDTO member;
   final bool? pm;
 
   @override

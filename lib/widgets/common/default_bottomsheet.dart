@@ -37,13 +37,18 @@ class DefaultBottomsheet extends StatelessWidget {
   }
 }
 
-
-// showModalBottomSheet(
-//   isScrollControlled: true,
-//             shape: const RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-//             context: context,
-//             builder: (context) => DefaultBottomsheet(
-//                   title: "",
-//                   contents: [],
-//                 )),
+class BottomSheetBuilder {
+  build(BuildContext context, String title,
+      {List<Widget>? contents, double bottomPadding = 56}) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        context: context,
+        builder: (context) => DefaultBottomsheet(
+              title: title,
+              contents: contents,
+              bottomPadding: bottomPadding,
+            ));
+  }
+}
