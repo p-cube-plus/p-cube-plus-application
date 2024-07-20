@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/screens/projects/project_chat_page.dart';
-import '../../remote/models/project_dto.dart';
+import '../../remote_f/models/project_dto.dart';
 import '../../widgets/common/default_bottomsheet.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';

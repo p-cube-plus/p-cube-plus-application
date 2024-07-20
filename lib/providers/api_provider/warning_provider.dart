@@ -1,4 +1,4 @@
-import 'package:p_cube_plus_application/remote/models/warning_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/warning_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'package:p_cube_plus_application/services/warning_api.dart';
 

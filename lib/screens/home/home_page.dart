@@ -22,7 +22,7 @@ import '../../widgets/home/content_summary_view.dart';
 import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';
 import '../rent/scan_page.dart';
-import '../../remote/models/rent_dto.dart';
+import '../../remote_f/models/rent_dto.dart';
 
 class HomePage extends StatelessWidget {
   @override

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/common/extensions/DateTimeExtension.dart';
 import 'package:p_cube_plus_application/common/extensions/StringExtension.dart';
 import 'package:p_cube_plus_application/remote/models/attendance.dart';
-import 'package:p_cube_plus_application/remote/models/attendance_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/attendance_dto.dart';
 import 'package:p_cube_plus_application/models/enum/state_type.dart';
 import 'package:p_cube_plus_application/services/attendance_api.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';

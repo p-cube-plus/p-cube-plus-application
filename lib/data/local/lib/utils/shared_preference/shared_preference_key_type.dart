@@ -1,0 +1,3 @@
+enum PrefKeyType {
+  themeSetting,
+}

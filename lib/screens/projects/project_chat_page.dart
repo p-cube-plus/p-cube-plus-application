@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../remote/models/project_dto.dart';
+import '../../remote_f/models/project_dto.dart';
 import '../../common/utils/contants.dart' as Constants;
 import '../../widgets/common/default_profile.dart';
 import '../../widgets/common/default_textField.dart';

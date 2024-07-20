@@ -3,7 +3,7 @@ import 'package:p_cube_plus_application/providers/api_provider/user_project_prov
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';
 import 'package:provider/provider.dart';
-import '../../remote/models/project_dto.dart';
+import '../../remote_f/models/project_dto.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_content.dart';
 import '../../widgets/page/default_page.dart';

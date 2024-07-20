@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/remote/models/rent_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/rent_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:p_cube_plus_application/widgets/common/default_futureBuilder.dart';
 import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.dart';

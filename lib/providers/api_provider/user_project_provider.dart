@@ -1,5 +1,5 @@
-import 'package:p_cube_plus_application/remote/models/project_dto.dart';
-import 'package:p_cube_plus_application/remote/models/user_project_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/project_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/user_project_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/base/provider_base.dart';
 import 'package:p_cube_plus_application/services/project_api.dart';
 import 'package:p_cube_plus_application/services/user_api.dart';

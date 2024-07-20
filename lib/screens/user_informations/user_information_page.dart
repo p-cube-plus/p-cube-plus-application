@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:p_cube_plus_application/remote/models/user_profile_dto.dart';
-import 'package:p_cube_plus_application/remote/models/user_project_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/user_profile_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/user_project_dto.dart';
 import 'package:p_cube_plus_application/providers/api_provider/composite/user_data_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_profile_provider.dart';
 import 'package:p_cube_plus_application/providers/api_provider/user_project_provider.dart';

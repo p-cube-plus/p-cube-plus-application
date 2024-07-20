@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../remote/models/rent_dto.dart';
+import '../../remote_f/models/rent_dto.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';
 import '../../widgets/page/default_page.dart';

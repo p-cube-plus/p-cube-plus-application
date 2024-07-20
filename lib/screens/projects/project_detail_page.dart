@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:p_cube_plus_application/screens/projects/project_inquiry_page.dart';
-import '../../remote/models/member_dto.dart';
-import '../../remote/models/project_dto.dart';
+import '../../remote_f/models/member_dto.dart';
+import '../../remote_f/models/project_dto.dart';
 import '../../widgets/common/default_profile.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_appbar.dart';

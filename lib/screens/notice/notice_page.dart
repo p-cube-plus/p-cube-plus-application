@@ -6,7 +6,7 @@ import 'package:p_cube_plus_application/widgets/common/default_refreshIndicator.
 import 'package:p_cube_plus_application/widgets/page/default_content.dart';
 import 'package:provider/provider.dart';
 
-import '../../remote/models/notification_dto.dart';
+import '../../remote_f/models/notification_dto.dart';
 import '../../widgets/common/rounded_border.dart';
 import '../../widgets/page/default_page.dart';
 import '../../widgets/page/default_tabbar.dart';

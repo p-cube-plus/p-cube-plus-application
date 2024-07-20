@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:p_cube_plus_application/providers/api_provider/rent_provider.dart';
 import 'package:provider/provider.dart';
-import '../../remote/models/rent_dto.dart';
+import '../../remote_f/models/rent_dto.dart';
 import '../../screens/rent/rent_detail_page.dart';
 import 'rent_box.dart';
 

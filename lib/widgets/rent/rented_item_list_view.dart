@@ -6,7 +6,7 @@ import 'package:p_cube_plus_application/widgets/rent/rent_button.dart';
 import 'package:p_cube_plus_application/widgets/rent/rented_box.dart';
 import 'package:provider/provider.dart';
 
-import '../../remote/models/rent_dto.dart';
+import '../../remote_f/models/rent_dto.dart';
 
 class RentedItemListView extends StatelessWidget {
   @override

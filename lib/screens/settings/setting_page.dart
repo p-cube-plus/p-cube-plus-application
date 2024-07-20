@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:p_cube_plus_application/remote/models/message_dto.dart';
+import 'package:p_cube_plus_application/remote_f/models/message_dto.dart';
 import 'package:p_cube_plus_application/screens/logout_page.dart';
 import 'package:p_cube_plus_application/services/auth_api.dart';
 import 'package:p_cube_plus_application/remote/utils/token_manager.dart';
