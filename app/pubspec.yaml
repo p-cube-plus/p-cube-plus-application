@@ -1,0 +1,70 @@
+name: app
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  presentation:
+    path: ../presentation
+  domain:
+    path: ../domain
+  data:
+    path: ../data
+
+  get_it: ^7.6.7
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.7
+  
+# 앱 아이콘
+# 이미지 설정 후 아래 명령어 사용
+# flutter pub run flutter_launcher_icons:main
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/symbol.png"
+  min_ask_android: 21
+
+# 앱 시작 시 로딩 화면
+# 설정 후 아래 명령어 사용
+# flutter pub run flutter_native_splash:remove
+# flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/images/symbol.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+     - assets/images/
+     - assets/images/icons/
+     - assets/lottie/
+  fonts:
+    - family: SpoqaHanSansNeo
+      fonts:
+        - asset: assets/font/SpoqaHanSansNeo-Thin.ttf
+          weight: 100
+        - asset: assets/font/SpoqaHanSansNeo-Light.ttf
+          weight: 300
+        - asset: assets/font/SpoqaHanSansNeo-Regular.ttf
+          weight: 400
+        - asset: assets/font/SpoqaHanSansNeo-Medium.ttf
+          weight: 500
+        - asset: assets/font/SpoqaHanSansNeo-Bold.ttf
+          weight: 700
+
+# target SDK 변경
+# android local.properties
+
+# 앱 이름 변경 (pcube+)
+# android:label=
+# <key>CFBundleDisplayName</key>

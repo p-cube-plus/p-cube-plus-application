@@ -1,0 +1,64 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+    //id "com.google.firebase.crashlytics"
+}
+
+android {
+    namespace "com.example.app"
+    ndkVersion flutter.ndkVersion
+
+    compileSdkVersion 34
+
+    defaultConfig {
+        applicationId "com.pandora_cube.p_cube_plus"
+        multiDexEnabled = true
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    buildTypes {
+        release {
+            //signingConfig signingConfigs.debug    // flutter run --release 작동 시 debug 설정
+            minifyEnabled true  // 코드 난독화 (proGuard) 적용을 위한 세팅. 코드 크기 줄임.
+            shrinkResources true    // 사용 안 하는 리소스 제거
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            splits.abi.enable = false       // 빌드 시 단일 APK 생성
+            splits.density.enable = false   // 모든 밀도를 포함한 단일 APK 생성
+            aaptOptions.cruncherEnabled = false // 이미지 압축 비활성화
+            ext.alwaysUpdateBuildId = false // 빌드 시 빌드 ID 유지
+            ext.enableCrashlytics = false   // fabric 비활성화
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:29.0.2')
+    implementation 'com.google.firebase:firebase-analytics'
+}

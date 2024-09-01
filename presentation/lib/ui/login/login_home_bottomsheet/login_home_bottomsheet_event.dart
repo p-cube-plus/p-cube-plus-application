@@ -1,0 +1,3 @@
+enum LoginHomeBottomSheetEvent {
+  onClickMemberAgree,
+}
