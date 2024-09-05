@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/theme/text_theme_extension.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 
 class DefaultBottomsheet extends StatelessWidget {
   const DefaultBottomsheet(this.content, {super.key});

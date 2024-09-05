@@ -5,7 +5,6 @@ import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/extensions/future_extension.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_event.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_state.dart';
-import 'package:presentation/ui/splash/splash_page_viewmodel.dart';
 import 'package:presentation/utils/throttler.dart';
 
 class LoginAuthNumberPageViewModel

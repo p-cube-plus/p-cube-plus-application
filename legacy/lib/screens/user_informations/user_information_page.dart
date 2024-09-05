@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../widgets/common/default_profile.dart';
 import '../../widgets/common/rounded_border.dart';
-import '../../widgets/home/content_summary_view.dart';
+import '../../../../presentation/lib/ui/home/home_attendance/content_summary_view.dart';
 import '../../../../presentation/lib/widgets/default_content.dart';
 import '../../widgets/page/default_page.dart';
 import '../user_informations/project_list_page.dart';

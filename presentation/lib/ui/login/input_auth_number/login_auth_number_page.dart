@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:presentation/theme/text_theme_extension.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_event.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_state.dart';
 import 'package:presentation/ui/login/input_user_name/input_name_page_viewmodel.dart';
@@ -16,7 +16,6 @@ import 'package:presentation/widgets/default_text_field.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:provider/provider.dart';
 import 'package:presentation/constants/asset_path.dart' as path;
-import 'package:presentation/constants/app_color.dart' as color;
 
 import 'input_auth_number_page_viewmodel.dart';
 
@@ -109,8 +108,8 @@ class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
                         (viewModel) => viewModel.timerText,
                         (timerText) => Text(
                               timerText,
-                              style: const TextStyle(
-                                color: color.primary80,
+                              style: TextStyle(
+                                color: theme.primary80,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/constants/asset_path.dart' as path;
-import 'package:presentation/constants/app_color.dart' as color;
-import 'package:presentation/theme/text_theme_extension.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 
 class LoginHomeLogoWidget extends StatelessWidget {
   const LoginHomeLogoWidget({super.key});
@@ -27,10 +26,10 @@ class LoginHomeLogoWidget extends StatelessWidget {
                   color: theme.neutral80,
                 ),
               ),
-              const TextSpan(
+              TextSpan(
                 text: "플러스",
                 style: TextStyle(
-                  color: color.primary80,
+                  color: theme.primary80,
                 ),
               ),
               TextSpan(

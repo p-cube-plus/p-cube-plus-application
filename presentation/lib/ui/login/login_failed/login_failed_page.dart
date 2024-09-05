@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/theme/text_theme_extension.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/widgets/default_page.dart';
 
