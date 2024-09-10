@@ -1,52 +1,79 @@
+import 'dart:convert';
+
+import 'package:domain/exception/api_exception.dart';
 import 'package:http/http.dart' as http;
-import 'package:data/remote/models/error/error_dto.dart';
-import 'package:data/utils/json_util.dart';
 import 'header_builder.dart';
 
 class PCubeApi {
-  final Uri _url;
+  final Uri _uri;
 
   PCubeApi(String endPoint)
-      : _url = Uri.parse("http://p-cube-plus.com/$endPoint");
+      : _uri = Uri.parse("http://p-cube-plus.com/$endPoint");
 
   Future<http.Response> get({Map<String, String>? headers}) async =>
-      _sendRequest(() => http.get(_url, headers: _getHeaders(headers)));
+      _sendRequest(
+        http.Request('GET', _uri),
+        headers ?? HeaderBuilder().contentTypeJson().withToken().build(),
+        null,
+      );
 
   Future<http.Response> post({
     Map<String, String>? headers,
     Object? body,
   }) async =>
       _sendRequest(
-          () => http.post(_url, headers: _getHeaders(headers), body: body));
+        http.Request('POST', _uri),
+        headers ?? HeaderBuilder().contentTypeJson().withToken().build(),
+        body,
+      );
 
   Future<http.Response> put({
     Map<String, String>? headers,
     Object? body,
   }) async =>
       _sendRequest(
-          () => http.put(_url, headers: _getHeaders(headers), body: body));
+        http.Request('PUT', _uri),
+        headers ?? HeaderBuilder().contentTypeJson().withToken().build(),
+        body,
+      );
 
   Future<http.Response> delete({
     Map<String, String>? headers,
     Object? body,
   }) async =>
       _sendRequest(
-          () => http.delete(_url, headers: _getHeaders(headers), body: body));
-
-  Map<String, String> _getHeaders(Map<String, String>? headers) {
-    return headers ?? HeaderBuilder().contentTypeJson().withToken().build();
-  }
+        http.Request('DELETE', _uri),
+        headers ?? HeaderBuilder().contentTypeJson().withToken().build(),
+        body,
+      );
 
   Future<http.Response> _sendRequest(
-      Future<http.Response> Function() requestFunction) async {
-    var response = await requestFunction();
+    http.Request request,
+    Map<String, String> headers,
+    Object? body,
+  ) async {
+    headers.addAll(headers);
+    if (body != null) request.body = jsonEncode(body);
+
+    print(request);
+    var streamedResponse = await request.send();
+
+    var response = await http.Response.fromStream(streamedResponse);
+    print(response);
+
     if (response.statusCode == 200) return response;
 
-    var error =
-        JsonUtil().convertTo<ErrorDto>(ErrorDto.fromJson, response.body);
+    if (response.statusCode == 401) {
+      // TODO: 토큰 재요청
+    }
 
-    var errorCode = error.errorCode ?? -1;
-    var errorType = error.errorType ?? "";
-    throw Exception("$_url ($errorCode): $errorType");
+    throw ApiException(
+      mothodType: request.method,
+      inputUri: request.url.toString(),
+      inputHeader: request.headers.toString(),
+      inputBody: request.body,
+      statusCode: response.statusCode,
+      errorBody: response.body,
+    );
   }
 }

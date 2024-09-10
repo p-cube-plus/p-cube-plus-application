@@ -1,0 +1,3 @@
+enum AttendanceType {
+  main,
+}

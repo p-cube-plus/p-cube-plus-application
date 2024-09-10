@@ -21,7 +21,7 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   }
 
   void _setEventListener() {
-    eventStream.listen((event) {
+    userActionEventStream.listen((event) {
       switch (event) {
         case SplashEvent.animationComplete:
           _changeStateBasedOnLogin();

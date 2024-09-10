@@ -45,7 +45,7 @@ class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
   }
 
   void _setStateListener() {
-    read(context).uiStateStream.listen((event) {
+    read(context).uiSideEffectStream.listen((event) {
       switch (event) {
         case InputAuthNumberState.showSendingAuthNumberToast:
           _showSendingAuthNumberToast();

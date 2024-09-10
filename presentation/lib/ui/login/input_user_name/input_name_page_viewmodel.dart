@@ -15,7 +15,7 @@ class LoginNamePageViewModel extends BaseViewModel<void, InputNameEvent> {
   }
 
   void _setEventListener() {
-    eventStream.listen((event) {
+    userActionEventStream.listen((event) {
       switch (event) {
         case InputNameEventSaveName(:final text):
           _saveName(text);

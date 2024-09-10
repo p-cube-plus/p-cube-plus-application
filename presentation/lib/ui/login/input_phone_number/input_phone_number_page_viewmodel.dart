@@ -13,7 +13,7 @@ class LoginPhoneNumberPageViewModel
   }
 
   void _setEventListener() {
-    eventStream.listen((event) {
+    userActionEventStream.listen((event) {
       switch (event) {
         case TextChanged(:final text):
           savePhoneNumber(text);

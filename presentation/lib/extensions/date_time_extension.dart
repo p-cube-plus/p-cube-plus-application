@@ -8,6 +8,13 @@ extension DateTimeExtension on DateTime {
 
   int get numberOfWeeks =>
       (firstDate.weekday + lastDate.day - 1) ~/ DateTime.daysPerWeek + 1;
+
+  bool isBetweenDates(DateTime? startDate, DateTime? endDate) {
+    if (startDate == null || endDate == null) return false;
+    return isAfter(startDate) && isBefore(endDate) ||
+        isAtSameMomentAs(startDate) ||
+        isAtSameMomentAs(endDate);
+  }
 }
 
 extension DateTimeStringExtension on DateTime {

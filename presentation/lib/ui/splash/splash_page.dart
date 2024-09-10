@@ -68,7 +68,7 @@ class SplashPageState extends State<SplashPage>
   }
 
   void _setStateListener() {
-    read(context).uiStateStream.listen((event) {
+    read(context).uiSideEffectStream.listen((event) {
       switch (event) {
         case SplashState.loginSuccess:
           _navigateToHomePage();

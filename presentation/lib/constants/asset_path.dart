@@ -19,3 +19,9 @@ const String alarmIconSelected = "assets/images/icons/bell_selected.svg";
 const String alarmIconUnselected = "assets/images/icons/bell.svg";
 const String userIconSelected = "assets/images/icons/user_selected.svg";
 const String userIconUnselected = "assets/images/icons/user.svg";
+
+// attendance
+const String success = "assets/images/icons/success.svg";
+const String late = "assets/images/icons/late.svg";
+const String off = "assets/images/icons/off.svg";
+const String failed = "assets/images/icons/failed.svg";

@@ -1,57 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/ui/home/home_schedule/home_schedule_viewmodel.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
-import 'package:provider/provider.dart';
-
 import 'home_attendance/home_attendance.dart';
-import 'home_attendance/home_attendnace_viewmodel.dart';
+import 'home_page_viewmodel.dart';
 import 'home_schedule/home_schedule.dart';
+import 'home_upcomming/home_upcomming_schedule.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatelessWidget with ViewModel<HomePageViewModel> {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => HomeAttendnaceViewModel()),
-        ChangeNotifierProvider(create: (_) => HomeScheduleViewmodel()),
-      ],
-      child: DefaultFutureBuilder(
-        fetchData: Future.wait([
-          context.read<HomeAttendnaceViewModel>().fetchData(),
-          context.read<HomeScheduleViewmodel>().fetchData(),
-        ]),
-        showOnLoadedWidget: (_) {
-          return DefaultRefreshIndicator(
-            onRefresh: Future.wait([
-              context.read<HomeAttendnaceViewModel>().refreshData(),
-              context.read<HomeScheduleViewmodel>().refreshData(),
-            ]),
-            child: const DefaultPage(
-              title: "홈",
-              content: DefaultContent(
-                child: Column(
-                  children: [
-                    HomeAttendence(),
-                    HomeSchedule(),
-                  ],
-                ),
+    return DefaultFutureBuilder(
+      fetchData: read(context).refreshHomePageData(),
+      showOnLoadedWidget: (_) {
+        return DefaultRefreshIndicator(
+          onRefresh: Future.wait([
+            read(context).fetchHomePageData(),
+          ]),
+          child: const DefaultPage(
+            title: "홈",
+            content: DefaultContent(
+              child: Column(
+                children: [
+                  HomeAttendence(),
+                  HomeUpcommingSchedule(),
+                  HomeSchedule(),
+                ],
               ),
-              //floatingActionButton: FloatingBarcodeButton(),
             ),
-          );
-        },
-        showOnErrorWidget: (error, trace) {
-          return const SizedBox();
-        },
-        handleError: (error, trace) {
-          // 오류 처리
-        },
-      ),
+            //floatingActionButton: FloatingBarcodeButton(),
+          ),
+        );
+      },
+      showOnErrorWidget: (error, trace) {
+        return const SizedBox();
+      },
+      handleError: (error, trace) {
+        // 오류 처리
+      },
     );
   }
 }

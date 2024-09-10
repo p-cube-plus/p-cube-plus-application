@@ -35,7 +35,7 @@ class LoginAuthNumberPageViewModel
   }
 
   void _setEventListener() {
-    eventStream.listen((event) {
+    userActionEventStream.listen((event) {
       switch (event) {
         case InputAuthNumberEventRequestAuthNumber():
           _requestAuth();

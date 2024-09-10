@@ -41,7 +41,7 @@ class _LoginPhoneNumberPageState extends State<LoginPhoneNumberPage>
   }
 
   void _setStateListener() {
-    read(context).uiStateStream.listen((event) {
+    read(context).uiSideEffectStream.listen((event) {
       switch (event) {
         case InputPhoneNumberState.navigateToAuth:
           _navigateToInputAuthNumberPage();

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:presentation/common/base_viewmodel.dart';
 
 import 'home_schedule_event.dart';
-import 'upcomming_schedule/upcomming_schedule_item/home_upcomming_schedule_data.dart';
+import '../home_upcomming/upcomming_schedule/upcomming_schedule_item/home_upcomming_schedule_data.dart';
 
 class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
   DateTime currentDate = DateTime.now();
@@ -17,7 +17,7 @@ class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
   }
 
   void _setEventListener() {
-    eventStream.listen((event) {
+    userActionEventStream.listen((event) {
       switch (event) {
         case HomeScheduleEventOnClickCell():
           changeCurrentDate(event.clickedDay);

@@ -83,7 +83,7 @@ class LoginLoadingPageState extends State<LoginLoadingPage>
   }
 
   void _setStateListener() {
-    read(context).uiStateStream.listen((event) {
+    read(context).uiSideEffectStream.listen((event) {
       switch (event) {
         case LoginLoadingState.successLogin:
           _navigateToHomePage();

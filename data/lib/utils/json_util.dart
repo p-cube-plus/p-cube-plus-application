@@ -15,4 +15,8 @@ class JsonUtil {
         .map<T>((item) => fromJson(item as Map<String, dynamic>))
         .toList();
   }
+
+  String mapToJson(Map<String, dynamic> map) {
+    return jsonEncode(map);
+  }
 }
