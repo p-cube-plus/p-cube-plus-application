@@ -17,12 +17,9 @@ dependencies:
     sdk: flutter
   presentation:
     path: ../presentation
-  domain:
-    path: ../domain
   data:
     path: ../data
 
-  get_it: ^7.6.7
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.7
   
@@ -69,3 +66,6 @@ flutter:
 # 앱 이름 변경 (pcube+)
 # android:label=
 # <key>CFBundleDisplayName</key>
+
+# flutter channel stable
+# flutter update

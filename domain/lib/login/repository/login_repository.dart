@@ -4,8 +4,7 @@ import 'package:domain/login/models/login_user_info_data.dart';
 
 import '../models/auth_token_data.dart';
 
-abstract class LoginRepository {
-  Future<void> initAppData();
+abstract interface class LoginRepository {
   Future<LoginUserInfoData> saveUserInfo(
       String name, String? phoneNumber, String? messageToken);
   Future<LoginRequestInfoData> sendAuthNumber(String phoneNumber);

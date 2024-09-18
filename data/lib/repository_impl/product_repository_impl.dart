@@ -1,0 +1,1 @@
+class ProductRepositoryImpl implements ProductRepository {}

@@ -1,0 +1,1 @@
+class MemberRepositoryImpl implements MemberRepository {}

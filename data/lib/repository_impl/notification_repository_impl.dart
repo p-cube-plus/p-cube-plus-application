@@ -1,0 +1,1 @@
+class NotificationRepositoryImpl implements NotificationRepository {}

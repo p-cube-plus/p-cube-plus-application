@@ -1,5 +1,5 @@
 import 'package:domain/project/models/project_data.dart';
 
-abstract class ProjectRepository {
+abstract interface class ProjectRepository {
   Future<List<ProjectData>> getProject();
 }

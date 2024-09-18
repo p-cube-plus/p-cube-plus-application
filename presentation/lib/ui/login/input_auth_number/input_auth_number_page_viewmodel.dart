@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:domain/usecase/login/send_auth_number_usecase.dart';
+import 'package:domain/login/usecase/auth_number/send_auth_number_usecase.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/extensions/future_extension.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_event.dart';
@@ -59,7 +59,7 @@ class LoginAuthNumberPageViewModel
 
       changeState(InputAuthNumberState.showSendingAuthNumberToast);
 
-      final result = await sendAuthNumber(_phoneNumber).getOrNull();
+      final result = await sendAuthNumber.call(_phoneNumber).getOrNull();
       var isSuccess = result?.isValid ?? false;
       if (!isSuccess) {
         _timer?.cancel();
