@@ -14,7 +14,8 @@ class MemoryCache<T> {
 
   MemoryCache(this._duration);
 
-  FutureOr<T?> fetchOrCache(Future<T> Function() fetchData) async {
+  FutureOr<T?> fetchOrCache(Future<T> Function() fetchData,
+      {bool isForcedUpdate = false}) async {
     var currentLength = 0;
     await Future.sync(() {
       currentLength = _completers.length;
@@ -25,7 +26,7 @@ class MemoryCache<T> {
       await _completers[currentLength - 1]?.future;
     }
 
-    if (_isCacheExpired()) {
+    if (_isCacheExpired() || isForcedUpdate) {
       _data = await fetchData();
       _lastCachedTime = DateTime.now().millisecondsSinceEpoch;
     }

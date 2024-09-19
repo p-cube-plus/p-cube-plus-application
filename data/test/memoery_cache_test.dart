@@ -54,6 +54,14 @@ void main() {
       final value3 = await _isCachedValue(cache);
       expect(!value1 && !value2 && !value3 && cache.completerLength == 0, true);
     });
+    test('강제 업데이트 테스트', () async {
+      final cache = MemoryCache<CacheTest>(Duration(seconds: 2));
+      final value1 = await _isCachedValue(cache);
+      await Future.delayed(Duration(seconds: 1));
+      final value2 = await _isCachedValue(cache);
+      final value3 = await _isCachedValue(cache, isForcedUpdate: true);
+      expect(!value1 && value2 && !value3 && cache.completerLength == 0, true);
+    });
     test('통합 테스트', () async {
       final cache = MemoryCache<CacheTest>(Duration(seconds: 1));
       final value1 = await _isCachedValue(cache);
@@ -79,7 +87,7 @@ void main() {
       ]);
       await Future.delayed(Duration(seconds: 1));
       final value14 = await _isCachedValue(cache);
-      final value15 = await _isCachedValue(cache);
+      final value15 = await _isCachedValue(cache, isForcedUpdate: true);
       final value16 = await Future.value(_isCachedValue(cache));
       final value17 = await Future.microtask(() => _isCachedValue(cache));
       final value18 = await Future.sync(() => _isCachedValue(cache));
@@ -104,7 +112,7 @@ void main() {
             value13[1] &&
             value13[2] &&
             !value14 &&
-            value15 &&
+            !value15 &&
             value16 &&
             value17 &&
             value18 &&
@@ -122,12 +130,18 @@ class CacheTest {
   CacheTest(this.value);
 }
 
-Future<bool> _isCachedValue(MemoryCache<CacheTest> cache) async {
+Future<bool> _isCachedValue(
+  MemoryCache<CacheTest> cache, {
+  bool isForcedUpdate = false,
+}) async {
   var result = true;
-  await cache.fetchOrCache(() async {
-    result = false;
-    return CacheTest(1);
-  });
+  await cache.fetchOrCache(
+    () async {
+      result = false;
+      return CacheTest(1);
+    },
+    isForcedUpdate: isForcedUpdate,
+  );
 
   if (result) {
     print("cache 데이터 반환");
