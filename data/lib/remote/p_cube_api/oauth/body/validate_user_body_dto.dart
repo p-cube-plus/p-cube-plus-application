@@ -1,7 +1,7 @@
 class ValidateUserBodyDTO {
   String name;
   String phoneNumber;
-  String fcmToken;
+  String? fcmToken;
   ValidateUserBodyDTO({
     required this.name,
     required this.phoneNumber,

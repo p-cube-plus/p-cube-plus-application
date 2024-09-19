@@ -1,5 +1,3 @@
-import 'package:domain/user/models/user_profile_data.dart';
-
 class UserProfileDTO {
   final String name;
   final String level;
@@ -25,19 +23,6 @@ class UserProfileDTO {
       part: json['part'],
       restType: json['rest_type'],
       profileImage: json['profile_image'],
-    );
-  }
-}
-
-extension UserProfileDTOExtension on UserProfileDTO {
-  UserProfileData toDomain() {
-    return UserProfileData(
-      name: name,
-      level: level,
-      grade: grade,
-      part: part,
-      restType: restType,
-      profileImage: profileImage,
     );
   }
 }

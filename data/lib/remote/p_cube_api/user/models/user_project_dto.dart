@@ -1,5 +1,3 @@
-import 'package:domain/user/models/user_project_data.dart';
-
 class UserProjectDTO {
   final int id;
   final String name;
@@ -48,23 +46,6 @@ class UserProjectDTO {
       platform: platformList,
       isFindingMember: data['is_finding_member'],
       isAbleInquiry: data['is_able_inquiry'],
-    );
-  }
-}
-
-extension UserProjectDTOExtension on UserProjectDTO {
-  UserProjectData toDomain() {
-    return UserProjectData(
-      id: id,
-      name: name,
-      type: type,
-      status: status,
-      startDate: startDate,
-      endDate: endDate,
-      graphic: graphic,
-      platform: platform,
-      isFindingMember: isFindingMember,
-      isAbleInquiry: isAbleInquiry,
     );
   }
 }

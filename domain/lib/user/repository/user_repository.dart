@@ -1,12 +1,13 @@
-import 'package:domain/notification/models/notification_data.dart';
-import 'package:domain/user/models/user_profile_data.dart';
-import 'package:domain/user/models/user_project_data.dart';
-import 'package:domain/user/models/user_warning_data.dart';
+import 'package:domain/user/value_objects/user_profile.dart';
+import 'package:domain/user/value_objects/user_project.dart';
+import 'package:domain/user/value_objects/user_project_detail.dart';
+import 'package:domain/user/value_objects/user_warning.dart';
+import 'package:domain/user/value_objects/user_warning_detail.dart';
 
 abstract interface class UserRepository {
-  Future<List<NotificationData>> getNotificationList();
-  Future<UserProfileData> getUserProfile();
-  Future<List<UserProjectData>> getUserProject();
-  Future<UserWarningData> getUserWarning();
-  Future<UserWarningData> getCurrentUserWarning();
+  Future<UserProfile> getUserData();
+  Future<UserWarning> getUserCumulativeWarning();
+  Future<List<UserWarningDetail>> getUserWarningDetail();
+  Future<List<UserProject>> getUserProject();
+  Future<List<UserProjectDetail>> getUserProjectDetail();
 }

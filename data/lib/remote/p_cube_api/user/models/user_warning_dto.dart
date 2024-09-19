@@ -1,5 +1,3 @@
-import 'package:domain/user/models/user_warning_data.dart';
-
 import 'user_warning_info_dto.dart';
 
 class UserWarningDTO {
@@ -31,19 +29,6 @@ class UserWarningDTO {
       totalWarning: json['total_warning'],
       totalAddWarning: json['total_add_warning'],
       totalRemoveWarning: json['total_remove_warning'],
-    );
-  }
-}
-
-extension UserWarningDTOExtension on UserWarningDTO {
-  UserWarningData toDomain() {
-    return UserWarningData(
-      warningCategory: warningCategory,
-      warningAddList: warningAddList.map((e) => e.toDomain()).toList(),
-      warningRemoveList: warningRemoveList.map((e) => e.toDomain()).toList(),
-      totalWarning: totalWarning,
-      totalAddWarning: totalAddWarning,
-      totalRemoveWarning: totalRemoveWarning,
     );
   }
 }

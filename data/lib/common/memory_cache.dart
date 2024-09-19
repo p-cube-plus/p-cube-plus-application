@@ -1,34 +1,50 @@
 import 'dart:async';
 
+/// 데이터 레이어의 핵심 캐싱 클래스
+/// 수정 시 테스트 코드 검증 필수
+/// flutter test test/memoery_cache_test.dart
 class MemoryCache<T> {
-  FutureOr<T?> Function() fetchData;
-
-  Duration? duration;
+  final Duration _duration;
   int? _lastCachedTime;
-  T? data;
-  bool isFirstCache = true;
+  T? _data;
 
-  MemoryCache(this.fetchData, {this.duration});
+  // Future.wait 비동기 동시성 문제 처리
+  final List<Completer<void>?> _completers = [];
+  int get completerLength => _completers.length;
 
-  FutureOr<T?> get({bool isForcedUpdate = false}) async {
-    if (isForcedUpdate) {
-      isFirstCache = false;
-      return fetchData();
+  MemoryCache(this._duration);
+
+  FutureOr<T?> fetchOrCache(Future<T> Function() fetchData) async {
+    var currentLength = 0;
+    await Future.sync(() {
+      currentLength = _completers.length;
+      _completers.add(Completer<void>());
+    });
+
+    if (currentLength > 0) {
+      await _completers[currentLength - 1]?.future;
     }
 
-    if (duration == null && !isFirstCache) {
-      data ??= await fetchData();
-      return data;
+    if (_isCacheExpired()) {
+      _data = await fetchData();
+      _lastCachedTime = DateTime.now().millisecondsSinceEpoch;
     }
 
+    _completers[currentLength]?.complete();
+    _completers[currentLength] = null;
+    for (var completer in _completers) {
+      if (completer != null) {
+        return _data;
+      }
+    }
+
+    _completers.clear();
+    return _data;
+  }
+
+  bool _isCacheExpired() {
     final currentTime = DateTime.now().millisecondsSinceEpoch;
     final msDifference = currentTime - (_lastCachedTime ?? 0);
-    if (msDifference > duration!.inMilliseconds) {
-      data = await fetchData();
-      _lastCachedTime = DateTime.now().millisecondsSinceEpoch;
-      return data;
-    }
-
-    return data;
+    return msDifference > _duration.inMilliseconds;
   }
 }

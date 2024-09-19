@@ -1,5 +1,3 @@
-import 'package:domain/user/models/user_curriculum_data.dart';
-
 class UserCurriculumDTO {
   final bool completed;
   final String? name;
@@ -22,17 +20,6 @@ class UserCurriculumDTO {
           : DateTime.parse(json['start_date']),
       endDate:
           json['end_date'] == null ? null : DateTime.parse(json['end_date']),
-    );
-  }
-}
-
-extension UserCurriculumDTOExtension on UserCurriculumDTO {
-  UserCurriculumData toDomain() {
-    return UserCurriculumData(
-      completed: completed,
-      name: name,
-      startDate: startDate,
-      endDate: endDate,
     );
   }
 }

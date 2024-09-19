@@ -1,7 +1,7 @@
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:data/remote/firebase/firebase_datasource.dart';
-import 'package:domain/app_configuration/models/theme_type.dart';
 import 'package:domain/app_configuration/repository/app_configuration_repository.dart';
+import 'package:domain/app_configuration/value_objects/theme_type.dart';
 import 'package:get_it/get_it.dart';
 
 class AppConfigurationRepositoryImpl implements AppConfigurationRepository {

@@ -1,5 +1,3 @@
-import 'package:domain/user/models/user_warning_info_data.dart';
-
 class UserWarningInfoDTO {
   final int category;
   final DateTime? date;
@@ -22,18 +20,6 @@ class UserWarningInfoDTO {
       description: json['description'],
       comment: json['comment'],
       id: json['id'],
-    );
-  }
-}
-
-extension UserWarningInfoDTOExtension on UserWarningInfoDTO {
-  UserWarningInfoData toDomain() {
-    return UserWarningInfoData(
-      category: category,
-      date: date,
-      description: description,
-      comment: comment,
-      id: id,
     );
   }
 }
