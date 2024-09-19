@@ -5,8 +5,8 @@ import 'dart:async';
 /// flutter test test/memoery_cache_test.dart
 class MemoryCache<T> {
   final Duration _duration;
-  int? _lastCachedTime;
-  T? _data;
+  int _lastCachedTime = 0;
+  late T _data;
 
   // Future.wait 비동기 동시성 문제 처리
   final List<Completer<void>?> _completers = [];
@@ -14,7 +14,7 @@ class MemoryCache<T> {
 
   MemoryCache(this._duration);
 
-  FutureOr<T?> fetchOrCache(Future<T> Function() fetchData,
+  FutureOr<T> fetchOrCache(Future<T> Function() fetchData,
       {bool isForcedUpdate = false}) async {
     var currentLength = 0;
     await Future.sync(() {
@@ -45,7 +45,7 @@ class MemoryCache<T> {
 
   bool _isCacheExpired() {
     final currentTime = DateTime.now().millisecondsSinceEpoch;
-    final msDifference = currentTime - (_lastCachedTime ?? 0);
+    final msDifference = currentTime - _lastCachedTime;
     return msDifference > _duration.inMilliseconds;
   }
 }

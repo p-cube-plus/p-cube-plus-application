@@ -26,14 +26,14 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     throw UnimplementedError();
   }
 
-  final MemoryCache<List<HomeAttendance>> _homeAttendanceCache = MemoryCache(
-    Duration(hours: 2),
-  );
+  final _homeAttendanceCache =
+      MemoryCache<List<HomeAttendance>>(Duration(hours: 2));
 
   @override
   Future<List<HomeAttendance>> getHomeAttendanceList() {
-    homeRemoteDatasource.getHomeAttendance();
-    _homeAttendanceCache.get();
+    ;
+    _homeAttendanceCache
+        .fetchOrCache(() => homeRemoteDatasource.getHomeAttendance());
   }
 
   @override

@@ -39,18 +39,32 @@ void main() {
         _isCachedValue(cache),
         _isCachedValue(cache),
         _isCachedValue(cache),
+      ]);
+      final value2 = await Future.wait([
         _isCachedValue(cache),
         _isCachedValue(cache),
       ]);
-      expect(!value[0] && value[1] && value[2] && cache.completerLength == 0,
+      final value3 = await Future.wait([
+        _isCachedValue(cache),
+        _isCachedValue(cache),
+      ]);
+      expect(
+          !value[0] &&
+              value[1] &&
+              value[2] &&
+              value2[0] &&
+              value2[1] &&
+              value3[0] &&
+              value3[1] &&
+              cache.completerLength == 0,
           true);
     });
     test('재캐싱 테스트', () async {
       final cache = MemoryCache<CacheTest>(Duration(seconds: 1));
       final value1 = await _isCachedValue(cache);
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 1));
       final value2 = await _isCachedValue(cache);
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 1));
       final value3 = await _isCachedValue(cache);
       expect(!value1 && !value2 && !value3 && cache.completerLength == 0, true);
     });
@@ -67,25 +81,25 @@ void main() {
       final value1 = await _isCachedValue(cache);
       final value2 = await _isCachedValue(cache);
       final value3 = await _isCachedValue(cache);
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 1));
       final value4 = await Future.value(_isCachedValue(cache));
       final value5 = await Future.value(_isCachedValue(cache));
       final value6 = await Future.value(_isCachedValue(cache));
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 1));
       final value7 = await Future.microtask(() => _isCachedValue(cache));
       final value8 = await Future.microtask(() => _isCachedValue(cache));
       final value9 = await Future.microtask(() => _isCachedValue(cache));
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 1));
       final value10 = await Future.sync(() => _isCachedValue(cache));
       final value11 = await Future.sync(() => _isCachedValue(cache));
       final value12 = await Future.sync(() => _isCachedValue(cache));
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 1));
       final value13 = await Future.wait([
         _isCachedValue(cache),
         _isCachedValue(cache),
         _isCachedValue(cache),
       ]);
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 1));
       final value14 = await _isCachedValue(cache);
       final value15 = await _isCachedValue(cache, isForcedUpdate: true);
       final value16 = await Future.value(_isCachedValue(cache));
