@@ -1,5 +1,6 @@
 import 'package:data/local/secure_storage/secure_storage_local_datasource.dart';
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
+import 'package:data/remote/firebase/firebase_datasource.dart';
 import 'package:data/remote/p_cube_api/auth/auth_remote_datasource.dart';
 import 'package:data/remote/p_cube_api/oauth/body/confirm_auth_code_body_dto.dart';
 import 'package:data/remote/p_cube_api/oauth/body/send_auth_code_to_sms_body_dto.dart';
@@ -11,6 +12,7 @@ import 'package:domain/login/value_objects/auth_token_data.dart';
 import 'package:domain/login/value_objects/login_confirm_info_data.dart';
 import 'package:domain/login/value_objects/login_request_info_data.dart';
 import 'package:domain/login/value_objects/login_user_info_data.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
@@ -20,6 +22,7 @@ class LoginRepositoryImpl implements LoginRepository {
       GetIt.I.get<SecureStorageLocalDatasource>();
   final oAuthRemoteDatasource = GetIt.I.get<OauthRemoteDatasource>();
   final authRemoteDatasource = GetIt.I.get<AuthRemoteDatasource>();
+  final firebaseDatasource = GetIt.I.get<FirebaseDatasource>();
 
   @override
   Future<LoginUserInfoData> authenticateUser(
@@ -72,9 +75,16 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  void setToken(String accessToken, String refreshToken) {
-    secureStorageLocalDatasource.saveAccessToken(accessToken);
-    secureStorageLocalDatasource.saveRefreshToken(refreshToken);
+  Future<void> setToken(String accessToken, String refreshToken) async {
     PCubeApi().setToken(accessToken, refreshToken);
+    await Future.wait([
+      secureStorageLocalDatasource.saveAccessToken(accessToken),
+      secureStorageLocalDatasource.saveRefreshToken(refreshToken),
+    ]);
+  }
+
+  @override
+  Future<String?> getFcmToken() {
+    return firebaseDatasource.getFcmToken();
   }
 }

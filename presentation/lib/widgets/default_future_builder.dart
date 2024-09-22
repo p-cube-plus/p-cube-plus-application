@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DefaultFutureBuilder<T> extends StatefulWidget {
+class DefaultFutureBuilder<T> extends StatelessWidget {
   const DefaultFutureBuilder(
       {super.key,
       required this.fetchData,
@@ -14,31 +14,24 @@ class DefaultFutureBuilder<T> extends StatefulWidget {
   final Widget? loadingWidget;
   final Widget Function(Object? error, StackTrace trace)? showOnErrorWidget;
   final void Function(Object? error, StackTrace trace)? handleError;
-
-  @override
-  State<DefaultFutureBuilder> createState() => _DefaultFutureBuilderState();
-}
-
-class _DefaultFutureBuilderState<T> extends State<DefaultFutureBuilder<T>> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: widget.fetchData,
+        future: fetchData,
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting ||
               snapshot.connectionState == ConnectionState.active) {
-            return widget.loadingWidget ??
+            return loadingWidget ??
                 const Center(
                   child: CircularProgressIndicator(),
                 );
           }
 
           try {
-            return widget.showOnLoadedWidget(snapshot.requireData);
+            return showOnLoadedWidget(snapshot.requireData);
           } catch (error, trace) {
-            widget.handleError?.call(error, trace);
-            return widget.showOnErrorWidget?.call(error, trace) ??
-                const SizedBox();
+            handleError?.call(error, trace);
+            return showOnErrorWidget?.call(error, trace) ?? const SizedBox();
           }
         });
   }

@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:domain/attendance/value_objects/home_attendance.dart';
+import 'package:domain/common/value_objects/color.dart';
 
 class HomeAttendanceResponseDTO {
   final int id;
@@ -25,13 +24,13 @@ class HomeAttendanceResponseDTO {
   }
 }
 
-extension HomeAttendanceResponseDTOExtension on HomeAttendanceResponseDTO {
-  HomeAttendance toDomain() {
-    return HomeAttendance(
-      id: id,
-      attendanceDate: startDate,
-      scheduleTypeColor: Color(0xFFFFFFFF),
-      title: title,
-    );
-  }
-}
+// extension HomeAttendanceResponseDTOExtension on HomeAttendanceResponseDTO {
+//   HomeAttendance toDomain() {
+//     return HomeAttendance(
+//       id: id,
+//       attendanceDate: startDate,
+//       scheduleTypeColor: Color(),
+//       title: title,
+//     );
+//   }
+// }

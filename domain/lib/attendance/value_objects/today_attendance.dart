@@ -1,5 +1,5 @@
 import 'package:domain/attendance/value_objects/attendance_data.dart';
-import 'package:domain/extensions/date_time_extension.dart';
+import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:meta/meta.dart';
 
 import 'attendance_status_type.dart';
@@ -20,7 +20,7 @@ class TodayAttendance {
   });
 
   bool get didAttend => attendanceTime != null;
-  bool get canAttend => endTime != null && endTime != null;
+  bool get canAttend => startTime != null && endTime != null;
 
   AttendanceStatusType get attendanceStatus {
     if (attendanceTime == null || endTime == null) {

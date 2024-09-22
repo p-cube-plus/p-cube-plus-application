@@ -1,8 +1,8 @@
+import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/rounded_border.dart';
-
-import 'home_attendance_content_data.dart';
 
 class HomeAttendanceContent extends StatelessWidget {
   const HomeAttendanceContent(
@@ -10,7 +10,7 @@ class HomeAttendanceContent extends StatelessWidget {
     super.key,
   });
 
-  final HomeAttendanceContentData data;
+  final HomeAttendance data;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,11 @@ class HomeAttendanceContent extends StatelessWidget {
             width: 7.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: data.scheduleColor,
+              color: Color(data.scheduleTypeColor.hex),
             ),
           ),
           Text(
-            data.dateString,
+            data.attendanceData.attendanceDate.format("yyyy.MM.dd"),
             style: TextStyle(
               fontSize: 10,
               color: theme.neutral60,
@@ -41,7 +41,7 @@ class HomeAttendanceContent extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            data.titleString,
+            data.title,
             style: TextStyle(
               fontSize: 12,
               color: theme.neutral100,

@@ -4,6 +4,7 @@ import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_selected.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_with_schedule.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 
 import '../../home_schedule_viewmodel.dart';
 
@@ -14,42 +15,47 @@ class CalendarDay extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return watchWidget(
-      (viewModel) => viewModel.currentDate,
+      (viewModel) => viewModel.selectedDate,
       (currentDate) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: List.generate(
-            currentDate.numberOfWeeks,
-            (columnIndex) => Row(
-              children: List.generate(DateTime.daysPerWeek, (rowIndex) {
-                final createdDay = _getCreatedDay(
-                  currentDate,
-                  columnIndex,
-                  rowIndex,
-                );
+        return DefaultFutureBuilder(
+          fetchData: read(context).fetchHomeMonthSchedule(),
+          showOnLoadedWidget: (scheduleMap) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List.generate(
+                currentDate.numberOfWeeks,
+                (columnIndex) => Row(
+                  children: List.generate(DateTime.daysPerWeek, (rowIndex) {
+                    final createdDay =
+                        _getCreatedDay(currentDate, columnIndex, rowIndex);
 
-                if (isBlankCell(currentDate, columnIndex, rowIndex)) {
-                  return const SizedBox();
-                }
+                    if (_isBlankCell(currentDate, columnIndex, rowIndex)) {
+                      return const SizedBox();
+                    }
 
-                return watchWidget(
-                  (viewModel) => viewModel.currentDate.day,
-                  (selectedDay) {
-                    if (currentDate.day == selectedDay) {
-                      return CalendarDayCellSelected(createdDay);
-                    }
-                    if (isSchduleCell(context, currentDate.day)) {
-                      return CalendarDayCellWithSchedule(createdDay);
-                    }
-                    return CalendarDayCell(createdDay);
-                  },
-                  shouldRebuild: (previous, next) {
-                    return createdDay == previous || createdDay == next;
-                  },
-                );
-              }),
-            ),
-          ),
+                    return watchWidget(
+                      (viewModel) => viewModel.selectedDate.day,
+                      (selectedDay) {
+                        if (currentDate.day == selectedDay) {
+                          return CalendarDayCellSelected(createdDay);
+                        }
+                        if (scheduleMap.containsKey(currentDate.day)) {
+                          return CalendarDayCellWithSchedule(
+                            createdDay,
+                            Color(scheduleMap[currentDate.day]!.markColor.hex),
+                          );
+                        }
+                        return CalendarDayCell(createdDay);
+                      },
+                      shouldRebuild: (previous, next) {
+                        return createdDay == previous || createdDay == next;
+                      },
+                    );
+                  }),
+                ),
+              ),
+            );
+          },
         );
       },
       shouldRebuild: (previous, next) {
@@ -58,13 +64,9 @@ class CalendarDay extends StatelessWidget
     );
   }
 
-  bool isBlankCell(DateTime currentDate, int columnIndex, int rowIndex) {
+  bool _isBlankCell(DateTime currentDate, int columnIndex, int rowIndex) {
     return rowIndex < currentDate.firstDateWeekday ||
         rowIndex > currentDate.lastDateWeekday;
-  }
-
-  bool isSchduleCell(BuildContext context, int day) {
-    return read(context).scheduleColorList.containsKey(day);
   }
 
   int _getCreatedDay(DateTime currentDate, int columnIndex, int rowIndex) {

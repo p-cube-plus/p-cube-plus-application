@@ -8,8 +8,13 @@ import '../../../home_schedule_viewmodel.dart';
 class CalendarDayCellWithSchedule extends StatelessWidget
     with ViewModel<HomeScheduleViewmodel> {
   final int currentDay;
+  final Color scheduleColor;
 
-  const CalendarDayCellWithSchedule(this.currentDay, {super.key});
+  const CalendarDayCellWithSchedule(
+    this.currentDay,
+    this.scheduleColor, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +35,13 @@ class CalendarDayCellWithSchedule extends StatelessWidget
                 ),
               ),
               const SizedBox(height: 2.0),
-              watchWidget(
-                (viewModel) => viewModel.scheduleColorList,
-                (scheduleMap) {
-                  return Container(
-                    height: 4.0,
-                    width: 4.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: scheduleMap[currentDay],
-                    ),
-                  );
-                },
-                shouldRebuild: (previous, next) {
-                  return previous.hashCode == next.hashCode;
-                },
+              Container(
+                height: 4.0,
+                width: 4.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: scheduleColor,
+                ),
               ),
             ],
           )),

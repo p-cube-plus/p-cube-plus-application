@@ -3,6 +3,7 @@ import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
+import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 
 abstract interface class AttendanceRepository {
@@ -15,8 +16,13 @@ abstract interface class AttendanceRepository {
     int month,
   );
 
-  Future<List<TodayAttendance>> getTodayAttendanceList();
-  Future<List<AttendanceStatusType>> getRecentAttendanceStatus(int count);
+  Future<List<TodayAttendance>> getTodayAttendanceList(
+      AttendanceData attendanceData);
+
+  Future<List<RecentAttendance>> getRecentAttendanceStatus(
+    AttendanceType type,
+    int count,
+  );
 
   Future<TodayAttendance> attend(
     int id,

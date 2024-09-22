@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:domain/login/usecase/auth_number/send_auth_number_usecase.dart';
+import 'package:domain/login/usecases/confirm_auth_number_use_case.dart';
+import 'package:domain/login/usecases/send_auth_number_use_case.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/extensions/future_extension.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_event.dart';
@@ -10,6 +11,7 @@ import 'package:presentation/utils/throttler.dart';
 class LoginAuthNumberPageViewModel
     extends BaseViewModel<InputAuthNumberState, InputAuthNumberEvent> {
   final sendAuthNumber = SendAuthNumberUseCase();
+  final _confirmAuthNumberUseCase = ConfirmAuthNumberUseCase();
 
   bool get isNeedToRetry => _isNeedToRetry;
   String get authText => _authText;
@@ -78,8 +80,7 @@ class LoginAuthNumberPageViewModel
     if (inputText.length == 6) {
       changeState(InputAuthNumberState.checkIsValidAuthNumber);
 
-      await Future.delayed(const Duration(seconds: 2));
-      var isVerified = true;
+      final isVerified = await _confirmAuthNumberUseCase.call(inputText);
       _isNeedToRetry = !isVerified;
       notifyListeners();
       changeState(InputAuthNumberState.completeVerification);

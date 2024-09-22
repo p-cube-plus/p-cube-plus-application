@@ -6,7 +6,7 @@ class FirebaseDatasource {
     await Firebase.initializeApp();
   }
 
-  Future<void> getFcmToken() {
+  Future<String?> getFcmToken() {
     return FirebaseMessaging.instance.getToken();
   }
 }

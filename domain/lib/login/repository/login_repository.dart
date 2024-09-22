@@ -13,7 +13,10 @@ abstract interface class LoginRepository {
   Future<LoginUserInfoData> authenticateUser(
       String name, String phoneNumber, String messageToken);
 
-  void setToken(String accessToken, String refreshToken);
+  // 로그인을 위한 FCM 토큰
+  Future<String?> getFcmToken();
+
+  Future<void> setToken(String accessToken, String refreshToken);
   Future<String?> getToken();
   Future<String?> getRefreshToken();
 

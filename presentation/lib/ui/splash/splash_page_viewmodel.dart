@@ -1,15 +1,16 @@
-import 'package:domain/usecase/splash/fetch_initialize_cache_data_usecase.dart';
-import 'package:domain/usecase/splash/fetch_is_need_login_usecase.dart';
-import 'package:domain/usecase/splash/init_app_settings_usecase.dart';
+import 'package:domain/app_configuration/usecases/caching_before_starting_use_case.dart';
+import 'package:domain/app_configuration/usecases/initialize_app_configuration_use_case.dart';
+import 'package:domain/login/usecases/fetch_is_need_login_use_case.dart';
 import 'package:presentation/extensions/future_extension.dart';
 import 'package:presentation/ui/splash/splash_event.dart';
 import 'package:presentation/ui/splash/splash_state.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
-  final _initAppSettings = InitAppSettingsUseCase();
+  final _initializeAppConfigurationUseCase =
+      InitializeAppConfigurationUseCase();
   final _fetchIsUserLoggedIn = FetchIsNeedLoginUseCase();
-  final _fetchInitialCacheData = FetchInitialCacheData();
+  final _cachingBeforeStartingUseCase = CachingBeforeStartingUseCase();
 
   bool _isNeedLogin = true;
   late Future<void> _initFuture;
@@ -30,14 +31,14 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   }
 
   Future<void> _init() async {
-    await _initAppSettings.call().catchError((error) {
+    await _initializeAppConfigurationUseCase.call().catchError((error) {
       initErrorMessage = error.toString();
       changeState(SplashState.failedInit);
       return;
     });
 
     _isNeedLogin = await _fetchIsUserLoggedIn.call().getOrDefault(false);
-    await _fetchInitialCacheData.call(_isNeedLogin).ignoreException();
+    await _cachingBeforeStartingUseCase.call(_isNeedLogin).ignoreException();
   }
 
   Future<void> _changeStateBasedOnLogin() async {

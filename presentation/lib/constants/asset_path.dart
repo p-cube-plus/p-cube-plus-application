@@ -25,3 +25,4 @@ const String success = "assets/images/icons/success.svg";
 const String late = "assets/images/icons/late.svg";
 const String off = "assets/images/icons/off.svg";
 const String failed = "assets/images/icons/failed.svg";
+const String blank = "assets/images/icons/blank.svg";

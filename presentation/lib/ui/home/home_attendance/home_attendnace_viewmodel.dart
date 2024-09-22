@@ -1,11 +1,11 @@
+import 'package:domain/attendance/usecases/fetch_home_attendance_use_case.dart';
+import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-import 'home_attendance_content/home_attendance_content_data.dart';
-
 class HomeAttendnaceViewModel extends BaseViewModel<void, void> {
-  final List<HomeAttendanceContentData> contentDataList = [];
+  final _fetchHomeAttendanceUseCase = FetchHomeAttendanceUseCase();
 
-  Future<void> fetchData() async {}
-
-  Future<void> refreshData() async {}
+  Future<List<HomeAttendance>> fetchData() async {
+    return _fetchHomeAttendanceUseCase.call();
+  }
 }

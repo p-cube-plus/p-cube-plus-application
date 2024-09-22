@@ -1,13 +1,13 @@
+import 'package:domain/schedule/value_objects/schedule_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/rounded_border.dart';
-
-import 'home_upcomming_schedule_data.dart';
 
 class HomeUpcommingScheduleItem extends StatelessWidget {
   const HomeUpcommingScheduleItem(this.data, {super.key});
 
-  final HomeUpcommingScheduleData data;
+  final ScheduleDetail data;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class HomeUpcommingScheduleItem extends StatelessWidget {
             width: 7.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: data.scheduleColor,
+              color: Color(data.schedule.markColor.hex),
             ),
           ),
           Column(
@@ -34,16 +34,16 @@ class HomeUpcommingScheduleItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                data.startDateString,
+                data.schedule.startDate.format("yyyy.MM.dd"),
                 style: TextStyle(
                   fontSize: 10,
                   color: theme.neutral60,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              if (data.endDateString != null)
+              if (data.schedule.isDailySchedule)
                 Text(
-                  "~${data.endDateString}",
+                  data.schedule.endDate.format("~yyyy.MM.dd"),
                   style: TextStyle(
                     fontSize: 10,
                     color: theme.neutral60,

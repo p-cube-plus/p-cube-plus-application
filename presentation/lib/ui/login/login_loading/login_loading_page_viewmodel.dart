@@ -1,9 +1,9 @@
-import 'package:domain/usecase/login/try_login_usecase.dart';
+import 'package:domain/login/usecases/try_login_use_case.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/ui/login/login_loading/login_loading_state.dart';
 
 class LoginLoadingPageViewModel extends BaseViewModel<LoginLoadingState, void> {
-  final _tryLogin = TryLoginUseCase();
+  final _tryLoginUseCase = TryLoginUseCase();
   var errorMessage = "";
 
   final String _phoneNumber;
@@ -16,7 +16,7 @@ class LoginLoadingPageViewModel extends BaseViewModel<LoginLoadingState, void> {
   }
 
   void tryLogin(String userName) {
-    _tryLogin(_phoneNumber, userName).then((isSuccess) {
+    _tryLoginUseCase(_phoneNumber, userName).then((isSuccess) {
       if (isSuccess) {
         changeState(LoginLoadingState.successLogin);
       } else {

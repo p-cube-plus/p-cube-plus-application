@@ -4,7 +4,6 @@ import 'package:presentation/ui/home/home_schedule/home_calendar/home_calendar.d
 import 'package:presentation/ui/home/home_schedule/home_schedule_viewmodel.dart';
 
 import 'schedule_summary/calendar_summary_view.dart';
-import '../home_upcomming/home_upcomming_schedule.dart';
 
 class HomeSchedule extends StatelessWidget
     with ViewModel<HomeScheduleViewmodel> {

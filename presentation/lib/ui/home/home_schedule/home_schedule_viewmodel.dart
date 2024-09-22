@@ -1,16 +1,16 @@
-import 'dart:ui';
-
+import 'package:domain/schedule/usecase/fetch_home_month_schedule_use_case.dart';
+import 'package:domain/schedule/usecase/fetch_home_today_schedule_use_case.dart';
+import 'package:domain/schedule/value_objects/schedule_data.dart';
+import 'package:domain/schedule/value_objects/schedule_detail.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 import 'home_schedule_event.dart';
-import '../home_upcomming/upcomming_schedule/upcomming_schedule_item/home_upcomming_schedule_data.dart';
 
 class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
-  DateTime currentDate = DateTime.now();
-  List<HomeUpcommingScheduleData> upcommingScheduleData = [];
+  final _fetchHomeMonthScheduleUseCase = FetchHomeMonthScheduleUseCase();
+  final _fetchHomeTodayScheduleUseCase = FetchHomeTodayScheduleUseCase();
 
-  Map<int, List<HomeScheduleData>> monthSchedule = {};
-  Map<int, Color> scheduleColorList = {};
+  DateTime selectedDate = DateTime.now();
 
   HomeScheduleViewmodel() {
     _setEventListener();
@@ -33,36 +33,24 @@ class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
     });
   }
 
-  Future<void> fetchData() async {}
+  Future<Map<int, ScheduleData>> fetchHomeMonthSchedule() {
+    return _fetchHomeMonthScheduleUseCase.call(
+        selectedDate.year, selectedDate.month);
+  }
 
-  Future<void> refreshData() async {}
+  Future<List<ScheduleDetail>> fetchHomeTodaySchedule() {
+    return _fetchHomeTodayScheduleUseCase.call(selectedDate);
+  }
 
   void changeCurrentDate(int selectedDay) {
-    currentDate = currentDate.copyWith(day: selectedDay);
+    selectedDate = selectedDate.copyWith(day: selectedDay);
   }
 
-  // 다가오는 일정이 날짜를 watch 중이기 때문에
-  // 스케줄 데이터를 먼저 가져와야 한다.
   void jumpToOneMonthLater() {
-    // TODO: 스케줄 데이터 새로 가져오기
-    currentDate = DateTime(currentDate.year, currentDate.month + 1, 1);
+    selectedDate = DateTime(selectedDate.year, selectedDate.month + 1, 1);
   }
 
-  // 다가오는 일정이 날짜를 watch 중이기 때문에
-  // 스케줄 데이터를 먼저 가져와야 한다.
   void jumpToOneMonthAgo() {
-    // TODO: 스케줄 데이터 새로 가져오기
-    currentDate = DateTime(currentDate.year, currentDate.month - 1, 1);
+    selectedDate = DateTime(selectedDate.year, selectedDate.month - 1, 1);
   }
-}
-
-class HomeScheduleData {
-  final Color scheduleColor;
-  final DateTime startTime;
-  final String title;
-  HomeScheduleData(
-    this.scheduleColor,
-    this.startTime,
-    this.title,
-  );
 }
