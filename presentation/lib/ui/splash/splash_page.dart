@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:presentation/ui/main/main_page.dart';
 import 'package:presentation/ui/splash/splash_event.dart';
 import 'package:presentation/ui/splash/splash_state.dart';
 import 'package:presentation/common/viewmodel.dart';
@@ -10,15 +11,28 @@ import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/splash/splash_page_viewmodel.dart';
 import 'package:presentation/constants/asset_path.dart' as path;
 import 'package:presentation/widgets/default_alert.dart';
+import 'package:provider/provider.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
-  SplashPageState createState() => SplashPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => SplashPageViewModel(),
+      child: const _SplashPage(),
+    );
+  }
 }
 
-class SplashPageState extends State<SplashPage>
+class _SplashPage extends StatefulWidget {
+  const _SplashPage();
+
+  @override
+  _SplashPageState createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<_SplashPage>
     with SingleTickerProviderStateMixin, ViewModel<SplashPageViewModel> {
   late final AnimationController _animationController;
 
@@ -31,10 +45,7 @@ class SplashPageState extends State<SplashPage>
           read(context).triggerEvent(SplashEvent.animationComplete);
         }
       });
-
-    Future.microtask(() {
-      _setStateListener();
-    });
+    Future.microtask(() => _setStateListener());
   }
 
   @override
@@ -68,10 +79,10 @@ class SplashPageState extends State<SplashPage>
   }
 
   void _setStateListener() {
-    read(context).uiSideEffectStream.listen((event) {
+    read(context).uiEventStream.listen((event) {
       switch (event) {
         case SplashState.loginSuccess:
-          _navigateToHomePage();
+          _navigateToMainPage();
         case SplashState.needLogin:
           _navigateToLoginPage();
         case SplashState.failedInit:
@@ -80,10 +91,10 @@ class SplashPageState extends State<SplashPage>
     });
   }
 
-  void _navigateToHomePage() {
+  void _navigateToMainPage() {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => const LoginHomePage(),
+        builder: (context) => const MainPage(),
       ),
       (route) => false,
     );

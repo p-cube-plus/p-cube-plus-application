@@ -1,12 +1,13 @@
 import 'package:domain/login/repository/login_repository.dart';
-import 'package:domain/login/value_objects/login_confirm_info_data.dart';
 import 'package:get_it/get_it.dart';
 
 class ConfirmAuthNumberUseCase {
   final LoginRepository _loginService = GetIt.I.get<LoginRepository>();
 
   Future<bool> call(String authNumber) async {
-    final result = await _loginService.confirmAuthNumber(authNumber);
+    final result = await _loginService
+        .confirmAuthNumber(authNumber)
+        .timeout(Duration(seconds: 5));
     return result.isVerified;
   }
 }

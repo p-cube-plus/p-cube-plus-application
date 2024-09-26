@@ -12,7 +12,7 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   final _fetchIsUserLoggedIn = FetchIsNeedLoginUseCase();
   final _cachingBeforeStartingUseCase = CachingBeforeStartingUseCase();
 
-  bool _isNeedLogin = true;
+  bool _isLoggedIn = false;
   late Future<void> _initFuture;
   String? initErrorMessage;
 
@@ -33,22 +33,22 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   Future<void> _init() async {
     await _initializeAppConfigurationUseCase.call().catchError((error) {
       initErrorMessage = error.toString();
-      changeState(SplashState.failedInit);
+      changeViewState(SplashState.failedInit);
       return;
     });
 
-    _isNeedLogin = await _fetchIsUserLoggedIn.call().getOrDefault(false);
-    await _cachingBeforeStartingUseCase.call(_isNeedLogin).ignoreException();
+    _isLoggedIn = await _fetchIsUserLoggedIn.call().getOrDefault(false);
+    await _cachingBeforeStartingUseCase.call(_isLoggedIn).ignoreException();
   }
 
   Future<void> _changeStateBasedOnLogin() async {
     if (initErrorMessage != null) return;
 
     await _initFuture;
-    if (_isNeedLogin) {
-      changeState(SplashState.needLogin);
+    if (_isLoggedIn) {
+      changeViewState(SplashState.loginSuccess);
     } else {
-      changeState(SplashState.loginSuccess);
+      changeViewState(SplashState.needLogin);
     }
   }
 }

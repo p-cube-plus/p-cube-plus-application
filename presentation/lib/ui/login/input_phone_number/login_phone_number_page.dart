@@ -15,14 +15,26 @@ import 'package:provider/provider.dart';
 
 import 'input_phone_number_page_viewmodel.dart';
 
-class LoginPhoneNumberPage extends StatefulWidget {
+class LoginPhoneNumberPage extends StatelessWidget {
   const LoginPhoneNumberPage({super.key});
 
   @override
-  State<LoginPhoneNumberPage> createState() => _LoginPhoneNumberPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => LoginPhoneNumberPageViewModel(),
+      child: const _LoginPhoneNumberPage(),
+    );
+  }
 }
 
-class _LoginPhoneNumberPageState extends State<LoginPhoneNumberPage>
+class _LoginPhoneNumberPage extends StatefulWidget {
+  const _LoginPhoneNumberPage();
+
+  @override
+  State<_LoginPhoneNumberPage> createState() => _LoginPhoneNumberPageState();
+}
+
+class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
     with ViewModel<LoginPhoneNumberPageViewModel> {
   final TextEditingController _textEditController = TextEditingController();
 
@@ -38,15 +50,6 @@ class _LoginPhoneNumberPageState extends State<LoginPhoneNumberPage>
   void dispose() {
     _textEditController.dispose();
     super.dispose();
-  }
-
-  void _setStateListener() {
-    read(context).uiSideEffectStream.listen((event) {
-      switch (event) {
-        case InputPhoneNumberState.navigateToAuth:
-          _navigateToInputAuthNumberPage();
-      }
-    });
   }
 
   @override
@@ -142,12 +145,20 @@ class _LoginPhoneNumberPageState extends State<LoginPhoneNumberPage>
     );
   }
 
+  void _setStateListener() {
+    read(context).uiEventStream.listen((event) {
+      switch (event) {
+        case InputPhoneNumberState.navigateToAuth:
+          _navigateToInputAuthNumberPage();
+      }
+    });
+  }
+
   void _navigateToInputAuthNumberPage() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider(
-          create: (_) => LoginAuthNumberPageViewModel(_textEditController.text),
-          child: const LoginAuthNumberPage(),
+        builder: (context) => LoginAuthNumberPage(
+          phoneNumber: _textEditController.text,
         ),
       ),
     );

@@ -42,7 +42,7 @@ class AttendanceTodayItemButton extends StatelessWidget
       );
     } else {
       return watchWidget(
-          (viewModel) => data.sequenceNumber == 1
+          (viewModel) => data.attendanceSequence == 1
               ? viewModel.isFirstAttendanceTime
               : viewModel.isSecondAttendanceTime, (isAttendanceTime) {
         return ElevatedButton(

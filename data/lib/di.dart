@@ -1,5 +1,10 @@
 import 'package:data/mock/mock_attendance_repository_impl.dart';
 import 'package:data/mock/mock_fee_repository_impl.dart';
+import 'package:data/mock/mock_login_repository_impl.dart';
+import 'package:data/mock/mock_member_repository_impl.dart';
+import 'package:data/mock/mock_notification_repository_impl.dart';
+import 'package:data/mock/mock_product_repository_impl.dart';
+import 'package:data/mock/mock_project_repository_impl.dart';
 import 'package:data/mock/mock_schedule_repository_impl.dart';
 import 'package:data/mock/mock_user_repository_impl.dart';
 import 'package:data/repository_impl/app_configuration_repository_impl.dart';
@@ -32,19 +37,19 @@ void registRepository() {
     () => MockFeeRepositoryImpl(),
   );
   GetIt.I.registerLazySingleton<LoginRepository>(
-    () => LoginRepositoryImpl(),
+    () => MockLoginRepositoryImpl(),
   );
   GetIt.I.registerLazySingleton<MemberRepository>(
-    () => MemberRepositoryImpl(),
+    () => MockMemberRepositoryImpl(),
   );
   GetIt.I.registerLazySingleton<NotificationRepository>(
-    () => NotificationRepositoryImpl(),
+    () => MockNotificationRepositoryImpl(),
   );
   GetIt.I.registerLazySingleton<ProductRepository>(
-    () => ProductRepositoryImpl(),
+    () => MockProductRepositoryImpl(),
   );
   GetIt.I.registerLazySingleton<ProjectRepository>(
-    () => ProjectRepositoryImpl(),
+    () => MockProjectRepositoryImpl(),
   );
   GetIt.I.registerLazySingleton<ScheduleRepository>(
     () => MockScheduleRepositoryImpl(),

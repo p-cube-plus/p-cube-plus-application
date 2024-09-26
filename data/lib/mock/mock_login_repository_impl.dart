@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:data/local/secure_storage/secure_storage_local_datasource.dart';
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:data/remote/firebase/firebase_datasource.dart';
@@ -23,7 +25,7 @@ class MockLoginRepositoryImpl implements LoginRepository {
   @override
   Future<LoginUserInfoData> authenticateUser(
       String name, String phoneNumber, String messageToken) async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 5));
     return LoginUserInfoData(
       isMember: true,
       tokenData: AuthTokenData(accessToken: "mock", refreshToken: "mock"),
@@ -32,7 +34,7 @@ class MockLoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<LoginConfirmInfoData> confirmAuthNumber(String code) async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: Random.secure().nextInt(5)));
     return LoginConfirmInfoData(isVerified: true);
   }
 
@@ -57,7 +59,7 @@ class MockLoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<LoginRequestInfoData> sendAuthNumber(String phoneNumber) async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: Random.secure().nextInt(5)));
     return LoginRequestInfoData(isValid: true);
   }
 

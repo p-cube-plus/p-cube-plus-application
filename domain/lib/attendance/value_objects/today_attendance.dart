@@ -6,14 +6,14 @@ import 'attendance_status_type.dart';
 
 @immutable
 class TodayAttendance {
-  final AttendanceData attendance;
-  final int sequenceNumber;
+  final int id;
+  final int attendanceSequence;
   final DateTime? startTime;
   final DateTime? endTime;
   final DateTime? attendanceTime;
   const TodayAttendance({
-    required this.attendance,
-    required this.sequenceNumber,
+    required this.id,
+    required this.attendanceSequence,
     this.startTime,
     this.endTime,
     this.attendanceTime,

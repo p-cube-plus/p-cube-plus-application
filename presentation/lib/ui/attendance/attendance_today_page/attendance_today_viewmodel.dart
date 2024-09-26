@@ -54,7 +54,7 @@ class AttendanceTodayViewmodel
       shouldRefresh = true;
       notifyListeners();
     }).catchError((error) {
-      changeState(AttendanceTodayState.showFailedDialog);
+      changeViewState(AttendanceTodayState.showFailedDialog);
     });
   }
 

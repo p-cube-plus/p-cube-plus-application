@@ -81,7 +81,7 @@ class PCubeApi with TokenHolder {
     }
 
     print("http request: $request");
-    var streamedResponse = await request.send();
+    var streamedResponse = await request.send().timeout(Duration(seconds: 10));
     var response = await http.Response.fromStream(streamedResponse);
     print("http response: $response");
 

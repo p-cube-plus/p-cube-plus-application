@@ -21,7 +21,7 @@ class AttendanceTodayItem extends StatelessWidget
         Row(
           children: [
             Text(
-              "${data.sequenceNumber}차 인증",
+              "${data.attendanceSequence}차 인증",
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w500,

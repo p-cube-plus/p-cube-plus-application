@@ -4,13 +4,26 @@ import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
+import 'package:provider/provider.dart';
 import 'home_attendance/home_attendance.dart';
 import 'home_page_viewmodel.dart';
 import 'home_schedule/home_schedule.dart';
 import 'home_upcomming/home_upcomming_schedule.dart';
 
-class HomePage extends StatelessWidget with ViewModel<HomePageViewModel> {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => HomePageViewModel(),
+      child: const _HomePage(),
+    );
+  }
+}
+
+class _HomePage extends StatelessWidget with ViewModel<HomePageViewModel> {
+  const _HomePage();
 
   @override
   Widget build(BuildContext context) {

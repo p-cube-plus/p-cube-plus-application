@@ -8,9 +8,21 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/input_phone_number/login_phone_number_page.dart';
 import 'package:provider/provider.dart';
 
-class LoginHomeBottomsheet extends StatelessWidget
-    with ViewModel<LoginHomeBottomSheetViewModel> {
+class LoginHomeBottomsheet extends StatelessWidget {
   const LoginHomeBottomsheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => LoginHomeBottomSheetViewModel(),
+      child: const _LoginHomeBottomsheet(),
+    );
+  }
+}
+
+class _LoginHomeBottomsheet extends StatelessWidget
+    with ViewModel<LoginHomeBottomSheetViewModel> {
+  const _LoginHomeBottomsheet();
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +112,7 @@ class LoginHomeBottomsheet extends StatelessWidget
   void _onClickStartLogin(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider(
-          create: (_) => LoginPhoneNumberPageViewModel(),
-          child: const LoginPhoneNumberPage(),
-        ),
+        builder: (context) => const LoginPhoneNumberPage(),
       ),
     );
   }

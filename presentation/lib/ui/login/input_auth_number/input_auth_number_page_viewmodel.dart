@@ -13,25 +13,18 @@ class LoginAuthNumberPageViewModel
   final sendAuthNumber = SendAuthNumberUseCase();
   final _confirmAuthNumberUseCase = ConfirmAuthNumberUseCase();
 
-  bool get isNeedToRetry => _isNeedToRetry;
-  String get authText => _authText;
-  String get timerText => _timerText;
-
-  final String _phoneNumber;
-  String get phoneNumner => _phoneNumber;
-
-  String _authText = "";
-  bool _isNeedToRetry = false;
-  String _timerText = "";
+  final String phoneNumner;
+  String authText = "";
+  bool isNeedToRetry = false;
+  bool isFailedInputAuth = false;
+  String timerText = "";
   StreamSubscription<int>? _timer;
 
   final timeoutDuration = const Duration(minutes: 3);
   Duration _timeoutCount = const Duration(minutes: 3);
-  final Throttler _throttler;
+  final Throttler _throttler = Throttler(const Duration(milliseconds: 500));
 
-  LoginAuthNumberPageViewModel(String phoneNumber)
-      : _phoneNumber = phoneNumber,
-        _throttler = Throttler(const Duration(milliseconds: 500)) {
+  LoginAuthNumberPageViewModel(String phoneNumber) : phoneNumner = phoneNumber {
     _setEventListener();
     _requestAuth();
   }
@@ -55,20 +48,21 @@ class LoginAuthNumberPageViewModel
 
   void _requestAuth() {
     _throttler.run(() async {
-      _authText = "";
-      _timerText = _getTimerText(_timeoutCount);
+      authText = "";
+      timerText = _getTimerText(_timeoutCount);
       _startTimer();
 
-      changeState(InputAuthNumberState.showSendingAuthNumberToast);
+      changeViewState(InputAuthNumberState.showSendingAuthNumberToast);
 
-      final result = await sendAuthNumber.call(_phoneNumber).getOrNull();
+      final result = await sendAuthNumber.call(phoneNumner).getOrNull();
       var isSuccess = result?.isValid ?? false;
       if (!isSuccess) {
         _timer?.cancel();
-        _isNeedToRetry = true;
-        _timerText = "인증번호 발송에 실패했어요.";
+        isNeedToRetry = true;
+        isFailedInputAuth = true;
+        timerText = "인증번호 발송에 실패했어요.";
         notifyListeners();
-        changeState(InputAuthNumberState.showFailedSendAuthNumberDialog);
+        changeViewState(InputAuthNumberState.showFailedSendAuthNumberDialog);
       }
     });
   }
@@ -78,22 +72,22 @@ class LoginAuthNumberPageViewModel
       inputText = inputText.substring(0, 6);
     }
     if (inputText.length == 6) {
-      changeState(InputAuthNumberState.checkIsValidAuthNumber);
+      changeViewState(InputAuthNumberState.checkIsValidAuthNumber);
 
       final isVerified = await _confirmAuthNumberUseCase.call(inputText);
-      _isNeedToRetry = !isVerified;
+      isNeedToRetry = !isVerified;
       notifyListeners();
-      changeState(InputAuthNumberState.completeVerification);
+      changeViewState(InputAuthNumberState.completeVerification);
 
       if (isVerified) {
         _timer?.cancel();
-        changeState(InputAuthNumberState.validAuthNumber);
+        changeViewState(InputAuthNumberState.validAuthNumber);
       } else {
         _timer?.cancel();
-        _isNeedToRetry = true;
-        _timerText = "본인 인증에 실패했어요.";
+        isNeedToRetry = true;
+        timerText = "본인 인증에 실패했어요.";
         notifyListeners();
-        changeState(InputAuthNumberState.invalidAuthNumber);
+        changeViewState(InputAuthNumberState.invalidAuthNumber);
       }
     }
   }
@@ -105,24 +99,24 @@ class LoginAuthNumberPageViewModel
   }
 
   void _startTimer() {
-    _isNeedToRetry = false;
+    isNeedToRetry = false;
     if (_timer != null) _timer!.cancel();
 
     _timeoutCount = timeoutDuration;
-    _timerText = _getTimerText(_timeoutCount);
+    timerText = _getTimerText(_timeoutCount);
     notifyListeners();
 
     _timer = Stream.periodic(const Duration(seconds: 1), (count) => count)
         .listen((count) {
       _timeoutCount -= const Duration(seconds: 1);
-      _timerText = _getTimerText(_timeoutCount);
+      timerText = _getTimerText(_timeoutCount);
 
-      if (_timeoutCount == const Duration(minutes: 2, seconds: 45)) {
-        _isNeedToRetry = true;
+      if (_timeoutCount == const Duration(minutes: 2, seconds: 50)) {
+        isNeedToRetry = true;
       }
 
       if (_timeoutCount == const Duration(minutes: 0, seconds: 0)) {
-        _timerText = "인증 시간이 만료되었어요.";
+        timerText = "인증 시간이 만료되었어요.";
         _timer?.cancel();
       }
 

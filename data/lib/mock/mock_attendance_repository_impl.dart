@@ -105,11 +105,8 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   Future<List<TodayAttendance>> getTodayAttendanceList(
       AttendanceData attendanceData) {
     return Future.value([
-      TodayAttendance(
-          attendance: AttendanceData(
-              id: id, attendanceDate: attendanceDate, type: type),
-          sequenceNumber: 1),
-      TodayAttendance(attendance: null, sequenceNumber: 2),
+      TodayAttendance(id: 1, attendanceSequence: 1),
+      TodayAttendance(id: 2, attendanceSequence: 1),
     ]);
   }
 

@@ -6,8 +6,8 @@ class CachingBeforeStartingUseCase {
   final _scheduleRepository = GetIt.I.get<ScheduleRepository>();
   final _attendanceRepository = GetIt.I.get<AttendanceRepository>();
 
-  Future<void> call(bool isNeedLogin) async {
-    if (isNeedLogin) return;
+  Future<void> call(bool isLoggedIn) async {
+    if (isLoggedIn) return;
 
     final today = DateTime.now();
     await Future.wait([

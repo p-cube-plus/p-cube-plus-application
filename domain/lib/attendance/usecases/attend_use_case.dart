@@ -7,9 +7,9 @@ class AttendUseCase {
 
   Future<TodayAttendance> call(TodayAttendance data) {
     return _attendanceRepository.attend(
-      data.attendance.id,
-      data.sequenceNumber,
-      data.attendance.attendanceDate,
+      data.id,
+      data.attendanceSequence,
+      DateTime.now(),
     );
   }
 }

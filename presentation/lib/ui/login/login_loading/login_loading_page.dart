@@ -3,20 +3,39 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/home/home_page.dart';
 import 'package:presentation/ui/login/login_failed/login_failed_page.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/login/login_loading/login_loading_page_viewmodel.dart';
 import 'package:presentation/constants/asset_path.dart' as path;
 import 'package:presentation/ui/login/login_loading/login_loading_state.dart';
+import 'package:presentation/ui/main/main_page.dart';
+import 'package:provider/provider.dart';
 
-class LoginLoadingPage extends StatefulWidget {
-  const LoginLoadingPage({super.key});
+class LoginLoadingPage extends StatelessWidget {
+  final String phoneNumber;
+  final String name;
+
+  const LoginLoadingPage(
+      {super.key, required this.phoneNumber, required this.name});
 
   @override
-  State<LoginLoadingPage> createState() => LoginLoadingPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => LoginLoadingPageViewModel(phoneNumber, name),
+      child: const _LoginLoadingPage(),
+    );
+  }
 }
 
-class LoginLoadingPageState extends State<LoginLoadingPage>
+class _LoginLoadingPage extends StatefulWidget {
+  const _LoginLoadingPage();
+
+  @override
+  State<_LoginLoadingPage> createState() => LoginLoadingPageState();
+}
+
+class LoginLoadingPageState extends State<_LoginLoadingPage>
     with SingleTickerProviderStateMixin, ViewModel<LoginLoadingPageViewModel> {
   late final AnimationController _animationController;
 
@@ -83,7 +102,7 @@ class LoginLoadingPageState extends State<LoginLoadingPage>
   }
 
   void _setStateListener() {
-    read(context).uiSideEffectStream.listen((event) {
+    read(context).uiEventStream.listen((event) {
       switch (event) {
         case LoginLoadingState.successLogin:
           _navigateToHomePage();
@@ -98,7 +117,7 @@ class LoginLoadingPageState extends State<LoginLoadingPage>
 
   void _navigateToHomePage() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => Container()),
+      MaterialPageRoute(builder: (context) => const MainPage()),
       (route) => false,
     );
   }

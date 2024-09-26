@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_event.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_state.dart';
-import 'package:presentation/ui/login/input_user_name/input_name_page_viewmodel.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/input_user_name/login_name_page.dart';
 import 'package:presentation/widgets/default_alert.dart';
@@ -19,14 +18,27 @@ import 'package:presentation/constants/asset_path.dart' as path;
 
 import 'input_auth_number_page_viewmodel.dart';
 
-class LoginAuthNumberPage extends StatefulWidget {
-  const LoginAuthNumberPage({super.key});
+class LoginAuthNumberPage extends StatelessWidget {
+  final String phoneNumber;
+  const LoginAuthNumberPage({super.key, required this.phoneNumber});
 
   @override
-  State<LoginAuthNumberPage> createState() => _LoginAuthNumberPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => LoginAuthNumberPageViewModel(phoneNumber),
+      child: const _LoginAuthNumberPage(),
+    );
+  }
 }
 
-class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
+class _LoginAuthNumberPage extends StatefulWidget {
+  const _LoginAuthNumberPage();
+
+  @override
+  State<_LoginAuthNumberPage> createState() => _LoginAuthNumberPageState();
+}
+
+class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
     with ViewModel<LoginAuthNumberPageViewModel> {
   final TextEditingController _textEditController = TextEditingController();
 
@@ -42,26 +54,6 @@ class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
   void dispose() {
     _textEditController.dispose();
     super.dispose();
-  }
-
-  void _setStateListener() {
-    read(context).uiSideEffectStream.listen((event) {
-      switch (event) {
-        case InputAuthNumberState.showSendingAuthNumberToast:
-          _showSendingAuthNumberToast();
-        case InputAuthNumberState.showFailedSendAuthNumberDialog:
-          _showFailedSendAuthNumberDialog();
-        case InputAuthNumberState.checkIsValidAuthNumber:
-          _showLoadingDialog();
-        case InputAuthNumberState.completeVerification:
-          _closeLoadingDialog();
-        case InputAuthNumberState.validAuthNumber:
-          _showSuccessVerificationToast();
-          _navigateToLoginNamePage();
-        case InputAuthNumberState.invalidAuthNumber:
-          _showFailedVerificationDialog();
-      }
-    });
   }
 
   @override
@@ -128,7 +120,7 @@ class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
                           width: 1,
                         ),
                         child: watchWidget<bool>(
-                          (viewModel) => viewModel.isNeedToRetry,
+                          (viewModel) => viewModel.isFailedInputAuth,
                           (isNeedToRetry) => DefaultTextField(
                             maxLength: 6,
                             minLine: 1,
@@ -170,6 +162,26 @@ class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
     );
   }
 
+  void _setStateListener() {
+    read(context).uiEventStream.listen((event) {
+      switch (event) {
+        case InputAuthNumberState.showSendingAuthNumberToast:
+          _showSendingAuthNumberToast();
+        case InputAuthNumberState.showFailedSendAuthNumberDialog:
+          _showFailedSendAuthNumberDialog();
+        case InputAuthNumberState.checkIsValidAuthNumber:
+          _showLoadingDialog();
+        case InputAuthNumberState.completeVerification:
+          _closeLoadingDialog();
+        case InputAuthNumberState.validAuthNumber:
+          _showSuccessVerificationToast();
+          _navigateToLoginNamePage();
+        case InputAuthNumberState.invalidAuthNumber:
+          _showFailedVerificationDialog();
+      }
+    });
+  }
+
   void _showSendingAuthNumberToast() {
     Fluttertoast.showToast(
       msg: "인증번호를 발송하고 있어요 :)",
@@ -202,7 +214,7 @@ class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
   }
 
   void _closeLoadingDialog() {
-    Navigator.of(context).pop();
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   void _showSuccessVerificationToast() {
@@ -215,13 +227,13 @@ class _LoginAuthNumberPageState extends State<LoginAuthNumberPage>
   void _navigateToLoginNamePage() {
     final phoneNumber = read(context).phoneNumner;
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider(
-            create: (_) => LoginNamePageViewModel(phoneNumber),
-            child: const LoginNamePage(),
-          ),
+      MaterialPageRoute(
+        builder: (context) => LoginNamePage(
+          phoneNumber: phoneNumber,
         ),
-        ((route) => route.isFirst));
+      ),
+      (route) => route.isFirst,
+    );
   }
 
   void _showFailedVerificationDialog() {

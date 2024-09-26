@@ -12,25 +12,36 @@ import 'package:provider/provider.dart';
 
 import 'input_name_page_viewmodel.dart';
 
-class LoginNamePage extends StatefulWidget {
-  const LoginNamePage({super.key});
+class LoginNamePage extends StatelessWidget {
+  final String phoneNumber;
+  const LoginNamePage({super.key, required this.phoneNumber});
 
   @override
-  State<LoginNamePage> createState() => _LoginNamePageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => LoginNamePageViewModel(phoneNumber),
+      child: const _LoginNamePage(),
+    );
+  }
 }
 
-class _LoginNamePageState extends State<LoginNamePage>
+class _LoginNamePage extends StatefulWidget {
+  const _LoginNamePage();
+
+  @override
+  State<_LoginNamePage> createState() => _LoginNamePageState();
+}
+
+class _LoginNamePageState extends State<_LoginNamePage>
     with ViewModel<LoginNamePageViewModel> {
   final TextEditingController _textEditingcontroller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      _textEditingcontroller.addListener(() {
-        read(context)
-            .triggerEvent(InputNameEventSaveName(_textEditingcontroller.text));
-      });
+    _textEditingcontroller.addListener(() {
+      read(context)
+          .triggerEvent(InputNameEventSaveName(_textEditingcontroller.text));
     });
   }
 
@@ -134,9 +145,9 @@ class _LoginNamePageState extends State<LoginNamePage>
     final name = read(context).name;
 
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ChangeNotifierProvider(
-        create: (_) => LoginLoadingPageViewModel(phoneNumber, name),
-        child: const LoginLoadingPage(),
+      builder: (context) => LoginLoadingPage(
+        phoneNumber: phoneNumber,
+        name: name,
       ),
     ));
   }

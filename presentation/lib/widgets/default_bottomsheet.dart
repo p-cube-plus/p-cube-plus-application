@@ -26,8 +26,8 @@ class DefaultBottomsheet extends StatelessWidget {
 }
 
 class BottomSheetBuilder {
-  build(BuildContext context, Widget content) {
-    showModalBottomSheet(
+  Future build(BuildContext context, Widget content) {
+    return showModalBottomSheet(
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),

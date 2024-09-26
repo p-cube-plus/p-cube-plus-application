@@ -30,7 +30,7 @@ class LoginPhoneNumberPageViewModel
 
     final isPhoneNumberMaxLenth = inputText.length >= ("000-0000-0000").length;
     if (isPhoneNumberMaxLenth) {
-      changeState(InputPhoneNumberState.navigateToAuth);
+      changeViewState(InputPhoneNumberState.navigateToAuth);
     }
   }
 }

@@ -12,7 +12,6 @@ import 'package:domain/login/value_objects/auth_token_data.dart';
 import 'package:domain/login/value_objects/login_confirm_info_data.dart';
 import 'package:domain/login/value_objects/login_request_info_data.dart';
 import 'package:domain/login/value_objects/login_user_info_data.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
 class LoginRepositoryImpl implements LoginRepository {

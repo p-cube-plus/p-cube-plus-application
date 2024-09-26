@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:presentation/ui/splash/splash_page_viewmodel.dart';
-import 'package:provider/provider.dart';
 import 'theme/dark_theme.dart';
 import 'theme/light_theme.dart';
 import 'ui/splash/splash_page.dart';
@@ -23,10 +21,7 @@ class PCubePlusApp extends StatelessWidget {
       theme: _getLightTheme(),
       darkTheme: _getDarkTheme(),
       scrollBehavior: _RemoveScrollGlowEffect(),
-      home: ChangeNotifierProvider(
-        create: (_) => SplashPageViewModel(),
-        child: const SplashPage(),
-      ),
+      home: const SplashPage(),
     );
   }
 

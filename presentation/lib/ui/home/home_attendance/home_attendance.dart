@@ -2,13 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
+import 'package:provider/provider.dart';
 
 import 'home_attendance_content/home_attendance_content.dart';
 import 'home_attendnace_viewmodel.dart';
 
-class HomeAttendence extends StatelessWidget
-    with ViewModel<HomeAttendnaceViewModel> {
+class HomeAttendence extends StatelessWidget {
   const HomeAttendence({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => HomeAttendnaceViewModel(),
+      child: const _HomeAttendence(),
+    );
+  }
+}
+
+class _HomeAttendence extends StatelessWidget
+    with ViewModel<HomeAttendnaceViewModel> {
+  const _HomeAttendence();
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +68,11 @@ class HomeAttendence extends StatelessWidget
               ],
             ),
             watchWidget(
-              (viewModel) => viewModel.contentDataList,
+              (viewModel) => data,
               (contentDataList) {
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    return HomeAttendanceContent(contentDataList[index]);
+                    return HomeAttendanceContent(data[index]);
                   },
                 );
               },
