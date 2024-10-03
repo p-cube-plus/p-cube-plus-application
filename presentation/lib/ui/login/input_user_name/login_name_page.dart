@@ -3,7 +3,6 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/input_user_name/input_name_event.dart';
 import 'package:presentation/ui/login/login_loading/login_loading_page.dart';
-import 'package:presentation/ui/login/login_loading/login_loading_page_viewmodel.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_text_field.dart';

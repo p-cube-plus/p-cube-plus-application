@@ -2,6 +2,7 @@ import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 class HomeAttendanceContent extends StatelessWidget {
@@ -17,10 +18,11 @@ class HomeAttendanceContent extends StatelessWidget {
     final theme = Theme.of(context);
 
     return RoundedBorder(
-      padding: const EdgeInsets.only(top: 8),
+      height: 56,
       onTap: () => _navigateToAttendancePage(context),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(width: 20),
           Container(
@@ -28,9 +30,10 @@ class HomeAttendanceContent extends StatelessWidget {
             width: 7.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color(data.scheduleTypeColor.hex),
+              color: Color(data.scheduleType.color.hex),
             ),
           ),
+          const SizedBox(width: 12),
           Text(
             data.attendanceData.attendanceDate.format("yyyy.MM.dd"),
             style: TextStyle(
@@ -64,7 +67,9 @@ class HomeAttendanceContent extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Container(),
+        builder: (context) => AttendanceTodayPage(
+          selectedAttendance: data.attendanceData,
+        ),
       ),
     );
   }

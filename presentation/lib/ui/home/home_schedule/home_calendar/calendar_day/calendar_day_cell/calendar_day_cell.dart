@@ -17,18 +17,16 @@ class CalendarDayCell extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Expanded(
-      child: InkWell(
-        onTap: () => read(context)
-            .triggerEvent(HomeScheduleEventOnClickCell(currentDay)),
-        child: Center(
-          child: Text(
-            "$currentDay",
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: theme.neutral100,
-            ),
+    return InkWell(
+      onTap: () =>
+          read(context).triggerEvent(HomeScheduleEventOnClickCell(currentDay)),
+      child: Center(
+        child: Text(
+          "$currentDay",
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w400,
+            color: theme.neutral100,
           ),
         ),
       ),

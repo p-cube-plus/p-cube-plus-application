@@ -26,30 +26,30 @@ class RoundedBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: color ?? Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(radius),
-        border: border,
-        boxShadow: [
-          if (hasShadow)
-            BoxShadow(
-              color: Theme.of(context).shadowColor,
-              blurRadius: 10.0,
-              spreadRadius: 0.0,
-              offset: Offset.fromDirection(0.0, 2.0),
-            )
-        ],
-      ),
-      child: InkWell(
-        customBorder: RoundedRectangleBorder(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: color ?? Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(radius),
+          border: border,
+          boxShadow: [
+            if (hasShadow)
+              BoxShadow(
+                color: Theme.of(context).shadowColor,
+                blurRadius: 10.0,
+                spreadRadius: 0.0,
+                offset: Offset.fromDirection(0.0, 2.0),
+              )
+          ],
         ),
-        onTap: onTap,
         child: Container(
           padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(radius),
+          ),
           child: child,
         ),
       ),

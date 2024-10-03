@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:domain/attendance/repository/attendance_repository.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
@@ -8,8 +6,8 @@ import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
-import 'package:domain/common/value_objects/color.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
+import 'package:domain/schedule/value_objects/schedule_type.dart';
 
 class MockAttendanceRepositoryImpl implements AttendanceRepository {
   @override
@@ -35,7 +33,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<List<HomeAttendance>> getHomeAttendanceList() async {
-    await Future.delayed(Duration(seconds: Random.secure().nextInt(5)));
+    //await Future.delayed(Duration(seconds: Random.secure().nextInt(5)));
     return [
       HomeAttendance(
         attendanceData: AttendanceData(
@@ -43,7 +41,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
           attendanceDate: DateTime.now(),
           type: RegularMetting(),
         ),
-        scheduleTypeColor: Color(0xE55542),
+        scheduleType: ScheduleTypMain(),
         title: '판도라큐브 정기회의',
       ),
       HomeAttendance(
@@ -52,7 +50,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
           attendanceDate: DateTime.now(),
           type: PartMettingAttendance(MemberPartType.development),
         ),
-        scheduleTypeColor: Color(0xE55542),
+        scheduleType: ScheduleTypMain(),
         title: '프로그래밍 파트회의',
       ),
       HomeAttendance(
@@ -61,7 +59,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
           attendanceDate: DateTime.now(),
           type: PartMettingAttendance(MemberPartType.art),
         ),
-        scheduleTypeColor: Color(0xE55542),
+        scheduleType: ScheduleTypMain(),
         title: '아트 파트회의',
       ),
       HomeAttendance(
@@ -70,7 +68,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
           attendanceDate: DateTime.now(),
           type: PartMettingAttendance(MemberPartType.design),
         ),
-        scheduleTypeColor: Color(0xE55542),
+        scheduleType: ScheduleTypMain(),
         title: '디자인 파트회의',
       ),
     ];
@@ -105,8 +103,16 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   Future<List<TodayAttendance>> getTodayAttendanceList(
       AttendanceData attendanceData) {
     return Future.value([
-      TodayAttendance(id: 1, attendanceSequence: 1),
-      TodayAttendance(id: 2, attendanceSequence: 1),
+      TodayAttendance(
+          id: 1,
+          attendanceSequence: 1,
+          startTime: DateTime.now(),
+          endTime: DateTime.now().add(Duration(minutes: 10))),
+      TodayAttendance(
+          id: 2,
+          attendanceSequence: 1,
+          startTime: DateTime.now(),
+          endTime: DateTime.now().add(Duration(minutes: 10))),
     ]);
   }
 

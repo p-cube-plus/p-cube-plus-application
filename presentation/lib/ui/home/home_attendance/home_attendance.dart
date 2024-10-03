@@ -67,15 +67,22 @@ class _HomeAttendence extends StatelessWidget
                 ),
               ],
             ),
-            watchWidget(
-              (viewModel) => data,
-              (contentDataList) {
-                return ListView.builder(
-                  itemBuilder: (context, index) {
+            const SizedBox(height: 16),
+            Column(
+              children: List.generate(
+                data.length,
+                (index) {
+                  if (index == 0) {
                     return HomeAttendanceContent(data[index]);
-                  },
-                );
-              },
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: HomeAttendanceContent(data[index]),
+                    );
+                  }
+                },
+                growable: false,
+              ),
             ),
           ],
         );

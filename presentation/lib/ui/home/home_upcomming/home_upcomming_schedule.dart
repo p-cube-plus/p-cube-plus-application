@@ -27,6 +27,7 @@ class _HomeUpcommingSchedule extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "다가오는 일정",
@@ -36,21 +37,34 @@ class _HomeUpcommingSchedule extends StatelessWidget
             color: theme.neutral100,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 16),
         DefaultFutureBuilder(
           fetchData: read(context).fetchData(),
           showOnLoadedWidget: (data) {
-            return Column(
-              children: List.generate(
-                data.length,
-                (index) {
-                  return HomeUpcommingScheduleItem(
-                    data[index],
-                  );
-                },
-                growable: false,
-              ),
-            );
+            if (data.isEmpty) {
+              return const Text("다가오는 일정이 없습니다.");
+            } else {
+              return Column(
+                children: List.generate(
+                  data.length,
+                  growable: false,
+                  (index) {
+                    if (index == 0) {
+                      return HomeUpcommingScheduleItem(
+                        data[index],
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: HomeUpcommingScheduleItem(
+                          data[index],
+                        ),
+                      );
+                    }
+                  },
+                ),
+              );
+            }
           },
         ),
       ],

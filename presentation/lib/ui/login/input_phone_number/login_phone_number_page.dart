@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/login/input_auth_number/input_auth_number_page_viewmodel.dart';
 import 'package:presentation/ui/login/input_phone_number/input_phone_number_event.dart';
 import 'package:presentation/ui/login/input_phone_number/input_phone_number_state.dart';
 import 'package:presentation/utils/phone_number_formatter.dart';

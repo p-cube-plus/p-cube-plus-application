@@ -19,32 +19,30 @@ class CalendarDayCellWithSchedule extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Expanded(
-      child: InkWell(
-          onTap: () => read(context)
-              .triggerEvent(HomeScheduleEventOnClickCell(currentDay)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "$currentDay",
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w400,
-                  color: theme.neutral100,
-                ),
+    return InkWell(
+        onTap: () => read(context)
+            .triggerEvent(HomeScheduleEventOnClickCell(currentDay)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "$currentDay",
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w400,
+                color: theme.neutral100,
               ),
-              const SizedBox(height: 2.0),
-              Container(
-                height: 4.0,
-                width: 4.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: scheduleColor,
-                ),
+            ),
+            const SizedBox(height: 2.0),
+            Container(
+              height: 4.0,
+              width: 4.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: scheduleColor,
               ),
-            ],
-          )),
-    );
+            ),
+          ],
+        ));
   }
 }

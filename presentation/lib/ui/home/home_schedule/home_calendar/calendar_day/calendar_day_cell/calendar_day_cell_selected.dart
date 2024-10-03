@@ -12,15 +12,12 @@ class CalendarDayCellSelected extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Expanded(
-        child: Stack(
+    return Stack(
       alignment: Alignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 6.0),
+        Center(
           child: Container(
-            height: 24.0,
-            width: 24.0,
+            width: 28.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: theme.primary80,
@@ -41,6 +38,6 @@ class CalendarDayCellSelected extends StatelessWidget {
           ],
         )
       ],
-    ));
+    );
   }
 }

@@ -17,7 +17,9 @@ class AttendanceToday extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final attendanceTypeName = read(context).selectedAttendance.type.name;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "오늘의 출석체크",
@@ -41,7 +43,7 @@ class AttendanceToday extends StatelessWidget
                     read(context)
                         .selectedAttendance
                         .attendanceDate
-                        .format("M월 d일 정기회의"),
+                        .format("M월 d일 $attendanceTypeName회의"),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,

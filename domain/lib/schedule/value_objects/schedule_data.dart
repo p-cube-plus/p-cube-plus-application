@@ -1,29 +1,41 @@
-import 'package:domain/common/value_objects/color.dart';
+import 'package:domain/schedule/value_objects/daily_schedule.dart';
 import 'package:domain/schedule/value_objects/schedule_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ScheduleData {
+  final String title;
   final ScheduleType type;
   final DateTime startDate;
   final DateTime endDate;
-
   const ScheduleData({
+    required this.title,
     required this.type,
     required this.startDate,
     required this.endDate,
   });
 
-  bool get isDailySchedule =>
-      startDate.year == endDate.year &&
-      startDate.month == endDate.month &&
-      startDate.day == endDate.day;
+  DailySchedule toStartDailySchedule() {
+    return DailySchedule(
+      title: "$title 시작",
+      type: type,
+      scheduleDate: startDate,
+    );
+  }
 
-  Color get markColor {
-    return [
-      Color(0xDE2B13),
-      Color(0x5EDCA7),
-      Color(0x4813DE),
-    ][type.index];
+  DailySchedule toOngoingDailySchedule(DateTime onGoingDay) {
+    return DailySchedule(
+      title: "$title 진행중",
+      type: type,
+      scheduleDate: onGoingDay.copyWith(hour: 0, minute: 0, second: 1),
+    );
+  }
+
+  DailySchedule toEndDailySchedule() {
+    return DailySchedule(
+      title: "$title 종료",
+      type: type,
+      scheduleDate: endDate,
+    );
   }
 }

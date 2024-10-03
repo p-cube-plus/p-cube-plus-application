@@ -1,4 +1,4 @@
-import 'package:domain/common/value_objects/color.dart';
+import 'package:domain/schedule/value_objects/schedule_type.dart';
 import 'package:meta/meta.dart';
 
 import 'attendance_data.dart';
@@ -6,11 +6,11 @@ import 'attendance_data.dart';
 @immutable
 class HomeAttendance {
   final AttendanceData attendanceData;
-  final Color scheduleTypeColor;
+  final ScheduleType scheduleType;
   final String title;
   const HomeAttendance({
     required this.attendanceData,
-    required this.scheduleTypeColor,
+    required this.scheduleType,
     required this.title,
   });
 }

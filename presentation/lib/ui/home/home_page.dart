@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/widgets/default_content.dart';
-import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
 import 'package:provider/provider.dart';
@@ -22,39 +20,39 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _HomePage extends StatelessWidget with ViewModel<HomePageViewModel> {
+class _HomePage extends StatefulWidget {
   const _HomePage();
 
   @override
+  State<_HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<_HomePage> {
+  Key _refreshKey = UniqueKey();
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultFutureBuilder(
-      fetchData: read(context).refreshHomePageData(),
-      showOnLoadedWidget: (_) {
-        return DefaultRefreshIndicator(
-          onRefresh: Future.wait([
-            read(context).fetchHomePageData(),
-          ]),
-          child: const DefaultPage(
-            title: "홈",
-            content: DefaultContent(
-              child: Column(
-                children: [
-                  HomeAttendence(),
-                  HomeUpcommingSchedule(),
-                  HomeSchedule(),
-                ],
-              ),
-            ),
-            //floatingActionButton: FloatingBarcodeButton(),
+    return DefaultRefreshIndicator(
+      onRefresh: () async {
+        setState(() {
+          _refreshKey = UniqueKey();
+        });
+      },
+      child: DefaultPage(
+        key: _refreshKey,
+        title: "홈",
+        content: const DefaultContent(
+          child: Column(
+            children: [
+              HomeAttendence(),
+              SizedBox(height: 40),
+              HomeUpcommingSchedule(),
+              HomeSchedule(),
+            ],
           ),
-        );
-      },
-      showOnErrorWidget: (error, trace) {
-        return const SizedBox();
-      },
-      handleError: (error, trace) {
-        // 오류 처리
-      },
+        ),
+        //floatingActionButton: FloatingBarcodeButton(),
+      ),
     );
   }
 }

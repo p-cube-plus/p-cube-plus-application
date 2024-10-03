@@ -1,37 +1,45 @@
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:domain/schedule/repository/schedule_repository.dart';
 import 'package:domain/schedule/value_objects/schedule_data.dart';
-import 'package:domain/schedule/value_objects/schedule_detail.dart';
 import 'package:domain/schedule/value_objects/schedule_type.dart';
 
 class MockScheduleRepositoryImpl implements ScheduleRepository {
   @override
-  Future<List<ScheduleDetail>> getDailyScheduleDetailList(DateTime date) async {
+  Future<List<ScheduleData>> getDailyScheduleDetailList(DateTime date) async {
     final result = await _getMockModel();
-    return result
-        .where(
-          (data) => date.isBetweenDates(
-            data.schedule.startDate,
-            data.schedule.endDate,
-          ),
-        )
-        .toList();
+    final startDate = DateTime(date.year, date.month, date.day);
+    final endDate = startDate.add(Duration(days: 1));
+    return result.where((data) {
+      if (data.startDate.isBefore(startDate)) {
+        return data.endDate.isAfter(startDate);
+      } else {
+        return data.startDate.isBetweenDates(startDate, endDate);
+      }
+    }).toList();
   }
 
   @override
   Future<List<ScheduleData>> getScheduleListInMonth(int year, int month) async {
     final result = await _getMockModel();
-    return result.map((data) => data.schedule).toList();
+    final startDate = DateTime(year, month, 1);
+    final endDate = DateTime(year, month + 1, 0);
+    return result.where((data) {
+      if (data.startDate.isBefore(startDate)) {
+        return data.endDate.isAfter(startDate);
+      } else {
+        return data.startDate.isBetweenDates(startDate, endDate);
+      }
+    }).toList();
   }
 
   @override
-  Future<List<ScheduleDetail>> getUpcommingScheduleDetailList() async {
+  Future<List<ScheduleData>> getUpcommingScheduleDetailList() async {
     final today = DateTime.now();
     final maxDate = DateTime.now().add(Duration(days: 7));
     final result = await _getMockModel();
     return result
         .where(
-          (data) => data.schedule.startDate.isBetweenDates(
+          (data) => data.startDate.isBetweenDates(
             today,
             maxDate,
           ),
@@ -39,88 +47,50 @@ class MockScheduleRepositoryImpl implements ScheduleRepository {
         .toList();
   }
 
-  Future<List<ScheduleDetail>> _getMockModel() {
+  Future<List<ScheduleData>> _getMockModel() {
     final today = DateTime.now();
     return Future.value([
-      ScheduleDetail(
+      ScheduleData(
+        title: '넘겨지는 스케줄',
+        type: ScheduleTypMain(),
+        startDate: DateTime(today.year, today.month - 1, 28, 9),
+        endDate: DateTime(today.year, today.month, 1, 1),
+      ),
+      ScheduleData(
         title: '매우 빠른 스케줄',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 1, 9),
-          endDate: DateTime(today.year, today.month, 1, 12),
-        ),
+        type: ScheduleTypMain(),
+        startDate: DateTime(today.year, today.month, 1, 9),
+        endDate: DateTime(today.year, today.month, 1, 12),
       ),
-      ScheduleDetail(
-        title: '3일 연속의 스케줄',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 1, 12),
-          endDate: DateTime(today.year, today.month, 3, 18),
-        ),
+      ScheduleData(
+        title: '워크샵 테스트',
+        type: ScheduleWorkShop(),
+        startDate: DateTime(today.year, today.month, 1, 9),
+        endDate: DateTime(today.year, today.month, 3, 18),
       ),
-      ScheduleDetail(
+      ScheduleData(
+        title: '청소 테스트',
+        type: ScheduleTypeClean(),
+        startDate: DateTime(today.year, today.month, 1, 11),
+        endDate: DateTime(today.year, today.month, 1, 12),
+      ),
+      ScheduleData(
+        title: '청소 테스트2',
+        type: ScheduleTypeClean(),
+        startDate: DateTime(today.year, today.month, 5, 11),
+        endDate: DateTime(today.year, today.month, 5, 12),
+      ),
+      ScheduleData(
         title: '7일의 행복',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 7, 7, 7, 7),
-          endDate: DateTime(today.year, today.month, 7, 17, 7, 7),
-        ),
+        type: ScheduleTypMain(),
+        startDate: DateTime(today.year, today.month, 7, 7),
+        endDate: DateTime(today.year, today.month, 7 + 7, 17),
       ),
-      ScheduleDetail(
-        title: '포키를 먹어라',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 11, 11, 11, 11),
-          endDate: DateTime(today.year, today.month, 11, 12),
-        ),
-      ),
-      ScheduleDetail(
+      ScheduleData(
         title: '28일의 공포',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 28, 12),
-          endDate: DateTime(today.year, today.month, 28, 15),
-        ),
-      ),
-      ScheduleDetail(
-        title: '테스트 청소 스케줄',
-        schedule: ScheduleData(
-          type: ScheduleType.clean,
-          startDate: DateTime(today.year, today.month, 15, 15),
-          endDate: DateTime(today.year, today.month, 15, 16),
-        ),
-      ),
-      ScheduleDetail(
-        title: '테스트 워크샵 스케줄',
-        schedule: ScheduleData(
-          type: ScheduleType.workshop,
-          startDate: DateTime(today.year, today.month, 17, 12),
-          endDate: DateTime(today.year, today.month, 20, 12),
-        ),
-      ),
-      ScheduleDetail(
-        title: '만약 스케줄이 겹친다면 어쩔테냐',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 15, 17),
-          endDate: DateTime(today.year, today.month, 15, 18),
-        ),
-      ),
-      ScheduleDetail(
-        title: '그러면 스케줄이 많다면 어쩔테야',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 15, 19),
-          endDate: DateTime(today.year, today.month, 15, 20),
-        ),
-      ),
-      ScheduleDetail(
-        title: '이어진 스케줄이 먼저냐 새로운 스케줄이 먼저냐',
-        schedule: ScheduleData(
-          type: ScheduleType.main,
-          startDate: DateTime(today.year, today.month, 18, 12),
-          endDate: DateTime(today.year, today.month, 18, 13),
-        ),
+        type: ScheduleTypMain(),
+        startDate: DateTime(today.year, today.month, 28, 1),
+        endDate: DateTime(today.year, today.month, 28, 23),
       ),
     ]);
   }

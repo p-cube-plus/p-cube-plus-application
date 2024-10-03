@@ -13,7 +13,6 @@ class CalendarHeader extends StatelessWidget
     final theme = Theme.of(context);
     return SizedBox(
       height: 48,
-      width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -33,8 +32,8 @@ class CalendarHeader extends StatelessWidget
             ),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const SizedBox(height: 20),
               watchWidget(
                 (viewModel) => viewModel.selectedDate.month,
                 (currentMonth) {
@@ -66,15 +65,12 @@ class CalendarHeader extends StatelessWidget
           GestureDetector(
             onTap: () =>
                 read(context).triggerEvent(HomeScheduleEventOnClickNextMonth()),
-            child: SizedBox(
-              height: double.infinity,
-              child: AspectRatio(
-                aspectRatio: 1.0,
-                child: Icon(
-                  Icons.chevron_left,
-                  color: theme.neutral40,
-                  size: 24,
-                ),
+            child: AspectRatio(
+              aspectRatio: 1.0,
+              child: Icon(
+                Icons.chevron_right,
+                color: theme.neutral40,
+                size: 24,
               ),
             ),
           ),

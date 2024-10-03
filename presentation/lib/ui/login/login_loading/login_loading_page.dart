@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/home/home_page.dart';
 import 'package:presentation/ui/login/login_failed/login_failed_page.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/login/login_loading/login_loading_page_viewmodel.dart';

@@ -8,7 +8,7 @@ class DefaultRefreshIndicator extends StatelessWidget {
     required this.child,
   });
 
-  final Future onRefresh;
+  final Future<void> Function() onRefresh;
   final Widget child;
 
   @override
@@ -17,7 +17,7 @@ class DefaultRefreshIndicator extends StatelessWidget {
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       edgeOffset: -60,
       color: Theme.of(context).primary80,
-      onRefresh: () async => await onRefresh,
+      onRefresh: onRefresh,
       child: child,
     );
   }

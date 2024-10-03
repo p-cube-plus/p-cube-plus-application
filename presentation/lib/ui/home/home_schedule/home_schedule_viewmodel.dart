@@ -1,7 +1,6 @@
 import 'package:domain/schedule/usecase/fetch_home_month_schedule_use_case.dart';
 import 'package:domain/schedule/usecase/fetch_home_today_schedule_use_case.dart';
-import 'package:domain/schedule/value_objects/schedule_data.dart';
-import 'package:domain/schedule/value_objects/schedule_detail.dart';
+import 'package:domain/schedule/value_objects/daily_schedule.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 import 'home_schedule_event.dart';
@@ -10,10 +9,13 @@ class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
   final _fetchHomeMonthScheduleUseCase = FetchHomeMonthScheduleUseCase();
   final _fetchHomeTodayScheduleUseCase = FetchHomeTodayScheduleUseCase();
 
+  Map<int, DailySchedule> monthSchedule = {};
+  List<DailySchedule> todayScheduleList = [];
   DateTime selectedDate = DateTime.now();
 
   HomeScheduleViewmodel() {
     _setEventListener();
+    _fetchHomeSchedule();
   }
 
   void _setEventListener() {
@@ -33,24 +35,31 @@ class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
     });
   }
 
-  Future<Map<int, ScheduleData>> fetchHomeMonthSchedule() {
-    return _fetchHomeMonthScheduleUseCase.call(
-        selectedDate.year, selectedDate.month);
-  }
-
-  Future<List<ScheduleDetail>> fetchHomeTodaySchedule() {
-    return _fetchHomeTodayScheduleUseCase.call(selectedDate);
-  }
-
-  void changeCurrentDate(int selectedDay) {
+  void changeCurrentDate(int selectedDay) async {
     selectedDate = selectedDate.copyWith(day: selectedDay);
+    notifyListeners();
+    todayScheduleList = await _fetchHomeTodayScheduleUseCase.call(selectedDate);
+    notifyListeners();
   }
 
   void jumpToOneMonthLater() {
     selectedDate = DateTime(selectedDate.year, selectedDate.month + 1, 1);
+    notifyListeners();
+    _fetchHomeSchedule();
   }
 
   void jumpToOneMonthAgo() {
     selectedDate = DateTime(selectedDate.year, selectedDate.month - 1, 1);
+    notifyListeners();
+    _fetchHomeSchedule();
+  }
+
+  void _fetchHomeSchedule() async {
+    monthSchedule = await _fetchHomeMonthScheduleUseCase.call(
+      selectedDate.year,
+      selectedDate.month,
+    );
+    todayScheduleList = await _fetchHomeTodayScheduleUseCase.call(selectedDate);
+    notifyListeners();
   }
 }
