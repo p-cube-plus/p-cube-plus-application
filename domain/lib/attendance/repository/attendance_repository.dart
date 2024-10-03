@@ -1,3 +1,4 @@
+import 'package:domain/attendance/value_objects/attendance_check.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
@@ -24,11 +25,12 @@ abstract interface class AttendanceRepository {
     int count,
   );
 
-  Future<TodayAttendance> attend(
-    int id,
-    int sequenceNumber,
-    DateTime currentTime,
-  );
+  bool getBeaconDetected();
+  Future<void> startScanningBeacon();
+  Future<void> stopScanningBeacon();
+
+  Future<AttendanceCheck?> getLocalAttendanceData(int id);
+  Future<void> insertAttendanceData(AttendanceCheck data);
 
   //
   // 아래부터는 임원진 데이터

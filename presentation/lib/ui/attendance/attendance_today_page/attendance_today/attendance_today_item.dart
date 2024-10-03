@@ -40,8 +40,13 @@ class AttendanceTodayItem extends StatelessWidget
             return Row(
               children: [
                 AttendanceStatusImage(data.attendanceStatus),
-                const SizedBox(width: 16),
-                AttendanceTodayItemButton(data),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: SizedBox(
+                    height: 56,
+                    child: AttendanceTodayItemButton(data),
+                  ),
+                ),
               ],
             );
           },

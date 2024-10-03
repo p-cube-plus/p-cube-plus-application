@@ -1,3 +1,4 @@
+import 'package:data/local/beacon/beacon_scanner.dart';
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:data/remote/firebase/firebase_datasource.dart';
 import 'package:domain/app_configuration/repository/app_configuration_repository.dart';
@@ -8,6 +9,7 @@ class AppConfigurationRepositoryImpl implements AppConfigurationRepository {
   final sharedPreferenceLocalDatasource =
       GetIt.I.get<SharedPreferenceLocalDatasource>();
   final firebaseDatasource = GetIt.I.get<FirebaseDatasource>();
+  final beaconScanner = GetIt.I.get<BeaconScanner>();
 
   @override
   ThemeType getTheme() {
@@ -19,6 +21,7 @@ class AppConfigurationRepositoryImpl implements AppConfigurationRepository {
     Future.wait([
       firebaseDatasource.initialize(),
       sharedPreferenceLocalDatasource.initialize(),
+      beaconScanner.initialize(),
     ]);
   }
 

@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:domain/attendance/usecases/attend_use_case.dart';
 import 'package:domain/attendance/usecases/fetch_attendance_state_use_case.dart';
+import 'package:domain/attendance/usecases/fetch_can_attend_use_case.dart';
 import 'package:domain/attendance/usecases/fetch_recent_attendance_use_case.dart';
+import 'package:domain/attendance/usecases/start_scanning_beacon_use_case.dart';
+import 'package:domain/attendance/usecases/stop_scanning_beacon_use_case.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
-import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 import 'attendance_today_event.dart';
@@ -16,18 +18,22 @@ class AttendanceTodayViewmodel
     extends BaseViewModel<AttendanceTodayState, AttendanceTodayEvent> {
   final _fetchAttendanceStateUseCase = FetchAttendanceStateUseCase();
   final _fetchRecentAttendanceUseCase = FetchRecentAttendanceUseCase();
+  final _fetchCanAttendUseCase = FetchCanAttendUseCase();
   final _attendUseCase = AttendUseCase();
+  final _startScanningBeaconUseCase = StartScanningBeaconUseCase();
+  final _stopScanningBeaconUseCase = StopScanningBeaconUseCase();
 
   AttendanceData selectedAttendance;
   StreamSubscription<DateTime>? _timer;
-  bool isFirstAttendanceTime = false;
-  bool isSecondAttendanceTime = false;
+  bool isPossibleFirstAttendance = false;
+  bool isPossibleSecondAttendance = false;
   bool shouldRefresh = false;
 
   AttendanceTodayViewmodel(
     this.selectedAttendance,
   ) {
     _setEventListener();
+    _startScanningBeaconUseCase();
   }
 
   Future<List<TodayAttendance>> fetchStateData() {
@@ -44,7 +50,7 @@ class AttendanceTodayViewmodel
         case AttendanceTodayEventOnClickAttendance():
           _checkAttendance(event.data);
         case CheckTimeToCanAttendance():
-          _startTimer(event.data);
+          _startCheckCanAttendanceTimer(event.data);
       }
     });
   }
@@ -58,28 +64,23 @@ class AttendanceTodayViewmodel
     });
   }
 
-  void _startTimer(List<TodayAttendance> attendanceList) {
+  void _startCheckCanAttendanceTimer(List<TodayAttendance> attendanceList) {
     _timer?.cancel();
-    _timer = Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now())
+    _timer = Stream.periodic(
+            const Duration(microseconds: 500), (_) => DateTime.now())
         .listen((currentTime) {
-      final isFirstAttendanceTimeOldValue = isFirstAttendanceTime;
-      isFirstAttendanceTime = currentTime.isBetweenDates(
-        attendanceList[0].startTime,
-        attendanceList[0].endTime,
-      );
+      final firstOldValue = isPossibleFirstAttendance;
+      final secondOldValue = isPossibleSecondAttendance;
 
-      final isSecondAttendanceTimeOldValue = isSecondAttendanceTime;
-      isSecondAttendanceTime = currentTime.isBetweenDates(
-        attendanceList[1].startTime,
-        attendanceList[1].endTime,
-      );
+      isPossibleFirstAttendance = _fetchCanAttendUseCase(attendanceList[0]);
+      isPossibleSecondAttendance = _fetchCanAttendUseCase(attendanceList[1]);
 
-      if (isFirstAttendanceTimeOldValue != isFirstAttendanceTime ||
-          isSecondAttendanceTimeOldValue != isSecondAttendanceTime) {
+      if (firstOldValue != isPossibleFirstAttendance ||
+          secondOldValue != isPossibleSecondAttendance) {
         notifyListeners();
       }
 
-      if (isFirstAttendanceTime && isSecondAttendanceTime) {
+      if (firstOldValue && secondOldValue) {
         _timer?.cancel();
         _timer = null;
       }
@@ -89,6 +90,7 @@ class AttendanceTodayViewmodel
   @override
   void dispose() {
     _timer?.cancel();
+    _stopScanningBeaconUseCase();
     super.dispose();
   }
 }

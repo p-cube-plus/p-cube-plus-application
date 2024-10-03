@@ -1,7 +1,6 @@
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:domain/schedule/value_objects/schedule_data.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 

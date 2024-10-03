@@ -19,7 +19,6 @@ class TodayAttendance {
   });
 
   bool get didAttend => attendanceTime != null;
-  bool get canAttend => DateTime.now().isBetweenDates(startTime, endTime);
 
   AttendanceStatusType get attendanceStatus {
     if (attendanceTime == null) {
@@ -31,5 +30,21 @@ class TodayAttendance {
     } else {
       return AttendanceStatusType.failed;
     }
+  }
+
+  TodayAttendance copyWith({
+    int? id,
+    int? attendanceSequence,
+    DateTime? startTime,
+    DateTime? endTime,
+    DateTime? attendanceTime,
+  }) {
+    return TodayAttendance(
+      id: id ?? this.id,
+      attendanceSequence: attendanceSequence ?? this.attendanceSequence,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      attendanceTime: attendanceTime ?? this.attendanceTime,
+    );
   }
 }

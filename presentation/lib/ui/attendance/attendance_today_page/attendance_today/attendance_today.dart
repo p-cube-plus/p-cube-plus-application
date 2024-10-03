@@ -1,11 +1,10 @@
+import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
-import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_event.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_viewmodel.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
-import 'package:presentation/widgets/list_divider.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 import 'attendance_today_item.dart';
@@ -53,16 +52,17 @@ class AttendanceToday extends StatelessWidget
                   const SizedBox(height: 20),
                   AttendanceTodayItem(todayAttendanceList[0]),
                   const SizedBox(height: 28),
-                  const ListDivider(horizontal: double.infinity, vertial: 1),
+                  Divider(
+                    thickness: 1,
+                    color: theme.neutral10,
+                  ),
                   const SizedBox(height: 24),
                   AttendanceTodayItem(todayAttendanceList[1]),
                 ],
               ),
             );
           },
-          loadingWidget: Container(
-              color: Colors.blueAccent, height: 270, width: double.infinity),
-        ),
+        )
       ],
     );
   }

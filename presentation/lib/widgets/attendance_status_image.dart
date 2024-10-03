@@ -11,8 +11,8 @@ class AttendanceStatusImage extends StatelessWidget {
   const AttendanceStatusImage(
     this.type, {
     super.key,
-    this.width = 48,
-    this.height = 48,
+    this.width = 68,
+    this.height = 68,
   });
 
   @override

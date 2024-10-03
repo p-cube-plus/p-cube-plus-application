@@ -1,6 +1,6 @@
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
+import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/attendance_status_image.dart';
 
@@ -12,6 +12,7 @@ class LastAttendanceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           data.date.format("M월 d일"),

@@ -14,6 +14,7 @@ class LastAttendance extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "지난 출석",
@@ -26,11 +27,14 @@ class LastAttendance extends StatelessWidget
         const SizedBox(height: 8),
         DefaultFutureBuilder(
           fetchData: read(context).fetchRecentData(),
+          showOnErrorWidget: (error, trace) {
+            return Text("$error");
+          },
           showOnLoadedWidget: (data) {
             return RoundedBorder(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(4, (index) {
                   return LastAttendanceItem(data[index]);
                 }),

@@ -1,5 +1,5 @@
+import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 
 class AttendanceTodayItemTimeText extends StatelessWidget {

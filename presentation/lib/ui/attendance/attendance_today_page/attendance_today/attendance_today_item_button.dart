@@ -1,8 +1,8 @@
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
+import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
-import 'package:presentation/extensions/date_time_extension.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_event.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_viewmodel.dart';
@@ -43,12 +43,12 @@ class AttendanceTodayItemButton extends StatelessWidget
     } else {
       return watchWidget(
           (viewModel) => data.attendanceSequence == 1
-              ? viewModel.isFirstAttendanceTime
-              : viewModel.isSecondAttendanceTime, (isAttendanceTime) {
+              ? viewModel.isPossibleFirstAttendance
+              : viewModel.isPossibleSecondAttendance, (isAttendanceTime) {
         return ElevatedButton(
           onPressed: _onClickAttendance(
             context,
-            data.canAttend && isAttendanceTime,
+            isAttendanceTime,
           ),
           child: const Text(
             "출석하기",
