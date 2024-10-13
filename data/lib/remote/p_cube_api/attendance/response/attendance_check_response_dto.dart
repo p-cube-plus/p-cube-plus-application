@@ -53,6 +53,7 @@ class AttendanceStateDTO {
   factory AttendanceStateDTO.fromJson(Map<String, dynamic> json) {
     return AttendanceStateDTO(
       date: json['date'],
+      // 출석(초록원), 지각(노랑원), 왕지각(빨강X), 불참(빈 원), (아직 출석 안 함),
       state: json['state'],
     );
   }

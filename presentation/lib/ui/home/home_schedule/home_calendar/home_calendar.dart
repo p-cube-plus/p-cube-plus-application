@@ -15,11 +15,14 @@ class HomeCalendar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     double startX = 0.0;
+    double positionX = 0.0;
 
     return GestureDetector(
         onHorizontalDragStart: (details) => startX = details.globalPosition.dx,
+        onHorizontalDragUpdate: (details) =>
+            positionX = details.localPosition.dx,
         onHorizontalDragEnd: (details) =>
-            _scrollAction(context, startX, details.localPosition.dx),
+            _scrollAction(context, startX, positionX),
         child: const RoundedBorder(
           padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
           child: Column(

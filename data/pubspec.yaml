@@ -12,7 +12,7 @@ dependencies:
   domain:
     path: ../domain
 
-  get_it: ^7.6.7
+  get_it: ^7.7.0
   meta: ^1.15.0
 
   #remote
@@ -22,9 +22,13 @@ dependencies:
   firebase_core: ^3.4.0
 
   #local
+  ibeacon_plugin:
+    git: https://github.com/p-cube-plus/ibeacon_plugin.git
+
+  
+  
   flutter_secure_storage: ^9.2.2
-  shared_preferences: ^2.3.2
-  flutter_beacon: ^0.5.1
+  shared_preferences: ^2.2.3
   permission_handler: ^11.3.1
-  sqflite: ^2.3.3+2
+  sqflite: ^2.3.3+1
   path: ^1.9.0

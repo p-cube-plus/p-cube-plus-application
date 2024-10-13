@@ -25,32 +25,32 @@ class GetDarkTheme {
             selectedItemColor: Color(0xFFBA2916)),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.disabled)) {
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.disabled)) {
                     return const Color(0xFF3B3B3B);
                   }
                   return const Color(0xFFBA2916);
                 },
               ),
-              foregroundColor: WidgetStateProperty.resolveWith<Color>(
-                (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.disabled)) {
+              foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.disabled)) {
                     return const Color(0xFFABABAB);
                   }
                   return const Color(0xFFFFFFFF);
                 },
               ),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              minimumSize: WidgetStateProperty.all<Size>(
+              minimumSize: MaterialStateProperty.all<Size>(
                 const Size(0.0, 35.0),
               ),
-              textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-                if (states.contains(WidgetState.disabled)) {
+              textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
+                if (states.contains(MaterialState.disabled)) {
                   return const TextStyle(
                       color: Color(0xFF575757),
                       fontSize: 16,

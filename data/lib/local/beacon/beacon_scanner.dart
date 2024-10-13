@@ -1,15 +1,17 @@
 import 'dart:async';
 
-import 'package:flutter_beacon/flutter_beacon.dart';
+import 'package:ibeacon_plugin/beacon_monitoring_state.dart';
+import 'package:ibeacon_plugin/ibeacon_plugin.dart';
+import 'package:ibeacon_plugin/region.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BeaconScanner {
   bool isBeaconDetected = false;
-  StreamSubscription<MonitoringResult>? _streamMonitoring;
+  final plugin = IbeaconPlugin();
 
-  Future<void> initialize() async {
-    await flutterBeacon.initializeAndCheckScanning;
-  }
+  StreamSubscription<BeaconMonitoringState>? _beaconListener;
+
+  Future<void> initialize() async {}
 
   Future<void> startScanning(
     String identifier,
@@ -17,24 +19,27 @@ class BeaconScanner {
     int major,
     int minor,
   ) async {
-    final regions = <Region>[
-      Region(
-        identifier: identifier,
-        proximityUUID: uuid,
-        major: major,
-        minor: minor,
-      ),
-    ];
+    await plugin.setRegion(Region(
+      identifier: identifier,
+      uuid: uuid,
+      major: major,
+      minor: minor,
+    ));
 
-    _streamMonitoring?.cancel();
-    _streamMonitoring =
-        flutterBeacon.monitoring(regions).listen((MonitoringResult result) {
-      isBeaconDetected = result.monitoringState == MonitoringState.inside;
+    _beaconListener = plugin.monitoringStream.listen((data) {
+      if (data == BeaconMonitoringState.inside) {
+        isBeaconDetected = true;
+      } else {
+        isBeaconDetected = false;
+      }
     });
+
+    return plugin.startMonitoring();
   }
 
   Future<void> stopScanning() async {
-    _streamMonitoring?.cancel();
+    await plugin.stopMonitoring();
+    await _beaconListener?.cancel();
   }
 
   Future<void> initPlatformState() async {

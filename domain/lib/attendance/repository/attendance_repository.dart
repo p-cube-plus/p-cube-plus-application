@@ -26,7 +26,7 @@ abstract interface class AttendanceRepository {
   );
 
   bool getBeaconDetected();
-  Future<void> startScanningBeacon();
+  void startScanningBeacon();
   Future<void> stopScanningBeacon();
 
   Future<AttendanceCheck?> getLocalAttendanceData(int id);

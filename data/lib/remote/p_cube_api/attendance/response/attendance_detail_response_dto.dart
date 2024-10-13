@@ -8,6 +8,7 @@ class AttendanceDetailResponseDTO {
 
   factory AttendanceDetailResponseDTO.fromJson(Map<String, dynamic> map) {
     return AttendanceDetailResponseDTO(
+      // 디자인, 아트, 프로그래밍, 정기, 기타
       category: map['category'] as String,
       recordList: List<RecordListDTO>.from(
         (map['record_list'] as List<int>).map<RecordListDTO>(

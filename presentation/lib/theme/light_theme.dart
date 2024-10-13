@@ -27,32 +27,32 @@ class GetLightTheme {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.disabled)) {
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.disabled)) {
                     return const Color(0xFFE9E9E9);
                   }
                   return const Color(0xFFE45441);
                 },
               ),
-              foregroundColor: WidgetStateProperty.resolveWith<Color>(
-                (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.disabled)) {
+              foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.disabled)) {
                     return const Color(0xFFABABAB);
                   }
                   return const Color(0xFFFFFFFF);
                 },
               ),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              minimumSize: WidgetStateProperty.all<Size>(
+              minimumSize: MaterialStateProperty.all<Size>(
                 const Size(0.0, 35.0),
               ),
-              textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-                if (states.contains(WidgetState.disabled)) {
+              textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
+                if (states.contains(MaterialState.disabled)) {
                   return const TextStyle(
                       color: Color(0xFFABABAB),
                       fontSize: 16,

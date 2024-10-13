@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: '>=3.0.0'
 
 dev_dependencies:
   flutter_test:
@@ -68,4 +68,11 @@ flutter:
 # <key>CFBundleDisplayName</key>
 
 # flutter channel stable
-# flutter update
+# flutter update --force
+
+# flutter downgrade v3.22.3
+
+# cd [flutter SDK 위치]
+# git fetch
+# git checkout 3.22.3
+# flutter pub get

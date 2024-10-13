@@ -92,7 +92,7 @@ class DefaultAlert extends StatelessWidget {
                                     .style!
                                     .copyWith(
                                         backgroundColor:
-                                            WidgetStateProperty.all(
+                                            MaterialStatePropertyAll(
                                                 Theme.of(context)
                                                     .dialogBackgroundColor)),
                                 child: Text("취소",
