@@ -11,7 +11,7 @@ class HomePageViewModel extends BaseViewModel<HomePageEvent, void> {
     fetchIsExecutiveUseCase()
         .then((result) => isExecutive = result)
         .onError((error, trace) {
-      changeViewState(HomePageEventShowToast(message: "유저정보 접근 실패"));
+      triggerEvent(HomePageEventShowToast(message: "유저정보 접근 실패"));
       return false;
     });
   }

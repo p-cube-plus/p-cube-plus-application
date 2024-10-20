@@ -18,13 +18,13 @@ class LoginLoadingPageViewModel extends BaseViewModel<LoginLoadingState, void> {
   void tryLogin(String userName) {
     _tryLoginUseCase(_phoneNumber, userName).then((isSuccess) {
       if (isSuccess) {
-        changeViewState(LoginLoadingState.successLogin);
+        triggerEvent(LoginLoadingState.successLogin);
       } else {
-        changeViewState(LoginLoadingState.failedLogin);
+        triggerEvent(LoginLoadingState.failedLogin);
       }
     }).onError((error, stackTrace) {
       errorMessage = "조회 중 오류가 발생했습니다. $error";
-      changeViewState(LoginLoadingState.errorLogin);
+      triggerEvent(LoginLoadingState.errorLogin);
     });
   }
 }

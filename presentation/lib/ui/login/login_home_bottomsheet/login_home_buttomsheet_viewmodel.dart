@@ -17,7 +17,7 @@ class LoginHomeBottomSheetViewModel
   }
 
   void setEventListener() {
-    userActionEventStream.listen((event) {
+    uiEventStream.listen((event) {
       switch (event) {
         case LoginHomeBottomSheetEvent.onClickMemberAgree:
           _toggleIsMemberAgreed();

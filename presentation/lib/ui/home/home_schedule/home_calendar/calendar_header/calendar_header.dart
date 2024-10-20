@@ -18,7 +18,7 @@ class CalendarHeader extends StatelessWidget
         children: [
           GestureDetector(
             onTap: () => read(context)
-                .triggerEvent(HomeScheduleEventOnClickPreviousMonth()),
+                .triggerUiEvent(HomeScheduleEventOnClickPreviousMonth()),
             child: SizedBox(
               height: double.infinity,
               child: AspectRatio(
@@ -63,8 +63,8 @@ class CalendarHeader extends StatelessWidget
             ],
           ),
           GestureDetector(
-            onTap: () =>
-                read(context).triggerEvent(HomeScheduleEventOnClickNextMonth()),
+            onTap: () => read(context)
+                .triggerUiEvent(HomeScheduleEventOnClickNextMonth()),
             child: AspectRatio(
               aspectRatio: 1.0,
               child: Icon(

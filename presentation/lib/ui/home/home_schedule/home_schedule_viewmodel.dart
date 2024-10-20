@@ -20,7 +20,7 @@ class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
   }
 
   void _setEventListener() {
-    userActionEventStream.listen((event) {
+    uiEventStream.listen((event) {
       switch (event) {
         case HomeScheduleEventOnClickCell():
           changeCurrentDate(event.clickedDay);

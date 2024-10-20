@@ -41,9 +41,9 @@ class HomeCalendar extends StatelessWidget
   void _scrollAction(BuildContext context, double startX, double endX) {
     const double scrollSensitivity = 20.0;
     if (endX - startX > scrollSensitivity) {
-      read(context).triggerEvent(HomeScheduleEventScrollPreviousMonth());
+      read(context).triggerUiEvent(HomeScheduleEventScrollPreviousMonth());
     } else if (startX - endX > scrollSensitivity) {
-      read(context).triggerEvent(HomeScheduleEventScrollNextMonth());
+      read(context).triggerUiEvent(HomeScheduleEventScrollNextMonth());
     }
   }
 }

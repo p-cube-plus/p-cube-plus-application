@@ -21,7 +21,7 @@ class CalendarDayCellWithSchedule extends StatelessWidget
     final theme = Theme.of(context);
     return InkWell(
         onTap: () => read(context)
-            .triggerEvent(HomeScheduleEventOnClickCell(currentDay)),
+            .triggerUiEvent(HomeScheduleEventOnClickCell(currentDay)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

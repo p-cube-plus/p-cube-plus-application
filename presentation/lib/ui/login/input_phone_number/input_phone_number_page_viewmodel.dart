@@ -13,7 +13,7 @@ class LoginPhoneNumberPageViewModel
   }
 
   void _setEventListener() {
-    userActionEventStream.listen((event) {
+    uiEventStream.listen((event) {
       switch (event) {
         case TextChanged(:final text):
           checkPhoneNumberState(text);
@@ -30,7 +30,7 @@ class LoginPhoneNumberPageViewModel
 
     final isPhoneNumberMaxLenth = inputText.length >= ("000-0000-0000").length;
     if (isPhoneNumberMaxLenth) {
-      changeViewState(InputPhoneNumberState.navigateToAuth);
+      triggerEvent(InputPhoneNumberState.navigateToAuth);
     }
   }
 }

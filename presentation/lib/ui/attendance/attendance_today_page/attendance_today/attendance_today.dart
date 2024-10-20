@@ -33,7 +33,7 @@ class AttendanceToday extends StatelessWidget
           fetchData: read(context).fetchStateData(),
           showOnLoadedWidget: (todayAttendanceList) {
             read(context)
-                .triggerEvent(CheckTimeToCanAttendance(todayAttendanceList));
+                .triggerUiEvent(CheckTimeToCanAttendance(todayAttendanceList));
             return RoundedBorder(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
               child: Column(

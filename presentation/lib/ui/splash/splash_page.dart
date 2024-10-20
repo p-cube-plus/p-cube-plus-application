@@ -42,7 +42,7 @@ class _SplashPageState extends State<_SplashPage>
     _animationController = AnimationController(vsync: this)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          read(context).triggerEvent(SplashEvent.animationComplete);
+          read(context).triggerUiEvent(SplashEvent.animationComplete);
         }
       });
     Future.microtask(() => _setStateListener());
@@ -79,7 +79,7 @@ class _SplashPageState extends State<_SplashPage>
   }
 
   void _setStateListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
         case SplashState.loginSuccess:
           _navigateToMainPage();

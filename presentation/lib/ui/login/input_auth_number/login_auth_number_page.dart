@@ -131,7 +131,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                             textType: TextInputType.number,
                             inputController: _textEditController,
                             onChanged: (inputText) => read(context)
-                                .triggerEvent(
+                                .triggerUiEvent(
                                     InputAuthNumberEventInputAuthNumber(
                                         inputText)),
                             autofocus: true,
@@ -145,7 +145,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                         (viewModel) => viewModel.isNeedToRetry,
                         (isNeedToRetry) => ElevatedButton(
                             onPressed: isNeedToRetry
-                                ? () => read(context).triggerEvent(
+                                ? () => read(context).triggerUiEvent(
                                     InputAuthNumberEventRequestAuthNumber())
                                 : null,
                             child: const Padding(
@@ -163,7 +163,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
   }
 
   void _setStateListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
         case InputAuthNumberState.showSendingAuthNumberToast:
           _showSendingAuthNumberToast();

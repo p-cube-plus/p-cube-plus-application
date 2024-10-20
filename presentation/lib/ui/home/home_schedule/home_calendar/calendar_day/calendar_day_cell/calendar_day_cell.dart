@@ -18,8 +18,8 @@ class CalendarDayCell extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return InkWell(
-      onTap: () =>
-          read(context).triggerEvent(HomeScheduleEventOnClickCell(currentDay)),
+      onTap: () => read(context)
+          .triggerUiEvent(HomeScheduleEventOnClickCell(currentDay)),
       child: Center(
         child: Text(
           "$currentDay",

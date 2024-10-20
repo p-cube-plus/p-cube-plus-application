@@ -47,7 +47,7 @@ class AttendanceTodayViewmodel
   }
 
   void _setEventListener() {
-    userActionEventStream.listen((event) {
+    uiEventStream.listen((event) {
       switch (event) {
         case AttendanceTodayEventOnClickAttendance():
           _checkAttendance(event.data);
@@ -62,7 +62,7 @@ class AttendanceTodayViewmodel
       shouldRefresh = true;
       notifyListeners();
     }).catchError((error) {
-      changeViewState(AttendanceTodayState.showFailedDialog);
+      triggerEvent(AttendanceTodayState.showFailedDialog);
     });
   }
 

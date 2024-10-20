@@ -22,7 +22,7 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   }
 
   void _setEventListener() {
-    userActionEventStream.listen((event) {
+    uiEventStream.listen((event) {
       switch (event) {
         case SplashEvent.animationComplete:
           _changeStateBasedOnLogin();
@@ -33,7 +33,7 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   Future<void> _initializeApp() async {
     await _initializeAppConfigurationUseCase.call().catchError((error) {
       initErrorMessage = error.toString();
-      changeViewState(SplashState.failedInit);
+      triggerEvent(SplashState.failedInit);
     });
 
     _isLoggedIn = await _fetchIsUserLoggedIn.call().getOrDefault(false);
@@ -45,9 +45,9 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
 
     await _initializeFuture;
     if (_isLoggedIn) {
-      changeViewState(SplashState.loginSuccess);
+      triggerEvent(SplashState.loginSuccess);
     } else {
-      changeViewState(SplashState.needLogin);
+      triggerEvent(SplashState.needLogin);
     }
   }
 }

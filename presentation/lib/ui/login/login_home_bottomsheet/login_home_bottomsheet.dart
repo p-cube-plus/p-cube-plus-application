@@ -82,7 +82,7 @@ class _LoginHomeBottomsheet extends StatelessWidget
             ),
           ),
           onTap: () => read(context)
-              .triggerEvent(LoginHomeBottomSheetEvent.onClickMemberAgree),
+              .triggerUiEvent(LoginHomeBottomSheetEvent.onClickMemberAgree),
         ),
         const SizedBox(height: 16),
         Padding(

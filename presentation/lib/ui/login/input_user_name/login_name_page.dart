@@ -40,7 +40,7 @@ class _LoginNamePageState extends State<_LoginNamePage>
     super.initState();
     _textEditingcontroller.addListener(() {
       read(context)
-          .triggerEvent(InputNameEventSaveName(_textEditingcontroller.text));
+          .triggerUiEvent(InputNameEventSaveName(_textEditingcontroller.text));
     });
   }
 

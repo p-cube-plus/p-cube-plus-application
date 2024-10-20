@@ -1,31 +1,31 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-class BaseViewModel<S, E> extends ChangeNotifier {
-  final _viewState = StreamController<S>.broadcast();
-  Stream<S> get uiEventStream => _viewState.stream;
+class BaseViewModel<ViewModelEvent, UiEvent> extends ChangeNotifier {
+  final _eventStream = StreamController<ViewModelEvent>.broadcast();
+  Stream<ViewModelEvent> get eventStream => _eventStream.stream;
 
-  final _viewEvent = StreamController<E>.broadcast();
-  Stream<E> get userActionEventStream => _viewEvent.stream;
+  final _uiEventStream = StreamController<UiEvent>.broadcast();
+  Stream<UiEvent> get uiEventStream => _uiEventStream.stream;
 
   bool _isDisposed = false;
   bool get isDisposed => _isDisposed;
 
-  void changeViewState(S state) {
-    if (_viewState.isClosed) return;
-    _viewState.add(state);
+  void triggerEvent(ViewModelEvent state) {
+    if (_eventStream.isClosed) return;
+    _eventStream.add(state);
   }
 
-  void triggerEvent(E event) {
-    if (_viewEvent.isClosed) return;
-    _viewEvent.add(event);
+  void triggerUiEvent(UiEvent event) {
+    if (_uiEventStream.isClosed) return;
+    _uiEventStream.add(event);
   }
 
   @override
   void dispose() {
     _isDisposed = true;
-    _viewState.close();
-    _viewEvent.close();
+    _eventStream.close();
+    _uiEventStream.close();
     super.dispose();
   }
 

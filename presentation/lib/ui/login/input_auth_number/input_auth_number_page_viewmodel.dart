@@ -30,7 +30,7 @@ class LoginAuthNumberPageViewModel
   }
 
   void _setEventListener() {
-    userActionEventStream.listen((event) {
+    uiEventStream.listen((event) {
       switch (event) {
         case InputAuthNumberEventRequestAuthNumber():
           _requestAuth();
@@ -52,7 +52,7 @@ class LoginAuthNumberPageViewModel
       timerText = _getTimerText(_timeoutCount);
       _startTimer();
 
-      changeViewState(InputAuthNumberState.showSendingAuthNumberToast);
+      triggerEvent(InputAuthNumberState.showSendingAuthNumberToast);
 
       final result = await sendAuthNumber.call(phoneNumner).getOrNull();
       var isSuccess = result?.isValid ?? false;
@@ -62,7 +62,7 @@ class LoginAuthNumberPageViewModel
         isFailedInputAuth = true;
         timerText = "인증번호 발송에 실패했어요.";
         notifyListeners();
-        changeViewState(InputAuthNumberState.showFailedSendAuthNumberDialog);
+        triggerEvent(InputAuthNumberState.showFailedSendAuthNumberDialog);
       }
     });
   }
@@ -72,22 +72,22 @@ class LoginAuthNumberPageViewModel
       inputText = inputText.substring(0, 6);
     }
     if (inputText.length == 6) {
-      changeViewState(InputAuthNumberState.checkIsValidAuthNumber);
+      triggerEvent(InputAuthNumberState.checkIsValidAuthNumber);
 
       final isVerified = await _confirmAuthNumberUseCase.call(inputText);
       isNeedToRetry = !isVerified;
       notifyListeners();
-      changeViewState(InputAuthNumberState.completeVerification);
+      triggerEvent(InputAuthNumberState.completeVerification);
 
       if (isVerified) {
         _timer?.cancel();
-        changeViewState(InputAuthNumberState.validAuthNumber);
+        triggerEvent(InputAuthNumberState.validAuthNumber);
       } else {
         _timer?.cancel();
         isNeedToRetry = true;
         timerText = "본인 인증에 실패했어요.";
         notifyListeners();
-        changeViewState(InputAuthNumberState.invalidAuthNumber);
+        triggerEvent(InputAuthNumberState.invalidAuthNumber);
       }
     }
   }

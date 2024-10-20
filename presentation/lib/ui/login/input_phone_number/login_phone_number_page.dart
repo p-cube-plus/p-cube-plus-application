@@ -107,7 +107,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
                     PhoneNumberFormatter(),
                   ],
                   onChanged: (inputText) =>
-                      read(context).triggerEvent(TextChanged(inputText)),
+                      read(context).triggerUiEvent(TextChanged(inputText)),
                 ),
               ),
             ],
@@ -145,7 +145,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
   }
 
   void _setStateListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
         case InputPhoneNumberState.navigateToAuth:
           _navigateToInputAuthNumberPage();

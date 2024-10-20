@@ -91,7 +91,7 @@ class AttendanceTodayItemButton extends StatelessWidget
 
   Function()? _onClickAttendance(BuildContext context, bool canClick) {
     if (!canClick) return null;
-    return () => read(context).triggerEvent(
+    return () => read(context).triggerUiEvent(
           AttendanceTodayEventOnClickAttendance(data),
         );
   }
