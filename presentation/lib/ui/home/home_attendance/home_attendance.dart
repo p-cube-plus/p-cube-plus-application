@@ -27,66 +27,76 @@ class _HomeAttendence extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return DefaultFutureBuilder(
-      fetchData: read(context).fetchData(),
-      showOnLoadedWidget: (data) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "출석체크",
-                  style: TextStyle(
-                    color: theme.neutral100,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _navigateToAttendanceDetailPage(context),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "자세히 보기",
-                        style: TextStyle(
-                          color: theme.neutral40,
-                          fontSize: 11.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Icon(
-                        Icons.chevron_right,
-                        color: theme.neutral40,
-                        size: 20.0,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            Text(
+              "출석체크",
+              style: TextStyle(
+                color: theme.neutral100,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            const SizedBox(height: 16),
-            Column(
-              children: List.generate(
-                data.length,
-                (index) {
-                  if (index == 0) {
-                    return HomeAttendanceContent(data[index]);
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: HomeAttendanceContent(data[index]),
-                    );
-                  }
-                },
-                growable: false,
+            GestureDetector(
+              onTap: () => _navigateToAttendanceDetailPage(context),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "자세히 보기",
+                    style: TextStyle(
+                      color: theme.neutral40,
+                      fontSize: 11.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right,
+                    color: theme.neutral40,
+                    size: 20.0,
+                  ),
+                ],
               ),
             ),
           ],
-        );
-      },
+        ),
+        const SizedBox(height: 16),
+        DefaultFutureBuilder(
+            fetchData: read(context).fetchData(),
+            showOnLoadedWidget: (data) {
+              if (data.isEmpty) {
+                return Text(
+                  "오늘은 출석이 없습니다.",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: theme.neutral60,
+                  ),
+                );
+              } else {
+                return Column(
+                  children: List.generate(
+                    data.length,
+                    (index) {
+                      if (index == 0) {
+                        return HomeAttendanceContent(data[index]);
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: HomeAttendanceContent(data[index]),
+                        );
+                      }
+                    },
+                    growable: false,
+                  ),
+                );
+              }
+            }),
+      ],
     );
   }
 

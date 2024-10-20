@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/ui/home/home_page_event.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
@@ -7,6 +11,7 @@ import 'home_attendance/home_attendance.dart';
 import 'home_page_viewmodel.dart';
 import 'home_schedule/home_schedule.dart';
 import 'home_upcomming/home_upcomming_schedule.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,8 +32,24 @@ class _HomePage extends StatefulWidget {
   State<_HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<_HomePage> {
+class _HomePageState extends State<_HomePage>
+    with ViewModel<HomePageViewModel> {
   Key _refreshKey = UniqueKey();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {});
+  }
+
+  void setListener() {
+    read(context).uiEventStream.listen((event) {
+      switch (event) {
+        case HomePageEventShowToast():
+          Fluttertoast.showToast(msg: event.message);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +62,20 @@ class _HomePageState extends State<_HomePage> {
       child: DefaultPage(
         key: _refreshKey,
         title: "홈",
+        action:
+            watchWidget((viewModel) => viewModel.isExecutive, (isExecutive) {
+          if (isExecutive) {
+            return GestureDetector(
+              child: SvgPicture.asset(asset.executive),
+              onTap: () => _navigateToExecutivePage(),
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
         content: const DefaultContent(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HomeAttendence(),
               SizedBox(height: 40),
@@ -52,6 +85,15 @@ class _HomePageState extends State<_HomePage> {
           ),
         ),
         //floatingActionButton: FloatingBarcodeButton(),
+      ),
+    );
+  }
+
+  _navigateToExecutivePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Container(),
       ),
     );
   }

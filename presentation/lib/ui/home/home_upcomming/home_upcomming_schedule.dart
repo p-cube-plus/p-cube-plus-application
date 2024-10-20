@@ -28,6 +28,7 @@ class _HomeUpcommingSchedule extends StatelessWidget
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           "다가오는 일정",
@@ -42,7 +43,14 @@ class _HomeUpcommingSchedule extends StatelessWidget
           fetchData: read(context).fetchData(),
           showOnLoadedWidget: (data) {
             if (data.isEmpty) {
-              return const Text("다가오는 일정이 없습니다.");
+              return Text(
+                "다가오는 일정이 없습니다.",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: theme.neutral60,
+                ),
+              );
             } else {
               return Column(
                 children: List.generate(

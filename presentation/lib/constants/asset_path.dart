@@ -26,3 +26,6 @@ const String late = "assets/images/icons/late.svg";
 const String off = "assets/images/icons/off.svg";
 const String failed = "assets/images/icons/failed.svg";
 const String blank = "assets/images/icons/blank.svg";
+
+// home executive icon
+const String executive = "assets/images/icons/executive.svg";
