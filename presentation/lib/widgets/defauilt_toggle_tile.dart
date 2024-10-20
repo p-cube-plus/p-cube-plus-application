@@ -3,12 +3,12 @@ import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/default_toggle.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
-class DefauiltToggleTile extends StatefulWidget {
+class DefaultToggleTile extends StatefulWidget {
   final String title;
   final bool value;
   final Function(bool isOn) onChanged;
 
-  const DefauiltToggleTile({
+  const DefaultToggleTile({
     super.key,
     required this.title,
     required this.value,
@@ -16,10 +16,10 @@ class DefauiltToggleTile extends StatefulWidget {
   });
 
   @override
-  State<DefauiltToggleTile> createState() => _DefauiltToggleTileState();
+  State<DefaultToggleTile> createState() => _DefaultToggleTileState();
 }
 
-class _DefauiltToggleTileState extends State<DefauiltToggleTile> {
+class _DefaultToggleTileState extends State<DefaultToggleTile> {
   late bool isOn;
 
   @override

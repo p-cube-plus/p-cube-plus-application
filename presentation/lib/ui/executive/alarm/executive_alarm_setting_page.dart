@@ -17,7 +17,7 @@ class ExecutiveAlarmSettingPage extends StatelessWidget {
       content: DefaultContent(
         child: Column(
           children: [
-            DefauiltToggleTile(
+            DefaultToggleTile(
               title: "알림 켜짐",
               value: true,
               onChanged: (bool isOn) {},
