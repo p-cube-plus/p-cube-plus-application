@@ -11,9 +11,9 @@ class BaseViewModel<ViewModelEvent, UiEvent> extends ChangeNotifier {
   bool _isDisposed = false;
   bool get isDisposed => _isDisposed;
 
-  void triggerEvent(ViewModelEvent state) {
+  void triggerEvent(ViewModelEvent event) {
     if (_eventStream.isClosed) return;
-    _eventStream.add(state);
+    _eventStream.add(event);
   }
 
   void triggerUiEvent(UiEvent event) {
