@@ -1,3 +1,5 @@
+import 'package:domain/member/value_objects/member_part_type.dart';
+import 'package:domain/member/value_objects/member_position_type.dart';
 import 'package:domain/user/repository/user_repository.dart';
 import 'package:domain/user/value_objects/user_profile.dart';
 import 'package:domain/user/value_objects/user_project.dart';
@@ -14,8 +16,11 @@ class MockUserRepositoryImpl implements UserRepository {
 
   @override
   Future<UserProfile> getUserData() {
-    // TODO: implement getUserData
-    throw UnimplementedError();
+    return Future.value(UserProfile(
+      name: "개발자 테스트",
+      partType: MemberPartType.development,
+      positionType: Chairman(),
+    ));
   }
 
   @override

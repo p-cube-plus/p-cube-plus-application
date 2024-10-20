@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/ui/executive/executive_main_page.dart';
 import 'package:presentation/ui/home/home_page_event.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -66,7 +67,7 @@ class _HomePageState extends State<_HomePage>
             watchWidget((viewModel) => viewModel.isExecutive, (isExecutive) {
           if (isExecutive) {
             return GestureDetector(
-              child: SvgPicture.asset(asset.executive),
+              child: SvgPicture.asset(asset.executiveHome),
               onTap: () => _navigateToExecutivePage(),
             );
           } else {
@@ -93,7 +94,7 @@ class _HomePageState extends State<_HomePage>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Container(),
+        builder: (context) => ExecutiveMainPage(),
       ),
     );
   }

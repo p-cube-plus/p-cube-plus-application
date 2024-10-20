@@ -8,11 +8,11 @@ class HomePageViewModel extends BaseViewModel<HomePageEvent, void> {
   bool isExecutive = false;
 
   HomePageViewModel() {
-    fetchIsExecutiveUseCase()
-        .then((result) => isExecutive = result)
-        .onError((error, trace) {
+    fetchIsExecutiveUseCase().then((result) {
+      isExecutive = result;
+      notifyListeners();
+    }).onError((error, trace) {
       triggerEvent(HomePageEventShowToast(message: "유저정보 접근 실패"));
-      return false;
     });
   }
 }

@@ -8,7 +8,8 @@ class HonoraryMember implements MemberPositionType {} // 명예회원
 
 class GraduatingMember implements MemberPositionType {} // 졸업회원
 
-sealed class ExecutiveTeam implements MemberPositionType {} // 임원진
+sealed class ExecutiveTeam
+    implements MemberPositionType, RegularMember {} // 임원진
 
 class Chairman implements ExecutiveTeam {} // 회장
 

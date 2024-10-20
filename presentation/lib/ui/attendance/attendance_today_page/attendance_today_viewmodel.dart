@@ -9,7 +9,6 @@ import 'package:domain/attendance/usecases/stop_scanning_beacon_use_case.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
-import 'package:domain/exception/permission_exception.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/extensions/future_extension.dart';
 
