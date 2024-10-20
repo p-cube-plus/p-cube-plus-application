@@ -6,10 +6,9 @@ extension DateTimeExtension on DateTime {
   int get numberOfWeeks =>
       (firstDate.weekDayIndex + lastDate.day - 1) ~/ DateTime.daysPerWeek + 1;
 
-  bool isBetweenDates(DateTime? startDate, DateTime? endDate) {
-    if (startDate == null || endDate == null) return false;
-    return isAfter(startDate) && isBefore(endDate) ||
-        isAtSameMomentAs(startDate);
+  /// 범위: [startDate, endDate), 즉 startDate는 포함, endDate는 미포함
+  bool isBetweenDates(DateTime startDate, DateTime endDate) {
+    return compareTo(startDate) >= 0 && compareTo(endDate) < 0;
   }
 
   bool isSameDay(DateTime dateTime) {

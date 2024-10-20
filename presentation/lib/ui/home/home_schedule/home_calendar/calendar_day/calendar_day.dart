@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_selected.dart';
+import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_today.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_with_schedule.dart';
 
 import '../../home_schedule_viewmodel.dart';
@@ -47,8 +48,10 @@ class CalendarDay extends StatelessWidget
                           final schedule = data.$2;
                           if (createdDay == selectedDay) {
                             return CalendarDayCellSelected(createdDay);
-                          }
-                          if (schedule != null) {
+                          } else if (_isToday(currentMonth.year,
+                              currentMonth.month, createdDay)) {
+                            return CalendarDayCellToday(createdDay);
+                          } else if (schedule != null) {
                             return CalendarDayCellWithSchedule(
                               createdDay,
                               Color(schedule.type.color.hex),
@@ -80,6 +83,11 @@ class CalendarDay extends StatelessWidget
         return previous.month != next.month;
       },
     );
+  }
+
+  bool _isToday(int year, int month, int day) {
+    final today = DateTime.now();
+    return today.year == year && today.month == month && today.day == day;
   }
 
   bool _isBlankCell(DateTime currentMonth, int columnIndex, int rowIndex) {

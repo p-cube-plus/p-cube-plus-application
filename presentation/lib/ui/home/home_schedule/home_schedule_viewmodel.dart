@@ -1,6 +1,7 @@
 import 'package:domain/schedule/usecase/fetch_home_month_schedule_use_case.dart';
 import 'package:domain/schedule/usecase/fetch_home_today_schedule_use_case.dart';
 import 'package:domain/schedule/value_objects/daily_schedule.dart';
+import 'package:domain/schedule/value_objects/month_schedule.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 import 'home_schedule_event.dart';
@@ -9,7 +10,7 @@ class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
   final _fetchHomeMonthScheduleUseCase = FetchHomeMonthScheduleUseCase();
   final _fetchHomeTodayScheduleUseCase = FetchHomeTodayScheduleUseCase();
 
-  Map<int, DailySchedule> monthSchedule = {};
+  Map<int, MonthSchedule> monthSchedule = {};
   List<DailySchedule> todayScheduleList = [];
   DateTime selectedDate = DateTime.now();
 

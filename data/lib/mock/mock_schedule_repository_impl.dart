@@ -8,28 +8,24 @@ class MockScheduleRepositoryImpl implements ScheduleRepository {
   Future<List<ScheduleData>> getDailyScheduleDetailList(DateTime date) async {
     final result = await _getMockModel();
     final startDate = DateTime(date.year, date.month, date.day);
-    final endDate = startDate.add(Duration(days: 1));
-    return result.where((data) {
-      if (data.startDate.isBefore(startDate)) {
-        return data.endDate.isAfter(startDate);
-      } else {
-        return data.startDate.isBetweenDates(startDate, endDate);
-      }
-    }).toList();
+    final endDate = DateTime(date.year, date.month, date.day + 1);
+    return result
+        .where((data) =>
+            data.startDate.compareTo(endDate) < 0 &&
+            data.endDate.compareTo(startDate) >= 0)
+        .toList();
   }
 
   @override
   Future<List<ScheduleData>> getScheduleListInMonth(int year, int month) async {
     final result = await _getMockModel();
     final startDate = DateTime(year, month, 1);
-    final endDate = DateTime(year, month + 1, 0);
-    return result.where((data) {
-      if (data.startDate.isBefore(startDate)) {
-        return data.endDate.isAfter(startDate);
-      } else {
-        return data.startDate.isBetweenDates(startDate, endDate);
-      }
-    }).toList();
+    final endDate = DateTime(year, month + 1, 1);
+    return result
+        .where((data) =>
+            data.startDate.compareTo(endDate) < 0 &&
+            data.endDate.compareTo(startDate) >= 0)
+        .toList();
   }
 
   @override
@@ -85,6 +81,12 @@ class MockScheduleRepositoryImpl implements ScheduleRepository {
         type: ScheduleTypMain(),
         startDate: DateTime(today.year, today.month, 7, 7),
         endDate: DateTime(today.year, today.month, 7 + 7, 17),
+      ),
+      ScheduleData(
+        title: '세계 콩의 날',
+        type: ScheduleTypMain(),
+        startDate: DateTime(today.year, today.month, 22),
+        endDate: DateTime(today.year, today.month, 22, 23),
       ),
       ScheduleData(
         title: '28일의 공포',

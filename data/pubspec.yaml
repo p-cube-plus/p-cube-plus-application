@@ -25,8 +25,6 @@ dependencies:
   ibeacon_plugin:
     git: https://github.com/p-cube-plus/ibeacon_plugin.git
 
-  
-  
   flutter_secure_storage: ^9.2.2
   shared_preferences: ^2.2.3
   permission_handler: ^11.3.1

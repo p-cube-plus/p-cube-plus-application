@@ -1,4 +1,5 @@
 import 'package:domain/schedule/value_objects/daily_schedule.dart';
+import 'package:domain/schedule/value_objects/month_schedule.dart';
 import 'package:domain/schedule/value_objects/schedule_type.dart';
 import 'package:meta/meta.dart';
 
@@ -14,6 +15,10 @@ class ScheduleData {
     required this.startDate,
     required this.endDate,
   });
+
+  MonthSchedule toMonthSchedule(DateTime scheduleDate) {
+    return MonthSchedule(type: type, scheduleDate: scheduleDate);
+  }
 
   DailySchedule toStartDailySchedule() {
     return DailySchedule(
