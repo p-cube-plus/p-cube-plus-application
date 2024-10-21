@@ -2,10 +2,10 @@ import 'package:domain/notification/repository/notification_repository.dart';
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:get_it/get_it.dart';
 
-class FetchNotificationSettingHour {
+class FetchNotificationSettingOn {
   final _notificationRepository = GetIt.I.get<NotificationRepository>();
 
-  Future<int> call(NotificationType type) {
-    return _notificationRepository.fetchNotificationSettingHour(type);
+  Future<bool> call(NotificationType type) {
+    return _notificationRepository.fetchNotificationSettingOn(type);
   }
 }

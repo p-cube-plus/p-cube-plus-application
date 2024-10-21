@@ -23,4 +23,7 @@ abstract interface class NotificationRepository {
 
   Future<void> setNotificationAllEnable(bool isEnable);
   Future<void> setNotificationEnable(NotificationType type, bool isEnable);
+
+  Future<bool> fetchNotificationSettingOn();
+  Future<int> fetchNotificationSettingHour();
 }

@@ -1,10 +1,15 @@
+import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:domain/notification/repository/notification_repository.dart';
 import 'package:domain/notification/value_objects/notification_data.dart';
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:domain/notification/value_objects/regular_notification_data.dart';
 import 'package:domain/notification/value_objects/regular_notification_setting.dart';
+import 'package:get_it/get_it.dart';
 
 class MockNotificationRepositoryImpl implements NotificationRepository {
+  final sharedPreferenceLocalDatasource =
+      GetIt.I.get<SharedPreferenceLocalDatasource>();
+
   @override
   Future<List<NotificationData>> getNewNotificationList() {
     // TODO: implement getNewNotificationList
@@ -46,6 +51,18 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   @override
   Future<void> setRegularNotification(RegularNotificationSetting setting) {
     // TODO: implement setRegularNotification
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<int> fetchNotificationSettingHour(NotificationType type) {
+    // TODO: implement fetchNotificationSettingHour
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> fetchNotificationSettingOn(NotificationType type) {
+    // TODO: implement fetchNotificationSettingOn
     throw UnimplementedError();
   }
 }

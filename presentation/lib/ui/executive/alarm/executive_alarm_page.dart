@@ -1,6 +1,8 @@
+import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/alarm/executive_alarm_setting_page.dart';
+import 'package:presentation/ui/executive/alarm/executive_part_alarm_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -29,7 +31,10 @@ class ExecutiveAlarmPage extends StatelessWidget {
             const SizedBox(height: 20),
             RoundedBorder(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-              onTap: () => _navigateToNotificationSettingPage(context),
+              onTap: () => _navigateToNotificationSettingPage(
+                context,
+                RegularMettingNotification(),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -52,7 +57,7 @@ class ExecutiveAlarmPage extends StatelessWidget {
             const SizedBox(height: 10),
             RoundedBorder(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-              onTap: () => _navigateToNotificationSettingPage(context),
+              onTap: () => _navigateToPartNotiricationPage(context),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -78,11 +83,21 @@ class ExecutiveAlarmPage extends StatelessWidget {
     );
   }
 
-  void _navigateToNotificationSettingPage(BuildContext context) {
+  void _navigateToNotificationSettingPage(
+      BuildContext context, NotificationType type) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ExecutiveAlarmSettingPage(),
+        builder: (context) => ExecutiveAlarmSettingPage(notificationType: type),
+      ),
+    );
+  }
+
+  void _navigateToPartNotiricationPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ExecutivePartAlarmPage(),
       ),
     );
   }
