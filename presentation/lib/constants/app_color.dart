@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color white = Color(0xFFFFFFFF);
-const Color black = Color(0x00000000);
+const Color black = Color(0xFF000000);
 
 const Color lightGray100 = Color(0xFF2E2E2E);
 const Color lightGray80 = Color(0XFF575757);
@@ -9,12 +9,15 @@ const Color lightGray60 = Color(0xFF818181);
 const Color lightGray40 = Color(0xFFABABAB);
 const Color lightGray20 = Color(0xFFD5D5D5);
 const Color lightGray10 = Color(0xFFE9E9E9);
-const Color darkGray100 = Color(0xDEFFFFFF);
-const Color darkGray80 = Color(0xDEFFFFFF);
-const Color darkGray60 = Color(0x99FFFFFF);
-const Color darkGray40 = Color(0x61FFFFFF);
-const Color darkGray20 = Color(0x33FFFFFF);
-const Color darkGray10 = Color(0x1AFFFFFF);
+const Color lightGray5 = Color(0xFFf7f7f7);
+
+const Color darkGray100 = Color(0xFFF5F5F5);
+const Color darkGray80 = Color(0xFFd3d3d3);
+const Color darkGray60 = Color(0xFFaeaeae);
+const Color darkGray40 = Color(0xFF838383);
+const Color darkGray20 = Color(0xFF505050);
+const Color darkGray10 = Color(0xFF2f2f2f);
+const Color darkGray5 = Color(0xFF191919);
 
 const Color lightPrimary80 = Color(0xFFE55542);
 const Color lightPrimary60 = Color(0xFFEB8071);

@@ -117,7 +117,7 @@ class _SplashPageState extends State<_SplashPage>
         title: "앱 실행에 문제가 발생했습니다.",
         messageType: MessageType.ok,
         description: errorMessage,
-        onTap: () => exit(0),
+        onTapOk: () => exit(0),
       ),
     );
   }

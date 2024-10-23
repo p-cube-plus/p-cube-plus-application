@@ -56,13 +56,12 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
 
   @override
   Future<int> fetchNotificationSettingHour(NotificationType type) {
-    // TODO: implement fetchNotificationSettingHour
-    throw UnimplementedError();
+    return Future.value(
+        sharedPreferenceLocalDatasource.getNotificationHour(type));
   }
 
   @override
   Future<bool> fetchNotificationSettingOn(NotificationType type) {
-    // TODO: implement fetchNotificationSettingOn
-    throw UnimplementedError();
+    return Future.value(sharedPreferenceLocalDatasource.isNotificationOn(type));
   }
 }

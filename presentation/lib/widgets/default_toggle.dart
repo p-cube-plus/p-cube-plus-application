@@ -3,7 +3,7 @@ import 'package:presentation/extensions/theme_data_extension.dart';
 
 class DefaultToggle extends StatefulWidget {
   final bool value;
-  final Function(bool isOn) onChanged;
+  final Function(bool isOn)? onChanged;
 
   final double width;
   final double height;
@@ -13,7 +13,7 @@ class DefaultToggle extends StatefulWidget {
   const DefaultToggle({
     super.key,
     required this.value,
-    required this.onChanged,
+    this.onChanged,
     this.width = 32,
     this.height = 16,
     this.radius = 50,
@@ -98,6 +98,6 @@ class _DefaultToggleState extends State<DefaultToggle> {
       isOn = !isOn;
       targetColor = isOn ? backgroundColor : offColor;
     });
-    widget.onChanged(isOn);
+    widget.onChanged?.call(isOn);
   }
 }

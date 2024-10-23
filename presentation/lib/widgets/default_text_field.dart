@@ -17,9 +17,13 @@ class DefaultTextField extends StatelessWidget {
     this.contentPadding = 8.0,
     this.textType,
     required this.inputController,
+    this.textDirection = TextDirection.ltr,
     this.inputFormatters,
-    this.autofocus,
+    this.autofocus = false,
+    this.readOnly = false,
     this.focusNode,
+    this.showCursor,
+    this.enableInteractiveSelection,
     this.enabled = true,
     this.onSubmitted,
     this.onChanged,
@@ -32,9 +36,13 @@ class DefaultTextField extends StatelessWidget {
   final double fontSize;
   final double contentPadding;
   final TextInputType? textType;
+  final TextDirection textDirection;
   final TextEditingController inputController;
   final List<TextInputFormatter>? inputFormatters;
-  final bool? autofocus;
+  final bool autofocus;
+  final bool readOnly;
+  final bool? showCursor;
+  final bool? enableInteractiveSelection;
   final FocusNode? focusNode;
   final bool enabled;
   final void Function(String)? onSubmitted;
@@ -45,6 +53,7 @@ class DefaultTextField extends StatelessWidget {
     final theme = Theme.of(context);
     return TextField(
       textAlignVertical: TextAlignVertical.bottom,
+      textDirection: textDirection,
       focusNode: focusNode,
       minLines: minLine ?? 1,
       maxLines: maxLine ?? minLine ?? 1,
@@ -57,28 +66,32 @@ class DefaultTextField extends StatelessWidget {
         fontSize: fontSize,
       ),
       decoration: InputDecoration(
-          isDense: true,
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          helperMaxLines: 0,
-          errorMaxLines: 0,
-          contentPadding: EdgeInsets.all(contentPadding),
-          counterText: "", // 글자수 제한 보이기 삭제
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: theme.neutral40,
-            fontWeight: FontWeight.w500,
-            fontSize: fontSize,
-          ),
-          border: const OutlineInputBorder(
-              borderSide: BorderSide(width: 0.0, style: BorderStyle.none))),
-      //toolbarOptions: ToolbarOptions(copy: true),
+        isDense: true,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        helperMaxLines: 0,
+        errorMaxLines: 0,
+        contentPadding: EdgeInsets.all(contentPadding),
+        counterText: "",
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: theme.neutral40,
+          fontWeight: FontWeight.w500,
+          fontSize: fontSize,
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(width: 0.0, style: BorderStyle.none),
+        ),
+      ),
       onSubmitted: onSubmitted,
       controller: inputController,
       onChanged: onChanged,
-      autofocus: autofocus == null ? false : autofocus!,
+      autofocus: autofocus,
       inputFormatters: inputFormatters,
       selectionControls: CustomTextSelectionControls(),
       enabled: enabled,
+      readOnly: readOnly,
+      showCursor: showCursor,
+      enableInteractiveSelection: enableInteractiveSelection,
     );
   }
 }

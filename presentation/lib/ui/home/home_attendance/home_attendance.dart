@@ -67,7 +67,7 @@ class _HomeAttendence extends StatelessWidget
         const SizedBox(height: 16),
         DefaultFutureBuilder(
             fetchData: read(context).fetchData(),
-            showOnLoadedWidget: (data) {
+            showOnLoadedWidget: (_, data) {
               if (data.isEmpty) {
                 return Text(
                   "오늘은 출석이 없습니다.",

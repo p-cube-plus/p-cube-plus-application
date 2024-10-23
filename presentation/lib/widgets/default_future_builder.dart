@@ -10,7 +10,7 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
       this.handleError});
 
   final Future<T> fetchData;
-  final Widget Function(T data) showOnLoadedWidget;
+  final Widget Function(BuildContext context, T data) showOnLoadedWidget;
   final Widget? loadingWidget;
   final Widget Function(Object? error, StackTrace trace)? showOnErrorWidget;
   final void Function(Object? error, StackTrace trace)? handleError;
@@ -28,7 +28,7 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
           }
 
           try {
-            return showOnLoadedWidget(snapshot.requireData);
+            return showOnLoadedWidget(context, snapshot.requireData);
           } catch (error, trace) {
             handleError?.call(error, trace);
             return showOnErrorWidget?.call(error, trace) ?? const SizedBox();

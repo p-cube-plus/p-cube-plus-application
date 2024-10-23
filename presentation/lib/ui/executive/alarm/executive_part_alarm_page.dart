@@ -27,6 +27,7 @@ class ExecutivePartAlarmPage extends StatelessWidget {
               final partType = MemberPartType.values[index];
               return RoundedBorder(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                margin: EdgeInsets.only(bottom: 10),
                 onTap: () => _navigateToNotificationSettingPage(
                   context,
                   PartMettingNotification(partType),
@@ -35,7 +36,7 @@ class ExecutivePartAlarmPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${partType.korean} 파트",
+                      "${partType.name} 파트",
                       style: TextStyle(
                         fontSize: 14,
                         color: theme.neutral100,

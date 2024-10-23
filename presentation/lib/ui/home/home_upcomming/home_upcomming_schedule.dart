@@ -41,7 +41,7 @@ class _HomeUpcommingSchedule extends StatelessWidget
         const SizedBox(height: 16),
         DefaultFutureBuilder(
           fetchData: read(context).fetchData(),
-          showOnLoadedWidget: (data) {
+          showOnLoadedWidget: (_, data) {
             if (data.isEmpty) {
               return Text(
                 "다가오는 일정이 없습니다.",

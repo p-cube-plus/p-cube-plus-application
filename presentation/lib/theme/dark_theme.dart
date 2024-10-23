@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/constants/app_color.dart' as color;
 
 class GetDarkTheme {
   ThemeData call() => ThemeData(
+        useMaterial3: true,
         brightness: Brightness.dark,
         fontFamily: "SpoqaHanSansNeo",
         colorScheme: const ColorScheme.dark(
@@ -20,37 +22,38 @@ class GetDarkTheme {
         //   ),
         // ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: Color(0xFF2E2E2E),
-            unselectedItemColor: Color(0xFFFFFFFF),
-            selectedItemColor: Color(0xFFBA2916)),
+          backgroundColor: Color(0xFF2E2E2E),
+          unselectedItemColor: Color(0xFFFFFFFF),
+          selectedItemColor: color.darkPrimary80,
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
+              backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
                     return const Color(0xFF3B3B3B);
                   }
-                  return const Color(0xFFBA2916);
+                  return color.darkPrimary80;
                 },
               ),
-              foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
+              foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
                     return const Color(0xFFABABAB);
                   }
                   return const Color(0xFFFFFFFF);
                 },
               ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              minimumSize: MaterialStateProperty.all<Size>(
+              minimumSize: WidgetStateProperty.all<Size>(
                 const Size(0.0, 35.0),
               ),
-              textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
-                if (states.contains(MaterialState.disabled)) {
+              textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+                if (states.contains(WidgetState.disabled)) {
                   return const TextStyle(
                       color: Color(0xFF575757),
                       fontSize: 16,

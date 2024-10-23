@@ -19,6 +19,20 @@ extension TextThemeExtension on ThemeData {
 
   Color get neutral10 =>
       (brightness == Brightness.light) ? color.lightGray10 : color.darkGray10;
+
+  Color get neutral5 =>
+      (brightness == Brightness.light) ? color.lightGray5 : color.darkGray5;
+
+  Color get neutral0 =>
+      (brightness == Brightness.light) ? color.white : color.black;
+}
+
+extension ContentExtension on ThemeData {
+  Color get background =>
+      (brightness == Brightness.light) ? Color(0xFFFBFBFB) : Color(0xFF141414);
+
+  Color get content =>
+      (brightness == Brightness.light) ? Color(0xFFFFFFFF) : Color(0xFF212121);
 }
 
 extension PrimaryExtension on ThemeData {

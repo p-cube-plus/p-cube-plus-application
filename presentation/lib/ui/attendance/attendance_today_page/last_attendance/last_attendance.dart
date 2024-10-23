@@ -30,7 +30,7 @@ class LastAttendance extends StatelessWidget
           showOnErrorWidget: (error, trace) {
             return Text("$error");
           },
-          showOnLoadedWidget: (data) {
+          showOnLoadedWidget: (_, data) {
             return RoundedBorder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Row(

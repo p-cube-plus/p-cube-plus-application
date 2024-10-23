@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 import 'default_appbar.dart';
 
 class DefaultPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class DefaultPage extends StatelessWidget {
     this.textColor,
     this.contentColor,
     this.backgroundColor,
-    this.resizeToAvoidBottomInset = true,
+    this.resizeToAvoidBottomInset = false,
     this.bottomPadding = 20.0,
   });
 
@@ -44,21 +45,17 @@ class DefaultPage extends StatelessWidget {
             ? 6.0
             : MediaQuery.of(context).padding.top + 34.0;
     return Scaffold(
-      backgroundColor: contentColor ?? theme.colorScheme.surface,
+      backgroundColor: contentColor ?? theme.background,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (appbar != null) appbar!,
           Container(
             decoration: BoxDecoration(
-                color: backgroundColor ??
-                    contentColor ??
-                    theme.colorScheme.surface,
+                color: backgroundColor ?? contentColor ?? theme.background,
                 border: Border.all(
                   width: 0.0,
-                  color: backgroundColor ??
-                      contentColor ??
-                      theme.colorScheme.surface,
+                  color: backgroundColor ?? contentColor ?? theme.background,
                 )),
             child: Padding(
               padding: EdgeInsets.only(

@@ -48,4 +48,16 @@ class NotificationRepositoryImpl implements NotificationRepository {
     // TODO: implement setRegularNotification
     throw UnimplementedError();
   }
+
+  @override
+  Future<int> fetchNotificationSettingHour(NotificationType type) {
+    // TODO: implement fetchNotificationSettingHour
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> fetchNotificationSettingOn(NotificationType type) {
+    // TODO: implement fetchNotificationSettingOn
+    throw UnimplementedError();
+  }
 }

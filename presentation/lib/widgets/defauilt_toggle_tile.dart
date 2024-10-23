@@ -6,13 +6,13 @@ import 'package:presentation/widgets/rounded_border.dart';
 class DefaultToggleTile extends StatefulWidget {
   final String title;
   final bool value;
-  final Function(bool isOn) onChanged;
+  final Function(bool isOn)? onChanged;
 
   const DefaultToggleTile({
     super.key,
     required this.title,
     required this.value,
-    required this.onChanged,
+    this.onChanged,
   });
 
   @override
@@ -35,7 +35,7 @@ class _DefaultToggleTileState extends State<DefaultToggleTile> {
       onTap: () {
         setState(() {
           isOn = !isOn;
-          widget.onChanged(isOn);
+          widget.onChanged?.call(isOn);
         });
       },
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),

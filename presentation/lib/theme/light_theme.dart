@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/constants/app_color.dart' as color;
 
 class GetLightTheme {
   ThemeData call() => ThemeData(
+        useMaterial3: true,
         brightness: Brightness.light,
         fontFamily: "SpoqaHanSansNeo",
         colorScheme: const ColorScheme.light(
@@ -23,36 +25,36 @@ class GetLightTheme {
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color(0xFFFFFFFF),
           unselectedItemColor: Color(0xFF2E2E2E),
-          selectedItemColor: Color(0xFFE45441),
+          selectedItemColor: color.lightPrimary80,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
+              backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
                     return const Color(0xFFE9E9E9);
                   }
-                  return const Color(0xFFE45441);
+                  return color.lightPrimary80;
                 },
               ),
-              foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
+              foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.disabled)) {
                     return const Color(0xFFABABAB);
                   }
                   return const Color(0xFFFFFFFF);
                 },
               ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              minimumSize: MaterialStateProperty.all<Size>(
+              minimumSize: WidgetStateProperty.all<Size>(
                 const Size(0.0, 35.0),
               ),
-              textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
-                if (states.contains(MaterialState.disabled)) {
+              textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+                if (states.contains(WidgetState.disabled)) {
                   return const TextStyle(
                       color: Color(0xFFABABAB),
                       fontSize: 16,
@@ -85,12 +87,12 @@ class GetLightTheme {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         )),
         progressIndicatorTheme: const ProgressIndicatorThemeData(
-          color: Color(0xFFE45441),
+          color: color.lightPrimary80,
         ),
         textSelectionTheme: const TextSelectionThemeData(
-          selectionColor: Color(0xCCE45441),
-          cursorColor: Color(0xCCE45441),
-          selectionHandleColor: Color(0xCCE45441),
+          selectionColor: color.lightPrimary80,
+          cursorColor: color.lightPrimary60,
+          selectionHandleColor: color.lightPrimary60,
         ),
       );
 }

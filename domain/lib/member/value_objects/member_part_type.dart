@@ -4,9 +4,9 @@ enum MemberPartType {
   development('프로그래밍'),
   ;
 
-  final String korean;
-  const MemberPartType(this.korean);
+  final String name;
+  const MemberPartType(this.name);
 
   @override
-  String toString() => korean;
+  String toString() => name;
 }

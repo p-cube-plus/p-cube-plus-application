@@ -14,7 +14,8 @@ class DefaultAlert extends StatelessWidget {
     this.description,
     this.descriptionColor,
     this.children,
-    this.onTap,
+    this.onTapOk,
+    this.onTapCancel,
   });
 
   final Color? backgroundColor;
@@ -23,7 +24,8 @@ class DefaultAlert extends StatelessWidget {
   final Color? descriptionColor;
   final MessageType messageType;
   final List<Widget>? children;
-  final void Function()? onTap;
+  final void Function()? onTapOk;
+  final void Function()? onTapCancel;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,10 @@ class DefaultAlert extends StatelessWidget {
         backgroundColor: backgroundColor ?? theme.colorScheme.surface,
         insetPadding: const EdgeInsets.all(20),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
         contentPadding: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
@@ -73,7 +78,7 @@ class DefaultAlert extends StatelessWidget {
                         width: double.infinity,
                         height: 35.0,
                         child: ElevatedButton(
-                          onPressed: onTap ?? () => Navigator.pop(context),
+                          onPressed: onTapOk ?? () => Navigator.pop(context),
                           child: const Text("확인",
                               style: TextStyle(color: Colors.white)),
                         ))
@@ -86,15 +91,17 @@ class DefaultAlert extends StatelessWidget {
                           children: [
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () {
+                                  onTapCancel?.call();
+                                  Navigator.pop(context);
+                                },
                                 style: Theme.of(context)
                                     .elevatedButtonTheme
                                     .style!
                                     .copyWith(
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Theme.of(context)
-                                                    .dialogBackgroundColor)),
+                                        backgroundColor: WidgetStatePropertyAll(
+                                            Theme.of(context)
+                                                .dialogBackgroundColor)),
                                 child: Text("취소",
                                     style: Theme.of(context)
                                         .textTheme
@@ -107,8 +114,10 @@ class DefaultAlert extends StatelessWidget {
                             const SizedBox(width: 16.0),
                             Expanded(
                               child: ElevatedButton(
-                                  onPressed:
-                                      onTap ?? () => Navigator.pop(context),
+                                  onPressed: () {
+                                    onTapOk?.call();
+                                    Navigator.pop(context);
+                                  },
                                   child: const Text("확인",
                                       style: TextStyle(color: Colors.white))),
                             )

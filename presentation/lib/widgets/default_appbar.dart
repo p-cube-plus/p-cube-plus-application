@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 
 class DefaultAppBar extends StatelessWidget {
   const DefaultAppBar({
@@ -28,9 +29,9 @@ class DefaultAppBar extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 0.0,
-          color: backgroundColor ?? theme.colorScheme.surface,
+          color: backgroundColor ?? theme.background,
         ),
-        color: backgroundColor ?? theme.colorScheme.surface,
+        color: backgroundColor ?? theme.background,
       ),
       padding: EdgeInsets.only(
           left: 24.0,
@@ -48,7 +49,7 @@ class DefaultAppBar extends StatelessWidget {
               child: Icon(
                 Icons.arrow_back_ios_new,
                 size: 20.0,
-                color: contentColor ?? theme.textTheme.displayLarge!.color,
+                color: contentColor ?? theme.neutral100,
               ),
             )
           else
@@ -59,7 +60,7 @@ class DefaultAppBar extends StatelessWidget {
               style: theme.textTheme.displayLarge!.copyWith(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w700,
-                color: contentColor ?? theme.textTheme.displayLarge!.color,
+                color: contentColor ?? theme.neutral100,
               ),
             ),
           if (leftTitle != null)
@@ -72,8 +73,7 @@ class DefaultAppBar extends StatelessWidget {
                     style: theme.textTheme.displayLarge!.copyWith(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w700,
-                      color:
-                          contentColor ?? theme.textTheme.displayLarge!.color,
+                      color: contentColor ?? theme.neutral100,
                     ),
                   ),
                   Padding(
