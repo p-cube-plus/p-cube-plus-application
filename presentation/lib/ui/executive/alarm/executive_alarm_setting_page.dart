@@ -91,8 +91,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
                       title: "알림 켜짐",
                       value: isOn,
                       onChanged: (bool isOn) {
-                        read(context).triggerEvent(
-                            ExecutiveAlarmSettingEvent.saveSettingOn);
+                        read(context).setSettingOn(isOn);
                       },
                     );
                   },
@@ -243,6 +242,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
         inputHour = 24;
       }
     }
+    read(context).setSettingHour(inputHour);
     _textEditingContoller.text = inputHour.toString();
   }
 

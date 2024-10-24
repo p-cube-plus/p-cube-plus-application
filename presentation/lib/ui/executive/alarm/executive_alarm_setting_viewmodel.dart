@@ -27,6 +27,7 @@ class ExecutiveAlarmSettingViewModel extends BaseViewModel<
   var initSettingOn = false;
   var isSettingOn = false;
   var initSettingHour = 0;
+  var settingHour = 0;
 
   ExecutiveAlarmSettingViewModel({
     required this.notificationType,
@@ -37,16 +38,13 @@ class ExecutiveAlarmSettingViewModel extends BaseViewModel<
           _saveSetting();
         case ExecutiveAlarmSettingEvent.saveSettingWithPopPage:
           _saveSettingWithPopPage();
-        case ExecutiveAlarmSettingEvent.saveSettingOn:
-          _setSettingOn(event.isOn);
       }
     });
   }
 
   Future<bool> fetchNotificationSettingOn() =>
-      _fetchNotificationSettingOnUseCase(notificationType).then((isOn) {
-        initSettingOn = isOn;
-      });
+      _fetchNotificationSettingOnUseCase(notificationType)
+          .then((isOn) => initSettingOn = isOn);
 
   Future<int> fetchNotificationSettingHour() =>
       _fetchNotificationSettingHourUseCase(notificationType)
@@ -56,8 +54,12 @@ class ExecutiveAlarmSettingViewModel extends BaseViewModel<
     return initSettingOn != isSettingOn || initSettingHour != inputHour;
   }
 
-  void _setSettingOn(bool isOn) {
+  void setSettingOn(bool isOn) {
     isSettingOn = isOn;
+  }
+
+  void setSettingHour(int hour) {
+    settingHour = hour;
   }
 
   Future<void> _saveSetting() async {
