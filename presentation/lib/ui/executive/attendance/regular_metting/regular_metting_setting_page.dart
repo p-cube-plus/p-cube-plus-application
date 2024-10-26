@@ -42,23 +42,16 @@ class _RegularMettingSettingPage extends StatelessWidget
             return RoundedBorder(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
               padding: EdgeInsets.all(20),
-              color: Colors.blue,
-              width: double.infinity,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        height: double.infinity,
-                        child: AspectRatio(
-                          aspectRatio: 1.0,
-                          child: Icon(
-                            Icons.chevron_left,
-                            color: theme.neutral40,
-                            size: 24,
-                          ),
-                        ),
+                      Icon(
+                        Icons.chevron_left,
+                        color: theme.neutral40,
+                        size: 24,
                       ),
                       Text(
                         "M월 dd일",
@@ -68,24 +61,20 @@ class _RegularMettingSettingPage extends StatelessWidget
                           color: theme.neutral100,
                         ),
                       ),
-                      SizedBox(
-                        height: double.infinity,
-                        child: AspectRatio(
-                          aspectRatio: 1.0,
-                          child: Icon(
-                            Icons.chevron_right,
-                            color: theme.neutral40,
-                            size: 24,
-                          ),
-                        ),
+                      Icon(
+                        Icons.chevron_right,
+                        color: theme.neutral40,
+                        size: 24,
                       ),
                     ],
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
+                  SizedBox(height: 22),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 20),
+                        child: Text(
                           "1차 인증",
                           style: TextStyle(
                             fontSize: 14,
@@ -93,27 +82,31 @@ class _RegularMettingSettingPage extends StatelessWidget
                             color: theme.neutral100,
                           ),
                         ),
-                        RoundedBorder(
-                          color: theme.neutral5,
-                          padding: EdgeInsets.symmetric(horizontal: 12),
+                      ),
+                      Expanded(
+                        child: RoundedBorder(
+                          color: theme.neutral10,
+                          padding: EdgeInsets.symmetric(vertical: 4),
                           child: Text(
                             "hh시 mm분 ss초 ~ hh시 mm분 ss초",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 12,
                               fontWeight: FontWeight.w500,
                               color: theme.neutral100,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 14),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 20),
+                        child: Text(
                           "2차 인증",
                           style: TextStyle(
                             fontSize: 14,
@@ -121,20 +114,23 @@ class _RegularMettingSettingPage extends StatelessWidget
                             color: theme.neutral100,
                           ),
                         ),
-                        RoundedBorder(
+                      ),
+                      Expanded(
+                        child: RoundedBorder(
                           color: theme.neutral5,
-                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          padding: EdgeInsets.symmetric(vertical: 4),
                           child: Text(
-                            "hh시 mm분 ss초 ~ hh시 mm분 ss초",
+                            "눌러서 2차 인증 시간을 설정해주세요",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 12,
                               fontWeight: FontWeight.w500,
                               color: theme.neutral100,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -173,20 +169,35 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
       children: [
         Row(
           children: [
-            TextButton(
-              onPressed: () => read(context).toggleTopWidgetVisible(),
-              child: Text("▲"),
+            GestureDetector(
+              onTap: () => read(context).toggleTopWidgetVisible(),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: watchWidget((viewModel) => viewModel.isVisibleTopWidget,
+                    (isVisibleTopWidget) {
+                  if (isVisibleTopWidget) {
+                    return Text("▲");
+                  } else {
+                    return Text("▼");
+                  }
+                }),
+              ),
             ),
             Expanded(
-              child: DefaultTextField(
-                maxLength: 20,
-                inputController: controller,
-                hintText: "회원 이름을 검색해보세요",
+              child: RoundedBorder(
+                radius: 50,
+                color: theme.neutral10,
+                child: DefaultTextField(
+                  maxLength: 20,
+                  inputController: controller,
+                  hintText: "  회원 이름을 검색해보세요",
+                ),
               ),
             ),
             SizedBox(width: 8),
             RoundedBorder(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              margin: EdgeInsets.only(right: 20),
               radius: 50,
               child: Row(
                 children: [
@@ -207,26 +218,161 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
                 ],
               ),
             ),
-            SizedBox(height: 16),
           ],
         ),
+        SizedBox(height: 8),
         Expanded(
           child: DefaultTabBar(
-            tabHeight: 11,
+            tabHeight: 8,
             isCenter: true,
             tabs: [
               DefaultTab(
-                  title: "전체",
-                  page: ListView.builder(
-                      itemCount: 20,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 48,
-                          width: double.infinity,
-                          margin: EdgeInsets.all(10),
-                          color: Colors.white,
-                        );
-                      })),
+                title: "전체",
+                page: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, bottom: 4),
+                        child: Text(
+                          "총 N명",
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
+                            color: theme.neutral100,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                            shrinkWrap: false,
+                            itemCount: 20,
+                            padding: EdgeInsets.all(0),
+                            separatorBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20),
+                                height: 1,
+                                color: theme.neutral40.withOpacity(0.5),
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 22,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "김테스트",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w700,
+                                                color: theme.neutral80,
+                                              ),
+                                            ),
+                                            SizedBox(width: 4),
+                                            RoundedBorder(
+                                              radius: 40,
+                                              color: theme.secondary20,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 8),
+                                              child: Text(
+                                                "정회원",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: theme.secondary,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 6),
+                                        Text(
+                                          "n학년 · 파트명",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w500,
+                                            color: theme.neutral40,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "n차",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: theme.neutral40,
+                                                ),
+                                              ),
+                                              SizedBox(width: 8),
+                                              Text(
+                                                "hh시 mm분 ss초",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: theme.secondary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 8),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "n차",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: theme.neutral40,
+                                                ),
+                                              ),
+                                              SizedBox(width: 8),
+                                              Text(
+                                                "hh시 mm분 ss초",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: theme.secondary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    SvgPicture.asset(
+                                      asset.success,
+                                      width: 56,
+                                      height: 56,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+                    ]),
+              ),
               DefaultTab(
                   title: "출석",
                   page: ListView.builder(
