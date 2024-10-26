@@ -1,6 +1,7 @@
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:domain/notification/repository/notification_repository.dart';
 import 'package:domain/notification/value_objects/notification_data.dart';
+import 'package:domain/notification/value_objects/notification_setting.dart';
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:domain/notification/value_objects/regular_notification_data.dart';
 import 'package:domain/notification/value_objects/regular_notification_setting.dart';
@@ -55,13 +56,13 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<int> fetchNotificationSettingHour(NotificationType type) {
-    return Future.value(
-        sharedPreferenceLocalDatasource.getNotificationHour(type));
-  }
-
-  @override
-  Future<bool> fetchNotificationSettingOn(NotificationType type) {
-    return Future.value(sharedPreferenceLocalDatasource.isNotificationOn(type));
+  Future<NotificationSetting> fetchNotificationSetting(
+      NotificationType type) async {
+    await Future.delayed(Duration(seconds: 1));
+    return NotificationSetting(
+      type: type,
+      isOn: true,
+      reminderHours: 2,
+    );
   }
 }

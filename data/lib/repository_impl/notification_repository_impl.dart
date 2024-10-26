@@ -1,5 +1,6 @@
 import 'package:domain/notification/repository/notification_repository.dart';
 import 'package:domain/notification/value_objects/notification_data.dart';
+import 'package:domain/notification/value_objects/notification_setting.dart';
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:domain/notification/value_objects/regular_notification_data.dart';
 import 'package:domain/notification/value_objects/regular_notification_setting.dart';
@@ -50,14 +51,8 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<int> fetchNotificationSettingHour(NotificationType type) {
-    // TODO: implement fetchNotificationSettingHour
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> fetchNotificationSettingOn(NotificationType type) {
-    // TODO: implement fetchNotificationSettingOn
+  Future<NotificationSetting> fetchNotificationSetting(NotificationType type) {
+    // TODO: implement fetchNotificationSetting
     throw UnimplementedError();
   }
 }

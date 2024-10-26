@@ -1,4 +1,5 @@
 import 'package:domain/notification/value_objects/notification_data.dart';
+import 'package:domain/notification/value_objects/notification_setting.dart';
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:domain/notification/value_objects/regular_notification_data.dart';
 import 'package:domain/notification/value_objects/regular_notification_setting.dart';
@@ -24,6 +25,5 @@ abstract interface class NotificationRepository {
   Future<void> setNotificationAllEnable(bool isEnable);
   Future<void> setNotificationEnable(NotificationType type, bool isEnable);
 
-  Future<bool> fetchNotificationSettingOn(NotificationType type);
-  Future<int> fetchNotificationSettingHour(NotificationType type);
+  Future<NotificationSetting> fetchNotificationSetting(NotificationType type);
 }

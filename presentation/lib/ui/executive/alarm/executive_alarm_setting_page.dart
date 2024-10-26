@@ -82,86 +82,92 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
         content: GestureDetector(
           onTap: () => _unfocusTextField(),
           child: DefaultContent(
-            child: Column(
-              children: [
-                DefaultFutureBuilder(
-                  fetchData: read(context).fetchNotificationSettingOn(),
-                  showOnLoadedWidget: (context, isOn) {
-                    return DefaultToggleTile(
+            child: DefaultFutureBuilder(
+              fetchData: read(context).fetchNotificationSetting(),
+              showOnLoadedWidget: (context, data) {
+                _textEditingContoller.text = data.reminderHours.toString();
+                return Column(
+                  children: [
+                    DefaultToggleTile(
                       title: "알림 켜짐",
-                      value: isOn,
+                      value: data.isOn,
                       onChanged: (bool isOn) {
                         read(context).setSettingOn(isOn);
                       },
-                    );
-                  },
-                ),
-                const SizedBox(height: 16),
-                DefaultFutureBuilder(
-                  fetchData: read(context).fetchNotificationSettingHour(),
-                  showOnLoadedWidget: (context, alarmTime) {
-                    _textEditingContoller.text = alarmTime.toString();
-                    return watchWidget((viewModel) => viewModel.isSettingOn,
-                        (isSettingOn) {
-                      if (isSettingOn) {
-                        return GestureDetector(
-                          onTap: () => _onTapTextField(),
-                          child: RoundedBorder(
-                            padding: EdgeInsetsDirectional.symmetric(
-                                horizontal: 20, vertical: 8),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "회의",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: theme.neutral60,
-                                    fontWeight: FontWeight.w500,
+                    ),
+                    const SizedBox(height: 16),
+                    watchWidget(
+                      (viewModel) => viewModel.isSettingOn,
+                      (isOn) {
+                        if (isOn) {
+                          return GestureDetector(
+                            onTap: () => _onTapTextField(),
+                            child: RoundedBorder(
+                              padding: EdgeInsetsDirectional.symmetric(
+                                  horizontal: 20, vertical: 8),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "회의",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: theme.neutral60,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: DefaultTextField(
-                                    inputController: _textEditingContoller,
-                                    focusNode: _focusNode,
-                                    textDirection: TextDirection.rtl,
-                                    textType: TextInputType.number,
-                                    fontSize: 22,
-                                    maxLine: 1,
-                                    maxLength: 3,
-                                    showCursor: false,
-                                    enableInteractiveSelection: false,
-                                    onChanged: (newText) =>
-                                        _onChangedText(newText),
+                                  Expanded(
+                                    child: DefaultTextField(
+                                      inputController: _textEditingContoller,
+                                      focusNode: _focusNode,
+                                      textDirection: TextDirection.rtl,
+                                      textType: TextInputType.number,
+                                      fontSize: 22,
+                                      maxLine: 1,
+                                      maxLength: 3,
+                                      showCursor: false,
+                                      enableInteractiveSelection: false,
+                                      onChanged: (newText) =>
+                                          _onChangedText(newText),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  "시간 전",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    color: theme.neutral100,
-                                    fontWeight: FontWeight.w500,
+                                  Text(
+                                    "시간 전",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      color: theme.neutral100,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 16),
-                                Icon(
-                                  Icons.keyboard_arrow_down_outlined,
-                                  color: theme.neutral40,
-                                  size: 32,
-                                ),
-                              ],
+                                  SizedBox(width: 16),
+                                  Icon(
+                                    Icons.keyboard_arrow_down_outlined,
+                                    color: theme.neutral40,
+                                    size: 32,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return RoundedBorder(
-                          color: theme.neutral40,
-                          child: Text("알림이 꺼져있어요."),
-                        );
-                      }
-                    });
-                  },
-                ),
-              ],
+                          );
+                        } else {
+                          return RoundedBorder(
+                            padding: EdgeInsets.all(20),
+                            width: double.infinity,
+                            color: theme.neutral10,
+                            child: Text(
+                              "알림이 꺼져있어요.",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: theme.neutral40,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),

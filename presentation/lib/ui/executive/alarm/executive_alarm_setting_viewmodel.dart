@@ -1,12 +1,11 @@
-import 'package:domain/notification/usecases/fetch_notification_setting_hour_use_case.dart';
-import 'package:domain/notification/usecases/fetch_notification_setting_on_use_case.dart';
+import 'package:domain/notification/usecases/fetch_notification_setting_use_case.dart';
+import 'package:domain/notification/value_objects/notification_setting.dart';
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 enum ExecutiveAlarmSettingEvent {
   saveSetting,
   saveSettingWithPopPage,
-  saveSettingOn,
 }
 
 enum ExecutiveAlarmSettingState {
@@ -18,9 +17,7 @@ enum ExecutiveAlarmSettingState {
 class ExecutiveAlarmSettingViewModel extends BaseViewModel<
     ExecutiveAlarmSettingEvent, ExecutiveAlarmSettingState> {
   final _fetchNotificationSettingHourUseCase =
-      FetchNotificationSettingHourUseCase();
-  final _fetchNotificationSettingOnUseCase =
-      FetchNotificationSettingOnUseCase();
+      FetchNotificationSettingUseCase();
 
   final NotificationType notificationType;
 
@@ -42,13 +39,12 @@ class ExecutiveAlarmSettingViewModel extends BaseViewModel<
     });
   }
 
-  Future<bool> fetchNotificationSettingOn() =>
-      _fetchNotificationSettingOnUseCase(notificationType)
-          .then((isOn) => initSettingOn = isOn);
-
-  Future<int> fetchNotificationSettingHour() =>
-      _fetchNotificationSettingHourUseCase(notificationType)
-          .then((hour) => initSettingHour = hour);
+  Future<NotificationSetting> fetchNotificationSetting() =>
+      _fetchNotificationSettingHourUseCase(notificationType).then((data) {
+        initSettingOn = isSettingOn = data.isOn;
+        initSettingHour = settingHour = data.reminderHours;
+        return data;
+      });
 
   bool isEdited(int inputHour) {
     return initSettingOn != isSettingOn || initSettingHour != inputHour;
@@ -56,6 +52,7 @@ class ExecutiveAlarmSettingViewModel extends BaseViewModel<
 
   void setSettingOn(bool isOn) {
     isSettingOn = isOn;
+    notifyListeners();
   }
 
   void setSettingHour(int hour) {
