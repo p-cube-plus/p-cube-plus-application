@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 
 class DefaultTab {
   DefaultTab({
@@ -32,8 +33,15 @@ class _DefaultTabBarState extends State<DefaultTabBar>
 
   @override
   void initState() {
-    controller = TabController(length: widget.tabs.length, vsync: this);
+    controller =
+        TabController(length: widget.tabs.length, vsync: this, initialIndex: 0);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,32 +54,50 @@ class _DefaultTabBarState extends State<DefaultTabBar>
         Align(
           alignment: widget.isCenter ? Alignment.center : Alignment.centerLeft,
           child: TabBar(
+            dividerHeight: 0,
+            // overlayColor: WidgetStateProperty.resolveWith<Color?>(
+            //     (Set<WidgetState> states) {
+            //   if (states.contains(WidgetState.pressed)) {
+            //     return Colors.red.withOpacity(0.2);
+            //   }
+            //   return null;
+            // }),
             tabs: [
               for (int i = 0; i < widget.tabs.length; ++i)
                 Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Text(widget.tabs[i].title))
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(widget.tabs[i].title),
+                )
             ],
             controller: controller,
-            physics: const PageScrollPhysics(),
             indicatorSize: widget.isCenter
                 ? TabBarIndicatorSize.tab
                 : TabBarIndicatorSize.label,
             indicator: UnderlineTabIndicator(
-                borderSide: BorderSide(
-              width: 2.0,
-              color: theme.tabBarTheme.labelColor!,
-            )),
-            isScrollable: !widget.isCenter,
+              borderSide: BorderSide(
+                width: 2.0,
+                color: theme.neutral100,
+              ),
+            ),
+            isScrollable: false,
             padding:
                 const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
-            unselectedLabelStyle: theme.tabBarTheme.unselectedLabelStyle,
-            labelStyle: theme.tabBarTheme.labelStyle,
+            unselectedLabelStyle: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: theme.neutral20,
+            ),
+            labelStyle: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: theme.neutral100,
+            ),
             labelPadding: EdgeInsets.only(
-                left: 8.0,
-                right: 8.0,
-                bottom: widget.tabHeight,
-                top: widget.tabHeight),
+              left: 8.0,
+              right: 8.0,
+              bottom: widget.tabHeight,
+              top: widget.tabHeight,
+            ),
           ),
         ),
         Expanded(

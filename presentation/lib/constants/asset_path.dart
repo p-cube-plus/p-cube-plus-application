@@ -27,6 +27,9 @@ const String off = "assets/images/icons/off.svg";
 const String failed = "assets/images/icons/failed.svg";
 const String blank = "assets/images/icons/blank.svg";
 
+// member executive
+const String filter = "assets/images/icons/filter.svg";
+
 // home executive
 const String executiveHome = "assets/images/icons/executive.svg";
 

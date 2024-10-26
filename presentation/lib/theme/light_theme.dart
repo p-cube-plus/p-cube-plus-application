@@ -9,6 +9,15 @@ class GetLightTheme {
         colorScheme: const ColorScheme.light(
           surface: Color(0xFFFBFBFB),
         ),
+        tabBarTheme: TabBarTheme(
+          overlayColor: WidgetStateProperty.resolveWith<Color?>(
+              (Set<WidgetState> states) {
+            if (states.contains(WidgetState.pressed)) {
+              return color.lightGray20.withOpacity(0.5); // 클릭 시 번지는 색상
+            }
+            return null; // 기본 색상 유지
+          }),
+        ),
         // tabBarTheme: const TabBarTheme(
         //   labelColor: const Color(0xFF2E2E2E),
         //   labelStyle: const TextStyle(
