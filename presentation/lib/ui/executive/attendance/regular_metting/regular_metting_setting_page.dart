@@ -37,17 +37,108 @@ class _RegularMettingSettingPage extends StatelessWidget
         children: [
           watchWidget((viewModel) => viewModel.isVisibleTopWidget,
               (isVisibleTopWidget) {
-            if (isVisibleTopWidget) {
-              return RoundedBorder(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-                padding: EdgeInsets.all(20),
-                color: Colors.blue,
-                width: double.infinity,
-                child: Text("sample"),
-              );
-            } else {
-              return SizedBox();
-            }
+            if (!isVisibleTopWidget) return SizedBox();
+
+            return RoundedBorder(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              padding: EdgeInsets.all(20),
+              color: Colors.blue,
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: double.infinity,
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: Icon(
+                            Icons.chevron_left,
+                            color: theme.neutral40,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "M월 dd일",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: theme.neutral100,
+                        ),
+                      ),
+                      SizedBox(
+                        height: double.infinity,
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: Icon(
+                            Icons.chevron_right,
+                            color: theme.neutral40,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "1차 인증",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: theme.neutral100,
+                          ),
+                        ),
+                        RoundedBorder(
+                          color: theme.neutral5,
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            "hh시 mm분 ss초 ~ hh시 mm분 ss초",
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: theme.neutral100,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 14),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "2차 인증",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: theme.neutral100,
+                          ),
+                        ),
+                        RoundedBorder(
+                          color: theme.neutral5,
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            "hh시 mm분 ss초 ~ hh시 mm분 ss초",
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: theme.neutral100,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
           }),
           Expanded(
             child: MemberAttendanceList(),
