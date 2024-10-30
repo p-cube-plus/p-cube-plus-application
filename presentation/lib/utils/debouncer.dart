@@ -15,7 +15,6 @@ class Debouncer {
 
     Future.delayed(duration, () {
       _action?.call();
-      print("그런가");
       _isWaiting = false;
       _action = null;
     });

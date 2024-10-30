@@ -10,6 +10,7 @@ class RoundedBorder extends StatelessWidget {
     this.child,
     this.color,
     this.hasShadow = true,
+    this.hasBorder = false,
     this.onTap,
     this.border,
     this.padding,
@@ -22,6 +23,7 @@ class RoundedBorder extends StatelessWidget {
   final Widget? child;
   final Color? color;
   final bool hasShadow;
+  final bool hasBorder;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final Border? border;
@@ -40,6 +42,12 @@ class RoundedBorder extends StatelessWidget {
         decoration: BoxDecoration(
           color: color ?? theme.content,
           borderRadius: BorderRadius.circular(radius),
+          border: hasBorder
+              ? Border.all(
+                  color: theme.neutral40,
+                  width: 1.0,
+                )
+              : null,
           boxShadow: [
             if (hasShadow)
               BoxShadow(
