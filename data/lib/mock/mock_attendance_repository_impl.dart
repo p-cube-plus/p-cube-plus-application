@@ -1,8 +1,10 @@
+import 'package:data/common/memory_cache.dart';
 import 'package:data/local/beacon/beacon_scanner.dart';
 import 'package:data/local/local_db/attendance/attendance_dao.dart';
 import 'package:data/local/local_db/attendance/attendance_local_datasource.dart';
 import 'package:data/remote/p_cube_api/attendance/attendance_remote_datasource.dart';
 import 'package:data/remote/p_cube_api/attendance/body/update_attendance_body_dto.dart';
+import 'package:data/utils/mock_util.dart';
 import 'package:domain/attendance/repository/attendance_repository.dart';
 import 'package:domain/attendance/value_objects/attendance_check.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
@@ -14,6 +16,7 @@ import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
+import 'package:domain/member/value_objects/member_position_type.dart';
 import 'package:domain/schedule/value_objects/schedule_type.dart';
 import 'package:get_it/get_it.dart';
 
@@ -21,6 +24,9 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   final beaconScanner = GetIt.I.get<BeaconScanner>();
   final attendanceRemoteDatasource = GetIt.I.get<AttendanceRemoteDatasource>();
   final attendanceLocalDatasource = GetIt.I.get<AttendanceLocalDatasource>();
+
+  MemoryCache<List<MemberAttendanceState>> cachedMemberAttendanceList =
+      MemoryCache(Duration(seconds: 30));
 
   @override
   bool getBeaconDetected() {
@@ -132,9 +138,71 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<List<MemberAttendanceState>> getMemberAttendanceStateList(
-      AttendanceType attendanceType, DateTime searchDate) {
-    // TODO: implement getMemberAttendanceStateList
-    throw UnimplementedError();
+      AttendanceType attendanceType, DateTime searchDate) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await cachedMemberAttendanceList.fetchOrCache(() {
+      final isExistSecondAttendance = MockUtil().getRandomBool();
+
+      return Future.value(List.generate(
+        MockUtil().getRandomNumber(50, 500),
+        (_) {
+          final isExistFirst = MockUtil().getRandomNumber(0, 9) < 8;
+          DateTime? firstTime;
+          AttendanceStatusType? firstResult;
+
+          if (isExistFirst) {
+            firstTime = MockUtil().getRandomDateTime(
+              DateTime.now(),
+              DateTime.now().add(Duration(minutes: 30)),
+            );
+            final firstTimeout = DateTime.now().add(Duration(minutes: 20));
+            final firstFailedTimeout =
+                DateTime.now().add(Duration(minutes: 25));
+
+            if (firstTime.isBefore(firstTimeout)) {
+              firstResult = AttendanceStatusType.success;
+            } else if (firstTime.isBefore(firstFailedTimeout)) {
+              firstResult = AttendanceStatusType.late;
+            } else {
+              firstResult = AttendanceStatusType.failed;
+            }
+          }
+
+          final isExistSecond = MockUtil().getRandomBool();
+          DateTime? secondTime;
+          AttendanceStatusType? secondResult;
+
+          if (isExistSecondAttendance && isExistFirst && isExistSecond) {
+            secondTime = MockUtil().getRandomDateTime(
+              firstTime!,
+              firstTime.add(Duration(minutes: 30)),
+            );
+            final secondTimeout = firstTime.add(Duration(minutes: 20));
+            final secondFailedTimeout = firstTime.add(Duration(minutes: 25));
+
+            if (secondTime.isBefore(secondTimeout)) {
+              secondResult = AttendanceStatusType.success;
+            } else if (secondTime.isBefore(secondFailedTimeout)) {
+              secondResult = AttendanceStatusType.late;
+            } else {
+              secondResult = AttendanceStatusType.failed;
+            }
+          }
+          return MemberAttendanceState(
+            name: MockUtil().getRandomKoreanString(3),
+            grade: MockUtil().getRandomNumber(1, 4),
+            partType: MockUtil().getRandomEnum(MemberPartType.values),
+            positionType: RegularMember(),
+            isExistSecondAttendance: isExistSecondAttendance,
+            firstAttendanceCheckTime: firstTime,
+            firstAttendanceStatusType: firstResult,
+            secondAttendanceCheckTime: secondTime,
+            secondAttendanceStatusType: secondResult,
+          );
+        },
+      ));
+    });
+    return result;
   }
 
   @override

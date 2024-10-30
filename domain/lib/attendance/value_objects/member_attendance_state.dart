@@ -35,21 +35,24 @@ class MemberAttendanceState {
       return firstAttendanceStatusType ?? _getDefaultFirstStatus();
     }
 
-    final firstStatus = firstAttendanceCheckTime ?? _getDefaultFirstStatus();
+    final firstStatus = firstAttendanceStatusType ?? _getDefaultFirstStatus();
     final secondStatus =
         secondAttendanceStatusType ?? _getDefaultSecondStatus();
 
     if (firstStatus == AttendanceStatusType.success &&
         secondStatus == AttendanceStatusType.success) {
       return AttendanceStatusType.success;
+    } else if (firstStatus == AttendanceStatusType.failed ||
+        secondStatus == AttendanceStatusType.failed) {
+      return AttendanceStatusType.failed;
+    } else if (firstStatus == AttendanceStatusType.late ||
+        secondStatus == AttendanceStatusType.late) {
+      return AttendanceStatusType.late;
     } else if (firstStatus == AttendanceStatusType.blank) {
       return AttendanceStatusType.blank;
     } else if (firstStatus == AttendanceStatusType.pending ||
         secondStatus == AttendanceStatusType.pending) {
       return AttendanceStatusType.pending;
-    } else if (firstStatus == AttendanceStatusType.late ||
-        secondStatus == AttendanceStatusType.late) {
-      return AttendanceStatusType.late;
     } else {
       return AttendanceStatusType.failed;
     }
