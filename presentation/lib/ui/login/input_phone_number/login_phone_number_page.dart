@@ -59,6 +59,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
           ?.unfocus(disposition: UnfocusDisposition.scope),
       child: DefaultPage(
         appbar: const DefaultAppBar(),
+        resizeToAvoidBottomInset: true,
         content: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
