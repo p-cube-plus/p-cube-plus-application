@@ -4,16 +4,27 @@ import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/ui/executive/attendance/regular_metting/regular_metting_setting_event.dart';
+import 'package:presentation/utils/debouncer.dart';
+import 'package:presentation/utils/match_korean.dart';
 
 class RegularMettingSettingViewModel
     extends BaseViewModel<RegularMettingSettingEvent, void> {
   final _fetchUserAttendanceList = FetchUserAttendanceListUseCase();
 
   bool isVisibleTopWidget = true;
+  String filterText = "";
+  final filterThrottle = Debouncer(Duration(microseconds: 500));
   AttendanceType attendanceType = RegularMetting();
 
   RegularMettingSettingViewModel() {
     fetchData();
+  }
+
+  void setFilterText(String newText) {
+    filterThrottle.run(() {
+      filterText = newText;
+      notifyListeners();
+    });
   }
 
   Future<List<MemberAttendanceState>> fetch() => _fetchUserAttendanceList
@@ -23,7 +34,9 @@ class RegularMettingSettingViewModel
   List<MemberAttendanceState> totalList = [];
 
   List<MemberAttendanceState> get successList => totalList
-      .where((v) => v.attendanceStatusType == AttendanceStatusType.success)
+      .where((v) =>
+          v.attendanceStatusType == AttendanceStatusType.success &&
+          v.name.matchKorean(filterText))
       .toList();
 
   List<MemberAttendanceState> get lateList => totalList

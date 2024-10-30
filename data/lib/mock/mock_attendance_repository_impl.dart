@@ -26,7 +26,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   final attendanceLocalDatasource = GetIt.I.get<AttendanceLocalDatasource>();
 
   MemoryCache<List<MemberAttendanceState>> cachedMemberAttendanceList =
-      MemoryCache(Duration(seconds: 30));
+      MemoryCache(Duration(minutes: 5));
 
   @override
   bool getBeaconDetected() {

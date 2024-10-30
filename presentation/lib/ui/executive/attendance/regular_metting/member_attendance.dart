@@ -53,10 +53,14 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
               child: RoundedBorder(
                 radius: 50,
                 color: theme.neutral10,
+                padding: EdgeInsets.symmetric(horizontal: 4),
                 child: DefaultTextField(
                   maxLength: 20,
                   inputController: controller,
-                  hintText: "  회원 이름을 검색해보세요",
+                  hintText: "회원 이름을 검색해보세요",
+                  onChanged: (inputText) {
+                    read(context).setFilterText(inputText);
+                  },
                 ),
               ),
             ),
@@ -113,6 +117,9 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
                       (totalList) => MemberAttendanceTab(
                         userAttendanceList: totalList,
                       ),
+                      shouldRebuild: (previous, next) {
+                        return previous.length != next.length;
+                      },
                     ),
                   ),
                   DefaultTab(
