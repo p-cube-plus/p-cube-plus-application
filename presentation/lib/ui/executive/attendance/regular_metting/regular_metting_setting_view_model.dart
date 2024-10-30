@@ -13,7 +13,7 @@ class RegularMettingSettingViewModel
 
   bool isVisibleTopWidget = true;
   String filterText = "";
-  final filterThrottle = Debouncer(Duration(microseconds: 500));
+  final filterThrottle = Debouncer(Duration(milliseconds: 200));
   AttendanceType attendanceType = RegularMetting();
 
   RegularMettingSettingViewModel() {
@@ -29,26 +29,34 @@ class RegularMettingSettingViewModel
 
   Future<List<MemberAttendanceState>> fetch() => _fetchUserAttendanceList
       .call(attendanceType, DateTime.now())
-      .then((result) => totalList = result);
+      .then((result) => _totalList = result);
 
-  List<MemberAttendanceState> totalList = [];
+  List<MemberAttendanceState> _totalList = [];
 
-  List<MemberAttendanceState> get successList => totalList
+  List<MemberAttendanceState> get totalList =>
+      _totalList.where((v) => v.name.matchKorean(filterText)).toList();
+
+  List<MemberAttendanceState> get successList => _totalList
       .where((v) =>
           v.attendanceStatusType == AttendanceStatusType.success &&
           v.name.matchKorean(filterText))
       .toList();
 
-  List<MemberAttendanceState> get lateList => totalList
-      .where((v) => v.attendanceStatusType == AttendanceStatusType.late)
+  List<MemberAttendanceState> get lateList => _totalList
+      .where((v) =>
+          v.attendanceStatusType == AttendanceStatusType.late &&
+          v.name.matchKorean(filterText))
       .toList();
 
-  List<MemberAttendanceState> get failedList => totalList
-      .where((v) => v.attendanceStatusType == AttendanceStatusType.failed)
+  List<MemberAttendanceState> get failedList => _totalList
+      .where((v) =>
+          (v.attendanceStatusType == AttendanceStatusType.failed ||
+              v.attendanceStatusType == AttendanceStatusType.pending) &&
+          v.name.matchKorean(filterText))
       .toList();
 
   void fetchData() async {
-    totalList =
+    _totalList =
         await _fetchUserAttendanceList.call(attendanceType, DateTime.now());
     notifyListeners();
   }
