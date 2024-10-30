@@ -21,9 +21,11 @@ class MemberAttendanceList extends StatefulWidget {
 class _MemberAttendanceListState extends State<MemberAttendanceList>
     with ViewModel<RegularMettingSettingViewModel> {
   final controller = TextEditingController();
+  final _focusNode = FocusNode();
 
   @override
   void dispose() {
+    _focusNode.dispose();
     controller.dispose();
     super.dispose();
   }
@@ -31,121 +33,126 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      children: [
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () => read(context).toggleTopWidgetVisible(),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: watchWidget((viewModel) => viewModel.isVisibleTopWidget,
-                    (isVisibleTopWidget) {
-                  if (isVisibleTopWidget) {
-                    return Text("▲");
-                  } else {
-                    return Text("▼");
-                  }
-                }),
-              ),
-            ),
-            Expanded(
-              child: RoundedBorder(
-                radius: 50,
-                color: theme.neutral10,
-                padding: EdgeInsets.symmetric(horizontal: 4),
-                child: DefaultTextField(
-                  maxLength: 20,
-                  inputController: controller,
-                  hintText: "회원 이름을 검색해보세요",
-                  onChanged: (inputText) {
-                    read(context).setFilterText(inputText);
-                  },
+    return GestureDetector(
+      onTap: () => _focusNode.unfocus(),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () => read(context).toggleTopWidgetVisible(),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child:
+                      watchWidget((viewModel) => viewModel.isVisibleTopWidget,
+                          (isVisibleTopWidget) {
+                    if (isVisibleTopWidget) {
+                      return Text("▲");
+                    } else {
+                      return Text("▼");
+                    }
+                  }),
                 ),
               ),
-            ),
-            SizedBox(width: 8),
-            RoundedBorder(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              margin: EdgeInsets.only(right: 20),
-              radius: 50,
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    asset.filter,
-                    width: 10,
-                    height: 10,
+              Expanded(
+                child: RoundedBorder(
+                  radius: 50,
+                  color: theme.neutral10,
+                  padding: EdgeInsets.symmetric(horizontal: 4),
+                  child: DefaultTextField(
+                    maxLength: 20,
+                    inputController: controller,
+                    focusNode: _focusNode,
+                    hintText: "회원 이름을 검색해보세요",
+                    onChanged: (inputText) {
+                      read(context).setFilterText(inputText);
+                    },
                   ),
-                  SizedBox(width: 8),
-                  Text(
-                    "필터",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: theme.primary80,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
-        ),
-        Expanded(
-          child: DefaultFutureBuilder(
-            fetchData: read(context).fetch(),
-            showOnLoadedWidget:
-                (BuildContext context, List<MemberAttendanceState> data) {
-              return DefaultTabBar(
-                padding:
-                    EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 16),
-                tabLabelPadding: EdgeInsets.symmetric(vertical: 11),
-                tabAlignment: TabAlignment.fill,
-                tabs: [
-                  DefaultTab(
-                    tabName: "전체",
-                    page: watchWidget(
-                      (viewModel) => viewModel.totalList,
-                      (totalList) => MemberAttendanceTab(
-                        userAttendanceList: totalList,
+              SizedBox(width: 8),
+              RoundedBorder(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                margin: EdgeInsets.only(right: 20),
+                radius: 50,
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      asset.filter,
+                      width: 10,
+                      height: 10,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "필터",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: theme.primary80,
                       ),
                     ),
-                  ),
-                  DefaultTab(
-                    tabName: "출석",
-                    page: watchWidget(
-                      (viewModel) => viewModel.successList,
-                      (totalList) => MemberAttendanceTab(
-                        userAttendanceList: totalList,
-                      ),
-                      shouldRebuild: (previous, next) {
-                        return previous.length != next.length;
-                      },
-                    ),
-                  ),
-                  DefaultTab(
-                    tabName: "지각",
-                    page: watchWidget(
-                      (viewModel) => viewModel.lateList,
-                      (totalList) => MemberAttendanceTab(
-                        userAttendanceList: totalList,
-                      ),
-                    ),
-                  ),
-                  DefaultTab(
-                    tabName: "불참",
-                    page: watchWidget(
-                      (viewModel) => viewModel.failedList,
-                      (totalList) => MemberAttendanceTab(
-                        userAttendanceList: totalList,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
+                  ],
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+          Expanded(
+            child: DefaultFutureBuilder(
+              fetchData: read(context).fetch(),
+              showOnLoadedWidget:
+                  (BuildContext context, List<MemberAttendanceState> data) {
+                return DefaultTabBar(
+                  padding:
+                      EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 16),
+                  tabLabelPadding: EdgeInsets.symmetric(vertical: 11),
+                  tabAlignment: TabAlignment.fill,
+                  tabs: [
+                    DefaultTab(
+                      tabName: "전체",
+                      page: watchWidget(
+                        (viewModel) => viewModel.totalList,
+                        (totalList) => MemberAttendanceTab(
+                          userAttendanceList: totalList,
+                        ),
+                      ),
+                    ),
+                    DefaultTab(
+                      tabName: "출석",
+                      page: watchWidget(
+                        (viewModel) => viewModel.successList,
+                        (totalList) => MemberAttendanceTab(
+                          userAttendanceList: totalList,
+                        ),
+                        shouldRebuild: (previous, next) {
+                          return previous.length != next.length;
+                        },
+                      ),
+                    ),
+                    DefaultTab(
+                      tabName: "지각",
+                      page: watchWidget(
+                        (viewModel) => viewModel.lateList,
+                        (totalList) => MemberAttendanceTab(
+                          userAttendanceList: totalList,
+                        ),
+                      ),
+                    ),
+                    DefaultTab(
+                      tabName: "불참",
+                      page: watchWidget(
+                        (viewModel) => viewModel.failedList,
+                        (totalList) => MemberAttendanceTab(
+                          userAttendanceList: totalList,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
