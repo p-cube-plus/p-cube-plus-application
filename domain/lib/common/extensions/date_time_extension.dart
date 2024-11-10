@@ -1,6 +1,8 @@
 extension DateTimeExtension on DateTime {
   DateTime get firstDate => DateTime(year, month, 1);
   DateTime get lastDate => DateTime(year, month + 1, 0);
+  DateTime get previousMonthFirstDate => DateTime(year, month - 1, 1);
+
   int get weekDayIndex => weekday % DateTime.daysPerWeek;
 
   int get numberOfWeeks =>

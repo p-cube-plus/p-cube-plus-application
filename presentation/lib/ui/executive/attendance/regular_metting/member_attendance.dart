@@ -11,11 +11,15 @@ import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
 import 'package:presentation/widgets/default_text_field.dart';
-import 'package:presentation/widgets/default_toggle.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 class MemberAttendanceList extends StatefulWidget {
-  const MemberAttendanceList({super.key});
+  const MemberAttendanceList({
+    super.key,
+    required this.selectedDate,
+  });
+
+  final DateTime selectedDate;
 
   @override
   State<MemberAttendanceList> createState() => _MemberAttendanceListState();
@@ -102,7 +106,8 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
           ),
           Expanded(
             child: DefaultFutureBuilder(
-              fetchData: read(context).fetch(),
+              fetchData:
+                  read(context).fetchUserAttendanceList(widget.selectedDate),
               showOnLoadedWidget:
                   (BuildContext context, List<MemberAttendanceState> data) {
                 return DefaultTabBar(

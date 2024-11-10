@@ -6,6 +6,7 @@ import 'package:data/remote/p_cube_api/attendance/body/update_attendance_body_dt
 import 'package:domain/attendance/repository/attendance_repository.dart';
 import 'package:domain/attendance/value_objects/attendance_check.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
+import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
@@ -127,6 +128,13 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   Future<List<RecentAttendance>> getRecentAttendanceStatus(
       AttendanceType type, int count) {
     // TODO: implement getRecentAttendanceStatus
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AttendanceDetailData> getMostRecentAttendance(
+      AttendanceType attendanceType) {
+    // TODO: implement getMostRecentAttendance
     throw UnimplementedError();
   }
 }

@@ -8,6 +8,7 @@ import 'package:data/utils/mock_util.dart';
 import 'package:domain/attendance/repository/attendance_repository.dart';
 import 'package:domain/attendance/value_objects/attendance_check.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
+import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
@@ -82,8 +83,22 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   @override
   Future<List<AttendanceData>> getAttendanceExistDayListInMonth(
       AttendanceType attendanceType, int year, int month) {
-    // TODO: implement getAttendanceExistDayListInMonth
-    throw UnimplementedError();
+    return Future.value([
+      AttendanceData(
+          id: 1, attendanceDate: DateTime.now(), type: attendanceType),
+      AttendanceData(
+          id: 2,
+          attendanceDate: DateTime.now().subtract(Duration(days: 7)),
+          type: attendanceType),
+      AttendanceData(
+          id: 3,
+          attendanceDate: DateTime.now().subtract(Duration(days: 14)),
+          type: attendanceType),
+      AttendanceData(
+          id: 4,
+          attendanceDate: DateTime.now().subtract(Duration(days: 21)),
+          type: attendanceType),
+    ]);
   }
 
   @override
@@ -261,5 +276,17 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
         date: DateTime.now().subtract(Duration(days: 28)),
       ),
     ]);
+  }
+
+  @override
+  Future<AttendanceDetailData> getMostRecentAttendance(
+      AttendanceType attendanceType) {
+    return Future.value(
+      AttendanceDetailData(
+        id: 1,
+        attendanceDate: DateTime.now(),
+        type: attendanceType,
+      ),
+    );
   }
 }
