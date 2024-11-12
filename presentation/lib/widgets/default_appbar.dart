@@ -64,23 +64,21 @@ class DefaultAppBar extends StatelessWidget {
               ),
             ),
           if (leftTitle != null)
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 4.0),
-              child: Row(
-                children: [
-                  Text(
-                    leftTitle!,
-                    style: theme.textTheme.displayLarge!.copyWith(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w700,
-                      color: contentColor ?? theme.neutral100,
-                    ),
+            Row(
+              children: [
+                Text(
+                  leftTitle!,
+                  style: theme.textTheme.displayLarge!.copyWith(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w700,
+                    color: contentColor ?? theme.neutral100,
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: leftTitleState)
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: leftTitleState,
+                )
+              ],
             ),
           SizedBox(width: centerTitle != null ? 20.0 : 0.0)
         ],

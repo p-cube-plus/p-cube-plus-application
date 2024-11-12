@@ -18,6 +18,7 @@ class DefaultTabBar extends StatefulWidget {
     this.tabAlignment = TabAlignment.center,
     this.padding,
     this.tabLabelPadding,
+    this.indicatorInsets,
   });
 
   final List<DefaultTab> tabs;
@@ -25,6 +26,7 @@ class DefaultTabBar extends StatefulWidget {
   final TabAlignment tabAlignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? tabLabelPadding;
+  final EdgeInsetsGeometry? indicatorInsets;
 
   @override
   State<DefaultTabBar> createState() => _DefaultTabBarState();
@@ -61,21 +63,25 @@ class _DefaultTabBarState extends State<DefaultTabBar>
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TabBar(
           tabAlignment: widget.tabAlignment,
           dividerHeight: 0,
-          isScrollable: false,
           controller: controller,
           padding: widget.padding,
           labelPadding: widget.tabLabelPadding,
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
           tabs: tabList,
+          indicatorPadding: EdgeInsets.all(0),
+          indicatorWeight: 0,
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: UnderlineTabIndicator(
             borderSide: BorderSide(
               width: 2.0,
               color: theme.neutral100,
             ),
+            insets: widget.indicatorInsets ?? EdgeInsets.zero,
           ),
           unselectedLabelStyle: TextStyle(
             fontSize: 14,

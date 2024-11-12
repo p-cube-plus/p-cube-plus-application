@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/ui/alarm/alarm_page.dart';
 import 'package:presentation/ui/home/home_page.dart';
 import 'main_navigation_bar_factory.dart';
 
@@ -34,7 +35,7 @@ class _MainPageState extends State<MainPage> {
         onPageChanged: (int index) => setState(() => _currentIndex = index),
         physics: const NeverScrollableScrollPhysics(),
         children: const [
-          SizedBox(),
+          AlarmPage(),
           HomePage(),
           SizedBox(),
         ],
