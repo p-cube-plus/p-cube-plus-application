@@ -10,21 +10,34 @@ import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
+import 'package:provider/provider.dart';
 
-class AlarmPage extends StatelessWidget with ViewModel<AlarmViewModel> {
+class AlarmPage extends StatelessWidget {
   const AlarmPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    return ChangeNotifierProvider(
+      create: (_) => AlarmViewModel(),
+      child: _AlarmPage(),
+    );
+  }
+}
+
+class _AlarmPage extends StatelessWidget with ViewModel<AlarmViewModel> {
+  const _AlarmPage();
+
+  @override
+  Widget build(BuildContext context) {
     return DefaultPage(
       title: "알림",
       action: SvgPicture.asset(asset.setting),
       content: DefaultTabBar(
+        overLayColor: Colors.transparent,
         tabAlignment: TabAlignment.center,
-        padding: EdgeInsets.only(left: 20, bottom: 16),
-        tabLabelPadding: EdgeInsets.only(left: 4, right: 20, top: 4, bottom: 4),
-        indicatorInsets: EdgeInsets.only(right: 16),
+        padding: EdgeInsets.only(left: 16, bottom: 16),
+        tabLabelPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        indicatorInsets: EdgeInsets.symmetric(horizontal: 8),
         tabs: [
           DefaultTab(
             tabName: "새 알림",
@@ -71,7 +84,6 @@ class AlarmListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return RoundedBorder(
-      color: theme.neutral0,
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       height: 64,
       child: Padding(

@@ -1,47 +1,97 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 
 class DefaultProfile extends StatelessWidget {
   const DefaultProfile({
     super.key,
-    this.size,
-    this.isOverflow = false,
+    required this.size,
   });
 
-  final double? size;
-  final bool isOverflow;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Theme.of(context).dialogBackgroundColor,
-        image: !isOverflow
-            ? const DecorationImage(
-                image: AssetImage('assets/images/default_profile.png'),
-              )
-            : null,
+        color: theme.neutral10,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor,
+            color: theme.neutral20,
             offset: Offset.fromDirection(1.0, 1.0),
             blurRadius: 3.0,
             spreadRadius: 0.0,
           ),
         ],
       ),
-      child: isOverflow
-          ? Center(
-              child: Text(
-              "+1",
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall!
-                  .copyWith(fontSize: 12.0, fontWeight: FontWeight.w400),
-            ))
-          : null,
+      child: Center(child: _PeopleImage(size / 5, theme.neutral20)),
     );
   }
+}
+
+class _PeopleImage extends StatelessWidget {
+  final double size;
+  final Color color;
+  const _PeopleImage(this.size, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        ),
+        SizedBox(height: size / 4),
+        SemiCircle(size * 2, color),
+      ],
+    );
+  }
+}
+
+class SemiCircle extends StatelessWidget {
+  final double diameter;
+  final Color color;
+
+  const SemiCircle(this.diameter, this.color, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: SemiCirclePainter(color),
+      size: Size(diameter, diameter / 2),
+    );
+  }
+}
+
+class SemiCirclePainter extends CustomPainter {
+  final Color color;
+  SemiCirclePainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = color;
+    final rect = Rect.fromLTWH(0, 0, size.width, size.height * 2);
+
+    canvas.drawArc(
+      rect,
+      math.pi,
+      math.pi,
+      false,
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

@@ -7,18 +7,6 @@ import 'package:domain/notification/value_objects/regular_notification_setting.d
 
 class NotificationRepositoryImpl implements NotificationRepository {
   @override
-  Future<List<NotificationData>> getNewNotificationList() {
-    // TODO: implement getNewNotificationList
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<NotificationData>> getReadNotificationList() {
-    // TODO: implement getReadNotificationList
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<RegularNotificationData>> getRegularNotification(
       PartMettingNotification type) {
     // TODO: implement getRegularNotification
@@ -53,6 +41,18 @@ class NotificationRepositoryImpl implements NotificationRepository {
   @override
   Future<NotificationSetting> fetchNotificationSetting(NotificationType type) {
     // TODO: implement fetchNotificationSetting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<NotificationData>> getNotificationList() {
+    // TODO: implement getNotificationList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateNotificationAsRead() {
+    // TODO: implement updateNotificationAsRead
     throw UnimplementedError();
   }
 }

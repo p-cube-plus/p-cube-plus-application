@@ -34,8 +34,11 @@ class _HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<_HomePage>
-    with ViewModel<HomePageViewModel> {
+    with ViewModel<HomePageViewModel>, AutomaticKeepAliveClientMixin {
   Key _refreshKey = UniqueKey();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -54,27 +57,27 @@ class _HomePageState extends State<_HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultRefreshIndicator(
-      onRefresh: () async {
-        setState(() {
-          _refreshKey = UniqueKey();
-        });
-      },
-      child: DefaultPage(
-        key: _refreshKey,
-        title: "홈",
-        action:
-            watchWidget((viewModel) => viewModel.isExecutive, (isExecutive) {
-          if (isExecutive) {
-            return GestureDetector(
-              child: SvgPicture.asset(asset.executiveHome),
-              onTap: () => _navigateToExecutivePage(),
-            );
-          } else {
-            return const SizedBox();
-          }
-        }),
-        content: const DefaultContent(
+    super.build(context);
+    return DefaultPage(
+      key: _refreshKey,
+      title: "홈",
+      action: watchWidget((viewModel) => viewModel.isExecutive, (isExecutive) {
+        if (isExecutive) {
+          return GestureDetector(
+            child: SvgPicture.asset(asset.executiveHome),
+            onTap: () => _navigateToExecutivePage(),
+          );
+        } else {
+          return const SizedBox();
+        }
+      }),
+      content: DefaultRefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            _refreshKey = UniqueKey();
+          });
+        },
+        child: const DefaultContent(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -85,8 +88,8 @@ class _HomePageState extends State<_HomePage>
             ],
           ),
         ),
-        //floatingActionButton: FloatingBarcodeButton(),
       ),
+      //floatingActionButton: FloatingBarcodeButton(),
     );
   }
 

@@ -12,18 +12,20 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   final sharedPreferenceLocalDatasource =
       GetIt.I.get<SharedPreferenceLocalDatasource>();
 
+  final mockNotification = List.generate(50, (index) {
+    return NotificationData(
+      id: index,
+      type: RegularMettingNotification(),
+      date: DateTime.now(),
+      title: "Title 예시",
+      description: "알림 설명설명설명설명설명",
+      isRead: MockUtil().getRandomBool(),
+    );
+  });
+
   @override
   Future<List<NotificationData>> getNotificationList() {
-    return Future.value(List.generate(50, (index) {
-      return NotificationData(
-        id: 1,
-        type: RegularMettingNotification(),
-        date: DateTime.now(),
-        title: "예시",
-        description: "설명설명설명설명설명",
-        isRead: MockUtil().getRandomBool(),
-      );
-    }));
+    return Future.value(mockNotification);
   }
 
   @override
@@ -67,5 +69,12 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
       isOn: true,
       reminderHours: 2,
     );
+  }
+
+  @override
+  Future<void> updateNotificationAsRead(int id) async {
+    Future.delayed(Duration(seconds: 2));
+    // final target = mockNotification.first((data) => data.id == id);
+    // target
   }
 }

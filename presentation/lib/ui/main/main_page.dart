@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/ui/alarm/alarm_page.dart';
 import 'package:presentation/ui/home/home_page.dart';
+import 'package:presentation/ui/user/user_page.dart';
 import 'main_navigation_bar_factory.dart';
 
 class MainPage extends StatefulWidget {
@@ -37,7 +38,7 @@ class _MainPageState extends State<MainPage> {
         children: const [
           AlarmPage(),
           HomePage(),
-          SizedBox(),
+          UserPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

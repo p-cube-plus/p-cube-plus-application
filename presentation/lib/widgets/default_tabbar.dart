@@ -19,6 +19,7 @@ class DefaultTabBar extends StatefulWidget {
     this.padding,
     this.tabLabelPadding,
     this.indicatorInsets,
+    this.overLayColor,
   });
 
   final List<DefaultTab> tabs;
@@ -27,6 +28,7 @@ class DefaultTabBar extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? tabLabelPadding;
   final EdgeInsetsGeometry? indicatorInsets;
+  final Color? overLayColor;
 
   @override
   State<DefaultTabBar> createState() => _DefaultTabBarState();
@@ -71,7 +73,7 @@ class _DefaultTabBarState extends State<DefaultTabBar>
           controller: controller,
           padding: widget.padding,
           labelPadding: widget.tabLabelPadding,
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(widget.overLayColor),
           tabs: tabList,
           indicatorPadding: EdgeInsets.all(0),
           indicatorWeight: 0,
