@@ -8,6 +8,7 @@ class NotificationData {
   final DateTime date;
   final String title;
   final String description;
+  final bool isRead;
 
   const NotificationData({
     required this.id,
@@ -15,5 +16,6 @@ class NotificationData {
     required this.date,
     required this.title,
     required this.description,
+    required this.isRead,
   });
 }

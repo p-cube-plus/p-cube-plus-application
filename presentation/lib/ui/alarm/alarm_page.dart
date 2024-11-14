@@ -1,13 +1,17 @@
+import 'package:domain/common/extensions/date_time_extension.dart';
+import 'package:domain/notification/value_objects/notification_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/widgets/default_appbar.dart';
+import 'package:presentation/ui/alarm/alarm_viewmodel.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
 
-class AlarmPage extends StatelessWidget {
+class AlarmPage extends StatelessWidget with ViewModel<AlarmViewModel> {
   const AlarmPage({super.key});
 
   @override
@@ -24,21 +28,31 @@ class AlarmPage extends StatelessWidget {
         tabs: [
           DefaultTab(
             tabName: "새 알림",
-            page: ListView.builder(
-              padding: EdgeInsets.only(bottom: 8),
-              itemCount: 25,
-              itemBuilder: (context, index) {
-                return AlarmListItem();
+            page: DefaultFutureBuilder(
+              fetchData: read(context).fetchNewNotification(),
+              showOnLoadedWidget: (context, data) {
+                return ListView.builder(
+                  padding: EdgeInsets.only(bottom: 8),
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return AlarmListItem(data: data[index]);
+                  },
+                );
               },
             ),
           ),
           DefaultTab(
             tabName: "읽은 알림",
-            page: ListView.builder(
-              padding: EdgeInsets.only(bottom: 8),
-              itemCount: 25,
-              itemBuilder: (context, index) {
-                return AlarmListItem();
+            page: DefaultFutureBuilder(
+              fetchData: read(context).fetchReadNotification(),
+              showOnLoadedWidget: (context, data) {
+                return ListView.builder(
+                  padding: EdgeInsets.only(bottom: 8),
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return AlarmListItem(data: data[index]);
+                  },
+                );
               },
             ),
           ),
@@ -49,7 +63,9 @@ class AlarmPage extends StatelessWidget {
 }
 
 class AlarmListItem extends StatelessWidget {
-  const AlarmListItem({super.key});
+  const AlarmListItem({super.key, required this.data});
+
+  final NotificationData data;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +89,7 @@ class AlarmListItem extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "회의 알림",
+                        data.title,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
@@ -98,7 +114,7 @@ class AlarmListItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "오늘 13시에 정기회의가 시작됩니다.",
+                  data.description,
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
@@ -106,7 +122,7 @@ class AlarmListItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "HH:mm",
+                  data.date.format("yyyy.MM.dd HH:mm"),
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,

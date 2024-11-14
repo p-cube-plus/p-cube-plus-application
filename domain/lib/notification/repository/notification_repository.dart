@@ -5,8 +5,7 @@ import 'package:domain/notification/value_objects/regular_notification_data.dart
 import 'package:domain/notification/value_objects/regular_notification_setting.dart';
 
 abstract interface class NotificationRepository {
-  Future<List<NotificationData>> getNewNotificationList();
-  Future<List<NotificationData>> getReadNotificationList();
+  Future<List<NotificationData>> getNotificationList();
 
   Future<void> setNotification(
     NotificationType type,

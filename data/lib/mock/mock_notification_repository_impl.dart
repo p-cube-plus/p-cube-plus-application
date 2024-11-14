@@ -1,4 +1,5 @@
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
+import 'package:data/utils/mock_util.dart';
 import 'package:domain/notification/repository/notification_repository.dart';
 import 'package:domain/notification/value_objects/notification_data.dart';
 import 'package:domain/notification/value_objects/notification_setting.dart';
@@ -12,15 +13,17 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
       GetIt.I.get<SharedPreferenceLocalDatasource>();
 
   @override
-  Future<List<NotificationData>> getNewNotificationList() {
-    // TODO: implement getNewNotificationList
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<NotificationData>> getReadNotificationList() {
-    // TODO: implement getReadNotificationList
-    throw UnimplementedError();
+  Future<List<NotificationData>> getNotificationList() {
+    return Future.value(List.generate(50, (index) {
+      return NotificationData(
+        id: 1,
+        type: RegularMettingNotification(),
+        date: DateTime.now(),
+        title: "예시",
+        description: "설명설명설명설명설명",
+        isRead: MockUtil().getRandomBool(),
+      );
+    }));
   }
 
   @override
