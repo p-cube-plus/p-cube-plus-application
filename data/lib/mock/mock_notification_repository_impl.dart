@@ -73,8 +73,19 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
 
   @override
   Future<void> updateNotificationAsRead(int id) async {
-    Future.delayed(Duration(seconds: 2));
-    // final target = mockNotification.first((data) => data.id == id);
-    // target
+    await Future.delayed(Duration(seconds: 2));
+    final index = mockNotification.indexWhere((data) => data.id == id);
+
+    if (index != -1) {
+      final target = mockNotification[index];
+      mockNotification[index] = NotificationData(
+        id: target.id,
+        type: target.type,
+        date: target.date,
+        title: target.title,
+        description: target.description,
+        isRead: true,
+      );
+    }
   }
 }
