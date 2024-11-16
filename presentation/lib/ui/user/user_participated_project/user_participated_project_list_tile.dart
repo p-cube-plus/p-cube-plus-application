@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/user/user_participated_project/user_participated_project_page.dart';
+import 'package:presentation/ui/user/user_view_model.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
-class UserParticipatedProjectListTile extends StatelessWidget {
+class UserParticipatedProjectListTile extends StatelessWidget
+    with ViewModel<UserViewModel> {
   const UserParticipatedProjectListTile({super.key});
 
   @override
@@ -45,34 +49,39 @@ class UserParticipatedProjectListTile extends StatelessWidget {
           ],
         ),
         SizedBox(height: 8),
-        Column(
-          children: List.generate(15, (index) {
-            return RoundedBorder(
-              padding: EdgeInsets.all(16),
-              margin: EdgeInsets.only(bottom: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "PCube+",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: theme.neutral100,
-                    ),
+        DefaultFutureBuilder(
+          fetchData: read(context).fetchUserProject(),
+          showOnLoadedWidget: (context, data) {
+            return Column(
+              children: List.generate(data.length, (index) {
+                return RoundedBorder(
+                  padding: EdgeInsets.all(16),
+                  margin: EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        data[index].title,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: theme.neutral100,
+                        ),
+                      ),
+                      Text(
+                        "${data[index].projectType}",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: theme.neutral40,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "메인 프로젝트",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: theme.neutral40,
-                    ),
-                  ),
-                ],
-              ),
+                );
+              }),
             );
-          }),
+          },
         ),
       ],
     );

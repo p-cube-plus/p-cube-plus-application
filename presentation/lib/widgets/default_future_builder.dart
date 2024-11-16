@@ -12,8 +12,8 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
   final Future<T> fetchData;
   final Widget Function(BuildContext context, T data) showOnLoadedWidget;
   final Widget? loadingWidget;
-  final Widget Function(Object? error, StackTrace trace)? showOnErrorWidget;
-  final void Function(Object? error, StackTrace trace)? handleError;
+  final Widget Function(Object? error, StackTrace? trace)? showOnErrorWidget;
+  final void Function(Object? error, StackTrace? trace)? handleError;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -27,12 +27,13 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
                 );
           }
 
-          try {
+          if (snapshot.hasData) {
             return showOnLoadedWidget(context, snapshot.requireData);
-          } catch (error, trace) {
-            handleError?.call(error, trace);
-            return showOnErrorWidget?.call(error, trace) ?? const SizedBox();
           }
+
+          handleError?.call(snapshot.error, snapshot.stackTrace);
+          return showOnErrorWidget?.call(snapshot.error, snapshot.stackTrace) ??
+              const SizedBox();
         });
   }
 }

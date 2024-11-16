@@ -24,7 +24,7 @@ class MockUtil {
     return values[randomIndex];
   }
 
-  String getRandomKoreanString(int length) {
+  String getRandomKoreanName() {
     final sample =
         "가강고곽구권기김나남노당대도마명모문미박방배백변사서선설섭성소손송수시신양여엄영오옥우유류윤이임장전정조주지창최민태추최표하한허호황";
 

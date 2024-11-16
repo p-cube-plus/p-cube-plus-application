@@ -6,7 +6,7 @@ class FetchIsExecutiveUseCase {
   final _userRepository = GetIt.I.get<UserRepository>();
 
   Future<bool> call() async {
-    final userData = await _userRepository.getUserData();
+    final userData = await _userRepository.getUserProfile();
     return userData.positionType is ExecutiveTeam;
   }
 }

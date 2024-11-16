@@ -204,7 +204,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
             }
           }
           return MemberAttendanceState(
-            name: MockUtil().getRandomKoreanString(3),
+            name: MockUtil().getRandomKoreanName(),
             grade: MockUtil().getRandomNumber(1, 4),
             partType: MockUtil().getRandomEnum(MemberPartType.values),
             positionType: RegularMember(),

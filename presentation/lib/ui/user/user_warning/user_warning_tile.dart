@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/user/user_view_model.dart';
 import 'package:presentation/ui/user/user_warning/user_warning_page.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
-class UserWarningTile extends StatelessWidget {
+class UserWarningTile extends StatelessWidget with ViewModel<UserViewModel> {
   const UserWarningTile({super.key});
 
   @override
@@ -45,29 +48,46 @@ class UserWarningTile extends StatelessWidget {
           ],
         ),
         SizedBox(height: 8),
-        RoundedBorder(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "누적 경고 횟수",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: theme.neutral100,
+        DefaultFutureBuilder(
+          fetchData: read(context).fetchUserWarning(),
+          showOnLoadedWidget: (context, data) {
+            return RoundedBorder(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "누적 경고 횟수",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                  Text(
+                    "총 ${data.cumulativeWarningCount}회",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: theme.primary80,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          showOnErrorWidget: (error, trace) {
+            return GestureDetector(
+              onTap: () {},
+              child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  "다시 불러오기",
+                  textAlign: TextAlign.center,
                 ),
               ),
-              Text(
-                "총 n회",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: theme.primary80,
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ],
     );
