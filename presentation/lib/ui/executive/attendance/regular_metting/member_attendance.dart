@@ -52,7 +52,7 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child:
                       watchWidget((viewModel) => viewModel.isVisibleTopWidget,
-                          (isVisibleTopWidget) {
+                          (context, isVisibleTopWidget) {
                     if (isVisibleTopWidget) {
                       return Text("▲");
                     } else {
@@ -120,7 +120,7 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
                       tabName: "전체",
                       page: watchWidget(
                         (viewModel) => viewModel.totalList,
-                        (totalList) => MemberAttendanceTab(
+                        (context, totalList) => MemberAttendanceTab(
                           userAttendanceList: totalList,
                         ),
                       ),
@@ -129,7 +129,7 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
                       tabName: "출석",
                       page: watchWidget(
                         (viewModel) => viewModel.successList,
-                        (totalList) => MemberAttendanceTab(
+                        (context, totalList) => MemberAttendanceTab(
                           userAttendanceList: totalList,
                         ),
                         shouldRebuild: (previous, next) {
@@ -141,7 +141,7 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
                       tabName: "지각",
                       page: watchWidget(
                         (viewModel) => viewModel.lateList,
-                        (totalList) => MemberAttendanceTab(
+                        (context, totalList) => MemberAttendanceTab(
                           userAttendanceList: totalList,
                         ),
                       ),
@@ -150,7 +150,7 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
                       tabName: "불참",
                       page: watchWidget(
                         (viewModel) => viewModel.failedList,
-                        (totalList) => MemberAttendanceTab(
+                        (context, totalList) => MemberAttendanceTab(
                           userAttendanceList: totalList,
                         ),
                       ),

@@ -6,15 +6,14 @@ mixin ViewModel<T> {
 
   Widget watchWidget<R>(
     R Function(T viewModel) selector,
-    Widget Function(R item) builder, {
+    Widget Function(BuildContext context, R item) builder, {
     bool Function(R previous, R next)? shouldRebuild,
   }) =>
       Selector<T, R>(
-        selector: (_, T viewModel) => selector(viewModel),
-        builder: (_, R item, __) => builder(item),
+        selector: (context, T viewModel) => selector(viewModel),
+        builder: (context, R item, _) => builder(context, item),
         shouldRebuild: shouldRebuild,
       );
-
 }
 
 mixin SharedViewModel<T> {

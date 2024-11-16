@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/alarm/alarm_event.dart';
 import 'package:presentation/ui/alarm/alarm_viewmodel.dart';
-import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
 import 'package:presentation/widgets/rounded_border.dart';
@@ -24,11 +24,39 @@ class AlarmPage extends StatelessWidget {
   }
 }
 
-class _AlarmPage extends StatelessWidget with ViewModel<AlarmViewModel> {
+class _AlarmPage extends StatefulWidget with ViewModel<AlarmViewModel> {
   const _AlarmPage();
 
   @override
+  State<_AlarmPage> createState() => _AlarmPageState();
+}
+
+class _AlarmPageState extends State<_AlarmPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => setEventListener());
+    Future.microtask(() => _showProgress());
+  }
+
+  void setEventListener() {
+    widget.read(context).uiEventStream.listen((event) {
+      switch (event) {
+        case AlarmEvent.showProgress:
+          _showProgress();
+        case AlarmEvent.dismissProgress:
+          _dismissProgress();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return DefaultPage(
       title: "알림",
       action: SvgPicture.asset(asset.setting),
@@ -41,31 +69,45 @@ class _AlarmPage extends StatelessWidget with ViewModel<AlarmViewModel> {
         tabs: [
           DefaultTab(
             tabName: "새 알림",
-            page: DefaultFutureBuilder(
-              fetchData: read(context).fetchNewNotification(),
-              showOnLoadedWidget: (context, data) {
+            page: widget.watchWidget(
+              (viewModel) => viewModel.newNotificationList,
+              (context, list) {
                 return ListView.builder(
                   padding: EdgeInsets.only(bottom: 8),
-                  itemCount: data.length,
+                  itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return AlarmListItem(data: data[index]);
+                    return AlarmListItem(
+                      data: list[index],
+                      onTap: () => widget
+                          .read(context)
+                          .updateReadNotification(list[index].id),
+                    );
                   },
                 );
+              },
+              shouldRebuild: (previous, next) {
+                return previous.length != next.length;
               },
             ),
           ),
           DefaultTab(
             tabName: "읽은 알림",
-            page: DefaultFutureBuilder(
-              fetchData: read(context).fetchReadNotification(),
-              showOnLoadedWidget: (context, data) {
+            page: widget.watchWidget(
+              (viewModel) => viewModel.readNotificationList,
+              (context, list) {
                 return ListView.builder(
                   padding: EdgeInsets.only(bottom: 8),
-                  itemCount: data.length,
+                  itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return AlarmListItem(data: data[index]);
+                    return AlarmListItem(
+                      data: list[index],
+                      onTap: null,
+                    );
                   },
                 );
+              },
+              shouldRebuild: (previous, next) {
+                return previous.length != next.length;
               },
             ),
           ),
@@ -73,18 +115,38 @@ class _AlarmPage extends StatelessWidget with ViewModel<AlarmViewModel> {
       ),
     );
   }
+
+  void _showProgress() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const PopScope(
+        canPop: false,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
+
+  void _dismissProgress() {
+    Navigator.of(context, rootNavigator: true).pop();
+  }
 }
 
 class AlarmListItem extends StatelessWidget {
-  const AlarmListItem({super.key, required this.data});
+  const AlarmListItem({super.key, required this.data, this.onTap});
 
   final NotificationData data;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return RoundedBorder(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      color: data.isRead ? theme.disabled : theme.content,
+      onTap: onTap,
       height: 64,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -92,32 +154,15 @@ class AlarmListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              clipBehavior: Clip.none,
+            Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        data.title,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: theme.neutral100,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: -4,
-                  right: 0,
-                  child: SvgPicture.asset(
-                    asset.cancel,
-                    width: 8,
-                    height: 8,
+                Text(
+                  data.title,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: theme.neutral100,
                   ),
                 ),
               ],

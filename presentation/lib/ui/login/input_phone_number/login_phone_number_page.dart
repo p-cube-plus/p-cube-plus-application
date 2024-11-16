@@ -121,7 +121,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: watchWidget<bool>(
                   (viewModel) => viewModel.canClickRequestAuth,
-                  (canClickRequestAuth) => ElevatedButton(
+                  (context, canClickRequestAuth) => ElevatedButton(
                     onPressed: canClickRequestAuth
                         ? () => _navigateToInputAuthNumberPage()
                         : null,

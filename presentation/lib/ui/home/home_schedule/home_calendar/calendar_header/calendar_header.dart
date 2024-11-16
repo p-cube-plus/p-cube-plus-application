@@ -36,7 +36,7 @@ class CalendarHeader extends StatelessWidget
             children: [
               watchWidget(
                 (viewModel) => viewModel.selectedDate.month,
-                (currentMonth) {
+                (context, currentMonth) {
                   return Text(
                     "$currentMonth월",
                     style: TextStyle(
@@ -49,7 +49,7 @@ class CalendarHeader extends StatelessWidget
               ),
               watchWidget(
                 (viewModel) => viewModel.selectedDate.year,
-                (currentYear) {
+                (context, currentYear) {
                   return Text(
                     "$currentYear년",
                     style: TextStyle(

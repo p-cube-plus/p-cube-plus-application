@@ -35,7 +35,7 @@ class AttendanceTodayItem extends StatelessWidget
         const SizedBox(height: 8),
         watchWidget(
           (viewModel) => viewModel.shouldRefresh,
-          (shouldRefresh) {
+          (context, shouldRefresh) {
             read(context).shouldRefresh = false;
             return Row(
               children: [

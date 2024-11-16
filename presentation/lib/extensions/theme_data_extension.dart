@@ -33,6 +33,9 @@ extension ContentExtension on ThemeData {
 
   Color get content =>
       (brightness == Brightness.light) ? Color(0xFFFFFFFF) : Color(0xFF212121);
+
+  Color get disabled =>
+      (brightness == Brightness.light) ? Color(0xFFDBDBDB) : Color(0xFF040404);
 }
 
 extension PrimaryExtension on ThemeData {

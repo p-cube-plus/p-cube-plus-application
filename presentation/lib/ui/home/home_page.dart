@@ -61,7 +61,8 @@ class _HomePageState extends State<_HomePage>
     return DefaultPage(
       key: _refreshKey,
       title: "홈",
-      action: watchWidget((viewModel) => viewModel.isExecutive, (isExecutive) {
+      action: watchWidget((viewModel) => viewModel.isExecutive,
+          (context, isExecutive) {
         if (isExecutive) {
           return GestureDetector(
             child: SvgPicture.asset(asset.executiveHome),

@@ -44,7 +44,8 @@ class AttendanceTodayItemButton extends StatelessWidget
       return watchWidget(
           (viewModel) => data.attendanceSequence == 1
               ? viewModel.isPossibleFirstAttendance
-              : viewModel.isPossibleSecondAttendance, (isAttendanceTime) {
+              : viewModel.isPossibleSecondAttendance,
+          (context, isAttendanceTime) {
         return ElevatedButton(
           onPressed: _onClickAttendance(
             context,

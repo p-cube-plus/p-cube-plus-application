@@ -98,7 +98,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                     const SizedBox(width: 4),
                     watchWidget<String>(
                         (viewModel) => viewModel.timerText,
-                        (timerText) => Text(
+                        (context, timerText) => Text(
                               timerText,
                               style: TextStyle(
                                 color: theme.primary80,
@@ -121,7 +121,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                         ),
                         child: watchWidget<bool>(
                           (viewModel) => viewModel.isFailedInputAuth,
-                          (isNeedToRetry) => DefaultTextField(
+                          (context, isNeedToRetry) => DefaultTextField(
                             maxLength: 6,
                             minLine: 1,
                             maxLine: 1,
@@ -143,7 +143,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                     const SizedBox(width: 16),
                     watchWidget<bool>(
                         (viewModel) => viewModel.isNeedToRetry,
-                        (isNeedToRetry) => ElevatedButton(
+                        (context, isNeedToRetry) => ElevatedButton(
                             onPressed: isNeedToRetry
                                 ? () => read(context).triggerUiEvent(
                                     InputAuthNumberEventRequestAuthNumber())

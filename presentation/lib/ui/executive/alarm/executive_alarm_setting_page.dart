@@ -98,7 +98,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
                     const SizedBox(height: 16),
                     watchWidget(
                       (viewModel) => viewModel.isSettingOn,
-                      (isOn) {
+                      (context, isOn) {
                         if (isOn) {
                           return GestureDetector(
                             onTap: () => _onTapTextField(),

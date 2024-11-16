@@ -40,7 +40,7 @@ class _RegularMettingSettingPage extends StatelessWidget
             return Column(
               children: [
                 watchWidget((viewModel) => viewModel.isVisibleTopWidget,
-                    (isVisibleTopWidget) {
+                    (context, isVisibleTopWidget) {
                   if (!isVisibleTopWidget) return SizedBox();
 
                   return RoundedBorder(

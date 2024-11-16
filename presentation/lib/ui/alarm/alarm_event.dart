@@ -1,0 +1,4 @@
+enum AlarmEvent {
+  showProgress,
+  dismissProgress,
+}

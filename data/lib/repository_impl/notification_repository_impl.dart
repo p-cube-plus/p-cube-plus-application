@@ -51,7 +51,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<void> updateNotificationAsRead(int id) {
+  Future<NotificationData> updateNotificationAsRead(int id) {
     // TODO: implement updateNotificationAsRead
     throw UnimplementedError();
   }

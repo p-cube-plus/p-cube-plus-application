@@ -111,7 +111,7 @@ class _LoginNamePageState extends State<_LoginNamePage>
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: watchWidget<bool>(
                   (viewModel) => viewModel.isNameAvailable,
-                  (isNameAvailable) => ElevatedButton(
+                  (context, isNameAvailable) => ElevatedButton(
                     onPressed: isNameAvailable
                         ? () => _navigateToLoginLoadingPage()
                         : null,

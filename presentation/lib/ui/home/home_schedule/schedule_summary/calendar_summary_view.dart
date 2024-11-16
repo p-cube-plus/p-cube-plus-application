@@ -15,10 +15,10 @@ class CalendarSelectedDateSummaryView extends StatelessWidget
 
     return watchWidget<DateTime>(
       (viewModel) => viewModel.selectedDate,
-      (selectedDate) {
+      (context, selectedDate) {
         return watchWidget(
           (viewModel) => viewModel.todayScheduleList,
-          (scheduleList) {
+          (context, scheduleList) {
             if (scheduleList.isEmpty) return const SizedBox();
             return RoundedBorder(
               width: double.infinity,

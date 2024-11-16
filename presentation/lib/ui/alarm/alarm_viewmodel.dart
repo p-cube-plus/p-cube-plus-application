@@ -3,8 +3,9 @@ import 'package:domain/notification/usecases/fetch_read_notification_use_case.da
 import 'package:domain/notification/usecases/update_read_notification_use_case.dart';
 import 'package:domain/notification/value_objects/notification_data.dart';
 import 'package:presentation/common/base_viewmodel.dart';
+import 'package:presentation/ui/alarm/alarm_event.dart';
 
-class AlarmViewModel extends BaseViewModel<void, void> {
+class AlarmViewModel extends BaseViewModel<void, AlarmEvent> {
   final _fetchNewNotificationUseCase = FetchNewNotificationUseCase();
   final _fetchReadNotificationUseCase = FetchReadNotificationUseCase();
   final _updateReadNotificationUseCase = UpdateReadNotificationUseCase();
@@ -12,15 +13,30 @@ class AlarmViewModel extends BaseViewModel<void, void> {
   List<NotificationData> newNotificationList = [];
   List<NotificationData> readNotificationList = [];
 
-  Future<List<NotificationData>> fetchNewNotification() =>
-      _fetchNewNotificationUseCase();
-
-  Future<List<NotificationData>> fetchReadNotification() =>
-      _fetchReadNotificationUseCase();
+  AlarmViewModel() {
+    Future.wait([
+      _fetchNewNotificationUseCase(),
+      _fetchReadNotificationUseCase(),
+    ]).then((data) {
+      newNotificationList = data.first;
+      readNotificationList = data.last;
+      notifyListeners();
+      triggerUiEvent(AlarmEvent.dismissProgress);
+    });
+  }
 
   void updateReadNotification(int notificationId) async {
-    _updateReadNotificationUseCase
-        .call(notificationId)
-        .then((_) => notifyListeners());
+    triggerUiEvent(AlarmEvent.showProgress);
+    _updateReadNotificationUseCase.call(notificationId).then((readData) {
+      List<NotificationData> updatedNewNotificationList =
+          List.from(newNotificationList);
+      updatedNewNotificationList
+          .removeWhere((data) => data.id == notificationId);
+
+      newNotificationList = updatedNewNotificationList;
+      readNotificationList = [readData, ...readNotificationList];
+      notifyListeners();
+      triggerUiEvent(AlarmEvent.dismissProgress);
+    });
   }
 }

@@ -10,6 +10,11 @@ class MockUtil {
     return start + _random.nextInt(end - start + 1);
   }
 
+  Duration getRandomDuration(int startMillis, int endMillis) {
+    final randomMillis = getRandomNumber(startMillis, endMillis);
+    return Duration(milliseconds: randomMillis);
+  }
+
   bool getRandomBool() {
     return _random.nextBool();
   }

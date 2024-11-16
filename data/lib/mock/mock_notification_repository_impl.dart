@@ -12,19 +12,20 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   final sharedPreferenceLocalDatasource =
       GetIt.I.get<SharedPreferenceLocalDatasource>();
 
-  final mockNotification = List.generate(50, (index) {
+  final mockNotification = List.generate(25, (index) {
     return NotificationData(
       id: index,
       type: RegularMettingNotification(),
       date: DateTime.now(),
-      title: "Title 예시",
+      title: "Title 예시 $index",
       description: "알림 설명설명설명설명설명",
       isRead: MockUtil().getRandomBool(),
     );
   });
 
   @override
-  Future<List<NotificationData>> getNotificationList() {
+  Future<List<NotificationData>> getNotificationList() async {
+    await Future.delayed(MockUtil().getRandomDuration(500, 1500));
     return Future.value(mockNotification);
   }
 
@@ -72,8 +73,8 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<void> updateNotificationAsRead(int id) async {
-    await Future.delayed(Duration(seconds: 2));
+  Future<NotificationData> updateNotificationAsRead(int id) async {
+    await Future.delayed(MockUtil().getRandomDuration(200, 1000));
     final index = mockNotification.indexWhere((data) => data.id == id);
 
     if (index != -1) {
@@ -86,6 +87,9 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
         description: target.description,
         isRead: true,
       );
+      return mockNotification[index];
     }
+
+    throw Exception("삭제할 알림을 찾지 못했습니다.");
   }
 }

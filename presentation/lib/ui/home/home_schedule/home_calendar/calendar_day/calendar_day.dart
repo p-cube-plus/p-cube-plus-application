@@ -16,7 +16,7 @@ class CalendarDay extends StatelessWidget
   Widget build(BuildContext context) {
     return watchWidget(
       (viewModel) => viewModel.selectedDate,
-      (currentMonth) {
+      (context, currentMonth) {
         return Column(
           children: List.generate(
             currentMonth.numberOfWeeks,
@@ -43,7 +43,7 @@ class CalendarDay extends StatelessWidget
                           viewModel.selectedDate.day,
                           viewModel.monthSchedule[createdDay]
                         ),
-                        (data) {
+                        (context, data) {
                           final selectedDay = data.$1;
                           final schedule = data.$2;
                           if (createdDay == selectedDay) {

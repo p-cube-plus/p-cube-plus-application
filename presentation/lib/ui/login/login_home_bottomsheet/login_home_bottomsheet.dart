@@ -68,7 +68,7 @@ class _LoginHomeBottomsheet extends StatelessWidget
                     padding: const EdgeInsets.only(right: 8),
                     child: watchWidget<String>(
                         (viewModel) => viewModel.memberAgreedImagePath,
-                        (memberAgreedImagePath) =>
+                        (context, memberAgreedImagePath) =>
                             SvgPicture.asset(memberAgreedImagePath))),
                 Text(
                   "네, 판도라큐브 회원입니다.",
@@ -89,7 +89,7 @@ class _LoginHomeBottomsheet extends StatelessWidget
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: watchWidget<bool>(
               (viewModel) => viewModel.isMemberAgreed,
-              (isMemberAgreed) => ElevatedButton(
+              (context, isMemberAgreed) => ElevatedButton(
                 onPressed:
                     isMemberAgreed ? () => _onClickStartLogin(context) : null,
                 onLongPress: null,
