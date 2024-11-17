@@ -22,7 +22,7 @@ class DefaultProfileList extends StatelessWidget {
         (index) {
           if (isOverFlow && index == 0) {
             return _RemainCountItem(
-                size: size, remainCount: itemCount - overFlowCount);
+                size: size, remainCount: itemCount - overFlowCount + 1);
           }
           return Padding(
             padding: EdgeInsets.only(right: index * (size - 4)),
@@ -53,10 +53,9 @@ class _RemainCountItem extends StatelessWidget {
         color: theme.neutral10,
         boxShadow: [
           BoxShadow(
-            color: theme.neutral20,
-            offset: Offset.fromDirection(1.0, 1.0),
-            blurRadius: 3.0,
-            spreadRadius: 0.0,
+            color: theme.neutral10,
+            offset: Offset.fromDirection(0.0, 2.0),
+            blurRadius: 2.0,
           ),
         ],
       ),

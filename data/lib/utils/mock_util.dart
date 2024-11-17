@@ -10,6 +10,15 @@ class MockUtil {
     return start + _random.nextInt(end - start + 1);
   }
 
+  double getRandomDouble(double start, double end, double interval) {
+    int factor = (1 / interval).toInt();
+    int startScaled = (start * factor).toInt();
+    int endScaled = (end * factor).toInt();
+
+    int randomInt = startScaled + _random.nextInt(endScaled - startScaled + 1);
+    return randomInt / factor;
+  }
+
   Duration getRandomDuration(int startMillis, int endMillis) {
     final randomMillis = getRandomNumber(startMillis, endMillis);
     return Duration(milliseconds: randomMillis);

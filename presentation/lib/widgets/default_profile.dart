@@ -22,10 +22,9 @@ class DefaultProfile extends StatelessWidget {
         color: theme.neutral10,
         boxShadow: [
           BoxShadow(
-            color: theme.neutral20,
-            offset: Offset.fromDirection(1.0, 1.0),
-            blurRadius: 3.0,
-            spreadRadius: 0.0,
+            color: theme.neutral10,
+            offset: Offset.fromDirection(0.0, 2.0),
+            blurRadius: 2.0,
           ),
         ],
       ),

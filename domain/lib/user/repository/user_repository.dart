@@ -7,7 +7,7 @@ import 'package:domain/user/value_objects/user_warning_detail.dart';
 abstract interface class UserRepository {
   Future<UserProfile> getUserProfile();
   Future<UserWarning> getUserCumulativeWarning();
-  Future<List<UserWarningDetail>> getUserWarningDetail();
+  Future<UserWarningDetail> getUserWarningDetail();
   Future<List<UserProject>> getUserProject();
   Future<List<UserProjectDetail>> getUserProjectDetail();
 }

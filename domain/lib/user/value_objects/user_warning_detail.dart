@@ -1,27 +1,28 @@
-import 'package:domain/member/value_objects/member_warning_type.dart';
+import 'package:domain/user/value_objects/user_warning_content.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class UserWarningDetail {
-  final String title;
-  final MemberWarningType warningType;
-  final DateTime warningDate;
-  const UserWarningDetail({
-    required this.title,
-    required this.warningType,
-    required this.warningDate,
-  });
-  // double warningCount;
-  // double deductCount;
-  // UserWarningDetail({
-  //   required this.warningCount,
-  //   required this.deductCount,
-  // });
+  final List<UserWarningContent> warningHistory;
+  final List<UserWarningContent> warningReductionHistory;
 
-  // double get totlaCount {
-  //   final result = warningCount - deductCount;
-  //   final zeroPointFiveRoundingValue = (result * 2).round() / 2.0;
-  //   if (zeroPointFiveRoundingValue < 0) return 0;
-  //   return zeroPointFiveRoundingValue;
-  // }
+  UserWarningDetail({
+    required this.warningHistory,
+    required this.warningReductionHistory,
+  });
+
+  late final double warningCount = warningHistory
+      .map((value) => value.warningPoint)
+      .fold(0.0, (sum, element) {
+    return sum + element;
+  });
+
+  late final double warningReductionCount = warningReductionHistory
+      .map((value) => value.warningPoint)
+      .fold(0.0, (sum, element) {
+    return sum - element;
+  });
+
+  late final double totlaCount =
+      (warningCount - warningReductionCount).clamp(0.0, double.infinity);
 }
