@@ -6,8 +6,15 @@ import 'package:presentation/ui/user/user_warning/user_warning_page.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
-class UserWarningTile extends StatelessWidget with ViewModel<UserViewModel> {
+class UserWarningTile extends StatefulWidget with ViewModel<UserViewModel> {
   const UserWarningTile({super.key});
+
+  @override
+  State<UserWarningTile> createState() => _UserWarningTileState();
+}
+
+class _UserWarningTileState extends State<UserWarningTile> {
+  var _refreshKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +56,8 @@ class UserWarningTile extends StatelessWidget with ViewModel<UserViewModel> {
         ),
         SizedBox(height: 8),
         DefaultFutureBuilder(
-          fetchData: read(context).fetchUserWarning(),
+          key: _refreshKey,
+          fetchData: widget.read(context).fetchUserWarning(),
           showOnLoadedWidget: (context, data) {
             return RoundedBorder(
               padding: EdgeInsets.all(16),
@@ -78,12 +86,11 @@ class UserWarningTile extends StatelessWidget with ViewModel<UserViewModel> {
           },
           showOnErrorWidget: (error, trace) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () => setState(() => _refreshKey = UniqueKey()),
               child: SizedBox(
                 width: double.infinity,
                 child: Text(
-                  "다시 불러오기",
-                  textAlign: TextAlign.center,
+                  "$error로 인해\n데이터 불러오기에 실패했습니다.\n터치해서 새로고침하기",
                 ),
               ),
             );

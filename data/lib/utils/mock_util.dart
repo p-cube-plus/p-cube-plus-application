@@ -1,10 +1,16 @@
 import 'dart:math';
 
+import 'package:domain/common/exception/mock_exception.dart';
+
 class MockUtil {
   MockUtil._internal();
   static final MockUtil _instance = MockUtil._internal();
   factory MockUtil() => _instance;
   final _random = Random.secure();
+
+  Future<void> throwMockException() {
+    Future.value(throw MockException());
+  }
 
   int getRandomNumber(int start, int end) {
     return start + _random.nextInt(end - start + 1);

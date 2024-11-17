@@ -18,14 +18,23 @@ class UserParticipatedProjectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => UserParticipatedProjectViewModel(),
-      child: const _UserParticipatedProjectPage(),
+      child: _UserParticipatedProjectPage(),
     );
   }
 }
 
-class _UserParticipatedProjectPage extends StatelessWidget
+class _UserParticipatedProjectPage extends StatefulWidget
     with ViewModel<UserParticipatedProjectViewModel> {
-  const _UserParticipatedProjectPage();
+  _UserParticipatedProjectPage();
+
+  @override
+  State<_UserParticipatedProjectPage> createState() =>
+      _UserParticipatedProjectPageState();
+}
+
+class _UserParticipatedProjectPageState
+    extends State<_UserParticipatedProjectPage> {
+  var refreshKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +43,8 @@ class _UserParticipatedProjectPage extends StatelessWidget
       appbar: DefaultAppBar(),
       title: "참여 프로젝트",
       content: DefaultFutureBuilder(
-        fetchData: read(context).fetchUserProjectDetail(),
+        key: refreshKey,
+        fetchData: widget.read(context).fetchUserProjectDetail(),
         showOnLoadedWidget:
             (BuildContext context, List<UserProjectDetail> data) {
           return ListView.builder(
@@ -88,6 +98,20 @@ class _UserParticipatedProjectPage extends StatelessWidget
                 ),
               );
             },
+          );
+        },
+        showOnErrorWidget: (error, trace) {
+          return GestureDetector(
+            onTap: () => setState(() => refreshKey = UniqueKey()),
+            child: Container(
+              color: Colors.transparent,
+              child: Center(
+                child: Text(
+                  "$error로 인해\n데이터 불러오기에 실패했습니다.\n터치해서 새로고침하기",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           );
         },
       ),

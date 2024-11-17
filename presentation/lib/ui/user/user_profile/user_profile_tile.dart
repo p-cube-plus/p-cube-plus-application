@@ -6,14 +6,21 @@ import 'package:presentation/ui/user/user_view_model.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_profile.dart';
 
-class UserProfileTile extends StatelessWidget with ViewModel<UserViewModel> {
+class UserProfileTile extends StatefulWidget with ViewModel<UserViewModel> {
   const UserProfileTile({super.key});
 
+  @override
+  State<UserProfileTile> createState() => _UserProfileTileState();
+}
+
+class _UserProfileTileState extends State<UserProfileTile> {
+  var _refreshKey = UniqueKey();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return DefaultFutureBuilder(
-      fetchData: read(context).fetchUserProfile(),
+      key: _refreshKey,
+      fetchData: widget.read(context).fetchUserProfile(),
       showOnLoadedWidget: (BuildContext context, UserProfile data) {
         return Row(
           children: [
@@ -44,7 +51,15 @@ class UserProfileTile extends StatelessWidget with ViewModel<UserViewModel> {
         );
       },
       showOnErrorWidget: (error, trace) {
-        return Text("유저 데이터 불러오기 실패! 새로고침하기");
+        return GestureDetector(
+          onTap: () => setState(() => _refreshKey = UniqueKey()),
+          child: SizedBox(
+            width: double.infinity,
+            child: Text(
+              "$error로 인해\n데이터 불러오기에 실패했습니다.\n터치해서 새로고침하기",
+            ),
+          ),
+        );
       },
     );
   }

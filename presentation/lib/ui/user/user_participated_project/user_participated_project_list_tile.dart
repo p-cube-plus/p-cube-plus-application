@@ -6,10 +6,18 @@ import 'package:presentation/ui/user/user_view_model.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
-class UserParticipatedProjectListTile extends StatelessWidget
+class UserParticipatedProjectListTile extends StatefulWidget
     with ViewModel<UserViewModel> {
   const UserParticipatedProjectListTile({super.key});
 
+  @override
+  State<UserParticipatedProjectListTile> createState() =>
+      _UserParticipatedProjectListTileState();
+}
+
+class _UserParticipatedProjectListTileState
+    extends State<UserParticipatedProjectListTile> {
+  var _refreshKey = UniqueKey();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -50,7 +58,8 @@ class UserParticipatedProjectListTile extends StatelessWidget
         ),
         SizedBox(height: 8),
         DefaultFutureBuilder(
-          fetchData: read(context).fetchUserProject(),
+          key: _refreshKey,
+          fetchData: widget.read(context).fetchUserProject(),
           showOnLoadedWidget: (context, data) {
             return Column(
               children: List.generate(data.length, (index) {
@@ -80,6 +89,17 @@ class UserParticipatedProjectListTile extends StatelessWidget
                   ),
                 );
               }),
+            );
+          },
+          showOnErrorWidget: (error, trace) {
+            return GestureDetector(
+              onTap: () => setState(() => _refreshKey = UniqueKey()),
+              child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  "$error로 인해\n데이터 불러오기에 실패했습니다.\n터치해서 새로고침하기",
+                ),
+              ),
             );
           },
         ),

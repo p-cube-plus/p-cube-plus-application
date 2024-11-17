@@ -23,9 +23,16 @@ class UserWarningPage extends StatelessWidget {
   }
 }
 
-class _UserWarningPage extends StatelessWidget
+class _UserWarningPage extends StatefulWidget
     with ViewModel<UserWarningViewModel> {
   const _UserWarningPage();
+
+  @override
+  State<_UserWarningPage> createState() => _UserWarningPageState();
+}
+
+class _UserWarningPageState extends State<_UserWarningPage> {
+  var refreshKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +41,8 @@ class _UserWarningPage extends StatelessWidget
       title: "경고 현황",
       appbar: DefaultAppBar(),
       content: DefaultFutureBuilder(
-        fetchData: read(context).fetchUserWarningDetail(),
+        key: refreshKey,
+        fetchData: widget.read(context).fetchUserWarningDetail(),
         showOnLoadedWidget: (BuildContext context, UserWarningDetail data) {
           return DefaultContent(
             child: Column(
@@ -218,6 +226,20 @@ class _UserWarningPage extends StatelessWidget
                   }),
                 ),
               ],
+            ),
+          );
+        },
+        showOnErrorWidget: (error, trace) {
+          return GestureDetector(
+            onTap: () => setState(() => refreshKey = UniqueKey()),
+            child: Container(
+              color: Colors.transparent,
+              child: Center(
+                child: Text(
+                  "$error로 인해\n데이터 불러오기에 실패했습니다.\n터치해서 새로고침하기",
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           );
         },
