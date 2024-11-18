@@ -4,6 +4,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/alarm/alarm_event.dart';
 import 'package:presentation/ui/alarm/alarm_list_item.dart';
 import 'package:presentation/ui/alarm/alarm_viewmodel.dart';
+import 'package:presentation/ui/user/user_setting/user_alarm/user_alarm_page.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
@@ -56,7 +57,10 @@ class _AlarmPageState extends State<_AlarmPage>
     super.build(context);
     return DefaultPage(
       title: "알림",
-      action: SvgPicture.asset(asset.setting),
+      action: GestureDetector(
+        onTap: () => _navigateToUserAlarmSettingPage(context),
+        child: SvgPicture.asset(asset.setting),
+      ),
       content: DefaultTabBar(
         overLayColor: Colors.transparent,
         tabAlignment: TabAlignment.center,
@@ -127,5 +131,10 @@ class _AlarmPageState extends State<_AlarmPage>
 
   void _dismissProgress() {
     Navigator.of(context, rootNavigator: true).pop();
+  }
+
+  void _navigateToUserAlarmSettingPage(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => UserAlarmPage()));
   }
 }

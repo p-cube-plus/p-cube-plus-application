@@ -1,5 +1,5 @@
 import 'package:domain/app_configuration/usecases/caching_before_starting_use_case.dart';
-import 'package:domain/app_configuration/usecases/initialize_app_configuration_use_case.dart';
+import 'package:domain/app_configuration/usecases/initialize_on_splash_start_use_case.dart';
 import 'package:domain/login/usecases/fetch_is_need_login_use_case.dart';
 import 'package:presentation/extensions/future_extension.dart';
 import 'package:presentation/ui/splash/splash_event.dart';
@@ -7,8 +7,7 @@ import 'package:presentation/ui/splash/splash_state.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
-  final _initializeAppConfigurationUseCase =
-      InitializeAppConfigurationUseCase();
+  final _initializeOnSplashStartUseCase = InitializeOnSplashStartUseCase();
   final _fetchIsUserLoggedIn = FetchIsNeedLoginUseCase();
   final _cachingBeforeStartingUseCase = CachingBeforeStartingUseCase();
 
@@ -31,7 +30,7 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   }
 
   Future<void> _initializeApp() async {
-    await _initializeAppConfigurationUseCase.call().catchError((error) {
+    await _initializeOnSplashStartUseCase.call().catchError((error) {
       initErrorMessage = error.toString();
       triggerEvent(SplashState.failedInit);
     });

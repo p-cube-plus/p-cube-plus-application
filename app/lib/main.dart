@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/p_cube_plus_app.dart';
-import 'init_service.dart' as ioc;
+import 'regist_service.dart' as ioc;
+import 'initialize_on_app_start.dart' as init;
 
 void main() async {
-  ioc.initService();
-  runApp(PCubePlusApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  ioc.registService();
+  await init.initializeOnAppStart();
+  runApp(const PCubePlusApp());
 }

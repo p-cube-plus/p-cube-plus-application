@@ -17,16 +17,22 @@ class AppConfigurationRepositoryImpl implements AppConfigurationRepository {
   }
 
   @override
-  Future<void> initialize() async {
+  void setTheme(ThemeType themeType) {
+    sharedPreferenceLocalDatasource.themeIndex = themeType.index;
+  }
+
+  @override
+  Future<void> initializeOnAppStart() async {
     Future.wait([
-      firebaseDatasource.initialize(),
       sharedPreferenceLocalDatasource.initialize(),
-      beaconScanner.initialize(),
     ]);
   }
 
   @override
-  void setTheme(ThemeType themeType) {
-    sharedPreferenceLocalDatasource.themeIndex = themeType.index;
+  Future<void> initializeOnSplashStart() async {
+    Future.wait([
+      firebaseDatasource.initialize(),
+      beaconScanner.initialize(),
+    ]);
   }
 }

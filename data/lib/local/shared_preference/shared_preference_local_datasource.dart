@@ -31,6 +31,19 @@ class SharedPreferenceLocalDatasource {
     _pref.setInt(_getNotificationSettingHourKey(type).name, value);
   }
 
+  bool get isMocking => _pref.getBool(PrefKeyType.isMocking.name) ?? false;
+  set isMocking(bool value) => _pref.setBool(PrefKeyType.isMocking.name, value);
+
+  bool get isTestingEmptyData =>
+      _pref.getBool(PrefKeyType.isTestingEmptyData.name) ?? false;
+  set isTestingEmptyData(bool value) =>
+      _pref.setBool(PrefKeyType.isTestingEmptyData.name, value);
+
+  bool get isTestingException =>
+      _pref.getBool(PrefKeyType.isTestingException.name) ?? false;
+  set isTestingException(bool value) =>
+      _pref.setBool(PrefKeyType.isTestingException.name, value);
+
   PrefKeyType _getNotificationSettingOnKey(NotificationType type) =>
       switch (type) {
         RegularMettingNotification() =>

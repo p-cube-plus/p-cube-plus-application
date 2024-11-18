@@ -43,7 +43,7 @@ class CalendarSelectedDateSummaryView extends StatelessWidget
                         top: 7.5,
                         child: Container(
                           color: theme.neutral20,
-                          height: (scheduleList.length - 1) * 44.0,
+                          height: (scheduleList.length - 1) * 44.5,
                           width: 1,
                         ),
                       ),
@@ -54,7 +54,7 @@ class CalendarSelectedDateSummaryView extends StatelessWidget
                         (index) {
                           final scheduleData = scheduleList[index];
                           return Padding(
-                            padding: EdgeInsets.only(top: 29.0 * index.sign),
+                            padding: EdgeInsets.only(top: 27.0 * index.sign),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [

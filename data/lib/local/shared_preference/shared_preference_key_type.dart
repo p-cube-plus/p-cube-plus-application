@@ -13,4 +13,8 @@ enum PrefKeyType {
   designPartMettingNotificationSettingHour,
   artPartMettingNotificationSettingHour,
   developPartMettingNotificationSettingHour,
+
+  isMocking,
+  isTestingEmptyData,
+  isTestingException,
 }

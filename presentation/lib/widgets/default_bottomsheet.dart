@@ -8,30 +8,40 @@ class DefaultBottomsheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 8),
-          Center(
-            child: Container(
-              height: 4,
-              width: 64,
-              color: Theme.of(context).neutral10,
-            ),
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 8),
+        Center(
+          child: Container(
+            height: 4,
+            width: 64,
+            color: Theme.of(context).neutral10,
           ),
-          const SizedBox(height: 36),
-          content,
-        ]);
+        ),
+        const SizedBox(height: 36),
+        content,
+      ],
+    );
   }
 }
 
 class BottomSheetBuilder {
   Future build(BuildContext context, Widget content) {
     return showModalBottomSheet(
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-        context: context,
-        builder: (context) => DefaultBottomsheet(content));
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(20),
+          ),
+          child: Container(
+            color: Theme.of(context).background,
+            child: DefaultBottomsheet(content),
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:domain/user/usecase/fetch_user_profile_use_case.dart';
-import 'package:domain/user/usecase/fetch_user_project_detail_use_case.dart';
 import 'package:domain/user/usecase/fetch_user_project_use_case.dart';
 import 'package:domain/user/usecase/fetch_user_warning_use_case.dart';
 import 'package:domain/user/value_objects/user_profile.dart';

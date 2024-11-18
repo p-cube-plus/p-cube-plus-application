@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 
 enum MessageType {
   ok,
@@ -16,11 +17,15 @@ class DefaultAlert extends StatelessWidget {
     this.children,
     this.onTapOk,
     this.onTapCancel,
+    this.cancelString,
+    this.okString,
   });
 
   final Color? backgroundColor;
   final String title;
   final String? description;
+  final String? cancelString;
+  final String? okString;
   final Color? descriptionColor;
   final MessageType messageType;
   final List<Widget>? children;
@@ -32,7 +37,7 @@ class DefaultAlert extends StatelessWidget {
     var theme = Theme.of(context);
     bool isCenterTitle = description != null;
     return AlertDialog(
-        backgroundColor: backgroundColor ?? theme.colorScheme.surface,
+        backgroundColor: backgroundColor ?? theme.background,
         insetPadding: const EdgeInsets.all(20),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -45,7 +50,7 @@ class DefaultAlert extends StatelessWidget {
             top: isCenterTitle ? 36.0 : 24.0,
             bottom: 16.0),
         content: SizedBox(
-          width: double.infinity,
+          width: 280,
           child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: isCenterTitle
@@ -79,7 +84,7 @@ class DefaultAlert extends StatelessWidget {
                         height: 35.0,
                         child: ElevatedButton(
                           onPressed: onTapOk ?? () => Navigator.pop(context),
-                          child: const Text("확인",
+                          child: Text(okString ?? "확인",
                               style: TextStyle(color: Colors.white)),
                         ))
                     : SizedBox(
@@ -90,36 +95,67 @@ class DefaultAlert extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
+                              child: InkWell(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                                onTap: () {
                                   onTapCancel?.call();
                                   Navigator.pop(context);
                                 },
-                                style: Theme.of(context)
-                                    .elevatedButtonTheme
-                                    .style!
-                                    .copyWith(
-                                        backgroundColor: WidgetStatePropertyAll(
-                                            Theme.of(context)
-                                                .dialogBackgroundColor)),
-                                child: Text("취소",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w700)),
+                                highlightColor:
+                                    theme.neutral10.withOpacity(0.3),
+                                child: Ink(
+                                  decoration: BoxDecoration(
+                                    color: theme.neutral10,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      cancelString ?? "취소",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: theme.neutral100,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             const SizedBox(width: 16.0),
                             Expanded(
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    onTapOk?.call();
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("확인",
-                                      style: TextStyle(color: Colors.white))),
+                              child: InkWell(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                                onTap: () {
+                                  onTapCancel?.call();
+                                  Navigator.pop(context);
+                                },
+                                highlightColor:
+                                    theme.primary80.withOpacity(0.3),
+                                child: Ink(
+                                  decoration: BoxDecoration(
+                                    color: theme.primary80,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      okString ?? "확인",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             )
                           ],
                         ),
