@@ -51,7 +51,13 @@ class _ToggleSettingTileState extends State<ToggleSettingTile> {
                 color: theme.neutral60,
               ),
             ),
-            DefaultToggle(value: isOn, onChanged: widget.onChanged),
+            DefaultToggle(
+              value: isOn,
+              onChanged: (toggleIsOn) {
+                isOn = toggleIsOn;
+                widget.onChanged?.call(isOn);
+              },
+            ),
           ],
         ),
       ),

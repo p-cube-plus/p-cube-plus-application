@@ -174,8 +174,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
         bottomContent: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
           child: ElevatedButton(
-            onPressed: () => read(context)
-                .triggerEvent(ExecutiveAlarmSettingEvent.saveSetting),
+            onPressed: () => _onClickSaveButton(),
             child: SizedBox(
               width: double.infinity,
               height: 48,
@@ -195,6 +194,13 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
         resizeToAvoidBottomInset: true,
       ),
     );
+  }
+
+  void _onClickSaveButton() {
+    if (_textEditingContoller.text.isEmpty) {
+      _textEditingContoller.text = "0";
+    }
+    read(context).triggerEvent(ExecutiveAlarmSettingEvent.saveSetting);
   }
 
   void _onPop(bool didPop) {
