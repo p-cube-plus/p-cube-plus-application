@@ -9,7 +9,7 @@ environment:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 # flutter create --template=package [만들고자하는 패키지명]
 dependencies:
@@ -20,7 +20,7 @@ dependencies:
   data:
     path: ../data
 
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.1
   flutter_native_splash: ^2.3.7
   
 # 앱 아이콘
