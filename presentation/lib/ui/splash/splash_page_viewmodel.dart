@@ -1,5 +1,6 @@
 import 'package:domain/app_configuration/usecases/caching_before_starting_use_case.dart';
 import 'package:domain/app_configuration/usecases/initialize_on_splash_start_use_case.dart';
+import 'package:domain/attendance/usecases/start_scanning_beacon_use_case.dart';
 import 'package:domain/login/usecases/fetch_is_need_login_use_case.dart';
 import 'package:presentation/extensions/future_extension.dart';
 import 'package:presentation/ui/splash/splash_event.dart';

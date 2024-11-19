@@ -52,7 +52,13 @@ class _DefaultToggleTileState extends State<DefaultToggleTile> {
               color: theme.neutral60,
             ),
           ),
-          DefaultToggle(value: isOn, onChanged: widget.onChanged),
+          DefaultToggle(
+            value: isOn,
+            onChanged: (value) {
+              isOn = value;
+              widget.onChanged?.call(isOn);
+            },
+          ),
         ],
       ),
     );

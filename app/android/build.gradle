@@ -1,16 +1,18 @@
 allprojects {
     repositories {
+        mavenCentral()
         google()
-        jcenter()
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.layout.buildDirectory.dir('../build')
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.layout.buildDirectory.dir("$rootProject.layout.buildDirectory/$project.name")
+}
+subprojects {
     project.evaluationDependsOn(':app')
 }
 
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+tasks.register('clean', Delete) {
+    delete rootProject.layout.buildDirectory
 }

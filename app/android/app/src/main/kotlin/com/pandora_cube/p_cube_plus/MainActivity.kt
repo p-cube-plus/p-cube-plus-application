@@ -1,4 +1,4 @@
-package com.example.app
+package com.pandora_cube.p_cube_plus
 
 import io.flutter.embedding.android.FlutterActivity
 

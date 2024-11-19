@@ -8,6 +8,7 @@ import 'package:domain/attendance/value_objects/attendance_check.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
+import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
@@ -135,6 +136,13 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   Future<AttendanceDetailData> getMostRecentAttendance(
       AttendanceType attendanceType) {
     // TODO: implement getMostRecentAttendance
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AttendanceSummary> getAttendanceSummaryList(
+      AttendanceType type, int year, int month) {
+    // TODO: implement getAttendanceSummaryList
     throw UnimplementedError();
   }
 }

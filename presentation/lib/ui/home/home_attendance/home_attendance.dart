@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/home/home_attendance/home_attendance_detail/home_attendance_detail_page.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:provider/provider.dart';
 
@@ -102,7 +103,7 @@ class _HomeAttendence extends StatelessWidget
 
   _navigateToAttendanceDetailPage(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => Container(),
+      builder: (context) => HomeAttendanceDetailPage(),
     ));
   }
 }

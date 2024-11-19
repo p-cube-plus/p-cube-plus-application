@@ -34,9 +34,11 @@ class MockUtil {
     return _random.nextBool();
   }
 
-  T getRandomEnum<T>(List<T> values) {
-    int randomIndex = _random.nextInt(values.length);
-    return values[randomIndex];
+  T getRandomEnum<T>(List<T> values, {List<T> except = const []}) {
+    List<T> filteredValues =
+        values.where((value) => !except.contains(value)).toList();
+    int randomIndex = _random.nextInt(filteredValues.length);
+    return filteredValues[randomIndex];
   }
 
   String getRandomKoreanName() {

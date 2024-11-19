@@ -76,3 +76,8 @@ flutter:
 # git fetch
 # git checkout 3.22.3
 # flutter pub get
+
+
+
+# flutter config --jdk-dir "JDK 설치 경로"
+# https://stackoverflow.com/questions/79067849/flutter-3-24-3-problem-with-android-studio-ladybug-2024-2-1

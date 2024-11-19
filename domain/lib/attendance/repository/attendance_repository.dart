@@ -2,6 +2,7 @@ import 'package:domain/attendance/value_objects/attendance_check.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
+import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
@@ -32,6 +33,12 @@ abstract interface class AttendanceRepository {
 
   Future<AttendanceCheck?> getLocalAttendanceData(int id);
   Future<void> insertAttendanceData(AttendanceCheck data);
+
+  Future<AttendanceSummary> getAttendanceSummaryList(
+    AttendanceType type,
+    int year,
+    int month,
+  );
 
   //
   // 아래부터는 임원진 데이터

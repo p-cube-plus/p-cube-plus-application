@@ -10,7 +10,6 @@ import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 import 'package:presentation/common/base_viewmodel.dart';
-import 'package:presentation/extensions/future_extension.dart';
 
 import 'attendance_today_event.dart';
 import 'attendance_today_state.dart';
@@ -21,8 +20,6 @@ class AttendanceTodayViewmodel
   final _fetchRecentAttendanceUseCase = FetchRecentAttendanceUseCase();
   final _fetchCanAttendUseCase = FetchCanAttendUseCase();
   final _attendUseCase = AttendUseCase();
-  final _startScanningBeaconUseCase = StartScanningBeaconUseCase();
-  final _stopScanningBeaconUseCase = StopScanningBeaconUseCase();
 
   AttendanceData selectedAttendance;
   StreamSubscription<DateTime>? _timer;
@@ -34,7 +31,6 @@ class AttendanceTodayViewmodel
     this.selectedAttendance,
   ) {
     _setEventListener();
-    _startScanningBeaconUseCase();
   }
 
   Future<List<TodayAttendance>> fetchStateData() {
@@ -91,7 +87,6 @@ class AttendanceTodayViewmodel
   @override
   void dispose() {
     _timer?.cancel();
-    _stopScanningBeaconUseCase().getOrNull();
     super.dispose();
   }
 }

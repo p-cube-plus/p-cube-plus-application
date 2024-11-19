@@ -10,6 +10,7 @@ import 'package:domain/attendance/value_objects/attendance_check.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
+import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
@@ -287,6 +288,41 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
         attendanceDate: DateTime.now(),
         type: attendanceType,
       ),
+    );
+  }
+
+  @override
+  Future<AttendanceSummary> getAttendanceSummaryList(
+      AttendanceType type, int year, int month) async {
+    final maxWeekNumber = MockUtil().getRandomNumber(4, 5);
+    final today = DateTime.now();
+    final isPreviousMonth =
+        today.year > year || today.year == year && today.month > month;
+    final isNextMonth =
+        today.year < year || today.year == year && today.month < month;
+
+    int generateCount;
+    if (isPreviousMonth) {
+      generateCount = maxWeekNumber;
+    } else if (!isNextMonth) {
+      generateCount = MockUtil().getRandomNumber(1, maxWeekNumber);
+    } else {
+      generateCount = 0;
+    }
+
+    today.weekDayIndex;
+    return AttendanceSummary(
+      maxWeekNumber: maxWeekNumber,
+      statusList: List.generate(generateCount, (index) {
+            return MockUtil().getRandomEnum(AttendanceStatusType.values,
+                except: [
+                  AttendanceStatusType.blank,
+                  AttendanceStatusType.pending
+                ]);
+          }) +
+          List.generate(maxWeekNumber - generateCount, (index) {
+            return AttendanceStatusType.blank;
+          }),
     );
   }
 }
