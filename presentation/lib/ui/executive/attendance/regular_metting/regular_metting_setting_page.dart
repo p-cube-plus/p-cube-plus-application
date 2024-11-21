@@ -5,6 +5,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/attendance/regular_metting/member_attendance.dart';
 import 'package:presentation/ui/executive/attendance/regular_metting/regular_metting_setting_view_model.dart';
+import 'package:presentation/ui/executive/attendance/restricted_date_picker/restricted_date_picker.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
@@ -57,12 +58,15 @@ class _RegularMettingSettingPage extends StatelessWidget
                               color: theme.neutral40,
                               size: 24,
                             ),
-                            Text(
-                              data.attendanceDate.format("M월 dd일"),
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: theme.neutral100,
+                            GestureDetector(
+                              onTap: () => _showDatePickerBottomSheet(context),
+                              child: Text(
+                                data.attendanceDate.format("M월 dd일"),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.neutral100,
+                                ),
                               ),
                             ),
                             Icon(
@@ -234,5 +238,14 @@ class _RegularMettingSettingPage extends StatelessWidget
           height: 200,
           color: Colors.green,
         ));
+  }
+
+  void _showDatePickerBottomSheet(
+    BuildContext context,
+  ) {
+    BottomSheetBuilder().build(
+      context,
+      RestrictedDatePicker(onDateSelectionComplete: (value) => {}),
+    );
   }
 }
