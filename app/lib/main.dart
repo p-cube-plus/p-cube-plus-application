@@ -5,10 +5,8 @@ import 'initialize_on_app_start.dart' as init;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    ioc.registService();
-    await init.initializeOnAppStart();
-  } catch (e) {}
+  ioc.registService();
+  await init.initializeOnAppStart();
 
   runApp(const PCubePlusApp());
 }

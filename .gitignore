@@ -16,3 +16,4 @@ app/linux/flutter/generated_plugin_registrant.cc
 presentation/.flutter-plugins
 presentation/.flutter-plugins-dependencies
 /app/android/app/build
+/data/build

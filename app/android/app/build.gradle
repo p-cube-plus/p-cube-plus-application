@@ -8,8 +8,6 @@ plugins {
 
 android {
     namespace "com.pandora_cube.p_cube_plus"
-    //ndkVersion "25.1.8937393"
-
     compileSdkVersion 34
 
     defaultConfig {
@@ -34,7 +32,7 @@ android {
 
     buildTypes {
         release {
-            //signingConfig signingConfigs.debug    // flutter run --release 작동 시 debug 설정
+            //signingConfig signingConfigs.debug    e  // 코드 난독화 (proGuard) 적용을 위한 세팅. 코드 크기 줄임.
             minifyEnabled true  // 코드 난독화 (proGuard) 적용을 위한 세팅. 코드 크기 줄임.
             shrinkResources true    // 사용 안 하는 리소스 제거
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -43,8 +41,6 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
-            splits.abi.enable = false       // 빌드 시 단일 APK 생성
-            splits.density.enable = false   // 모든 밀도를 포함한 단일 APK 생성
             aaptOptions.cruncherEnabled = false // 이미지 압축 비활성화
             ext.alwaysUpdateBuildId = false // 빌드 시 빌드 ID 유지
             ext.enableCrashlytics = false   // fabric 비활성화

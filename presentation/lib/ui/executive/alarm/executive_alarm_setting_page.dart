@@ -197,9 +197,6 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
   }
 
   void _onClickSaveButton() {
-    if (_textEditingContoller.text.isEmpty) {
-      _textEditingContoller.text = "0";
-    }
     read(context).triggerEvent(ExecutiveAlarmSettingEvent.saveSetting);
   }
 
@@ -245,6 +242,9 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
   }
 
   void _onChangedText(String newText) {
+    if (newText.isEmpty) {
+      newText = "0";
+    }
     var inputHour = int.parse(newText);
     if (inputHour > 24) {
       if (inputHour / 10 >= 24) {
