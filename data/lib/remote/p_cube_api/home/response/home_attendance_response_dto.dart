@@ -1,6 +1,3 @@
-import 'package:domain/attendance/value_objects/home_attendance.dart';
-import 'package:domain/common/value_objects/color.dart';
-
 class HomeAttendanceResponseDTO {
   final int id;
   final String title;
