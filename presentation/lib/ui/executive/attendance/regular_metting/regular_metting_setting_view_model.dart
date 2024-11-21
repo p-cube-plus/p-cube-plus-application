@@ -13,9 +13,9 @@ import 'package:presentation/utils/match_korean.dart';
 
 class RegularMettingSettingViewModel
     extends BaseViewModel<RegularMettingSettingEvent, void> {
-  final _fetchUserAttendanceList = FetchUserAttendanceListUseCase();
-  final _fetchMonthAttendanceUseCase = FetchMonthAttendanceUseCase();
   final _fetchMostRecentAttendanceUseCase = FetchMostRecentAttendanceUseCase();
+  final _fetchUserAttendanceListUseCase = FetchUserAttendanceListUseCase();
+  final _fetchMonthAttendanceUseCase = FetchMonthAttendanceUseCase();
 
   final AttendanceType attendanceType;
 
@@ -24,9 +24,27 @@ class RegularMettingSettingViewModel
   String filterText = "";
   final filterThrottle = Debouncer(Duration(milliseconds: 200));
 
+  DateTime? selectedDate;
   List<MemberAttendanceState> _totalList = [];
 
   RegularMettingSettingViewModel(this.attendanceType);
+
+  Future<AttendanceDetailData> fetchAttendanceDetailData() {
+    Future<AttendanceDetailData> result;
+    if (selectedDate == null) {
+      result = _fetchMostRecentAttendanceUseCase.call(attendanceType);
+    } else {
+      result = _fetchUserAttendanceListUseCase.call(
+        attendanceType,
+        selectedDate!,
+      );
+    }
+
+    return result.then((data) {
+      _totalList = data.memberStateList;
+      return data;
+    });
+  }
 
   void setFilterText(String newText) {
     filterThrottle.run(() {
@@ -37,14 +55,6 @@ class RegularMettingSettingViewModel
 
   Future<AttendanceDetailData> fetchMostRecentAttendance() =>
       _fetchMostRecentAttendanceUseCase.call(attendanceType);
-
-  Future<List<MemberAttendanceState>> fetchUserAttendanceList(
-    DateTime selectedDate,
-  ) {
-    return _fetchUserAttendanceList
-        .call(attendanceType, selectedDate)
-        .then((result) => _totalList = result);
-  }
 
   List<MemberAttendanceState> get totalList => _totalList
       .where((memberAttendanceData) =>
@@ -74,10 +84,12 @@ class RegularMettingSettingViewModel
           memberAttendanceData.name.matchKorean(filterText))
       .toList();
 
-  Future<List<AttendanceData>> fetchMonthlyAttendanceList(
+  Future<Set<int>> fetchValidDateSet(
     DateTime selectedDate,
-  ) {
-    return _fetchMonthAttendanceUseCase.call(attendanceType, selectedDate);
+  ) async {
+    final existAttendanceList =
+        await _fetchMonthAttendanceUseCase.call(attendanceType, selectedDate);
+    return existAttendanceList.map((data) => data.attendanceDate.day).toSet();
   }
 
   void toggleTopWidgetVisible() {

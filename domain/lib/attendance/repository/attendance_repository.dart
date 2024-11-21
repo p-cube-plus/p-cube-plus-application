@@ -44,13 +44,10 @@ abstract interface class AttendanceRepository {
   // 아래부터는 임원진 데이터
   //
 
-  Future<List<MemberAttendanceState>> getMemberAttendanceStateList(
+  // DateTime이 null이면 화면에 첫 진입할 때 어떤 데이터 보여줄 지 결정
+  Future<AttendanceDetailData> getAttendanceDetail(
     AttendanceType attendanceType,
-    DateTime searchDate,
-  );
-
-  Future<AttendanceDetailData> getMostRecentAttendance(
-    AttendanceType attendanceType,
+    DateTime? searchDate,
   );
 
   Future<List<AttendanceData>> getAttendanceExistDayListInMonth(

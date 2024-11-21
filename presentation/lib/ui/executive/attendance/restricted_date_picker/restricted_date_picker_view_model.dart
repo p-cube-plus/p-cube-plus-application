@@ -3,6 +3,7 @@ import 'package:presentation/common/base_viewmodel.dart';
 
 class RestrictedDatePickerViewModel extends BaseViewModel<void, void> {
   final Function(DateTime) onDateSelectionComplete;
+  final Set<int> Function(DateTime) onRefreshValidDates;
 
   DateTime currentDate = DateTime.now();
   DateTime selectedDay = DateTime.now();
@@ -11,6 +12,7 @@ class RestrictedDatePickerViewModel extends BaseViewModel<void, void> {
 
   RestrictedDatePickerViewModel(
     this.onDateSelectionComplete,
+    this.onRefreshValidDates,
   ) {
     selectedDay =
         DateTime(currentDate.year, currentDate.month, _validDaySet.first);

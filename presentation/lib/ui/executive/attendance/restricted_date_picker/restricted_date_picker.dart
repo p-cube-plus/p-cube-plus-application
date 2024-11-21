@@ -12,14 +12,19 @@ class RestrictedDatePicker extends StatelessWidget {
   const RestrictedDatePicker({
     super.key,
     required this.onDateSelectionComplete,
+    required this.onRefreshValidDates,
   });
 
   final Function(DateTime) onDateSelectionComplete;
+  final Future<Set<int>> Function(DateTime) onRefreshValidDates;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => RestrictedDatePickerViewModel(onDateSelectionComplete),
+      create: (_) => RestrictedDatePickerViewModel(
+        onDateSelectionComplete,
+        onRefreshValidDates,
+      ),
       child: _RestrictedDatePicker(),
     );
   }
@@ -33,7 +38,7 @@ class _RestrictedDatePicker extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: DragDetector(
         moveLeftContent: () => read(context).movePreviousMonth(),
         moveRightContent: () => read(context).moveNextMonth(),
@@ -96,11 +101,6 @@ class _RestrictedDatePicker extends StatelessWidget
                 padding: EdgeInsets.symmetric(vertical: 12),
                 child: Text(
                   "해당 날짜 선택하기",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: theme.neutral40,
-                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

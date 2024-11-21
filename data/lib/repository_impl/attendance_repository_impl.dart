@@ -94,13 +94,6 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   }
 
   @override
-  Future<List<MemberAttendanceState>> getMemberAttendanceStateList(
-      AttendanceType attendanceType, DateTime searchDate) {
-    // TODO: implement getMemberAttendanceStateList
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> setAttendance(
       int attendanceId,
       int memberId,
@@ -133,16 +126,16 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   }
 
   @override
-  Future<AttendanceDetailData> getMostRecentAttendance(
-      AttendanceType attendanceType) {
-    // TODO: implement getMostRecentAttendance
+  Future<AttendanceSummary> getAttendanceSummaryList(
+      AttendanceType type, int year, int month) {
+    // TODO: implement getAttendanceSummaryList
     throw UnimplementedError();
   }
 
   @override
-  Future<AttendanceSummary> getAttendanceSummaryList(
-      AttendanceType type, int year, int month) {
-    // TODO: implement getAttendanceSummaryList
+  Future<AttendanceDetailData> getAttendanceDetail(
+      AttendanceType attendanceType, DateTime? searchDate) {
+    // TODO: implement getMemberAttendanceStateList
     throw UnimplementedError();
   }
 }

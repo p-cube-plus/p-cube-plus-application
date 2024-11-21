@@ -8,7 +8,6 @@ import 'package:presentation/ui/executive/attendance/regular_metting/member_atte
 import 'package:presentation/ui/executive/attendance/regular_metting/regular_metting_setting_view_model.dart';
 import 'package:presentation/widgets/defauilt_toggle_tile.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
-import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
 import 'package:presentation/widgets/default_text_field.dart';
 import 'package:presentation/widgets/rounded_border.dart';
@@ -17,9 +16,11 @@ class MemberAttendanceList extends StatefulWidget {
   const MemberAttendanceList({
     super.key,
     required this.selectedDate,
+    required this.memberList,
   });
 
   final DateTime selectedDate;
+  final List<MemberAttendanceState> memberList;
 
   @override
   State<MemberAttendanceList> createState() => _MemberAttendanceListState();
@@ -105,59 +106,51 @@ class _MemberAttendanceListState extends State<MemberAttendanceList>
             ],
           ),
           Expanded(
-            child: DefaultFutureBuilder(
-              fetchData:
-                  read(context).fetchUserAttendanceList(widget.selectedDate),
-              showOnLoadedWidget:
-                  (BuildContext context, List<MemberAttendanceState> data) {
-                return DefaultTabBar(
-                  padding:
-                      EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 16),
-                  tabLabelPadding: EdgeInsets.symmetric(vertical: 11),
-                  tabAlignment: TabAlignment.fill,
-                  tabs: [
-                    DefaultTab(
-                      tabName: "전체",
-                      page: watchWidget(
-                        (viewModel) => viewModel.totalList,
-                        (context, totalList) => MemberAttendanceTab(
-                          userAttendanceList: totalList,
-                        ),
-                      ),
+            child: DefaultTabBar(
+              padding: EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 16),
+              tabLabelPadding: EdgeInsets.symmetric(vertical: 11),
+              tabAlignment: TabAlignment.fill,
+              tabs: [
+                DefaultTab(
+                  tabName: "전체",
+                  page: watchWidget(
+                    (viewModel) => viewModel.totalList,
+                    (context, totalList) => MemberAttendanceTab(
+                      userAttendanceList: totalList,
                     ),
-                    DefaultTab(
-                      tabName: "출석",
-                      page: watchWidget(
-                        (viewModel) => viewModel.successList,
-                        (context, totalList) => MemberAttendanceTab(
-                          userAttendanceList: totalList,
-                        ),
-                        shouldRebuild: (previous, next) {
-                          return previous.length != next.length;
-                        },
-                      ),
+                  ),
+                ),
+                DefaultTab(
+                  tabName: "출석",
+                  page: watchWidget(
+                    (viewModel) => viewModel.successList,
+                    (context, totalList) => MemberAttendanceTab(
+                      userAttendanceList: totalList,
                     ),
-                    DefaultTab(
-                      tabName: "지각",
-                      page: watchWidget(
-                        (viewModel) => viewModel.lateList,
-                        (context, totalList) => MemberAttendanceTab(
-                          userAttendanceList: totalList,
-                        ),
-                      ),
+                    shouldRebuild: (previous, next) {
+                      return previous.length != next.length;
+                    },
+                  ),
+                ),
+                DefaultTab(
+                  tabName: "지각",
+                  page: watchWidget(
+                    (viewModel) => viewModel.lateList,
+                    (context, totalList) => MemberAttendanceTab(
+                      userAttendanceList: totalList,
                     ),
-                    DefaultTab(
-                      tabName: "불참",
-                      page: watchWidget(
-                        (viewModel) => viewModel.failedList,
-                        (context, totalList) => MemberAttendanceTab(
-                          userAttendanceList: totalList,
-                        ),
-                      ),
+                  ),
+                ),
+                DefaultTab(
+                  tabName: "불참",
+                  page: watchWidget(
+                    (viewModel) => viewModel.failedList,
+                    (context, totalList) => MemberAttendanceTab(
+                      userAttendanceList: totalList,
                     ),
-                  ],
-                );
-              },
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -7,6 +7,6 @@ class FetchMostRecentAttendanceUseCase {
   final _attendanceRepository = GetIt.I.get<AttendanceRepository>();
 
   Future<AttendanceDetailData> call(AttendanceType type) {
-    return _attendanceRepository.getMostRecentAttendance(type);
+    return _attendanceRepository.getAttendanceDetail(type, null);
   }
 }

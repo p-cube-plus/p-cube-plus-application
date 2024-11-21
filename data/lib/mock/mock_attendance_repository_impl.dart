@@ -153,75 +153,6 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   }
 
   @override
-  Future<List<MemberAttendanceState>> getMemberAttendanceStateList(
-      AttendanceType attendanceType, DateTime searchDate) async {
-    await Future.delayed(Duration(seconds: 1));
-    final result = await cachedMemberAttendanceList.fetchOrCache(() {
-      final isExistSecondAttendance = MockUtil().getRandomBool();
-
-      return Future.value(List.generate(
-        MockUtil().getRandomNumber(50, 500),
-        (_) {
-          final isExistFirst = MockUtil().getRandomNumber(0, 9) < 8;
-          DateTime? firstTime;
-          AttendanceStatusType? firstResult;
-
-          if (isExistFirst) {
-            firstTime = MockUtil().getRandomDateTime(
-              DateTime.now(),
-              DateTime.now().add(Duration(minutes: 30)),
-            );
-            final firstTimeout = DateTime.now().add(Duration(minutes: 20));
-            final firstFailedTimeout =
-                DateTime.now().add(Duration(minutes: 25));
-
-            if (firstTime.isBefore(firstTimeout)) {
-              firstResult = AttendanceStatusType.success;
-            } else if (firstTime.isBefore(firstFailedTimeout)) {
-              firstResult = AttendanceStatusType.late;
-            } else {
-              firstResult = AttendanceStatusType.failed;
-            }
-          }
-
-          final isExistSecond = MockUtil().getRandomBool();
-          DateTime? secondTime;
-          AttendanceStatusType? secondResult;
-
-          if (isExistSecondAttendance && isExistFirst && isExistSecond) {
-            secondTime = MockUtil().getRandomDateTime(
-              firstTime!,
-              firstTime.add(Duration(minutes: 30)),
-            );
-            final secondTimeout = firstTime.add(Duration(minutes: 20));
-            final secondFailedTimeout = firstTime.add(Duration(minutes: 25));
-
-            if (secondTime.isBefore(secondTimeout)) {
-              secondResult = AttendanceStatusType.success;
-            } else if (secondTime.isBefore(secondFailedTimeout)) {
-              secondResult = AttendanceStatusType.late;
-            } else {
-              secondResult = AttendanceStatusType.failed;
-            }
-          }
-          return MemberAttendanceState(
-            name: MockUtil().getRandomKoreanName(),
-            grade: MockUtil().getRandomNumber(1, 4),
-            partType: MockUtil().getRandomEnum(MemberPartType.values),
-            positionType: RegularMember(),
-            isExistSecondAttendance: isExistSecondAttendance,
-            firstAttendanceCheckTime: firstTime,
-            firstAttendanceStatusType: firstResult,
-            secondAttendanceCheckTime: secondTime,
-            secondAttendanceStatusType: secondResult,
-          );
-        },
-      ));
-    });
-    return result;
-  }
-
-  @override
   Future<void> setAttendance(
       int attendanceId,
       int memberId,
@@ -280,18 +211,6 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   }
 
   @override
-  Future<AttendanceDetailData> getMostRecentAttendance(
-      AttendanceType attendanceType) {
-    return Future.value(
-      AttendanceDetailData(
-        id: 1,
-        attendanceDate: DateTime.now(),
-        type: attendanceType,
-      ),
-    );
-  }
-
-  @override
   Future<AttendanceSummary> getAttendanceSummaryList(
       AttendanceType type, int year, int month) async {
     final maxWeekNumber = MockUtil().getRandomNumber(4, 5);
@@ -323,6 +242,38 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
           List.generate(maxWeekNumber - generateCount, (index) {
             return AttendanceStatusType.blank;
           }),
+    );
+  }
+
+  @override
+  Future<AttendanceDetailData> getAttendanceDetail(
+      AttendanceType attendanceType, DateTime? searchDate) async {
+    return AttendanceDetailData(
+      attendanceScheduleId: 1,
+      attendanceDate: DateTime.now().subtract(Duration(days: 1)),
+      type: attendanceType,
+      memberStateList:
+          List.generate(MockUtil().getRandomNumber(100, 500), (index) {
+        return MemberAttendanceState(
+          memberId: index,
+          isActiveMember: MockUtil().getRandomBool(),
+          name: MockUtil().getRandomKoreanName(),
+          grade: MockUtil().getRandomNumber(1, 4),
+          partType: MockUtil().getRandomEnum(MemberPartType.values),
+          positionType: RegularMember(),
+          attendanceId: index,
+          attendanceStatusType:
+              MockUtil().getRandomEnum(AttendanceStatusType.values),
+          firstAttendanceCheckTime: MockUtil().getRandomDateTime(
+            DateTime.now(),
+            DateTime.now().add(Duration(minutes: 30)),
+          ),
+          secondAttendanceCheckTime: MockUtil().getRandomDateTime(
+            DateTime.now().add(Duration(hours: 2)),
+            DateTime.now().add(Duration(hours: 3)),
+          ),
+        );
+      }),
     );
   }
 }

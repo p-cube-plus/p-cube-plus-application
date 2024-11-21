@@ -25,8 +25,17 @@ class RegularMettingSettingPage extends StatelessWidget {
   }
 }
 
-class _RegularMettingSettingPage extends StatelessWidget
+class _RegularMettingSettingPage extends StatefulWidget
     with ViewModel<RegularMettingSettingViewModel> {
+  @override
+  State<_RegularMettingSettingPage> createState() =>
+      _RegularMettingSettingPageState();
+}
+
+class _RegularMettingSettingPageState
+    extends State<_RegularMettingSettingPage> {
+  var _refreshKey = UniqueKey();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -36,11 +45,12 @@ class _RegularMettingSettingPage extends StatelessWidget
         leftTitle: "정기회의 출석",
       ),
       content: DefaultFutureBuilder(
-          fetchData: read(context).fetchMostRecentAttendance(),
-          showOnLoadedWidget: (_, data) {
+          key: _refreshKey,
+          fetchData: widget.read(context).fetchAttendanceDetailData(),
+          showOnLoadedWidget: (context, data) {
             return Column(
               children: [
-                watchWidget((viewModel) => viewModel.isVisibleTopWidget,
+                widget.watchWidget((viewModel) => viewModel.isVisibleTopWidget,
                     (context, isVisibleTopWidget) {
                   if (!isVisibleTopWidget) return SizedBox();
 
@@ -59,7 +69,7 @@ class _RegularMettingSettingPage extends StatelessWidget
                               size: 24,
                             ),
                             GestureDetector(
-                              onTap: () => _showDatePickerBottomSheet(context),
+                              onTap: () => _showDatePickerBottomSheet(),
                               child: Text(
                                 data.attendanceDate.format("M월 dd일"),
                                 style: TextStyle(
@@ -129,7 +139,7 @@ class _RegularMettingSettingPage extends StatelessWidget
                                     padding: EdgeInsets.symmetric(vertical: 4),
                                     onTap: () =>
                                         _showAttendanceTimeSettingBottomSheet(
-                                            context, 1),
+                                            1),
                                     child: Text(
                                       "눌러서 1차 인증 시간을 설정해주세요",
                                       textAlign: TextAlign.center,
@@ -198,7 +208,7 @@ class _RegularMettingSettingPage extends StatelessWidget
                                     padding: EdgeInsets.symmetric(vertical: 4),
                                     onTap: () =>
                                         _showAttendanceTimeSettingBottomSheet(
-                                            context, 2),
+                                            2),
                                     child: Text(
                                       "눌러서 2차 인증 시간을 설정해주세요",
                                       textAlign: TextAlign.center,
@@ -219,8 +229,10 @@ class _RegularMettingSettingPage extends StatelessWidget
                   );
                 }),
                 Expanded(
-                  child:
-                      MemberAttendanceList(selectedDate: data.attendanceDate),
+                  child: MemberAttendanceList(
+                    selectedDate: data.attendanceDate,
+                    memberList: data.memberStateList,
+                  ),
                 ),
               ],
             );
@@ -229,7 +241,6 @@ class _RegularMettingSettingPage extends StatelessWidget
   }
 
   void _showAttendanceTimeSettingBottomSheet(
-    BuildContext context,
     int attendanceSequence,
   ) {
     BottomSheetBuilder().build(
@@ -240,12 +251,17 @@ class _RegularMettingSettingPage extends StatelessWidget
         ));
   }
 
-  void _showDatePickerBottomSheet(
-    BuildContext context,
-  ) {
+  void _showDatePickerBottomSheet() {
     BottomSheetBuilder().build(
       context,
-      RestrictedDatePicker(onDateSelectionComplete: (value) => {}),
+      RestrictedDatePicker(
+        onDateSelectionComplete: (selectedDate) {
+          widget.read(context).setSelectedDate(selectedDate);
+          setState(() => _refreshKey = UniqueKey());
+        },
+        onRefreshValidDates: (selectedDate) =>
+            widget.read(context).fetchValidDateSet(selectedDate),
+      ),
     );
   }
 }

@@ -6,57 +6,60 @@ import 'attendance_status_type.dart';
 
 @immutable
 class MemberAttendanceState {
+  final int memberId;
+  final bool isActiveMember;
   final String name;
   final int grade;
   final MemberPartType partType;
   final MemberPositionType positionType;
-  final bool isExistSecondAttendance;
 
+  final int attendanceId;
   final DateTime? firstAttendanceCheckTime;
-  final AttendanceStatusType? firstAttendanceStatusType;
-
   final DateTime? secondAttendanceCheckTime;
-  final AttendanceStatusType? secondAttendanceStatusType;
+  final AttendanceStatusType attendanceStatusType;
 
-  const MemberAttendanceState({
+  MemberAttendanceState({
+    required this.memberId,
+    required this.isActiveMember,
     required this.name,
     required this.grade,
     required this.partType,
     required this.positionType,
-    required this.isExistSecondAttendance,
+    required this.attendanceId,
+    required this.attendanceStatusType,
     this.firstAttendanceCheckTime,
-    this.firstAttendanceStatusType,
     this.secondAttendanceCheckTime,
-    this.secondAttendanceStatusType,
   });
 
-  AttendanceStatusType get attendanceStatusType {
-    if (!isExistSecondAttendance) {
-      return firstAttendanceStatusType ?? _getDefaultFirstStatus();
-    }
+  bool get isExistSecondAttendance => secondAttendanceCheckTime == null;
 
-    final firstStatus = firstAttendanceStatusType ?? _getDefaultFirstStatus();
-    final secondStatus =
-        secondAttendanceStatusType ?? _getDefaultSecondStatus();
+  // AttendanceStatusType get attendanceStatusType {
+  //   if (!isExistSecondAttendance) {
+  //     return firstAttendanceStatusType ?? _getDefaultFirstStatus();
+  //   }
 
-    if (firstStatus == AttendanceStatusType.success &&
-        secondStatus == AttendanceStatusType.success) {
-      return AttendanceStatusType.success;
-    } else if (firstStatus == AttendanceStatusType.failed ||
-        secondStatus == AttendanceStatusType.failed) {
-      return AttendanceStatusType.failed;
-    } else if (firstStatus == AttendanceStatusType.late ||
-        secondStatus == AttendanceStatusType.late) {
-      return AttendanceStatusType.late;
-    } else if (firstStatus == AttendanceStatusType.blank) {
-      return AttendanceStatusType.blank;
-    } else if (firstStatus == AttendanceStatusType.pending ||
-        secondStatus == AttendanceStatusType.pending) {
-      return AttendanceStatusType.pending;
-    } else {
-      return AttendanceStatusType.failed;
-    }
-  }
+  //   final firstStatus = firstAttendanceStatusType ?? _getDefaultFirstStatus();
+  //   final secondStatus =
+  //       secondAttendanceStatusType ?? _getDefaultSecondStatus();
+
+  //   if (firstStatus == AttendanceStatusType.success &&
+  //       secondStatus == AttendanceStatusType.success) {
+  //     return AttendanceStatusType.success;
+  //   } else if (firstStatus == AttendanceStatusType.failed ||
+  //       secondStatus == AttendanceStatusType.failed) {
+  //     return AttendanceStatusType.failed;
+  //   } else if (firstStatus == AttendanceStatusType.late ||
+  //       secondStatus == AttendanceStatusType.late) {
+  //     return AttendanceStatusType.late;
+  //   } else if (firstStatus == AttendanceStatusType.blank) {
+  //     return AttendanceStatusType.blank;
+  //   } else if (firstStatus == AttendanceStatusType.pending ||
+  //       secondStatus == AttendanceStatusType.pending) {
+  //     return AttendanceStatusType.pending;
+  //   } else {
+  //     return AttendanceStatusType.failed;
+  //   }
+  // }
 
   AttendanceStatusType _getDefaultFirstStatus() {
     return AttendanceStatusType.pending;

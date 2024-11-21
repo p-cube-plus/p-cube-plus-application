@@ -69,26 +69,27 @@ class _AttendanceSettingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return RoundedBorder(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-        margin: const EdgeInsets.only(bottom: 10),
-        onTap: () => onClick.call(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              titleName,
-              style: TextStyle(
-                fontSize: 14,
-                color: theme.neutral100,
-                fontWeight: FontWeight.w700,
-              ),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      margin: const EdgeInsets.only(bottom: 10),
+      onTap: () => onClick.call(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            titleName,
+            style: TextStyle(
+              fontSize: 14,
+              color: theme.neutral100,
+              fontWeight: FontWeight.w700,
             ),
-            Icon(
-              Icons.chevron_right,
-              color: theme.neutral40,
-              size: 24,
-            ),
-          ],
-        ));
+          ),
+          Icon(
+            Icons.chevron_right,
+            color: theme.neutral40,
+            size: 24,
+          ),
+        ],
+      ),
+    );
   }
 }
