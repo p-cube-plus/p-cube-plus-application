@@ -1,7 +1,6 @@
 import 'package:domain/attendance/usecases/fetch_member_attendance_list_use_case.dart';
 import 'package:domain/attendance/usecases/fetch_month_attendance_use_case.dart';
 import 'package:domain/attendance/usecases/fetch_most_recent_attendance_use_case.dart';
-import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
@@ -84,12 +83,12 @@ class RegularMettingSettingViewModel
           memberAttendanceData.name.matchKorean(filterText))
       .toList();
 
-  Future<Set<int>> fetchValidDateSet(
+  Future<List<int>> fetchValidDateSet(
     DateTime selectedDate,
   ) async {
     final existAttendanceList =
         await _fetchMonthAttendanceUseCase.call(attendanceType, selectedDate);
-    return existAttendanceList.map((data) => data.attendanceDate.day).toSet();
+    return existAttendanceList.map((data) => data.attendanceDate.day).toList();
   }
 
   void toggleTopWidgetVisible() {

@@ -2,8 +2,8 @@ import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/executive/attendance/restricted_date_picker/restricted_date_picker_day.dart';
-import 'package:presentation/ui/executive/attendance/restricted_date_picker/restricted_date_picker_view_model.dart';
+import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker_day.dart';
+import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker_view_model.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_week_row.dart/calendar_week_row.dart';
 import 'package:presentation/widgets/drag_detector.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,7 @@ class RestrictedDatePicker extends StatelessWidget {
   });
 
   final Function(DateTime) onDateSelectionComplete;
-  final Future<Set<int>> Function(DateTime) onRefreshValidDates;
+  final Future<List<int>> Function(DateTime) onRefreshValidDates;
 
   @override
   Widget build(BuildContext context) {

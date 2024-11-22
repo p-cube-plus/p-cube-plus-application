@@ -256,7 +256,7 @@ class _RegularMettingSettingPageState
       context,
       RestrictedDatePicker(
         onDateSelectionComplete: (selectedDate) {
-          widget.read(context).setSelectedDate(selectedDate);
+          widget.read(context).fetchValidDateSet(selectedDate);
           setState(() => _refreshKey = UniqueKey());
         },
         onRefreshValidDates: (selectedDate) =>
