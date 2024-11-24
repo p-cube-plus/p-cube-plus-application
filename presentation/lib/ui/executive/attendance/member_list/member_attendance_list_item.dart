@@ -88,7 +88,7 @@ class MemberAttendanceListItem extends StatelessWidget {
                         SizedBox(width: 8),
                         Text(
                           data.firstAttendanceCheckTime
-                                  ?.format("hh시 mm분 ss초") ??
+                                  ?.format("HH시 mm분 ss초") ??
                               "-",
                           style: TextStyle(
                             fontSize: 10,
@@ -113,7 +113,7 @@ class MemberAttendanceListItem extends StatelessWidget {
                         SizedBox(width: 8),
                         Text(
                           data.secondAttendanceCheckTime
-                                  ?.format("hh시 mm분 ss초") ??
+                                  ?.format("HH시 mm분 ss초") ??
                               "-",
                           style: TextStyle(
                             fontSize: 10,

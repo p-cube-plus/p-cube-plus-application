@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/attendance/edit_attendance/edit_attendance_view_model.dart';
+import 'package:presentation/ui/executive/attendance/edit_attendance/editable_attendance_time_box/attendance_time_picker.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
@@ -26,7 +27,7 @@ class EditableAttendanceTimeBox extends StatelessWidget
         ),
         SizedBox(height: 8),
         RoundedBorder(
-          onTap: () => _showSetTimeBottomSheet(context),
+          onTap: () => _showSetTimeBottomSheet(context, 1),
           radius: 40,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
@@ -41,11 +42,11 @@ class EditableAttendanceTimeBox extends StatelessWidget
               ),
               Expanded(
                 child: Center(
-                  child:
-                      watchWidget((viewModel) => viewModel.firstAttendanceTime,
-                          (context, time) {
+                  child: watchWidget(
+                      (viewModel) => viewModel.memberFirstAttendanceTime,
+                      (context, time) {
                     return Text(
-                      time.format("hh시 mm분 ss초"),
+                      time!.format("HH시 mm분 ss초"),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -62,8 +63,9 @@ class EditableAttendanceTimeBox extends StatelessWidget
         RoundedBorder(
           radius: 40,
           onTap: isExistSecondAttendance
-              ? () => _showSetTimeBottomSheet(context)
+              ? () => _showSetTimeBottomSheet(context, 2)
               : null,
+          color: isExistSecondAttendance ? theme.content : theme.disabled,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
@@ -77,10 +79,10 @@ class EditableAttendanceTimeBox extends StatelessWidget
               ),
               Expanded(
                 child: Center(
-                  child:
-                      watchWidget((viewModel) => viewModel.secondAttendanceTime,
-                          (context, time) {
-                    if (time == null) {
+                  child: watchWidget(
+                      (viewModel) => viewModel.memberSecondAttendanceTime,
+                      (context, time) {
+                    if (!isExistSecondAttendance) {
                       return Text(
                         "2차 인증이 설정되지 않았습니다.",
                         style: TextStyle(
@@ -91,7 +93,7 @@ class EditableAttendanceTimeBox extends StatelessWidget
                       );
                     }
                     return Text(
-                      time.format("hh시 mm분 ss초"),
+                      time!.format("HH시 mm분 ss초"),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -108,7 +110,26 @@ class EditableAttendanceTimeBox extends StatelessWidget
     );
   }
 
-  void _showSetTimeBottomSheet(BuildContext context) {
-    BottomSheetBuilder().build(context, Container());
+  void _showSetTimeBottomSheet(
+    BuildContext context,
+    int sequenceNumber,
+  ) {
+    DateTime targetDate;
+    if (sequenceNumber == 1) {
+      targetDate = read(context).memberFirstAttendanceTime!;
+    } else {
+      targetDate = read(context).memberSecondAttendanceTime!;
+    }
+
+    BottomSheetBuilder().build(
+      context,
+      AttendanceTimePicker(
+        sequenceNumber: sequenceNumber,
+        initializeTime: targetDate,
+        onSaveTime: (DateTime selectedTime) {
+          read(context).changeFirstAttendanceTime(selectedTime);
+        },
+      ),
+    );
   }
 }

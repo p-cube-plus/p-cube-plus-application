@@ -30,7 +30,7 @@ class AttendanceTodayItemButton extends StatelessWidget
               ),
             ),
             Text(
-              data.attendanceTime!.format("hh시 mm분 ss초"),
+              data.attendanceTime!.format("HH시 mm분 ss초"),
               style: TextStyle(
                 fontSize: 12,
                 color: theme.secondary120,

@@ -57,8 +57,14 @@ class _RegularMettingEditPageState extends State<_RegularMettingEditPage>
                           vertical: 24,
                         ),
                         child: AttendanceScheduleBox(
-                          data: data,
                           isReadOnly: false,
+                          attendanceDate: data.attendanceDate,
+                          firstAttendanceStartTime:
+                              data.firstAttendanceStartTime,
+                          firstAttendanceEndTime: data.firstAttendanceEndTime,
+                          secondAttendanceStartTime:
+                              data.secondAttendanceStartTime,
+                          secondAttendanceEndTime: data.secondAttendanceEndTime,
                         ),
                       );
                     },

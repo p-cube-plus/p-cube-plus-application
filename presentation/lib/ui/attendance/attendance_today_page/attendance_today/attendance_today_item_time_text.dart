@@ -13,7 +13,7 @@ class AttendanceTodayItemTimeText extends StatelessWidget {
     final theme = Theme.of(context);
     if (startDate != null && endDate != null) {
       return Text(
-        "${startDate!.format("hh시 mm분 ss초")} ~ ${endDate!.format("hh시 mm분 ss초")}",
+        "${startDate!.format("HH시 mm분 ss초")} ~ ${endDate!.format("HH시 mm분 ss초")}",
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w400,

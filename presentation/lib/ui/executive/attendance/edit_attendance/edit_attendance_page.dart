@@ -3,7 +3,7 @@ import 'package:domain/attendance/value_objects/member_attendance_state.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/attendance/attendance_schedule_box/attendance_schedule_box.dart';
-import 'package:presentation/ui/executive/attendance/edit_attendance/ediable_attendance_time_box/editable_attendance_time_box.dart';
+import 'package:presentation/ui/executive/attendance/edit_attendance/editable_attendance_time_box/editable_attendance_time_box.dart';
 import 'package:presentation/ui/executive/attendance/edit_attendance/edit_attendance_view_model.dart';
 import 'package:presentation/ui/executive/attendance/edit_attendance/editable_attendance_status_box/editable_attendance_status_box.dart';
 import 'package:presentation/widgets/default_appbar.dart';
@@ -25,9 +25,13 @@ class EditAttendancePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => EditAttendanceViewModel(
+        firstAttendanceStartTime: attendanceSchedule.firstAttendanceStartTime,
+        firstAttendanceEndTime: attendanceSchedule.firstAttendanceEndTime,
+        secondAttendanceStartTime: attendanceSchedule.secondAttendanceStartTime,
+        secondAttendanceEndTime: attendanceSchedule.secondAttendanceEndTime,
         type: memberAttendance.attendanceStatusType,
-        firstAttendanceTime: attendanceSchedule.firstAttendanceStartTime!,
-        secondAttendanceTime: attendanceSchedule.secondAttendanceStartTime,
+        memberFirstAttendanceTime: memberAttendance.firstAttendanceCheckTime,
+        memberSecondAttendanceTime: memberAttendance.secondAttendanceCheckTime,
       ),
       child: _EditAttendancePage(
         attendanceSchedule: attendanceSchedule,
@@ -70,7 +74,18 @@ class _EditAttendancePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AttendanceScheduleBox(data: attendanceSchedule, isReadOnly: true),
+              AttendanceScheduleBox(
+                isReadOnly: true,
+                attendanceDate: attendanceSchedule.attendanceDate,
+                firstAttendanceStartTime:
+                    attendanceSchedule.firstAttendanceStartTime,
+                firstAttendanceEndTime:
+                    attendanceSchedule.firstAttendanceEndTime,
+                secondAttendanceStartTime:
+                    attendanceSchedule.secondAttendanceStartTime,
+                secondAttendanceEndTime:
+                    attendanceSchedule.secondAttendanceEndTime,
+              ),
               SizedBox(height: 32),
               Text(
                 "회원 정보",
@@ -151,7 +166,6 @@ class _EditAttendancePage extends StatelessWidget {
                 child: EditableAttendanceStatusBox(),
               ),
               SizedBox(height: 16),
-
               EditableAttendanceTimeBox(),
             ],
           ),

@@ -1,4 +1,3 @@
-import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
@@ -13,17 +12,24 @@ class AttendanceScheduleBox extends StatelessWidget
     with ViewModel<AttendanceEditViewModel> {
   const AttendanceScheduleBox({
     super.key,
-    required this.data,
     required this.isReadOnly,
+    required this.attendanceDate,
+    required this.firstAttendanceStartTime,
+    required this.firstAttendanceEndTime,
+    required this.secondAttendanceStartTime,
+    required this.secondAttendanceEndTime,
   });
 
-  final AttendanceDetailData data;
+  final DateTime attendanceDate;
+  final DateTime firstAttendanceStartTime;
+  final DateTime firstAttendanceEndTime;
+  final DateTime? secondAttendanceStartTime;
+  final DateTime? secondAttendanceEndTime;
   final bool isReadOnly;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final currentDate = data.attendanceDate;
     return DragDetector(
       moveLeftContent: _movePreviousValidDate(context),
       moveRightContent: _moveNextValidDate(context),
@@ -36,7 +42,7 @@ class AttendanceScheduleBox extends StatelessWidget
               if (isReadOnly) {
                 return Center(
                   child: Text(
-                    data.attendanceDate.format("M월 dd일"),
+                    attendanceDate.format("M월 dd일"),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -58,9 +64,9 @@ class AttendanceScheduleBox extends StatelessWidget
                     ),
                   ),
                   GestureDetector(
-                    onTap: _showDatePickerBottomSheet(context, currentDate),
+                    onTap: _showDatePickerBottomSheet(context, attendanceDate),
                     child: Text(
-                      data.attendanceDate.format("M월 dd일"),
+                      attendanceDate.format("M월 dd일"),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -102,8 +108,7 @@ class AttendanceScheduleBox extends StatelessWidget
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          data.firstAttendanceStartTime!
-                              .format("hh시 mm분 ss초 ~"),
+                          firstAttendanceStartTime.format("HH시 mm분 ss초 ~"),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 11,
@@ -112,7 +117,7 @@ class AttendanceScheduleBox extends StatelessWidget
                           ),
                         ),
                         Text(
-                          data.firstAttendanceEndTime!.format("hh시 mm분 ss초"),
+                          firstAttendanceEndTime.format("HH시 mm분 ss초"),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 11,
@@ -143,7 +148,8 @@ class AttendanceScheduleBox extends StatelessWidget
                 ),
                 Expanded(
                   child: Builder(builder: (context) {
-                    if (data.isExistSecondAttendance) {
+                    if (secondAttendanceStartTime != null &&
+                        secondAttendanceEndTime != null) {
                       return RoundedBorder(
                         color: theme.neutral5,
                         padding: EdgeInsets.symmetric(vertical: 4),
@@ -151,8 +157,8 @@ class AttendanceScheduleBox extends StatelessWidget
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              data.secondAttendanceStartTime!
-                                  .format("hh시 mm분 ss초 ~"),
+                              secondAttendanceStartTime!
+                                  .format("HH시 mm분 ss초 ~"),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 11,
@@ -161,8 +167,7 @@ class AttendanceScheduleBox extends StatelessWidget
                               ),
                             ),
                             Text(
-                              data.secondAttendanceEndTime!
-                                  .format("hh시 mm분 ss초"),
+                              secondAttendanceEndTime!.format("HH시 mm분 ss초"),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 11,
@@ -175,7 +180,7 @@ class AttendanceScheduleBox extends StatelessWidget
                       );
                     } else {
                       return RoundedBorder(
-                        color: theme.neutral5,
+                        color: theme.disabled,
                         padding: EdgeInsets.symmetric(vertical: 4),
                         child: Text(
                           "2차 인증 시간이 설정되지 않았습니다.",
@@ -200,12 +205,12 @@ class AttendanceScheduleBox extends StatelessWidget
 
   void Function()? _movePreviousValidDate(BuildContext context) {
     if (isReadOnly) return null;
-    return () => read(context).movePreviousValidDate(data.attendanceDate);
+    return () => read(context).movePreviousValidDate(attendanceDate);
   }
 
   void Function()? _moveNextValidDate(BuildContext context) {
     if (isReadOnly) return null;
-    return () => read(context).moveNextValidDate(data.attendanceDate);
+    return () => read(context).moveNextValidDate(attendanceDate);
   }
 
   void Function()? _showDatePickerBottomSheet(
