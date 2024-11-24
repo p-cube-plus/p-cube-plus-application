@@ -11,28 +11,41 @@ import 'package:provider/provider.dart';
 class RestrictedDatePicker extends StatelessWidget {
   const RestrictedDatePicker({
     super.key,
+    required this.targetYear,
+    required this.targetMonth,
     required this.onDateSelectionComplete,
-    required this.onRefreshValidDates,
+    required this.fetchRefreshValidDates,
   });
 
+  final int targetYear;
+  final int targetMonth;
   final Function(DateTime) onDateSelectionComplete;
-  final Future<List<int>> Function(DateTime) onRefreshValidDates;
+  final Future<List<int>> Function(DateTime) fetchRefreshValidDates;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => RestrictedDatePickerViewModel(
+        targetYear,
+        targetMonth,
         onDateSelectionComplete,
-        onRefreshValidDates,
+        fetchRefreshValidDates,
       ),
       child: _RestrictedDatePicker(),
     );
   }
 }
 
-class _RestrictedDatePicker extends StatelessWidget
+class _RestrictedDatePicker extends StatefulWidget
     with ViewModel<RestrictedDatePickerViewModel> {
   const _RestrictedDatePicker();
+
+  @override
+  State<_RestrictedDatePicker> createState() => _RestrictedDatePickerState();
+}
+
+class _RestrictedDatePickerState extends State<_RestrictedDatePicker> {
+  var _refreshKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +53,8 @@ class _RestrictedDatePicker extends StatelessWidget
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: DragDetector(
-        moveLeftContent: () => read(context).movePreviousMonth(),
-        moveRightContent: () => read(context).moveNextMonth(),
+        moveLeftContent: () => _movePreviousMonth(),
+        moveRightContent: () => _moveNextMonth(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -59,7 +72,7 @@ class _RestrictedDatePicker extends StatelessWidget
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => read(context).movePreviousMonth(),
+                    onTap: () => _movePreviousMonth(),
                     child: Icon(
                       Icons.chevron_left,
                       color: theme.neutral40,
@@ -67,7 +80,7 @@ class _RestrictedDatePicker extends StatelessWidget
                     ),
                   ),
                 ),
-                watchWidget((viewModel) => viewModel.currentDate,
+                widget.watchWidget((viewModel) => viewModel.currentDate,
                     (context, selectedDate) {
                   return Text(
                     selectedDate.format("yyyy년 M월"),
@@ -80,7 +93,7 @@ class _RestrictedDatePicker extends StatelessWidget
                 }),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => read(context).moveNextMonth(),
+                    onTap: () => _moveNextMonth(),
                     child: Icon(
                       Icons.chevron_right,
                       color: theme.neutral40,
@@ -92,22 +105,48 @@ class _RestrictedDatePicker extends StatelessWidget
             ),
             SizedBox(height: 16),
             CalendarWeekRow(),
-            RestrictedDatePickerDay(),
+            RestrictedDatePickerDay(
+              key: _refreshKey,
+            ),
             SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () => read(context).onDateSelect(),
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Text(
-                  "해당 날짜 선택하기",
-                  textAlign: TextAlign.center,
-                ),
-              ),
+            widget.watchWidget(
+              (viewModel) => viewModel.selectedDay,
+              (context, selectedDay) {
+                return ElevatedButton(
+                  onPressed: onDateSelectionComplete(),
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      "해당 날짜 선택하기",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _movePreviousMonth() {
+    widget.read(context).movePreviousMonth();
+    setState(() => _refreshKey = UniqueKey());
+  }
+
+  void _moveNextMonth() {
+    widget.read(context).moveNextMonth();
+    setState(() => _refreshKey = UniqueKey());
+  }
+
+  void Function()? onDateSelectionComplete() {
+    final selectedDay = widget.read(context).selectedDay;
+    final currentDate = widget.read(context).currentDate;
+    if (selectedDay == null || !selectedDay.isSameMonth(currentDate)) {
+      return null;
+    }
+    return () => widget.read(context).onDateSelectionComplete(selectedDay);
   }
 }

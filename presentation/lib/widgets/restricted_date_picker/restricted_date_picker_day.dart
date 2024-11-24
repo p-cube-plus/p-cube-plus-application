@@ -1,11 +1,12 @@
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
-import 'package:presentation/ui/executive/attendance/restricted_date_picker/cell/date_picker_restricted_cell.dart';
-import 'package:presentation/ui/executive/attendance/restricted_date_picker/cell/date_picker_selected_cell.dart';
-import 'package:presentation/ui/executive/attendance/restricted_date_picker/cell/date_picker_today_cell.dart';
-import 'package:presentation/ui/executive/attendance/restricted_date_picker/cell/date_picker_valid_cell.dart';
-import 'package:presentation/ui/executive/attendance/restricted_date_picker/restricted_date_picker_view_model.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
+import 'package:presentation/widgets/restricted_date_picker/cell/date_picker_restricted_cell.dart';
+import 'package:presentation/widgets/restricted_date_picker/cell/date_picker_selected_cell.dart';
+import 'package:presentation/widgets/restricted_date_picker/cell/date_picker_today_cell.dart';
+import 'package:presentation/widgets/restricted_date_picker/cell/date_picker_valid_cell.dart';
+import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker_view_model.dart';
 
 class RestrictedDatePickerDay extends StatelessWidget
     with ViewModel<RestrictedDatePickerViewModel> {
@@ -13,57 +14,103 @@ class RestrictedDatePickerDay extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return watchWidget((viewModel) => viewModel.currentDate,
-        (context, currentMonth) {
-      return Column(
-        children: List.generate(
-          currentMonth.numberOfWeeks,
-          growable: false,
-          (columnIndex) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(
-              DateTime.daysPerWeek,
-              growable: false,
-              (rowIndex) {
-                const cellHeight = 42.0;
-                final createdDay =
-                    _getCreatedDay(currentMonth, columnIndex, rowIndex);
+    final currentMonth = read(context).currentDate;
+    return DefaultFutureBuilder(
+      fetchData: read(context).fetchRefreshValidDates(),
+      showOnLoadedWidget: (BuildContext context, List<int> validDates) {
+        return Column(
+          children: List.generate(
+            currentMonth.numberOfWeeks,
+            growable: false,
+            (columnIndex) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                DateTime.daysPerWeek,
+                growable: false,
+                (rowIndex) {
+                  const cellHeight = 42.0;
+                  final createdDay =
+                      _getCreatedDay(currentMonth, columnIndex, rowIndex);
+                  if (_isBlankCell(currentMonth, columnIndex, rowIndex)) {
+                    return const Expanded(child: SizedBox(height: cellHeight));
+                  }
+                  return Expanded(
+                    child: SizedBox(
+                      height: cellHeight,
+                      child: watchWidget(
+                        (viewModel) => viewModel.selectedDay,
+                        (context, selectedDay) {
+                          if (createdDay == selectedDay?.day) {
+                            return RestrictedDatePickerSelectedCell(createdDay);
+                          }
 
-                if (_isBlankCell(currentMonth, columnIndex, rowIndex)) {
-                  return const Expanded(child: SizedBox(height: cellHeight));
-                }
+                          if (validDates.contains(createdDay)) {
+                            if (_isToday(currentMonth.year, currentMonth.month,
+                                createdDay)) {
+                              return RestrictedDatePickerTodayCell(
+                                  createdDay, true);
+                            }
+                            return DatePickerValidCell(createdDay);
+                          }
 
-                return Expanded(
-                  child: SizedBox(
-                    height: cellHeight,
-                    child: watchWidget(
-                      (viewModel) => viewModel.selectedDay,
-                      (context, selectedDay) {
-                        if (createdDay == selectedDay.day) {
-                          return RestrictedDatePickerSelectedCell(createdDay);
-                        }
-                        if (_isToday(currentMonth.year, currentMonth.month,
-                            createdDay)) {
-                          return RestrictedDatePickerTodayCell(createdDay);
-                        }
+                          if (_isToday(currentMonth.year, currentMonth.month,
+                              createdDay)) {
+                            return RestrictedDatePickerTodayCell(
+                                createdDay, false);
+                          }
 
-                        if (read(context).isValidDay(createdDay)) {
-                          return DatePickerValidCell(createdDay);
-                        }
-                        return DatePickerRestrictedCell(createdDay);
-                      },
-                      shouldRebuild: (previous, next) {
-                        return previous.day != next.day;
-                      },
+                          return DatePickerRestrictedCell(createdDay);
+                        },
+                        shouldRebuild: (previous, next) {
+                          return previous?.day != next?.day;
+                        },
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+      loadingWidget: Stack(
+        children: [
+          Column(
+            children: List.generate(
+              currentMonth.numberOfWeeks,
+              growable: false,
+              (columnIndex) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(
+                  DateTime.daysPerWeek,
+                  growable: false,
+                  (rowIndex) {
+                    const cellHeight = 42.0;
+                    final createdDay =
+                        _getCreatedDay(currentMonth, columnIndex, rowIndex);
+                    if (_isBlankCell(currentMonth, columnIndex, rowIndex)) {
+                      return const Expanded(
+                          child: SizedBox(height: cellHeight));
+                    }
+                    return Expanded(
+                      child: SizedBox(
+                        height: cellHeight,
+                        child: DatePickerRestrictedCell(createdDay),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   bool _isToday(int year, int month, int day) {

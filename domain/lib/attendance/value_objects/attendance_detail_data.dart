@@ -8,8 +8,8 @@ class AttendanceDetailData {
   final DateTime attendanceDate;
   final AttendanceType type;
   final List<MemberAttendanceState> memberStateList;
-  final DateTime? firstAttendanceStartTime;
-  final DateTime? firstAttendanceEndTime;
+  final DateTime firstAttendanceStartTime;
+  final DateTime firstAttendanceEndTime;
   final DateTime? secondAttendanceStartTime;
   final DateTime? secondAttendanceEndTime;
 
@@ -18,14 +18,12 @@ class AttendanceDetailData {
     required this.attendanceDate,
     required this.type,
     required this.memberStateList,
-    this.firstAttendanceStartTime,
-    this.firstAttendanceEndTime,
+    required this.firstAttendanceStartTime,
+    required this.firstAttendanceEndTime,
     this.secondAttendanceStartTime,
     this.secondAttendanceEndTime,
   });
 
-  bool get isExistFirstAttendance =>
-      firstAttendanceStartTime != null && firstAttendanceEndTime != null;
   bool get isExistSecondAttendance =>
       secondAttendanceStartTime != null && secondAttendanceEndTime != null;
 }

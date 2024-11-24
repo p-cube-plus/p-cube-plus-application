@@ -138,4 +138,18 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     // TODO: implement getMemberAttendanceStateList
     throw UnimplementedError();
   }
+
+  @override
+  Future<AttendanceDetailData> getNextAttendanceDetail(
+      AttendanceType attendanceType, DateTime searchDate) {
+    // TODO: implement getNextAttendanceDetail
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AttendanceDetailData> getPreviousAttendanceDetail(
+      AttendanceType attendanceType, DateTime searchDate) {
+    // TODO: implement getPreviousAttendanceDetail
+    throw UnimplementedError();
+  }
 }

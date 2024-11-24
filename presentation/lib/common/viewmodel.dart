@@ -8,8 +8,10 @@ mixin ViewModel<T> {
     R Function(T viewModel) selector,
     Widget Function(BuildContext context, R item) builder, {
     bool Function(R previous, R next)? shouldRebuild,
+    Key? key,
   }) =>
       Selector<T, R>(
+        key: key,
         selector: (context, T viewModel) => selector(viewModel),
         builder: (context, R item, _) => builder(context, item),
         shouldRebuild: shouldRebuild,

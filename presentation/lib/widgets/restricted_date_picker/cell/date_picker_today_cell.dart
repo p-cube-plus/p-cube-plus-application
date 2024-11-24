@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker_view_model.dart';
 
-class RestrictedDatePickerTodayCell extends StatelessWidget {
+class RestrictedDatePickerTodayCell extends StatelessWidget
+    with ViewModel<RestrictedDatePickerViewModel> {
   final int currentDay;
+  final bool isClickable;
 
   const RestrictedDatePickerTodayCell(
-    this.currentDay, {
+    this.currentDay,
+    this.isClickable, {
     super.key,
   });
 
@@ -13,7 +18,7 @@ class RestrictedDatePickerTodayCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return InkWell(
-      onTap: () => {},
+      onTap: onTap(context),
       child: Stack(
         alignment: Alignment.center,
         clipBehavior: Clip.none,
@@ -49,5 +54,10 @@ class RestrictedDatePickerTodayCell extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void Function()? onTap(BuildContext context) {
+    if (!isClickable) return null;
+    return () => read(context).changeSelectedDay(currentDay);
   }
 }

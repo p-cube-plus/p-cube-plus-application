@@ -50,6 +50,16 @@ abstract interface class AttendanceRepository {
     DateTime? searchDate,
   );
 
+  Future<AttendanceDetailData> getNextAttendanceDetail(
+    AttendanceType attendanceType,
+    DateTime searchDate,
+  );
+
+  Future<AttendanceDetailData> getPreviousAttendanceDetail(
+    AttendanceType attendanceType,
+    DateTime searchDate,
+  );
+
   Future<List<AttendanceData>> getAttendanceExistDayListInMonth(
     AttendanceType attendanceType,
     int year,

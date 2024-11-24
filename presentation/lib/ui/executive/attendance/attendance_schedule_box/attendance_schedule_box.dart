@@ -1,0 +1,229 @@
+import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
+import 'package:domain/common/extensions/date_time_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/executive/attendance/attendance_edit_view_model.dart';
+import 'package:presentation/widgets/default_bottomsheet.dart';
+import 'package:presentation/widgets/drag_detector.dart';
+import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker.dart';
+import 'package:presentation/widgets/rounded_border.dart';
+
+class AttendanceScheduleBox extends StatelessWidget
+    with ViewModel<AttendanceEditViewModel> {
+  const AttendanceScheduleBox({
+    super.key,
+    required this.data,
+    required this.isReadOnly,
+  });
+
+  final AttendanceDetailData data;
+  final bool isReadOnly;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final currentDate = data.attendanceDate;
+    return DragDetector(
+      moveLeftContent: _movePreviousValidDate(context),
+      moveRightContent: _moveNextValidDate(context),
+      child: RoundedBorder(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Builder(builder: (context) {
+              if (isReadOnly) {
+                return Center(
+                  child: Text(
+                    data.attendanceDate.format("M월 dd일"),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                );
+              }
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: _movePreviousValidDate(context),
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: theme.neutral40,
+                      size: 24,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _showDatePickerBottomSheet(context, currentDate),
+                    child: Text(
+                      data.attendanceDate.format("M월 dd일"),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: theme.neutral100,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _moveNextValidDate(context),
+                    child: Icon(
+                      Icons.chevron_right,
+                      color: theme.neutral40,
+                      size: 24,
+                    ),
+                  ),
+                ],
+              );
+            }),
+            SizedBox(height: 22),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 20),
+                  child: Text(
+                    "1차 인증",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: RoundedBorder(
+                    color: theme.neutral10,
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          data.firstAttendanceStartTime!
+                              .format("hh시 mm분 ss초 ~"),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: theme.neutral100,
+                          ),
+                        ),
+                        Text(
+                          data.firstAttendanceEndTime!.format("hh시 mm분 ss초"),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: theme.neutral100,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 14),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 20),
+                  child: Text(
+                    "2차 인증",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Builder(builder: (context) {
+                    if (data.isExistSecondAttendance) {
+                      return RoundedBorder(
+                        color: theme.neutral5,
+                        padding: EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              data.secondAttendanceStartTime!
+                                  .format("hh시 mm분 ss초 ~"),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: theme.neutral100,
+                              ),
+                            ),
+                            Text(
+                              data.secondAttendanceEndTime!
+                                  .format("hh시 mm분 ss초"),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: theme.neutral100,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return RoundedBorder(
+                        color: theme.neutral5,
+                        padding: EdgeInsets.symmetric(vertical: 4),
+                        child: Text(
+                          "2차 인증 시간이 설정되지 않았습니다.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: theme.neutral40,
+                          ),
+                        ),
+                      );
+                    }
+                  }),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void Function()? _movePreviousValidDate(BuildContext context) {
+    if (isReadOnly) return null;
+    return () => read(context).movePreviousValidDate(data.attendanceDate);
+  }
+
+  void Function()? _moveNextValidDate(BuildContext context) {
+    if (isReadOnly) return null;
+    return () => read(context).moveNextValidDate(data.attendanceDate);
+  }
+
+  void Function()? _showDatePickerBottomSheet(
+      BuildContext context, DateTime currentDate) {
+    if (isReadOnly) return null;
+
+    return () => BottomSheetBuilder().build(
+          context,
+          RestrictedDatePicker(
+            targetYear: currentDate.year,
+            targetMonth: currentDate.month,
+            onDateSelectionComplete: (selectedDate) {
+              Navigator.of(context).pop();
+              read(context).changeSelectedDate(selectedDate);
+            },
+            fetchRefreshValidDates: (selectedDate) =>
+                read(context).fetchValidDateSet(selectedDate),
+          ),
+        );
+  }
+}

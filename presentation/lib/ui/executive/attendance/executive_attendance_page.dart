@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/executive/attendance/regular_metting/regular_metting_setting_page.dart';
+import 'package:presentation/ui/executive/attendance/regular_metting/regular_metting_edit_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
@@ -42,7 +42,7 @@ class ExecutiveAttendancePage extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => RegularMettingSettingPage(),
+        builder: (context) => RegularMettingEditPage(),
       ),
     );
   }

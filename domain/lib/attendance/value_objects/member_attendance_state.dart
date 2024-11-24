@@ -31,6 +31,7 @@ class MemberAttendanceState {
     this.secondAttendanceCheckTime,
   });
 
+  bool get isExistFirstAttendance => firstAttendanceCheckTime == null;
   bool get isExistSecondAttendance => secondAttendanceCheckTime == null;
 
   // AttendanceStatusType get attendanceStatusType {

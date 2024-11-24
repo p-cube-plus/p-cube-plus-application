@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DragDetector extends StatelessWidget {
-  final Function() moveLeftContent;
-  final Function() moveRightContent;
+  final Function()? moveLeftContent;
+  final Function()? moveRightContent;
   final Widget child;
 
   final double _scrollSensitivity = 20.0;
@@ -30,9 +30,9 @@ class DragDetector extends StatelessWidget {
 
   void _scrollAction(BuildContext context, double startX, double endX) {
     if (endX - startX > _scrollSensitivity) {
-      moveLeftContent();
+      moveLeftContent?.call();
     } else if (startX - endX > _scrollSensitivity) {
-      moveRightContent();
+      moveRightContent?.call();
     }
   }
 }
