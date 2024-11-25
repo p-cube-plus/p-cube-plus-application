@@ -20,6 +20,10 @@ class DefaultTabBar extends StatefulWidget {
     this.tabLabelPadding,
     this.indicatorInsets,
     this.overLayColor,
+    this.background,
+    this.labelStyle,
+    this.unselectedLabelStyle,
+    this.indicatorColor,
   });
 
   final List<DefaultTab> tabs;
@@ -29,6 +33,10 @@ class DefaultTabBar extends StatefulWidget {
   final EdgeInsetsGeometry? tabLabelPadding;
   final EdgeInsetsGeometry? indicatorInsets;
   final Color? overLayColor;
+  final Color? background;
+  final Color? indicatorColor;
+  final TextStyle? unselectedLabelStyle;
+  final TextStyle? labelStyle;
 
   @override
   State<DefaultTabBar> createState() => _DefaultTabBarState();
@@ -67,33 +75,38 @@ class _DefaultTabBarState extends State<DefaultTabBar>
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TabBar(
-          tabAlignment: widget.tabAlignment,
-          dividerHeight: 0,
-          controller: controller,
-          padding: widget.padding,
-          labelPadding: widget.tabLabelPadding,
-          overlayColor: WidgetStateProperty.all(widget.overLayColor),
-          tabs: tabList,
-          indicatorPadding: EdgeInsets.all(0),
-          indicatorWeight: 0,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicator: UnderlineTabIndicator(
-            borderSide: BorderSide(
-              width: 2.0,
-              color: theme.neutral100,
+        Container(
+          color: widget.background ?? Colors.transparent,
+          child: TabBar(
+            tabAlignment: widget.tabAlignment,
+            dividerHeight: 0,
+            controller: controller,
+            padding: widget.padding,
+            labelPadding: widget.tabLabelPadding,
+            overlayColor: WidgetStateProperty.all(widget.overLayColor),
+            tabs: tabList,
+            indicatorPadding: EdgeInsets.all(0),
+            indicatorWeight: 0,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicator: UnderlineTabIndicator(
+              borderSide: BorderSide(
+                width: 2.0,
+                color: widget.indicatorColor ?? theme.neutral100,
+              ),
+              insets: widget.indicatorInsets ?? EdgeInsets.zero,
             ),
-            insets: widget.indicatorInsets ?? EdgeInsets.zero,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: theme.neutral20,
-          ),
-          labelStyle: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color: theme.neutral100,
+            unselectedLabelStyle: widget.unselectedLabelStyle ??
+                TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: theme.neutral20,
+                ),
+            labelStyle: widget.labelStyle ??
+                TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: theme.neutral100,
+                ),
           ),
         ),
         Expanded(

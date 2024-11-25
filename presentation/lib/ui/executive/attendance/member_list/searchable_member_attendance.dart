@@ -5,7 +5,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/attendance/member_list/member_attendance_list_tab.dart';
-import 'package:presentation/ui/executive/attendance/attendance_edit_view_model.dart';
+import 'package:presentation/ui/executive/attendance/attendance_status_tab/attendance_status_view_model.dart';
 import 'package:presentation/ui/executive/attendance/member_list/member_filter_bottom_sheet.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
@@ -26,7 +26,7 @@ class SearchableMemberAttendance extends StatefulWidget {
 }
 
 class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
-    with ViewModel<AttendanceEditViewModel> {
+    with ViewModel<AttendanceStatusViewModel> {
   final controller = TextEditingController();
   final _focusNode = FocusNode();
 

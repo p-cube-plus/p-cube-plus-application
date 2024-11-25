@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/executive/attendance/part_metting/part_metting_edit_page.dart';
 import 'package:presentation/ui/executive/attendance/regular_metting/regular_metting_edit_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -13,27 +14,31 @@ class ExecutiveAttendancePage extends StatelessWidget {
     final theme = Theme.of(context);
     return DefaultPage(
       appbar: const DefaultAppBar(),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "출석",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: theme.neutral100,
+      bottomPadding: 0,
+      content: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "출석",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: theme.neutral100,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          _AttendanceSettingTile(
-            titleName: "정기회의 출석",
-            onClick: () => _navigateToRegularMettingSettingPage(context),
-          ),
-          _AttendanceSettingTile(
-            titleName: "파트회의 출석",
-            onClick: () => _navigateToPartMettingSettingPage(context),
-          ),
-        ],
+            const SizedBox(height: 20),
+            _AttendanceSettingTile(
+              titleName: "정기회의 출석",
+              onClick: () => _navigateToRegularMettingSettingPage(context),
+            ),
+            _AttendanceSettingTile(
+              titleName: "파트회의 출석",
+              onClick: () => _navigateToPartMettingSettingPage(context),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -51,7 +56,7 @@ class ExecutiveAttendancePage extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Container(),
+        builder: (context) => PartMettingEditPage(),
       ),
     );
   }

@@ -47,7 +47,7 @@ class ExecutiveMainPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
-                        SvgPicture.asset(
+                        Image.asset(
                           asset.executiveAlarm,
                           width: 32,
                           height: 32,
@@ -72,7 +72,7 @@ class ExecutiveMainPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
-                        SvgPicture.asset(
+                        Image.asset(
                           asset.executiveAttendance,
                           width: 32,
                           height: 32,

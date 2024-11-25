@@ -41,6 +41,5 @@ const String filter = "assets/images/icons/filter.svg";
 const String executiveHome = "assets/images/icons/executive.svg";
 
 // executive main
-const String executiveAlarm = "assets/images/icons/executive_alarm.svg";
-const String executiveAttendance =
-    "assets/images/icons/executive_attendance.svg";
+const String executiveAlarm = "assets/images/executive_alarm.png";
+const String executiveAttendance = "assets/images/executive_attendance.png";

@@ -2,14 +2,14 @@ import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/executive/attendance/attendance_edit_view_model.dart';
+import 'package:presentation/ui/executive/attendance/attendance_status_tab/attendance_status_view_model.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/drag_detector.dart';
 import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 class AttendanceScheduleBox extends StatelessWidget
-    with ViewModel<AttendanceEditViewModel> {
+    with ViewModel<AttendanceStatusViewModel> {
   const AttendanceScheduleBox({
     super.key,
     required this.isReadOnly,

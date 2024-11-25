@@ -11,7 +11,7 @@ import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/utils/debouncer.dart';
 import 'package:presentation/utils/match_korean.dart';
 
-class AttendanceEditViewModel extends BaseViewModel<void, void> {
+class AttendanceStatusViewModel extends BaseViewModel<void, void> {
   final _fetchUserAttendanceListUseCase = FetchUserAttendanceListUseCase();
   final _fetchMonthAttendanceUseCase = FetchMonthAttendanceUseCase();
   final _fetchNextAttendanceScheduleUseCase =
@@ -28,7 +28,7 @@ class AttendanceEditViewModel extends BaseViewModel<void, void> {
 
   bool isVisibleTopWidget = true;
 
-  AttendanceEditViewModel(this.attendanceType)
+  AttendanceStatusViewModel(this.attendanceType)
       : fetchAttendanceDetailData =
             FetchMostRecentAttendanceUseCase().call(attendanceType);
 
