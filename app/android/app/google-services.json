@@ -1,94 +1,45 @@
 {
   "project_info": {
-    "project_number": "367985551076",
-    "project_id": "violet-strike",
-    "storage_bucket": "violet-strike.appspot.com"
+    "project_number": "537634283817",
+    "project_id": "p-cube-plus",
+    "storage_bucket": "p-cube-plus.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:367985551076:android:c0d964b0253118e4316ef1",
-        "android_client_info": {
-          "package_name": "com.example.firebase_test"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAH2pfe0kTKYGnNzVrOcd_9NmBW4tPTkLM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:367985551076:android:cb1dff5427ebf034316ef1",
-        "android_client_info": {
-          "package_name": "com.example.ftest"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAH2pfe0kTKYGnNzVrOcd_9NmBW4tPTkLM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:367985551076:android:8d7d501b83b39f3b316ef1",
+        "mobilesdk_app_id": "1:537634283817:android:fee1127f13e7e27e049738",
         "android_client_info": {
           "package_name": "com.pandora_cube.p_cube_plus"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAH2pfe0kTKYGnNzVrOcd_9NmBW4tPTkLM"
+          "current_key": "AIzaSyAlKi3tEh58dR7BcjPdXNHdb83bS2OS35E"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "367985551076-b3suphq136eaoh5ccalct5bcekgesd7d.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537634283817:android:39079b2465b596af049738",
+        "android_client_info": {
+          "package_name": "com.pandora_cube.p_cube_plus.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlKi3tEh58dR7BcjPdXNHdb83bS2OS35E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

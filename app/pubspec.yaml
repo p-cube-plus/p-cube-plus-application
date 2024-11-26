@@ -22,6 +22,7 @@ dependencies:
 
   flutter_launcher_icons: ^0.14.1
   flutter_native_splash: ^2.3.7
+  firebase_core: ^3.4.0
   
 # 앱 아이콘
 # 이미지 설정 후 아래 명령어 사용
@@ -30,7 +31,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/symbol.png"
-  min_ask_android: 21
+  min_ask_android: 24
 
 # 앱 시작 시 로딩 화면
 # 설정 후 아래 명령어 사용

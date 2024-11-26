@@ -9,10 +9,12 @@ import 'package:data/mock/mock_schedule_repository_impl.dart';
 import 'package:data/mock/mock_user_repository_impl.dart';
 import 'package:data/repository_impl/app_configuration_repository_impl.dart';
 import 'package:data/repository_impl/debug_repository_impl.dart';
+import 'package:data/repository_impl/logging_repository_impl.dart';
 import 'package:domain/app_configuration/repository/app_configuration_repository.dart';
 import 'package:domain/attendance/repository/attendance_repository.dart';
 import 'package:domain/debug/repository/debug_repository.dart';
 import 'package:domain/fee/repository/fee_repository.dart';
+import 'package:domain/logging/repository/logging_repository.dart';
 import 'package:domain/login/repository/login_repository.dart';
 import 'package:domain/member/repository/member_repository.dart';
 import 'package:domain/notification/repository/notification_repository.dart';
@@ -55,5 +57,8 @@ void registRepository() {
   );
   GetIt.I.registerLazySingleton<DebugRepository>(
     () => DebugRepositoryImpl(),
+  );
+  GetIt.I.registerLazySingleton<LoggingRepository>(
+    () => LoggingRepositoryImpl(),
   );
 }

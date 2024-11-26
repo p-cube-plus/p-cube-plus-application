@@ -7,74 +7,18 @@
         {
             "name": "app",
             "cwd": "app",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "app (profile mode)",
-            "cwd": "app",
+            "program": "lib/main.dart",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "debug"
         },
         {
             "name": "app (release mode)",
             "cwd": "app",
+            "program": "lib/main.dart",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
-        {
-            "name": "domain",
-            "cwd": "domain",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "legacy",
-            "cwd": "legacy",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "legacy (profile mode)",
-            "cwd": "legacy",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "legacy (release mode)",
-            "cwd": "legacy",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "presentation",
-            "cwd": "presentation",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "presentation (profile mode)",
-            "cwd": "presentation",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "presentation (release mode)",
-            "cwd": "presentation",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "service",
-            "cwd": "service",
-            "request": "launch",
-            "type": "dart"
-        }
     ]
 }
