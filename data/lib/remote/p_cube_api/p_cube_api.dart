@@ -4,7 +4,7 @@ import 'package:data/remote/common/header_builder.dart';
 import 'package:data/remote/common/token_holder.dart';
 import 'package:data/remote/p_cube_api/auth/response/auth_token_response_dto.dart';
 import 'package:data/utils/json_util.dart';
-import 'package:domain/exception/api_exception.dart';
+import 'package:domain/common/extensions/api_exception.dart';
 import 'package:http/http.dart' as http;
 
 class PCubeApi with TokenHolder {

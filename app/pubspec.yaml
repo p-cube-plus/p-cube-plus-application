@@ -25,6 +25,7 @@ dependencies:
   firebase_core: ^3.4.0
   firebase_crashlytics: ^4.1.0
   firebase_analytics: ^11.3.0
+  firebase_messaging: ^15.1.0
   
 # 앱 아이콘
 # 이미지 설정 후 아래 명령어 사용
@@ -49,6 +50,7 @@ flutter:
      - assets/images/
      - assets/images/icons/
      - assets/lottie/
+     - assets/data/
   fonts:
     - family: SpoqaHanSansNeo
       fonts:

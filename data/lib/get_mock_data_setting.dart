@@ -1,7 +1,6 @@
-import 'package:data/local/shared_preference/shared_preference_key_type.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
+import 'package:get_it/get_it.dart';
 
-Future getMockDataSetting() async {
-  final pref = await SharedPreferences.getInstance();
-  return pref.getBool(PrefKeyType.isMocking.name) ?? false;
+bool getMockDataSetting() {
+  return GetIt.I.get<SharedPreferenceLocalDatasource>().isMocking;
 }

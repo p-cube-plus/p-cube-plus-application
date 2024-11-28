@@ -9,13 +9,9 @@ void registService() async {
   remote_di.registRemoteDatasource();
   local_di.registLocalDatasource();
 
-  if (kDebugMode) {
-    final isMocking = await mock_setting.getMockDataSetting();
-    if (isMocking) {
-      mock_di.registRepository();
-    } else {
-      data_di.registRepository();
-    }
+  final isMocking = kDebugMode && mock_setting.getMockDataSetting();
+  if (isMocking) {
+    mock_di.registRepository();
   } else {
     data_di.registRepository();
   }

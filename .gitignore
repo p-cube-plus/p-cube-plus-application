@@ -18,3 +18,5 @@ presentation/.flutter-plugins-dependencies
 /app/android/app/build
 /data/build
 app/firepit-log.txt
+data/.flutter-plugins
+app/assets/data/fcm_auth.json

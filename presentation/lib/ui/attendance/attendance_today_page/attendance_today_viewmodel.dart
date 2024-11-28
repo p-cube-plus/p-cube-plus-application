@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:domain/attendance/usecases/attend_use_case.dart';
 import 'package:domain/attendance/usecases/fetch_attendance_state_use_case.dart';
-import 'package:domain/attendance/usecases/fetch_can_attend_use_case.dart';
 import 'package:domain/attendance/usecases/fetch_recent_attendance_use_case.dart';
-import 'package:domain/attendance/usecases/start_scanning_beacon_use_case.dart';
-import 'package:domain/attendance/usecases/stop_scanning_beacon_use_case.dart';
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
+import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 import 'attendance_today_event.dart';
@@ -18,7 +16,6 @@ class AttendanceTodayViewmodel
     extends BaseViewModel<AttendanceTodayState, AttendanceTodayEvent> {
   final _fetchAttendanceStateUseCase = FetchAttendanceStateUseCase();
   final _fetchRecentAttendanceUseCase = FetchRecentAttendanceUseCase();
-  final _fetchCanAttendUseCase = FetchCanAttendUseCase();
   final _attendUseCase = AttendUseCase();
 
   AttendanceData selectedAttendance;
@@ -69,8 +66,8 @@ class AttendanceTodayViewmodel
       final firstOldValue = isPossibleFirstAttendance;
       final secondOldValue = isPossibleSecondAttendance;
 
-      isPossibleFirstAttendance = _fetchCanAttendUseCase(attendanceList[0]);
-      isPossibleSecondAttendance = _fetchCanAttendUseCase(attendanceList[1]);
+      isPossibleFirstAttendance = _canAttend(attendanceList[0]);
+      isPossibleSecondAttendance = _canAttend(attendanceList[1]);
 
       if (firstOldValue != isPossibleFirstAttendance ||
           secondOldValue != isPossibleSecondAttendance) {
@@ -82,6 +79,12 @@ class AttendanceTodayViewmodel
         _timer = null;
       }
     });
+  }
+
+  bool _canAttend(TodayAttendance data) {
+    final isAvailableTime =
+        DateTime.now().isBetweenDates(data.startTime, data.endTime);
+    return isAvailableTime; // isBeaconDetected
   }
 
   @override

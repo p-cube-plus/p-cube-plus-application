@@ -1,5 +1,4 @@
 import 'package:data/common/memory_cache.dart';
-import 'package:data/local/beacon/beacon_scanner.dart';
 import 'package:data/local/local_db/attendance/attendance_dao.dart';
 import 'package:data/local/local_db/attendance/attendance_local_datasource.dart';
 import 'package:data/remote/p_cube_api/attendance/attendance_remote_datasource.dart';
@@ -23,32 +22,11 @@ import 'package:domain/schedule/value_objects/schedule_type.dart';
 import 'package:get_it/get_it.dart';
 
 class MockAttendanceRepositoryImpl implements AttendanceRepository {
-  final beaconScanner = GetIt.I.get<BeaconScanner>();
   final attendanceRemoteDatasource = GetIt.I.get<AttendanceRemoteDatasource>();
   final attendanceLocalDatasource = GetIt.I.get<AttendanceLocalDatasource>();
 
   MemoryCache<List<MemberAttendanceState>> cachedMemberAttendanceList =
       MemoryCache(Duration(minutes: 5));
-
-  @override
-  bool getBeaconDetected() {
-    return beaconScanner.isBeaconDetected;
-  }
-
-  @override
-  void startScanningBeacon() {
-    beaconScanner.startScanning(
-      "Pcube+",
-      "e2c56db5-dffb-48d2-b060-d0f5a71096e0",
-      40011,
-      32023,
-    );
-  }
-
-  @override
-  Future<void> stopScanningBeacon() {
-    return beaconScanner.stopScanning();
-  }
 
   @override
   Future<AttendanceCheck?> getLocalAttendanceData(int id) async {

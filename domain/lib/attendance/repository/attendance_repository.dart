@@ -5,7 +5,6 @@ import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
-import 'package:domain/attendance/value_objects/member_attendance_state.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 
@@ -26,10 +25,6 @@ abstract interface class AttendanceRepository {
     AttendanceType type,
     int count,
   );
-
-  bool getBeaconDetected();
-  void startScanningBeacon();
-  Future<void> stopScanningBeacon();
 
   Future<AttendanceCheck?> getLocalAttendanceData(int id);
   Future<void> insertAttendanceData(AttendanceCheck data);

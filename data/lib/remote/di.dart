@@ -1,4 +1,4 @@
-import 'package:data/remote/firebase/firebase_datasource.dart';
+import 'package:data/firebase/firebase_manager.dart';
 import 'package:data/remote/p_cube_api/accounting/accounting_remote_datasource.dart';
 import 'package:data/remote/p_cube_api/attendance/attendance_remote_datasource.dart';
 import 'package:data/remote/p_cube_api/auth/auth_remote_datasource.dart';
@@ -14,8 +14,8 @@ import 'package:data/remote/p_cube_api/warning/warning_remote_datasource.dart';
 import 'package:get_it/get_it.dart';
 
 void registRemoteDatasource() {
-  GetIt.I.registerLazySingleton<FirebaseDatasource>(
-    () => FirebaseDatasource(),
+  GetIt.I.registerLazySingleton<FirebaseManager>(
+    () => FirebaseManager(),
   );
   GetIt.I.registerLazySingleton<AccountingRemoteDatasource>(
     () => AccountingRemoteDatasource(),

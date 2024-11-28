@@ -25,10 +25,11 @@ dependencies:
   firebase_analytics: ^11.3.0
   firebase_performance: ^0.10.0+5
 
-  # local
-  ibeacon_plugin:
-    git: https://github.com/p-cube-plus/ibeacon_plugin.git
+  # API 변경 시 삭제
+  # assets/data/auth.json 삭제
+  googleapis_auth: ^1.6.0 
 
+  # local
   flutter_secure_storage: ^9.2.2
   shared_preferences: ^2.2.3
   permission_handler: ^11.3.1

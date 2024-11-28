@@ -1,4 +1,3 @@
-import 'package:data/local/beacon/beacon_scanner.dart';
 import 'package:data/local/local_db/attendance/attendance_dao.dart';
 import 'package:data/local/local_db/attendance/attendance_local_datasource.dart';
 import 'package:data/remote/p_cube_api/attendance/attendance_remote_datasource.dart';
@@ -11,36 +10,14 @@ import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
-import 'package:domain/attendance/value_objects/member_attendance_state.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:get_it/get_it.dart';
 
 class AttendanceRepositoryImpl implements AttendanceRepository {
-  final beaconScanner = GetIt.I.get<BeaconScanner>();
   final attendanceRemoteDatasource = GetIt.I.get<AttendanceRemoteDatasource>();
   final attendanceLocalDatasource = GetIt.I.get<AttendanceLocalDatasource>();
-
-  @override
-  bool getBeaconDetected() {
-    return beaconScanner.isBeaconDetected;
-  }
-
-  @override
-  void startScanningBeacon() {
-    beaconScanner.startScanning(
-      "Pcube+",
-      "e2c56db5-dffb-48d2-b060-d0f5a71096e0",
-      40011,
-      32023,
-    );
-  }
-
-  @override
-  Future<void> stopScanningBeacon() {
-    return beaconScanner.stopScanning();
-  }
 
   @override
   Future<AttendanceCheck?> getLocalAttendanceData(int id) async {
