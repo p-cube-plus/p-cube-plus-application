@@ -6,6 +6,12 @@ plugins {
     id "com.google.firebase.crashlytics"
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace "com.pandora_cube.p_cube_plus"
     compileSdkVersion 34
@@ -13,7 +19,7 @@ android {
     defaultConfig {
         applicationId "com.pandora_cube.p_cube_plus"
         multiDexEnabled = true
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0.0"
@@ -30,11 +36,18 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    signingConfigs {
+        release {
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             manifestPlaceholders.put("applicationLabel", "@string/app_name")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true  // 코드 난독화 (proGuard) 적용을 위한 세팅. 코드 크기 줄임.
@@ -48,7 +61,6 @@ android {
             shrinkResources false
             aaptOptions.cruncherEnabled = false // 이미지 압축 비활성화
         }
-
     }
 }
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
 import 'package:presentation/ui/splash/splash_event.dart';
 import 'package:presentation/ui/splash/splash_state.dart';
@@ -94,7 +95,9 @@ class _SplashPageState extends State<_SplashPage>
   void _navigateToMainPage() {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => const MainPage(),
+        builder: (context) => const MainPage(
+          initializeType: MainNavigationType.home,
+        ),
       ),
       (route) => false,
     );

@@ -50,7 +50,6 @@ flutter:
      - assets/images/
      - assets/images/icons/
      - assets/lottie/
-     - assets/data/
   fonts:
     - family: SpoqaHanSansNeo
       fonts:

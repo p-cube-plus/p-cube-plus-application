@@ -3,11 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
 
 enum MainNavigationType {
-  project,
-  fee,
-  home,
-  alarm,
-  user,
+  project(-1),
+  fee(-2),
+  home(1),
+  alarm(0),
+  user(2),
+  ;
+
+  const MainNavigationType(this.navigationIndex);
+  final int navigationIndex;
 }
 
 class MainNavigationBarFactory {

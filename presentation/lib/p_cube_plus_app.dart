@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:presentation/app_view_model.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/executive/alarm/executive_alarm_page.dart';
+import 'package:presentation/ui/home/home_page.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/user/user_setting/developer_setting_page/developer_page.dart';
 import 'package:provider/provider.dart';
@@ -55,26 +56,16 @@ class _PCubePlusApp extends StatelessWidget with ViewModel<AppViewModel> {
         darkTheme: _getDarkTheme(),
         scrollBehavior: _RemoveScrollGlowEffect(),
         navigatorKey: navigatorKey,
-        initialRoute: "/",
-        onGenerateRoute: _onGenerateRoute,
+        home: SplashPage(),
+        routes: {
+          // "/": (context) => SplashPage(),
+          "/login": (context) => LoginHomePage(),
+          "/developer": (context) => DeveloperPage(),
+          "/user": (context) => LoginHomePage(),
+          "/alarm": (context) => ExecutiveAlarmPage(),
+        },
       );
     });
-  }
-
-  Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
-    switch (settings.name) {
-      case '/developer':
-        return MaterialPageRoute(builder: (context) => DeveloperPage());
-      case '/user':
-        return MaterialPageRoute(builder: (context) => LoginHomePage());
-      case '/alarm':
-        return MaterialPageRoute(builder: (context) => ExecutiveAlarmPage());
-      // 추가적으로 경로를 더 설정할 수 있습니다.
-      default:
-        return MaterialPageRoute(builder: (context) => SplashPage());
-    }
   }
 }
 

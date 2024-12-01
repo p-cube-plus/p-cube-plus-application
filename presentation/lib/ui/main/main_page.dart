@@ -2,22 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:presentation/ui/alarm/alarm_page.dart';
 import 'package:presentation/ui/home/home_page.dart';
 import 'package:presentation/ui/user/user_page.dart';
+
 import 'main_navigation_bar_factory.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final MainNavigationType initializeType;
+  const MainPage({
+    super.key,
+    required this.initializeType,
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentIndex = 1;
+  late int _currentIndex;
   late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initializeType.index;
     _pageController = PageController(initialPage: _currentIndex);
   }
 

@@ -8,6 +8,7 @@ import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/login/login_loading/login_loading_page_viewmodel.dart';
 import 'package:presentation/constants/asset_path.dart' as path;
 import 'package:presentation/ui/login/login_loading/login_loading_state.dart';
+import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
 import 'package:provider/provider.dart';
 
@@ -116,7 +117,11 @@ class LoginLoadingPageState extends State<_LoginLoadingPage>
 
   void _navigateToHomePage() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const MainPage()),
+      MaterialPageRoute(
+        builder: (context) => const MainPage(
+          initializeType: MainNavigationType.home,
+        ),
+      ),
       (route) => false,
     );
   }

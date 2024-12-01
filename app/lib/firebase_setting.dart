@@ -4,7 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/services/fcm_handler.dart' show fcmHandler;
+import 'package:presentation/services/fcm_handler.dart';
+import 'package:presentation/services/route_handler.dart' show routeHandler;
 
 /// aos: google-services.json
 /// ios: GoogleService-Info.plist
@@ -34,15 +35,17 @@ void _setFcmBackground() {
 }
 
 Future<void> _onNotificationClicked() async {
-  // final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-  // if (initialMessage != null) {
-  //   /// ios: 종료 -> FCM 알림 클릭 -> 앱 실행 (Notification 페이로드 필요)
-  //   /// aos: 포그라운드 -> FCM 알림 클릭 -> 앱 실행
-  //   fcmClickedHandler(initialMessage);
-  // }
+  final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+  if (initialMessage != null) {
+    /// ios: 종료 -> FCM 알림 클릭 -> 앱 실행 (Notification 페이로드 필요)
+    /// aos: 포그라운드 -> FCM 알림 클릭 -> 앱 실행
+    final payload = getPayload(initialMessage.data);
+    routeHandler(payload);
+  }
 
-  // // 백그라운드 -> FCM 알림 클릭 -> 앱 실행
-  // FirebaseMessaging.onMessageOpenedApp.listen((clickedMessage) {
-  //   fcmClickedHandler(clickedMessage);
-  // });
+  // 백그라운드 -> FCM 알림 클릭 -> 앱 실행
+  FirebaseMessaging.onMessageOpenedApp.listen((clickedMessage) {
+    final payload = getPayload(clickedMessage.data);
+    routeHandler(payload);
+  });
 }

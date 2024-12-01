@@ -27,7 +27,7 @@ class PushNotificationManager {
     String? payload,
   }) async {
     const androidNotificationDetails = AndroidNotificationDetails(
-      'NORMAL_CHANNEL',
+      'NORMAL_CHANNEL', // Android\app\res\values\notification_channel_string.xml
       '일반 알림',
       channelDescription:
           '앱 내 전반적인 알림을 설정합니다.\n중요도 변경 시 앱 내 설정이 제대로 작동하지 않을 수 있습니다.',
