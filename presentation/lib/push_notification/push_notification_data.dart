@@ -1,14 +1,20 @@
-sealed class PushNotificationData {
-  abstract final int id;
-  abstract final String title;
-  abstract final String descrption;
+enum PushNotificationType {
+  test(1),
+  test2(2),
+  test3(3),
+  ;
+
+  const PushNotificationType(this.notificationId);
+  final int notificationId;
 }
 
-class TempPushNotification implements PushNotificationData {
-  @override
-  int get id => 0;
-  @override
-  String get descrption => "테스트 알림입니다.";
-  @override
-  String get title => "테스트 알림";
+class PushNotificationData {
+  final PushNotificationType type;
+  final String title;
+  final String descrption;
+  const PushNotificationData({
+    required this.type,
+    required this.title,
+    required this.descrption,
+  });
 }

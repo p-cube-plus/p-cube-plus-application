@@ -4,9 +4,9 @@ import 'package:data/local/secure_storage/secure_storage_local_datasource.dart';
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:get_it/get_it.dart';
 
-void registLocalDatasource() {
-  GetIt.I.registerLazySingleton<LocalDb>(
-    () => LocalDb(),
+Future<void> registLocalDatasource() async {
+  GetIt.I.registerSingleton<LocalDb>(
+    LocalDb(),
   );
   GetIt.I.registerLazySingleton<AttendanceLocalDatasource>(
     () => AttendanceLocalDatasource(),
@@ -14,7 +14,12 @@ void registLocalDatasource() {
   GetIt.I.registerLazySingleton<SecureStorageLocalDatasource>(
     () => SecureStorageLocalDatasource(),
   );
-  GetIt.I.registerLazySingleton<SharedPreferenceLocalDatasource>(
-    () => SharedPreferenceLocalDatasource(),
+  GetIt.I.registerSingleton<SharedPreferenceLocalDatasource>(
+    SharedPreferenceLocalDatasource(),
   );
+
+  await Future.wait([
+    GetIt.I.get<LocalDb>().initialize(),
+    GetIt.I.get<SharedPreferenceLocalDatasource>().initialize(),
+  ]);
 }

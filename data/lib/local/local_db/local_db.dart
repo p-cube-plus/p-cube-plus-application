@@ -8,15 +8,12 @@ class LocalDb {
   late Database db;
 
   Future<void> initialize() async {
-    db = await openDatabase(
-      path.join(await getDatabasesPath(), _dbName),
-      onCreate: (db, version) async {
-        await GetIt.I.get<AttendanceLocalDatasource>().createTable(db);
-        await Future.delayed(Duration(seconds: 5));
-        print("젠장, 순서가 꼬였나?");
-      },
-      version: 1,
-    );
-    print("해치웠나?");
+    // db = await openDatabase(
+    //   path.join(await getDatabasesPath(), _dbName),
+    //   onCreate: (db, version) async {
+    //     await GetIt.I.get<AttendanceLocalDatasource>().createTable(db);
+    //   },
+    //   version: 1,
+    // );
   }
 }

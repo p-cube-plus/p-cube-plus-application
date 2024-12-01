@@ -13,7 +13,7 @@ CREATE TABLE $_tableName(
   id INTEGER PRIMARY KEY,
   sequenceNumber INTEGER,
   attendanceDateString TEXT,
-  attendanceStatusIndex INTEGER,
+  attendanceStatusIndex INTEGER
 )
 """);
   }

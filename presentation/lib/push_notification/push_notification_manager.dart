@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'push_notification_data.dart';
+import '../services/route_handler.dart' show routeHandler;
 
 class PushNotificationManager {
   static final _instance = PushNotificationManager._internal();
@@ -16,23 +17,15 @@ class PushNotificationManager {
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: onForegroundNotificationReceived,
+      onDidReceiveNotificationResponse: onNotificationReceived,
+      onDidReceiveBackgroundNotificationResponse: onNotificationReceived,
     );
   }
 
-  void onForegroundNotificationReceived(
-    NotificationResponse notificationResponse,
-  ) async {
-    // await Navigator.push(
-    //   context,
-    //   MaterialPageRoute<void>(builder: (context) => SecondScreen(payload)),
-    // );
-    //streamController.add(payload);
-  }
-
   Future<void> showNotification(
-    PushNotificationData data,
-  ) async {
+    PushNotificationData data, {
+    String? payload,
+  }) async {
     const androidNotificationDetails = AndroidNotificationDetails(
       'NORMAL_CHANNEL',
       '일반 알림',
@@ -47,10 +40,19 @@ class PushNotificationManager {
     );
 
     await flutterLocalNotificationsPlugin.show(
-      data.id,
+      data.type.notificationId,
       data.title,
       data.descrption,
       notificationDetails,
+      payload: payload,
     );
   }
+}
+
+@pragma('vm:entry-point')
+void onNotificationReceived(
+  NotificationResponse notificationResponse,
+) async {
+  if (notificationResponse.payload == null) return;
+  routeHandler(notificationResponse.payload!);
 }

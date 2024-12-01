@@ -3,7 +3,7 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services"
-    //id "com.google.firebase.crashlytics"
+    id "com.google.firebase.crashlytics"
 }
 
 android {
@@ -19,11 +19,11 @@ android {
         versionName "1.0.0"
     }
 
-    kotlin {
-        jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(17))
-        }
-        jvmToolchain(17)
+    
+    compileOptions {
+        coreLibraryDesugaringEnabled true   // flutter_local_notifications 요구사항
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     sourceSets {
@@ -59,4 +59,7 @@ flutter {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.6.0')
     implementation 'com.google.firebase:firebase-analytics'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'    // flutter_local_notifications 요구사항
+    implementation 'androidx.window:window:1.0.0'       // flutter_local_notifications 요구사항
+    implementation 'androidx.window:window-java:1.0.0'    // flutter_local_notifications 요구사항
 }

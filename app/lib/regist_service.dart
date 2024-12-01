@@ -5,9 +5,9 @@ import 'package:data/di_mock.dart' as mock_di;
 import 'package:flutter/foundation.dart';
 import 'package:data/get_mock_data_setting.dart' as mock_setting;
 
-void registService() async {
+Future<void> registService() async {
   remote_di.registRemoteDatasource();
-  local_di.registLocalDatasource();
+  await local_di.registLocalDatasource();
 
   final isMocking = kDebugMode && mock_setting.getMockDataSetting();
   if (isMocking) {
