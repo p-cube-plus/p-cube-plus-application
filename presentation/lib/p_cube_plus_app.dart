@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:presentation/app_view_model.dart';
 import 'package:presentation/common/viewmodel.dart';
-import 'package:presentation/ui/executive/alarm/executive_alarm_page.dart';
-import 'package:presentation/ui/home/home_page.dart';
-import 'package:presentation/ui/login/login_home/login_home_page.dart';
-import 'package:presentation/ui/user/user_setting/developer_setting_page/developer_page.dart';
 import 'package:provider/provider.dart';
 import 'theme/dark_theme.dart';
 import 'theme/light_theme.dart';
 import 'ui/splash/splash_page.dart';
-import 'services/route_handler.dart' show navigatorKey;
+import 'route_handler/route_handler.dart' show navigatorKey;
+import 'route_handler/get_route.dart' show getRoute;
 
 class PCubePlusApp extends StatelessWidget {
   const PCubePlusApp({super.key});
@@ -57,13 +54,7 @@ class _PCubePlusApp extends StatelessWidget with ViewModel<AppViewModel> {
         scrollBehavior: _RemoveScrollGlowEffect(),
         navigatorKey: navigatorKey,
         home: SplashPage(),
-        routes: {
-          // "/": (context) => SplashPage(),
-          "/login": (context) => LoginHomePage(),
-          "/developer": (context) => DeveloperPage(),
-          "/user": (context) => LoginHomePage(),
-          "/alarm": (context) => ExecutiveAlarmPage(),
-        },
+        routes: getRoute(),
       );
     });
   }
