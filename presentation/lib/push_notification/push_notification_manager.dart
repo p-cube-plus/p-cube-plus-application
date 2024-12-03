@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'push_notification_data.dart';
-import '../services/route_handler.dart' show routeHandler;
+import 'package:presentation/route_handler/route_handler.dart';
 
 class PushNotificationManager {
   static final _instance = PushNotificationManager._internal();
