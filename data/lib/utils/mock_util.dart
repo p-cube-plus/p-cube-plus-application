@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:domain/common/exception/mock_exception.dart';
+import 'package:domain/member/value_objects/member_type.dart';
 
 class MockUtil {
   MockUtil._internal();
@@ -39,6 +40,17 @@ class MockUtil {
         values.where((value) => !except.contains(value)).toList();
     int randomIndex = _random.nextInt(filteredValues.length);
     return filteredValues[randomIndex];
+  }
+
+  MemberType getRandomMemberType() {
+    final targetValues = [
+      TraineeMember(),
+      RegularMember(),
+      DormantMember(),
+      GraduateMember(),
+    ];
+    int randomIndex = _random.nextInt(targetValues.length);
+    return targetValues[randomIndex];
   }
 
   String getRandomKoreanName() {

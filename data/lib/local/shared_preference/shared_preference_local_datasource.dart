@@ -44,6 +44,16 @@ class SharedPreferenceLocalDatasource {
   set isTestingException(bool value) =>
       _pref.setBool(PrefKeyType.isTestingException.name, value);
 
+  bool get isShowOnlyActiveMember =>
+      _pref.getBool(PrefKeyType.isShowOnlyActiveMember.name) ?? false;
+  set isShowOnlyActiveMember(bool value) =>
+      _pref.setBool(PrefKeyType.isShowOnlyActiveMember.name, value);
+
+  int get memberNameSortType =>
+      _pref.getInt(PrefKeyType.memberNameSortType.name) ?? 0;
+  set memberNameSortType(int value) =>
+      _pref.setInt(PrefKeyType.memberNameSortType.name, value);
+
   PrefKeyType _getNotificationSettingOnKey(NotificationType type) =>
       switch (type) {
         RegularMettingNotification() =>

@@ -23,7 +23,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _currentIndex = widget.initializeType.index;
+    _currentIndex = widget.initializeType.navigationIndex;
     _pageController = PageController(initialPage: _currentIndex);
   }
 

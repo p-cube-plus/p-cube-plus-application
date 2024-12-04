@@ -8,6 +8,7 @@ class DefaultToggleTile extends StatefulWidget {
   final bool value;
   final Color? background;
   final Function(bool isOn)? onChanged;
+  final EdgeInsets? padding;
 
   const DefaultToggleTile({
     super.key,
@@ -15,6 +16,7 @@ class DefaultToggleTile extends StatefulWidget {
     required this.value,
     this.onChanged,
     this.background,
+    this.padding,
   });
 
   @override
@@ -40,8 +42,10 @@ class _DefaultToggleTileState extends State<DefaultToggleTile> {
           widget.onChanged?.call(isOn);
         });
       },
+      hasShadow: false,
       color: widget.background,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding:
+          widget.padding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       radius: 10,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +56,7 @@ class _DefaultToggleTileState extends State<DefaultToggleTile> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: theme.neutral60,
+              color: theme.neutral80,
             ),
           ),
           DefaultToggle(

@@ -1,4 +1,5 @@
 import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
+import 'package:domain/member/value_objects/member_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
@@ -6,7 +7,7 @@ import 'package:presentation/constants/asset_path.dart' as asset;
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/attendance/member_list/member_attendance_list_tab.dart';
 import 'package:presentation/ui/executive/attendance/attendance_status_tab/attendance_status_view_model.dart';
-import 'package:presentation/ui/executive/attendance/member_list/member_filter_bottom_sheet.dart';
+import 'package:presentation/ui/executive/attendance/member_list/member_filter_bottom_sheet/member_filter_bottom_sheet.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
 import 'package:presentation/widgets/default_text_field.dart';
@@ -171,7 +172,11 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
   void _showFilterBottomSheet() {
     BottomSheetBuilder().build(
       context,
-      MemberFilterBottomSheet(),
+      MemberFilterBottomSheet(
+        onSetFilter: (MemberFilter filter) {
+          read(context).setMemberFilter(filter);
+        },
+      ),
     );
   }
 }

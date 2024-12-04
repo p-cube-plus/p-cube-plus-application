@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:presentation/app_view_model.dart';
 import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
+import 'package:presentation/ui/main/main_page.dart';
 import 'package:provider/provider.dart';
 import 'theme/dark_theme.dart';
 import 'theme/light_theme.dart';
@@ -10,7 +12,12 @@ import 'route_handler/route_handler.dart' show navigatorKey;
 import 'route_handler/get_route.dart' show getRoute;
 
 class PCubePlusApp extends StatelessWidget {
-  const PCubePlusApp({super.key});
+  final bool isLoggedIn;
+
+  const PCubePlusApp(
+    this.isLoggedIn, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,7 @@ class PCubePlusApp extends StatelessWidget {
     _setStatusBarTransparent();
     return ChangeNotifierProvider(
       create: (_) => AppViewModel(),
-      child: _PCubePlusApp(),
+      child: _PCubePlusApp(isLoggedIn),
     );
   }
 
@@ -40,6 +47,9 @@ class PCubePlusApp extends StatelessWidget {
 class _PCubePlusApp extends StatelessWidget with ViewModel<AppViewModel> {
   final _getLightTheme = GetLightTheme();
   final _getDarkTheme = GetDarkTheme();
+  final bool isLoggedIn;
+
+  _PCubePlusApp(this.isLoggedIn);
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +63,18 @@ class _PCubePlusApp extends StatelessWidget with ViewModel<AppViewModel> {
         darkTheme: _getDarkTheme(),
         scrollBehavior: _RemoveScrollGlowEffect(),
         navigatorKey: navigatorKey,
-        home: SplashPage(),
+        home: _getHomePage(),
         routes: getRoute(),
       );
     });
+  }
+
+  Widget _getHomePage() {
+    if (isLoggedIn) {
+      return MainPage(initializeType: MainNavigationType.home);
+    } else {
+      return SplashPage();
+    }
   }
 }
 
@@ -69,17 +87,3 @@ class _RemoveScrollGlowEffect extends MaterialScrollBehavior {
   ) =>
       child;
 }
-
-
-
-  //  Navigator.of(context).push(
-  //          MaterialPageRoute(
-  //          settings: RouteSettings(name: "/Page1"),
-  //          builder: (context) => Page1(),
-	// 	),
-  //  );
-
-  // Navigator.of(context).pushNamed(LoginViewRoute, arguments: 'Data Passed in');
-
-    //  Navigator.of(context)
-    //           .popUntil(ModalRoute.withName("/Page1"));

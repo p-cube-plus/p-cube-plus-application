@@ -1,5 +1,5 @@
 import 'package:domain/member/value_objects/member_part_type.dart';
-import 'package:domain/member/value_objects/member_classification.dart';
+import 'package:domain/member/value_objects/member_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable

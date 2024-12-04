@@ -5,7 +5,7 @@ import 'package:presentation/route_handler/route_type.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void routeHandler(String routeTypeName) async {
+void routeHandler(RouteType routeType) async {
   final fetchIsUserLoggedIn = FetchIsNeedLoginUseCase();
   final isLogedIn = await fetchIsUserLoggedIn.call().getOrDefault(false);
 
@@ -15,7 +15,6 @@ void routeHandler(String routeTypeName) async {
       (route) => false,
     );
   } else {
-    final routeType = RouteType.values.byName(routeTypeName);
     navigatorKey.currentState?.popUntil((route) => false);
     for (final routeName in routeType.routePath) {
       navigatorKey.currentState?.pushNamed(routeName);

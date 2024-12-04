@@ -17,4 +17,7 @@ enum PrefKeyType {
   isMocking,
   isTestingEmptyData,
   isTestingException,
+
+  isShowOnlyActiveMember,
+  memberNameSortType,
 }

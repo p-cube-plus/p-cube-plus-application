@@ -7,6 +7,8 @@ import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
+import 'package:domain/member/usecases/fetch_member_filter_use_case.dart';
+import 'package:domain/member/value_objects/member_filter.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/utils/debouncer.dart';
 import 'package:presentation/utils/match_korean.dart';
@@ -18,19 +20,22 @@ class AttendanceStatusViewModel extends BaseViewModel<void, void> {
       FetchNextAttendanceScheduleUseCase();
   final _fetchPreviousAttendanceScheduleUseCase =
       FetchPreviousAttendanceScheduleUseCase();
+  final _fetchMemberFilterUseCase = FetchMemberFilterUseCase();
 
   final AttendanceType attendanceType;
-
-  Future<AttendanceDetailData> fetchAttendanceDetailData;
+  late MemberFilter memberFilter;
+  late Future<AttendanceDetailData> fetchAttendanceDetailData;
 
   String filterText = "";
   final filterThrottle = Debouncer(Duration(milliseconds: 200));
 
   bool isVisibleTopWidget = true;
 
-  AttendanceStatusViewModel(this.attendanceType)
-      : fetchAttendanceDetailData =
-            FetchMostRecentAttendanceUseCase().call(attendanceType);
+  AttendanceStatusViewModel(this.attendanceType) {
+    memberFilter = _fetchMemberFilterUseCase.call();
+    fetchAttendanceDetailData =
+        FetchMostRecentAttendanceUseCase().call(attendanceType);
+  }
 
   void changeSelectedDate(DateTime selectedDate) {
     fetchAttendanceDetailData =
@@ -57,40 +62,36 @@ class AttendanceStatusViewModel extends BaseViewModel<void, void> {
     });
   }
 
+  void setMemberFilter(MemberFilter filter) {
+    memberFilter = filter;
+    notifyListeners();
+  }
+
   List<MemberAttendanceState> getTotalList(
           List<MemberAttendanceState> totalList) =>
-      totalList
-          .where((memberAttendanceData) =>
-              memberAttendanceData.name.matchKorean(filterText))
-          .toList();
+      totalList.filter(memberFilter, filterText);
 
   List<MemberAttendanceState> getSuccessList(
           List<MemberAttendanceState> totalList) =>
-      totalList
-          .where((memberAttendanceData) =>
-              memberAttendanceData.attendanceStatusType ==
-                  AttendanceStatusType.success &&
-              memberAttendanceData.name.matchKorean(filterText))
+      getTotalList(totalList)
+          .where((data) =>
+              data.attendanceStatusType == AttendanceStatusType.success)
           .toList();
 
   List<MemberAttendanceState> getLateList(
           List<MemberAttendanceState> totalList) =>
-      totalList
-          .where((memberAttendanceData) =>
-              memberAttendanceData.attendanceStatusType ==
-                  AttendanceStatusType.late &&
-              memberAttendanceData.name.matchKorean(filterText))
+      getTotalList(totalList)
+          .where(
+              (data) => data.attendanceStatusType == AttendanceStatusType.late)
           .toList();
 
   List<MemberAttendanceState> getFailedList(
           List<MemberAttendanceState> totalList) =>
-      totalList
-          .where((memberAttendanceData) =>
-              (memberAttendanceData.attendanceStatusType ==
-                      AttendanceStatusType.failed ||
-                  memberAttendanceData.attendanceStatusType ==
-                      AttendanceStatusType.pending) &&
-              memberAttendanceData.name.matchKorean(filterText))
+      getTotalList(totalList)
+          .where((data) =>
+              data.attendanceStatusType == AttendanceStatusType.failed ||
+              data.attendanceStatusType == AttendanceStatusType.blank ||
+              data.attendanceStatusType == AttendanceStatusType.pending)
           .toList();
 
   Future<List<int>> fetchValidDateSet(
@@ -104,5 +105,22 @@ class AttendanceStatusViewModel extends BaseViewModel<void, void> {
   void toggleTopWidgetVisible() {
     isVisibleTopWidget = !isVisibleTopWidget;
     notifyListeners();
+  }
+}
+
+extension MemberSortExtension on List<MemberAttendanceState> {
+  List<MemberAttendanceState> filter(MemberFilter filter, String filterText) {
+    final filtedResult = where((data) =>
+        data.name.matchKorean(filterText) && filter.isShowOnlyActiveMember
+            ? data.memberType.isActiveMember
+            : true).toList();
+
+    if (filter.memberNameSortType == SortType.ascend) {
+      filtedResult.sort((a, b) => a.name.compareTo(b.name));
+    } else {
+      filtedResult.sort((a, b) => b.name.compareTo(a.name));
+    }
+
+    return filtedResult;
   }
 }

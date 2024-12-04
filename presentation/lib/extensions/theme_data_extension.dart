@@ -51,6 +51,10 @@ extension PrimaryExtension on ThemeData {
       ? color.lightPrimary40
       : color.darkPrimary40;
 
+  Color get primary20 => (brightness == Brightness.light)
+      ? color.lightPrimary20
+      : color.darkPrimary20;
+
   Color get primary10 => (brightness == Brightness.light)
       ? color.lightPrimary10
       : color.darkPrimary10;

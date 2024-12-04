@@ -9,7 +9,7 @@ enum RouteType {
   const RouteType(this._routePath);
 
   String get routeName {
-    return _routePath.split("/").last;
+    return "/${_routePath.split("/").last}";
   }
 
   List<String> get routePath {

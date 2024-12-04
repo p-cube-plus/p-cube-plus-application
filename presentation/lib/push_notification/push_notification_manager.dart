@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:presentation/route_handler/route_type.dart';
 import 'push_notification_data.dart';
 import 'package:presentation/route_handler/route_handler.dart';
 
@@ -54,5 +55,9 @@ void onNotificationReceived(
   NotificationResponse notificationResponse,
 ) async {
   if (notificationResponse.payload == null) return;
-  routeHandler(notificationResponse.payload!);
+
+  try {
+    final routeType = RouteType.values.byName(notificationResponse.payload!);
+    routeHandler(routeType);
+  } catch (e) {}
 }

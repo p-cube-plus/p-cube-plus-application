@@ -1,5 +1,4 @@
 import 'package:data/utils/mock_util.dart';
-import 'package:domain/member/value_objects/executive_type.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
 import 'package:domain/member/value_objects/member_type.dart';
 import 'package:domain/member/value_objects/member_warning_type.dart';
@@ -27,8 +26,7 @@ class MockUserRepositoryImpl implements UserRepository {
     return Future.value(UserProfile(
       name: "개발자 테스트",
       partType: MemberPartType.development,
-      memberType: MemberType.regular,
-      executiveType: ExecutiveType.chairman,
+      memberType: ExecutiveMember("개발자의 최상위 권한"),
     ));
   }
 

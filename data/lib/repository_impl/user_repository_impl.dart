@@ -25,8 +25,7 @@ class UserRepositoryImpl implements UserRepository {
     return UserProfile(
       name: result.name,
       partType: MemberPartType.development,
-      memberType: MemberType.regular,
-      executiveType: null,
+      memberType: ExecutiveMember("개발자의 최상위 권한"),
     );
   }
 

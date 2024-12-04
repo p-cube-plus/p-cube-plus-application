@@ -5,6 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/route_handler/route_handler.dart';
+import 'package:presentation/route_handler/route_type.dart';
 
 /// aos: google-services.json
 /// ios: GoogleService-Info.plist
@@ -36,6 +37,7 @@ void _setFcmBackground() {
 @pragma('vm:entry-point')
 Future<void> fcmHandler(RemoteMessage message) async {
   if (message.notification == null) return;
+  // 알림
 }
 
 Future<void> _onNotificationClicked() async {
@@ -43,11 +45,17 @@ Future<void> _onNotificationClicked() async {
   if (initialMessage != null) {
     /// ios: 종료 -> FCM 알림 클릭 -> 앱 실행 (Notification 페이로드 필요)
     /// aos: 포그라운드 -> FCM 알림 클릭 -> 앱 실행
-    routeHandler(initialMessage.data["type"]);
+    try {
+      final routeType = RouteType.values.byName(initialMessage.data["type"]);
+      routeHandler(routeType);
+    } catch (e) {}
   }
 
   // 백그라운드 -> FCM 알림 클릭 -> 앱 실행
   FirebaseMessaging.onMessageOpenedApp.listen((clickedMessage) {
-    routeHandler(clickedMessage.data["type"]);
+    try {
+      final routeType = RouteType.values.byName(clickedMessage.data["type"]);
+      routeHandler(routeType);
+    } catch (e) {}
   });
 }

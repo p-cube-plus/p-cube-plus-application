@@ -1,10 +1,29 @@
+import 'package:domain/member/value_objects/member_filter.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/executive/attendance/member_list/member_filter_bottom_sheet/member_filter_view_model.dart';
 import 'package:presentation/widgets/defauilt_toggle_tile.dart';
-import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/sort_sliding_toggle_button.dart';
+import 'package:provider/provider.dart';
 
 class MemberFilterBottomSheet extends StatelessWidget {
-  const MemberFilterBottomSheet({super.key});
+  final void Function(MemberFilter filter) onSetFilter;
+  const MemberFilterBottomSheet({super.key, required this.onSetFilter});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => MemberFilterViewModel(),
+      child: _MemberFilterBottomSheet(onSetFilter),
+    );
+  }
+}
+
+class _MemberFilterBottomSheet extends StatelessWidget
+    with ViewModel<MemberFilterViewModel> {
+  final void Function(MemberFilter filter) onSetFilter;
+  const _MemberFilterBottomSheet(this.onSetFilter);
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +55,16 @@ class MemberFilterBottomSheet extends StatelessWidget {
         ),
         DefaultToggleTile(
           title: "활동 회원만 보기",
-          value: true,
+          value: read(context).memberFilter.isShowOnlyActiveMember,
           background: theme.background,
+          onChanged: (isOn) {
+            read(context).onUpdateIsShowOnlyActiveMember(isOn);
+          },
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20, top: 24),
           child: Text(
-            "정렬",
+            "이름 정렬",
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
@@ -50,54 +72,19 @@ class MemberFilterBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-        RoundedBorder(
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.all(4.0),
-          width: double.infinity,
-          color: Colors.transparent,
-          radius: 40,
-          hasBorder: true,
-          child: Row(
-            children: [
-              Expanded(
-                child: RoundedBorder(
-                  radius: 40,
-                  color: theme.primary10,
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    "이름 순",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: theme.primary80,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: RoundedBorder(
-                  radius: 40,
-                  color: Colors.transparent,
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    "회원구분 순",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: theme.neutral40,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        SortSlidingToggleButton(
+          onToggle: (SortType sortType) =>
+              read(context).onUpdateMemberNameSortType(sortType),
+          initializeValue: read(context).memberFilter.memberNameSortType,
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 32),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              read(context).onSaveFilter();
+              onSetFilter(read(context).memberFilter);
+              Navigator.of(context).pop();
+            },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: SizedBox(
