@@ -1,7 +1,7 @@
 import 'package:data/utils/mock_util.dart';
-import 'package:domain/common/exception/mock_exception.dart';
+import 'package:domain/member/value_objects/executive_type.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
-import 'package:domain/member/value_objects/member_position_type.dart';
+import 'package:domain/member/value_objects/member_type.dart';
 import 'package:domain/member/value_objects/member_warning_type.dart';
 import 'package:domain/project/value_objects/project_type.dart';
 import 'package:domain/user/repository/user_repository.dart';
@@ -27,7 +27,8 @@ class MockUserRepositoryImpl implements UserRepository {
     return Future.value(UserProfile(
       name: "개발자 테스트",
       partType: MemberPartType.development,
-      positionType: Chairman(),
+      memberType: MemberType.regular,
+      executiveType: ExecutiveType.chairman,
     ));
   }
 

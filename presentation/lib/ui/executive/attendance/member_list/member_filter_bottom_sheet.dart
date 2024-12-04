@@ -34,7 +34,11 @@ class MemberFilterBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-        DefaultToggleTile(title: "활동 회원만 보기", value: true),
+        DefaultToggleTile(
+          title: "활동 회원만 보기",
+          value: true,
+          background: theme.background,
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 20, top: 24),
           child: Text(

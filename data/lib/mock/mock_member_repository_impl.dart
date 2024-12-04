@@ -2,8 +2,8 @@ import 'package:data/local/shared_preference/shared_preference_local_datasource.
 import 'package:domain/member/repository/member_repository.dart';
 import 'package:domain/member/value_objects/developer_member.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
-import 'package:domain/member/value_objects/member_position_type.dart';
 import 'package:domain/member/value_objects/member_selection.dart';
+import 'package:domain/member/value_objects/member_type.dart';
 import 'package:get_it/get_it.dart';
 
 class MockMemberRepositoryImpl implements MemberRepository {
@@ -17,50 +17,57 @@ class MockMemberRepositoryImpl implements MemberRepository {
   }
 
   @override
-  Future<List<DeveloperMember>> getDeveloperList() {
-    return Future.value([
+  List<DeveloperMember> getDeveloperList() {
+    return [
       DeveloperMember(
         name: "오창한",
         departmentName: "컴퓨터공학과",
         studentNumber: 18,
         partType: MemberPartType.development,
-        positionType: GraduatingMember(),
+        positionType: MemberType.graduating,
       ),
       DeveloperMember(
         name: "권오민",
         departmentName: "컴퓨터공학과",
         studentNumber: 20,
         partType: MemberPartType.development,
-        positionType: HonoraryMember(),
+        positionType: MemberType.regular,
       ),
       DeveloperMember(
         name: "신혜민",
         departmentName: "신문방송학과",
         studentNumber: 18,
         partType: MemberPartType.design,
-        positionType: RegularMember(),
+        positionType: MemberType.graduating,
       ),
       DeveloperMember(
         name: "정성희",
         departmentName: "컴퓨터공학과",
         studentNumber: 20,
-        partType: MemberPartType.design,
-        positionType: RegularMember(),
+        partType: MemberPartType.development,
+        positionType: MemberType.regular,
       ),
       DeveloperMember(
         name: "조승빈",
         departmentName: "컴퓨터공학과",
         studentNumber: 21,
         partType: MemberPartType.development,
-        positionType: HonoraryMember(),
+        positionType: MemberType.regular,
       ),
       DeveloperMember(
         name: "공도한",
         departmentName: "컴퓨터공학과",
         studentNumber: 19,
         partType: MemberPartType.development,
-        positionType: RegularMember(),
+        positionType: MemberType.regular,
       ),
-    ]);
+      DeveloperMember(
+        name: "전재원",
+        departmentName: "컴퓨터공학과",
+        studentNumber: 19,
+        partType: MemberPartType.development,
+        positionType: MemberType.regular,
+      ),
+    ];
   }
 }

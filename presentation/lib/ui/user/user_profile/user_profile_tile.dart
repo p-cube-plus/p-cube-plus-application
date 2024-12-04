@@ -38,7 +38,7 @@ class _UserProfileTileState extends State<UserProfileTile> {
                   ),
                 ),
                 Text(
-                  "${data.partType.name} / ${data.positionType}",
+                  "${data.partType.name} / ${data.memberType}",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,

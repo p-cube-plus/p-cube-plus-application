@@ -48,7 +48,7 @@ class MemberAttendanceListItem extends StatelessWidget {
                         color: theme.secondary20,
                         padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          "${data.positionType}",
+                          "${data.memberType}",
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w700,

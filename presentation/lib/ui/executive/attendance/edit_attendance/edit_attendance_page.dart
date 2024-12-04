@@ -117,7 +117,7 @@ class _EditAttendancePage extends StatelessWidget {
                           color: theme.secondary20,
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
-                            "${memberAttendance.positionType}",
+                            "${memberAttendance.memberType}",
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,

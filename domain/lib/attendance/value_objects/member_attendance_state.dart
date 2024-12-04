@@ -1,8 +1,7 @@
+import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
-import 'package:domain/member/value_objects/member_position_type.dart';
+import 'package:domain/member/value_objects/member_type.dart';
 import 'package:meta/meta.dart';
-
-import 'attendance_status_type.dart';
 
 @immutable
 class MemberAttendanceState {
@@ -11,7 +10,7 @@ class MemberAttendanceState {
   final String name;
   final int grade;
   final MemberPartType partType;
-  final MemberPositionType positionType;
+  final MemberType memberType;
 
   final int attendanceId;
   final DateTime? firstAttendanceCheckTime;
@@ -24,7 +23,7 @@ class MemberAttendanceState {
     required this.name,
     required this.grade,
     required this.partType,
-    required this.positionType,
+    required this.memberType,
     required this.attendanceId,
     required this.attendanceStatusType,
     this.firstAttendanceCheckTime,

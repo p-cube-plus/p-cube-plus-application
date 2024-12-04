@@ -17,7 +17,7 @@ import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
-import 'package:domain/member/value_objects/member_position_type.dart';
+import 'package:domain/member/value_objects/member_type.dart';
 import 'package:domain/schedule/value_objects/schedule_type.dart';
 import 'package:get_it/get_it.dart';
 
@@ -241,7 +241,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
             name: MockUtil().getRandomKoreanName(),
             grade: MockUtil().getRandomNumber(1, 4),
             partType: MockUtil().getRandomEnum(MemberPartType.values),
-            positionType: RegularMember(),
+            memberType: MemberType.regular,
             attendanceId: index,
             attendanceStatusType:
                 MockUtil().getRandomEnum(AttendanceStatusType.values),
@@ -280,7 +280,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
             name: MockUtil().getRandomKoreanName(),
             grade: MockUtil().getRandomNumber(1, 4),
             partType: MockUtil().getRandomEnum(MemberPartType.values),
-            positionType: RegularMember(),
+            memberType: MemberType.regular,
             attendanceId: index,
             attendanceStatusType:
                 MockUtil().getRandomEnum(AttendanceStatusType.values),
@@ -319,7 +319,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
             name: MockUtil().getRandomKoreanName(),
             grade: MockUtil().getRandomNumber(1, 4),
             partType: MockUtil().getRandomEnum(MemberPartType.values),
-            positionType: RegularMember(),
+            memberType: MemberType.regular,
             attendanceId: index,
             attendanceStatusType:
                 MockUtil().getRandomEnum(AttendanceStatusType.values),

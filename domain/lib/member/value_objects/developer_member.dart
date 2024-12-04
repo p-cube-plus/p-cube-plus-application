@@ -1,5 +1,5 @@
 import 'package:domain/member/value_objects/member_part_type.dart';
-import 'package:domain/member/value_objects/member_position_type.dart';
+import 'package:domain/member/value_objects/member_classification.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -8,7 +8,7 @@ class DeveloperMember {
   final String departmentName;
   final int studentNumber;
   final MemberPartType partType;
-  final MemberPositionType positionType;
+  final MemberType positionType;
   const DeveloperMember({
     required this.name,
     required this.departmentName,

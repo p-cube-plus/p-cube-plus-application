@@ -1,6 +1,6 @@
 import 'package:data/remote/p_cube_api/user/user_remote_datasource.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
-import 'package:domain/member/value_objects/member_position_type.dart';
+import 'package:domain/member/value_objects/member_type.dart';
 import 'package:domain/project/value_objects/project_type.dart';
 import 'package:domain/user/repository/user_repository.dart';
 import 'package:domain/user/value_objects/user_profile.dart';
@@ -25,7 +25,8 @@ class UserRepositoryImpl implements UserRepository {
     return UserProfile(
       name: result.name,
       partType: MemberPartType.development,
-      positionType: RegularMember(),
+      memberType: MemberType.regular,
+      executiveType: null,
     );
   }
 
