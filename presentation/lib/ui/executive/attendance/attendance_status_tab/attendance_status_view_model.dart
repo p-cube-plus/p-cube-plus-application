@@ -111,9 +111,10 @@ class AttendanceStatusViewModel extends BaseViewModel<void, void> {
 extension MemberSortExtension on List<MemberAttendanceState> {
   List<MemberAttendanceState> filter(MemberFilter filter, String filterText) {
     final filtedResult = where((data) =>
-        data.name.matchKorean(filterText) && filter.isShowOnlyActiveMember
+        data.name.matchKorean(filterText) &&
+        (filter.isShowOnlyActiveMember
             ? data.memberType.isActiveMember
-            : true).toList();
+            : true)).toList();
 
     if (filter.memberNameSortType == SortType.ascend) {
       filtedResult.sort((a, b) => a.name.compareTo(b.name));
