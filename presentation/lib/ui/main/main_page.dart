@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/ui/alarm/alarm_page.dart';
 import 'package:presentation/ui/home/home_page.dart';
+import 'package:presentation/ui/project/project_page.dart';
 import 'package:presentation/ui/user/user_page.dart';
 
 import 'main_navigation_bar_factory.dart';
@@ -42,6 +43,7 @@ class _MainPageState extends State<MainPage> {
         onPageChanged: (int index) => setState(() => _currentIndex = index),
         physics: const NeverScrollableScrollPhysics(),
         children: const [
+          ProjectPage(),
           AlarmPage(),
           HomePage(),
           UserPage(),
@@ -55,6 +57,7 @@ class _MainPageState extends State<MainPage> {
         selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
         backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
         items: [
+          MainNavigationBarFactory().create(MainNavigationType.project),
           MainNavigationBarFactory().create(MainNavigationType.alarm),
           MainNavigationBarFactory().create(MainNavigationType.home),
           MainNavigationBarFactory().create(MainNavigationType.user),

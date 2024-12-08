@@ -36,7 +36,7 @@ class MockUserRepositoryImpl implements UserRepository {
     return Future.value(List.generate(15, (index) {
       return UserProject(
         title: "프로젝트 $index",
-        projectType: MockUtil().getRandomEnum(ProjectType.values),
+        projectType: MockUtil().getRandom(ProjectType.values),
       );
     }));
   }
@@ -48,7 +48,7 @@ class MockUserRepositoryImpl implements UserRepository {
       return UserProjectDetail(
         projectId: index,
         title: "프로젝트 $index",
-        type: MockUtil().getRandomEnum(ProjectType.values),
+        type: MockUtil().getRandom(ProjectType.values),
         startDate: DateTime.now(),
         endDate: DateTime.now().add(Duration(days: 90)),
         memberCount: MockUtil().getRandomNumber(1, 10),
@@ -63,7 +63,7 @@ class MockUserRepositoryImpl implements UserRepository {
       warningHistory: List.generate(
         MockUtil().getRandomNumber(0, 5),
         (index) {
-          final type = MockUtil().getRandomEnum(MemberWarningType.values);
+          final type = MockUtil().getRandom(MemberWarningType.values);
           return UserWarningContent(
             warningType: type,
             desceiption: "테스트 $type",

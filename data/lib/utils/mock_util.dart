@@ -14,6 +14,9 @@ class MockUtil {
   }
 
   int getRandomNumber(int start, int end) {
+    if (end - start >= 1 << 31) {
+      return start + _random.nextInt(1 << 31 - 1);
+    }
     return start + _random.nextInt(end - start + 1);
   }
 
@@ -35,7 +38,7 @@ class MockUtil {
     return _random.nextBool();
   }
 
-  T getRandomEnum<T>(List<T> values, {List<T> except = const []}) {
+  T getRandom<T>(List<T> values, {List<T> except = const []}) {
     List<T> filteredValues =
         values.where((value) => !except.contains(value)).toList();
     int randomIndex = _random.nextInt(filteredValues.length);
@@ -65,9 +68,9 @@ class MockUtil {
   }
 
   DateTime getRandomDateTime(DateTime start, DateTime end) {
-    int startMillis = start.millisecondsSinceEpoch;
-    int endMillis = end.millisecondsSinceEpoch;
-    int randomMillis = startMillis + _random.nextInt(endMillis - startMillis);
-    return DateTime.fromMillisecondsSinceEpoch(randomMillis);
+    int startSeconds = start.millisecondsSinceEpoch ~/ 1000;
+    int endSeconds = end.millisecondsSinceEpoch ~/ 1000;
+    int randomSeconds = getRandomNumber(startSeconds, endSeconds);
+    return DateTime.fromMillisecondsSinceEpoch(randomSeconds * 1000);
   }
 }

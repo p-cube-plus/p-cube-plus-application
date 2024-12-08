@@ -17,6 +17,7 @@ class MemoryCache<T> {
   FutureOr<T> fetchOrCache(Future<T> Function() fetchData,
       {bool isForcedUpdate = false}) async {
     var currentLength = 0;
+
     await Future.sync(() {
       currentLength = _completers.length;
       _completers.add(Completer<void>());

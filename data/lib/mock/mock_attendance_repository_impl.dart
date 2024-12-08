@@ -211,11 +211,10 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
     return AttendanceSummary(
       maxWeekNumber: maxWeekNumber,
       statusList: List.generate(generateCount, (index) {
-            return MockUtil().getRandomEnum(AttendanceStatusType.values,
-                except: [
-                  AttendanceStatusType.blank,
-                  AttendanceStatusType.pending
-                ]);
+            return MockUtil().getRandom(AttendanceStatusType.values, except: [
+              AttendanceStatusType.blank,
+              AttendanceStatusType.pending
+            ]);
           }) +
           List.generate(maxWeekNumber - generateCount, (index) {
             return AttendanceStatusType.blank;
@@ -239,11 +238,11 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
             isActiveMember: MockUtil().getRandomBool(),
             name: MockUtil().getRandomKoreanName(),
             grade: MockUtil().getRandomNumber(1, 4),
-            partType: MockUtil().getRandomEnum(MemberPartType.values),
+            partType: MockUtil().getRandom(MemberPartType.values),
             memberType: MockUtil().getRandomMemberType(),
             attendanceId: index,
             attendanceStatusType:
-                MockUtil().getRandomEnum(AttendanceStatusType.values),
+                MockUtil().getRandom(AttendanceStatusType.values),
             firstAttendanceCheckTime: MockUtil().getRandomDateTime(
               DateTime.now(),
               DateTime.now().add(Duration(minutes: 30)),
@@ -278,11 +277,11 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
             isActiveMember: MockUtil().getRandomBool(),
             name: MockUtil().getRandomKoreanName(),
             grade: MockUtil().getRandomNumber(1, 4),
-            partType: MockUtil().getRandomEnum(MemberPartType.values),
+            partType: MockUtil().getRandom(MemberPartType.values),
             memberType: MockUtil().getRandomMemberType(),
             attendanceId: index,
             attendanceStatusType:
-                MockUtil().getRandomEnum(AttendanceStatusType.values),
+                MockUtil().getRandom(AttendanceStatusType.values),
             firstAttendanceCheckTime: MockUtil().getRandomDateTime(
               DateTime.now(),
               DateTime.now().add(Duration(minutes: 30)),
@@ -317,11 +316,11 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
             isActiveMember: MockUtil().getRandomBool(),
             name: MockUtil().getRandomKoreanName(),
             grade: MockUtil().getRandomNumber(1, 4),
-            partType: MockUtil().getRandomEnum(MemberPartType.values),
+            partType: MockUtil().getRandom(MemberPartType.values),
             memberType: MockUtil().getRandomMemberType(),
             attendanceId: index,
             attendanceStatusType:
-                MockUtil().getRandomEnum(AttendanceStatusType.values),
+                MockUtil().getRandom(AttendanceStatusType.values),
             firstAttendanceCheckTime: MockUtil().getRandomDateTime(
               DateTime.now(),
               DateTime.now().add(Duration(minutes: 30)),

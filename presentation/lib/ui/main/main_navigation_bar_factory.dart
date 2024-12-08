@@ -3,11 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
 
 enum MainNavigationType {
-  project(-1),
+  project(0),
   fee(-2),
-  home(1),
-  alarm(0),
-  user(2),
+  home(2),
+  alarm(1),
+  user(3),
   ;
 
   const MainNavigationType(this.navigationIndex);
