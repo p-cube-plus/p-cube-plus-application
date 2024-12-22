@@ -5,6 +5,10 @@ import 'package:ibeacon_plugin/ibeacon_plugin.dart';
 import 'package:ibeacon_plugin/region.dart';
 
 class BeaconScanner {
+  static final BeaconScanner _instance = BeaconScanner._internal();
+  BeaconScanner._internal();
+  factory BeaconScanner() => _instance;
+
   bool isBeaconDetected = false;
   final _plugin = IbeaconPlugin();
 
@@ -38,24 +42,4 @@ class BeaconScanner {
     await _plugin.stopMonitoring();
     await _beaconListener?.cancel();
   }
-
-  // Future<void> initPlatformState() async {
-  //   // 블루투스의 위치 정보를 얻기 위해 사용
-  //   var status = await Permission.location.status;
-  //   if (!(status.isGranted)) {
-  //     await Permission.location.request();
-  //   }
-
-  //   // 블루투스 모듈에 접근 권한
-  //   status = await Permission.bluetooth.status;
-  //   if (!(status.isGranted)) {
-  //     await Permission.bluetooth.request();
-  //   }
-
-  //   // 주변 블루투스 검색 권한
-  //   status = await Permission.bluetoothScan.status;
-  //   if (!(status.isGranted)) {
-  //     await Permission.bluetoothScan.request();
-  //   }
-  // }
 }

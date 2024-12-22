@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:domain/attendance/value_objects/attendance_data.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_state.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_viewmodel.dart';
 import 'package:presentation/widgets/default_alert.dart';
@@ -33,11 +37,21 @@ class _AttendanceTodayPage extends StatefulWidget {
 }
 
 class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
-    with ViewModel<AttendanceTodayViewmodel> {
+    with ViewModel<AttendanceTodayViewmodel>, WidgetsBindingObserver {
+  bool _isCheckingPermission = false;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    Future.microtask(() => _checkPermission());
     Future.microtask(() => _setStateListener());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   void _setStateListener() {
@@ -50,23 +64,40 @@ class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return const DefaultPage(
-        appbar: DefaultAppBar(),
-        title: "출석체크",
-        content: DefaultContent(
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              AttendanceToday(),
-              SizedBox(height: 56),
-              LastAttendance(),
-            ],
-          ),
-        ));
+  void didChangeAppLifecycleState(final AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (_isCheckingPermission) return;
+      Future.microtask(() => _checkPermission());
+    }
   }
 
-  _showFailedDialog() {
+  @override
+  Widget build(BuildContext context) {
+    return const DefaultPage(
+      appbar: DefaultAppBar(),
+      title: "출석체크",
+      content: DefaultContent(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            AttendanceToday(),
+            SizedBox(height: 56),
+            LastAttendance(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _checkPermission() async {
+    _isCheckingPermission = true;
+    final isAvailable = await PermissionManager().checkAttendancePermission();
+    if (!isAvailable) {
+      _showUnavailablePermissionDialog();
+    }
+  }
+
+  void _showFailedDialog() {
     showDialog(
       context: context,
       builder: (context) {
@@ -74,6 +105,27 @@ class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
           title: "출석체크에 실패했어요.",
           description: "다시 시도해주세요.",
           messageType: MessageType.ok,
+        );
+      },
+    );
+  }
+
+  void _showUnavailablePermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return PopScope(
+          canPop: false,
+          child: DefaultAlert(
+            title: "출석에 필요한 권한이 없습니다.",
+            description: "근처 기기 검색과 블루투스 권한을 허용해주세요.",
+            messageType: MessageType.ok,
+            onTapOk: () {
+              Navigator.pop(dialogContext);
+              openAppSettings();
+              _isCheckingPermission = false;
+            },
+          ),
         );
       },
     );

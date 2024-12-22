@@ -9,17 +9,20 @@ import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 
 abstract interface class AttendanceRepository {
+  /// 오늘 출석 데이터 - 홈화면 출석체크
   Future<List<HomeAttendance>> getHomeAttendanceList();
 
-  /// 해당 월의 주 개수만큼 리스트 개수 반환. (달의 최대가 4주면 개수는 4개)
+  /// 오늘 출석 데이터 상세 - 오늘의 출석체크
+  Future<List<TodayAttendance>> getTodayAttendanceList(
+    AttendanceData attendanceData,
+  );
+
+  /// 해당 월의 주 개수만큼 출석 상태 반환. (달의 최대가 4주면 개수는 4개) - 오늘의 출석체크
   Future<List<AttendanceStatusType>> getAttendanceStatusInMonth(
     AttendanceType attendanceType,
     int year,
     int month,
   );
-
-  Future<List<TodayAttendance>> getTodayAttendanceList(
-      AttendanceData attendanceData);
 
   Future<List<RecentAttendance>> getRecentAttendanceStatus(
     AttendanceType type,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/executive/executive_main_page.dart';
 import 'package:presentation/ui/home/home_page_event.dart';
 import 'package:presentation/widgets/default_content.dart';
@@ -57,6 +58,7 @@ class _HomePageState extends State<_HomePage>
 
   @override
   Widget build(BuildContext context) {
+    PermissionManager().checkOnBoardingPermission();
     super.build(context);
     return DefaultPage(
       key: _refreshKey,
