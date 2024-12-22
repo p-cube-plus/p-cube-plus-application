@@ -15,11 +15,11 @@ class BeaconScanner {
   StreamSubscription<BeaconMonitoringState>? _beaconListener;
 
   Future<void> startScanning(
-    String identifier,
-    String uuid,
-    int major,
-    int minor,
-  ) async {
+      // String identifier,
+      // String uuid,
+      // int major,
+      // int minor,
+      ) async {
     await _plugin.setRegion(Region(
       identifier: "Pcube",
       uuid: "e2c56db5-dffb-48d2-b060-d0f5a71096e0",

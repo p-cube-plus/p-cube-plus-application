@@ -12,6 +12,7 @@ import 'package:domain/user/value_objects/user_warning_content.dart';
 import 'package:domain/user/value_objects/user_warning_detail.dart';
 
 class MockUserRepositoryImpl implements UserRepository {
+
   @override
   Future<UserWarning> getUserCumulativeWarning() async {
     await Future.delayed(Duration(seconds: 1));
@@ -85,5 +86,11 @@ class MockUserRepositoryImpl implements UserRepository {
         },
       ),
     ));
+  }
+  
+  @override
+  Future<void> logout() {
+    // TODO: implement logout
+    throw UnimplementedError();
   }
 }

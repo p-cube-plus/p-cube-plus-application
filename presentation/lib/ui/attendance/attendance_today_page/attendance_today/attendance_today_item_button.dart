@@ -2,10 +2,12 @@ import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/beacon/beacon_scanner.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_event.dart';
 import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_viewmodel.dart';
+import 'package:presentation/widgets/default_alert.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 class AttendanceTodayItemButton extends StatelessWidget
@@ -92,8 +94,27 @@ class AttendanceTodayItemButton extends StatelessWidget
 
   Function()? _onClickAttendance(BuildContext context, bool canClick) {
     if (!canClick) return null;
-    return () => read(context).triggerUiEvent(
-          AttendanceTodayEventOnClickAttendance(data),
+    return () {
+      if (!BeaconScanner().isBeaconDetected) {
+        _showCanNotFoundBeaconDialog(context);
+        return;
+      }
+      read(context).triggerUiEvent(
+        AttendanceTodayEventOnClickAttendance(data),
+      );
+    };
+  }
+
+  void _showCanNotFoundBeaconDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const DefaultAlert(
+          title: "비콘을 찾을 수 없습니다.",
+          description: "블루투스가 켜져있는지, 또는 주변에 켜져있는 비콘이 있는지\n확인 후 다시 시도해주세요.",
+          messageType: MessageType.ok,
         );
+      },
+    );
   }
 }

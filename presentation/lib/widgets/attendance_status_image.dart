@@ -1,7 +1,10 @@
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:presentation/constants/asset_path.dart' as asset;
+import 'package:presentation/widgets/status_icon/status_blank.dart';
+import 'package:presentation/widgets/status_icon/status_fail.dart';
+import 'package:presentation/widgets/status_icon/status_late.dart';
+import 'package:presentation/widgets/status_icon/status_pending.dart';
+import 'package:presentation/widgets/status_icon/status_success.dart';
 
 class AttendanceStatusImage extends StatelessWidget {
   final AttendanceStatusType type;
@@ -17,20 +20,12 @@ class AttendanceStatusImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      _getAssetPath(),
-      width: width,
-      height: height,
-    );
-  }
-
-  _getAssetPath() {
     return switch (type) {
-      AttendanceStatusType.blank => asset.blank,
-      AttendanceStatusType.success => asset.success,
-      AttendanceStatusType.failed => asset.failed,
-      AttendanceStatusType.late => asset.late,
-      AttendanceStatusType.pending => asset.off,
+      AttendanceStatusType.blank => StatusBlank(size: 48),
+      AttendanceStatusType.success => StatusSuccess(size: 48),
+      AttendanceStatusType.failed => StatusFail(size: 48),
+      AttendanceStatusType.late => StatusLate(size: 48),
+      AttendanceStatusType.pending => StatusPending(size: 48),
     };
   }
 }

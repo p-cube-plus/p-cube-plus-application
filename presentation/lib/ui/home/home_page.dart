@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:presentation/beacon/beacon_scanner.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/executive/executive_main_page.dart';
@@ -44,6 +45,7 @@ class _HomePageState extends State<_HomePage>
   @override
   void initState() {
     super.initState();
+    BeaconScanner().startScanning();
     Future.microtask(() {});
   }
 

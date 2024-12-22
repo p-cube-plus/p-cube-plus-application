@@ -10,4 +10,5 @@ abstract interface class UserRepository {
   Future<UserWarningDetail> getUserWarningDetail();
   Future<List<UserProject>> getUserProject();
   Future<List<UserProjectDetail>> getUserProjectDetail();
+  Future<void> logout();
 }

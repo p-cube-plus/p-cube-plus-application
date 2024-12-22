@@ -24,13 +24,6 @@ const String userIconUnselected = "assets/images/icons/user.svg";
 const String cancel = "assets/images/icons/cancel.svg";
 const String setting = "assets/images/icons/setting.svg";
 
-// attendance
-const String success = "assets/images/icons/success.svg";
-const String late = "assets/images/icons/late.svg";
-const String off = "assets/images/icons/off.svg";
-const String failed = "assets/images/icons/failed.svg";
-const String blank = "assets/images/icons/blank.svg";
-
 // user
 const String profile = "assets/images/icons/profile.svg";
 

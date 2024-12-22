@@ -51,4 +51,10 @@ class UserRepositoryImpl implements UserRepository {
     // TODO: implement getUserWarningDetail
     throw UnimplementedError();
   }
+  
+  @override
+  Future<void> logout() {
+    // TODO: implement logout
+    throw UnimplementedError();
+  }
 }

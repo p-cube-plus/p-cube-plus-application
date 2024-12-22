@@ -99,6 +99,9 @@ class _UserSettingPage extends StatelessWidget
         title: "로그아웃",
         description: "정말 로그아웃 하시겠어요?",
         messageType: MessageType.okCancel,
+        onTapOk: () {
+          
+        },
       ),
     );
   }
