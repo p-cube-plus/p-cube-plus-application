@@ -65,6 +65,7 @@ class LoginLoadingPageState extends State<_LoginLoadingPage>
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: theme.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

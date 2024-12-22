@@ -86,4 +86,10 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<String?> getFcmToken() {
     return firebaseDatasource.getFcmToken();
   }
+  
+  @override
+  Future<void> deleteUser() {
+    // TODO: implement deleteUser
+    throw UnimplementedError();
+  }
 }

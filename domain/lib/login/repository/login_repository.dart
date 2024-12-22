@@ -21,4 +21,5 @@ abstract interface class LoginRepository {
   Future<String?> getRefreshToken();
 
   Future<void> logout();
+  Future<void> deleteUser();
 }

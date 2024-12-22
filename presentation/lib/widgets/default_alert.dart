@@ -132,7 +132,7 @@ class DefaultAlert extends StatelessWidget {
                                   Radius.circular(10),
                                 ),
                                 onTap: () {
-                                  onTapCancel?.call();
+                                  onTapOk?.call();
                                   Navigator.pop(context);
                                 },
                                 highlightColor:

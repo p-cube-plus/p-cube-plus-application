@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:data/local/secure_storage/secure_storage_local_datasource.dart';
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:data/firebase/firebase_manager.dart';
-import 'package:data/remote/p_cube_api/auth/auth_remote_datasource.dart';
-import 'package:data/remote/p_cube_api/oauth/oauth_remote_datasource.dart';
 import 'package:data/remote/p_cube_api/p_cube_api.dart';
 import 'package:domain/login/repository/login_repository.dart';
 import 'package:domain/login/value_objects/auth_token_data.dart';
@@ -18,8 +16,6 @@ class MockLoginRepositoryImpl implements LoginRepository {
       GetIt.I.get<SharedPreferenceLocalDatasource>();
   final secureStorageLocalDatasource =
       GetIt.I.get<SecureStorageLocalDatasource>();
-  final oAuthRemoteDatasource = GetIt.I.get<OauthRemoteDatasource>();
-  final authRemoteDatasource = GetIt.I.get<AuthRemoteDatasource>();
   final firebaseDatasource = GetIt.I.get<FirebaseManager>();
 
   @override
@@ -51,7 +47,6 @@ class MockLoginRepositoryImpl implements LoginRepository {
   @override
   Future<void> logout() {
     return Future.wait([
-      authRemoteDatasource.deleteToken(),
       secureStorageLocalDatasource.deleteAccessToken(),
       secureStorageLocalDatasource.deleteRefreshToken(),
     ]);
@@ -75,5 +70,13 @@ class MockLoginRepositoryImpl implements LoginRepository {
   @override
   Future<String?> getFcmToken() {
     return firebaseDatasource.getFcmToken();
+  }
+
+  @override
+  Future<void> deleteUser() {
+    return Future.wait([
+      secureStorageLocalDatasource.deleteAccessToken(),
+      secureStorageLocalDatasource.deleteRefreshToken(),
+    ]);
   }
 }

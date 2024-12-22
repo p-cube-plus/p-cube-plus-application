@@ -5,6 +5,7 @@ import 'package:presentation/ui/login/login_home_bottomsheet/login_home_bottomsh
 import 'package:presentation/ui/login/login_home_bottomsheet/login_home_buttomsheet_viewmodel.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/input_phone_number/login_phone_number_page.dart';
+import 'package:presentation/widgets/status_icon/status_check.dart';
 import 'package:provider/provider.dart';
 
 class LoginHomeBottomsheet extends StatelessWidget {
@@ -65,11 +66,17 @@ class _LoginHomeBottomsheet extends StatelessWidget
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: watchWidget<String>(
-                        (viewModel) => viewModel.memberAgreedImagePath,
-                        (context, memberAgreedImagePath) =>
-                            SvgPicture.asset(memberAgreedImagePath))),
+                  padding: const EdgeInsets.only(right: 8),
+                  child: watchWidget(
+                    (viewModel) => viewModel.isMemberAgreed,
+                    (context, isMemberAgreed) {
+                      return StatusCheck(
+                        isChecked: isMemberAgreed,
+                        size: 20,
+                      );
+                    },
+                  ),
+                ),
                 Text(
                   "네, 판도라큐브 회원입니다.",
                   style: TextStyle(

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
 import 'package:presentation/ui/splash/splash_event.dart';
@@ -57,7 +58,9 @@ class _SplashPageState extends State<_SplashPage>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: theme.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
