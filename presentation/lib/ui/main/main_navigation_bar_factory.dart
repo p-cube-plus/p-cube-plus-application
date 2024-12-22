@@ -15,19 +15,7 @@ enum MainNavigationType {
 }
 
 class MainNavigationBarFactory {
-  BottomNavigationBarItem create(MainNavigationType type) {
-    return BottomNavigationBarItem(
-      icon: Container(
-        padding: const EdgeInsets.only(bottom: 4),
-        child: SvgPicture.asset(_getUnselectedIconPath(type)),
-      ),
-      activeIcon: Container(
-        padding: const EdgeInsets.only(bottom: 4),
-        child: SvgPicture.asset(_getSelectedIconPath(type)),
-      ),
-      label: _getLabel(type),
-    );
-  }
+
 
   String _getLabel(MainNavigationType type) => switch (type) {
         MainNavigationType.project => "프로젝트",

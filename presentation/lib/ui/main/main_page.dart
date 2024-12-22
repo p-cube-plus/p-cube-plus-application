@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/alarm/alarm_page.dart';
 import 'package:presentation/ui/home/home_page.dart';
 import 'package:presentation/ui/project/project_page.dart';
 import 'package:presentation/ui/user/user_page.dart';
-
+import 'package:presentation/constants/asset_path.dart' as asset;
+import 'package:presentation/ui/user/user_setting/user_setting_page.dart';
 import 'main_navigation_bar_factory.dart';
 
 class MainPage extends StatefulWidget {
@@ -49,24 +52,87 @@ class _MainPageState extends State<MainPage> {
           UserPage(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        iconSize: 20,
-        selectedFontSize: 8,
-        unselectedFontSize: 8,
-        selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,
-        backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
-        items: [
-          MainNavigationBarFactory().create(MainNavigationType.project),
-          MainNavigationBarFactory().create(MainNavigationType.alarm),
-          MainNavigationBarFactory().create(MainNavigationType.home),
-          MainNavigationBarFactory().create(MainNavigationType.user),
-        ],
-        onTap: (int tappedIndex) {
-          _pageController.jumpToPage(tappedIndex);
-        },
-        currentIndex: _currentIndex,
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          highlightColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: theme.background,
+          iconSize: 20,
+          selectedFontSize: 8,
+          selectedItemColor: theme.primary80,
+          selectedLabelStyle: TextStyle(
+            fontSize: 8,
+            fontWeight: FontWeight.w700,
+            color: theme.primary80,
+          ),
+          unselectedFontSize: 8,
+          unselectedItemColor: theme.neutral40,
+          unselectedLabelStyle: TextStyle(
+            fontSize: 8,
+            fontWeight: FontWeight.w700,
+            color: theme.neutral40,
+          ),
+          items: [
+            getDefaultNavigationBarItem(
+              "프로젝트",
+              asset.projectIconUnselected,
+              asset.projectIconSelected,
+            ),
+            // getDefaultNavigationBarItem(
+            //   "회비",
+            //   asset.feeIconUnselected,
+            //   asset.feeIconSelected,
+            // ),
+            getDefaultNavigationBarItem(
+              "홈",
+              asset.homeIconUnselected,
+              asset.homeIconSelected,
+            ),
+            getDefaultNavigationBarItem(
+              "알림",
+              asset.alarmIconUnselected,
+              asset.alarmIconSelected,
+            ),
+            getDefaultNavigationBarItem(
+              "내 정보",
+              asset.userIconUnselected,
+              asset.userIconSelected,
+            ),
+          ],
+          onTap: (int tappedIndex) {
+            _pageController.jumpToPage(tappedIndex);
+          },
+          currentIndex: _currentIndex,
+        ),
       ),
+    );
+  }
+
+  BottomNavigationBarItem getDefaultNavigationBarItem(
+    String label,
+    String unselectedSvgAssetName,
+    String selectedSvgAssetName,
+  ) {
+    final theme = Theme.of(context);
+    return BottomNavigationBarItem(
+      icon: Container(
+        padding: const EdgeInsets.only(bottom: 4),
+        child: SvgPicture.asset(
+          unselectedSvgAssetName,
+          colorFilter: ColorFilter.mode(theme.neutral40, BlendMode.srcIn),
+        ),
+      ),
+      activeIcon: Container(
+        padding: const EdgeInsets.only(bottom: 4),
+        child: SvgPicture.asset(
+          selectedSvgAssetName,
+          colorFilter: ColorFilter.mode(theme.primary80, BlendMode.srcIn),
+        ),
+      ),
+      label: label,
     );
   }
 }
