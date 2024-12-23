@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/user/user_logout_complete/user_logout_complete_page.dart';
 import 'package:presentation/ui/user/user_setting/bottom_sheet/delete_user_bottom_sheet/delete_user_bottom_sheet.dart';
 import 'package:presentation/ui/user/user_setting/bottom_sheet/development_list_bottom_sheet.dart';
@@ -19,6 +19,7 @@ import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserSettingPage extends StatelessWidget {
   const UserSettingPage({super.key});
@@ -75,6 +76,7 @@ class _UserSettingPageState extends State<_UserSettingPage>
           VersionSettingTile(),
           RightArrowSettingTile(
             title: "PCube+에 피드백 보내기",
+            onTap: (context) => _goToMailAppLink(),
           ),
           RightArrowSettingTile(
             title: "개발진 목록",
@@ -150,5 +152,32 @@ class _UserSettingPageState extends State<_UserSettingPage>
         builder: (_) => DeveloperPage(),
       ),
     );
+  }
+
+  void _goToMailAppLink() async {
+    const mailScheme = "mailto";
+    const email = "pcube.team.vent@gmail.com";
+    const subject = "피큐브 문의드립니다.";
+    const body = "샘플 바디입니다.";
+
+    final url = Uri(
+      scheme: mailScheme,
+      path: email,
+      queryParameters: {
+        "subject": subject,
+        "body": body,
+      },
+    );
+
+    final canLaunch = await canLaunchUrl(url);
+
+    if (canLaunch) {
+      await launchUrl(url);
+    } else {
+      Fluttertoast.showToast(
+        msg: "실행할 수 있는 메일앱이 없습니다.",
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
   }
 }

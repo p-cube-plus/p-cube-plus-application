@@ -61,5 +61,11 @@
 	<!-- for iOS 13 + -->
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Reason why app needs bluetooth</string>
+
+	<!-- 앱링크 처리 -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>mailto</string>
+	</array>
 </dict>
 </plist>

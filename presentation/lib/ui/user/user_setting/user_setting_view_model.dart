@@ -1,4 +1,3 @@
-import 'package:domain/login/usecases/delete_user_use_case.dart';
 import 'package:domain/login/usecases/logout_use_case.dart';
 import 'package:domain/member/usecases/fetch_development_list_use_case.dart';
 import 'package:domain/member/value_objects/developer_member.dart';
