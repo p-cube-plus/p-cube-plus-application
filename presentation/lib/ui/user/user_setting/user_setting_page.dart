@@ -157,16 +157,27 @@ class _UserSettingPageState extends State<_UserSettingPage>
   void _goToMailAppLink() async {
     const mailScheme = "mailto";
     const email = "pcube.team.vent@gmail.com";
-    const subject = "피큐브 문의드립니다.";
-    const body = "샘플 바디입니다.";
+    const subject = "[불편신고][PCube+]";
+    const body = """
+---------- 지우지 마세요. ----------
+uuid:
+디바이스 모델:
+OS 버전:
+앱 버전:
+------------------------------------------
+""";
 
     final url = Uri(
       scheme: mailScheme,
       path: email,
-      queryParameters: {
-        "subject": subject,
-        "body": body,
-      },
+      query: {
+        'subject': subject,
+        'body': body,
+      }
+          .entries
+          .map((e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+          .join('&'),
     );
 
     final canLaunch = await canLaunchUrl(url);

@@ -111,7 +111,7 @@ class AttendanceTodayItemButton extends StatelessWidget
       builder: (context) {
         return const DefaultAlert(
           title: "비콘을 찾을 수 없습니다.",
-          description: "블루투스가 켜져있는지, 또는 주변에 켜져있는 비콘이 있는지\n확인 후 다시 시도해주세요.",
+          description: "블루투스가 켜져있는지,\n또는 주변에 켜져있는 비콘이 있는지\n확인 후 다시 시도해주세요.",
           messageType: MessageType.ok,
         );
       },
