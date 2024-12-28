@@ -5,13 +5,13 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
       {super.key,
       required this.fetchData,
       required this.showOnLoadedWidget,
-      this.loadingWidget,
+      this.showOnLoadingWidget,
       this.showOnErrorWidget,
       this.handleError});
 
   final Future<T> fetchData;
   final Widget Function(BuildContext context, T data) showOnLoadedWidget;
-  final Widget? loadingWidget;
+  final Widget Function(BuildContext context)? showOnLoadingWidget;
   final Widget Function(Object? error, StackTrace? trace)? showOnErrorWidget;
   final void Function(Object? error, StackTrace? trace)? handleError;
   @override
@@ -21,7 +21,7 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting ||
               snapshot.connectionState == ConnectionState.active) {
-            return loadingWidget ??
+            return showOnLoadingWidget?.call(context) ??
                 const Center(
                   child: CircularProgressIndicator(),
                 );

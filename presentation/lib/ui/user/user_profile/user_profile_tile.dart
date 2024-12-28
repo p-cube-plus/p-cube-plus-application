@@ -5,6 +5,7 @@ import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/user/user_view_model.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_profile.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 
 class UserProfileTile extends StatefulWidget with ViewModel<UserViewModel> {
   const UserProfileTile({super.key});
@@ -45,6 +46,22 @@ class _UserProfileTileState extends State<UserProfileTile> {
                     color: theme.neutral60,
                   ),
                 ),
+              ],
+            ),
+          ],
+        );
+      },
+      showOnLoadingWidget: (context) {
+        return Row(
+          children: [
+            DefaultProfile(size: 72),
+            SizedBox(width: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SkeletonAnimation(120, 16),
+                SizedBox(height: 4),
+                SkeletonAnimation(60, 14),
               ],
             ),
           ],

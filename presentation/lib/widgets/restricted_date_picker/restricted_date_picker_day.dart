@@ -73,43 +73,45 @@ class RestrictedDatePickerDay extends StatelessWidget
           ),
         );
       },
-      loadingWidget: Stack(
-        children: [
-          Column(
-            children: List.generate(
-              currentMonth.numberOfWeeks,
-              growable: false,
-              (columnIndex) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                  DateTime.daysPerWeek,
-                  growable: false,
-                  (rowIndex) {
-                    const cellHeight = 42.0;
-                    final createdDay =
-                        _getCreatedDay(currentMonth, columnIndex, rowIndex);
-                    if (_isBlankCell(currentMonth, columnIndex, rowIndex)) {
-                      return const Expanded(
-                          child: SizedBox(height: cellHeight));
-                    }
-                    return Expanded(
-                      child: SizedBox(
-                        height: cellHeight,
-                        child: DatePickerRestrictedCell(createdDay),
-                      ),
-                    );
-                  },
+      showOnLoadingWidget: (context) {
+        return Stack(
+          children: [
+            Column(
+              children: List.generate(
+                currentMonth.numberOfWeeks,
+                growable: false,
+                (columnIndex) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    DateTime.daysPerWeek,
+                    growable: false,
+                    (rowIndex) {
+                      const cellHeight = 42.0;
+                      final createdDay =
+                          _getCreatedDay(currentMonth, columnIndex, rowIndex);
+                      if (_isBlankCell(currentMonth, columnIndex, rowIndex)) {
+                        return const Expanded(
+                            child: SizedBox(height: cellHeight));
+                      }
+                      return Expanded(
+                        child: SizedBox(
+                          height: cellHeight,
+                          child: DatePickerRestrictedCell(createdDay),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned.fill(
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
-        ],
-      ),
+            Positioned.fill(
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 
