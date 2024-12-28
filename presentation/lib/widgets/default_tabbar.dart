@@ -57,8 +57,10 @@ class _DefaultTabBarState extends State<DefaultTabBar>
       initialIndex: widget.pageIndex,
     );
 
-    controller.addListener(() {
-      FocusScope.of(context).unfocus();
+    controller.animation?.addListener(() {
+      if (controller.animation!.value != controller.index.toDouble()) {
+        FocusScope.of(context).unfocus();
+      }
     });
 
     tabList = widget.tabs.map((tab) => Text(tab.tabName)).toList();
