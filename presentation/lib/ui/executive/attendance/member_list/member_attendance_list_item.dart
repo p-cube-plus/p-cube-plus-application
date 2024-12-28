@@ -46,6 +46,7 @@ class MemberAttendanceListItem extends StatelessWidget {
                       RoundedBorder(
                         radius: 40,
                         color: theme.secondary20,
+                        hasShadow: false,
                         padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
                           "${data.memberType}",

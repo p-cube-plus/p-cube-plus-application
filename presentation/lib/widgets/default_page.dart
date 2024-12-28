@@ -68,20 +68,18 @@ class DefaultPage extends StatelessWidget {
                     children: [
                       if (title != null)
                         Text(title!,
-                            style: theme.textTheme.displayLarge!.copyWith(
+                            style: TextStyle(
                                 fontSize: 24.0,
                                 fontWeight: FontWeight.w700,
-                                color: textColor ??
-                                    theme.textTheme.displayLarge!.color)),
+                                color: textColor ?? theme.neutral100)),
                       if (subtitle != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Text(subtitle!,
-                              style: theme.textTheme.displayLarge!.copyWith(
+                              style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w700,
-                                  color: textColor ??
-                                      theme.textTheme.displayLarge!.color)),
+                                  color: textColor ?? theme.neutral100)),
                         ),
                     ],
                   ),

@@ -14,8 +14,10 @@ class RegularMettingEditPage extends StatelessWidget {
     return DefaultPage(
       appbar: DefaultAppBar(
         backgroundColor: theme.primary80,
+        contentColor: Colors.white,
       ),
       title: "정기회의 출석",
+      textColor: Colors.white,
       backgroundColor: theme.primary80,
       content: AttendanceStatusTab(type: RegularMetting()),
     );

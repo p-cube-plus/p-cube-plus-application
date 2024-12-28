@@ -57,6 +57,10 @@ class _DefaultTabBarState extends State<DefaultTabBar>
       initialIndex: widget.pageIndex,
     );
 
+    controller.addListener(() {
+      FocusScope.of(context).unfocus();
+    });
+
     tabList = widget.tabs.map((tab) => Text(tab.tabName)).toList();
     pageList = widget.tabs.map((tab) => tab.page).toList();
   }
@@ -78,6 +82,9 @@ class _DefaultTabBarState extends State<DefaultTabBar>
         Container(
           color: widget.background ?? Colors.transparent,
           child: TabBar(
+            onTap: (_) {
+              FocusScope.of(context).unfocus();
+            },
             tabAlignment: widget.tabAlignment,
             dividerHeight: 0,
             controller: controller,

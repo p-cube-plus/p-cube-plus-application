@@ -114,6 +114,7 @@ class _EditAttendancePage extends StatelessWidget {
                         SizedBox(width: 4),
                         RoundedBorder(
                           radius: 40,
+                          hasShadow: false,
                           color: theme.secondary20,
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text(

@@ -103,6 +103,7 @@ class AttendanceScheduleBox extends StatelessWidget
                 Expanded(
                   child: RoundedBorder(
                     color: theme.neutral10,
+                    hasShadow: false,
                     padding: EdgeInsets.symmetric(vertical: 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -153,6 +154,7 @@ class AttendanceScheduleBox extends StatelessWidget
                       return RoundedBorder(
                         color: theme.neutral5,
                         padding: EdgeInsets.symmetric(vertical: 4),
+                        hasShadow: false,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -181,6 +183,7 @@ class AttendanceScheduleBox extends StatelessWidget
                     } else {
                       return RoundedBorder(
                         color: theme.disabled,
+                        hasShadow: false,
                         padding: EdgeInsets.symmetric(vertical: 4),
                         child: Text(
                           "2차 인증 시간이 설정되지 않았습니다.",

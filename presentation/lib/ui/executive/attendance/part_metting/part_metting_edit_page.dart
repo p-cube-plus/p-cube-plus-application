@@ -18,6 +18,7 @@ class PartMettingEditPage extends StatelessWidget {
       appbar: DefaultAppBar(
         backgroundColor: theme.primary80,
         centerTitle: "파트회의 출석",
+        contentColor: Colors.white,
       ),
       bottomPadding: 0,
       backgroundColor: theme.primary80,

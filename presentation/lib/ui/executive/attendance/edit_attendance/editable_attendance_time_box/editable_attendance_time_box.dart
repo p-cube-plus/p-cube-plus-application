@@ -16,6 +16,7 @@ class EditableAttendanceTimeBox extends StatelessWidget
     final theme = Theme.of(context);
     final isExistSecondAttendance = read(context).isExistSecondAttendance;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "출석 시간",

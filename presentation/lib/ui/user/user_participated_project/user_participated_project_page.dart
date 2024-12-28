@@ -3,6 +3,7 @@ import 'package:domain/user/value_objects/user_project_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/project/project_detail_page.dart';
 import 'package:presentation/ui/user/user_participated_project/user_participated_project_view_model.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
@@ -52,8 +53,10 @@ class _UserParticipatedProjectPageState
             itemCount: data.length,
             itemBuilder: (context, index) {
               return RoundedBorder(
-                margin: EdgeInsets.only(left: 20, right: 20, bottom: 16),
+                margin: EdgeInsets.only(left: 20, right: 20, bottom: 8),
                 padding: EdgeInsets.all(20),
+                onTap: () =>
+                    _navigateToProjectDetailPage(data[index].projectId),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -114,6 +117,14 @@ class _UserParticipatedProjectPageState
             ),
           );
         },
+      ),
+    );
+  }
+
+  void _navigateToProjectDetailPage(int projectId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ProjectDetailPage(projectId: projectId),
       ),
     );
   }

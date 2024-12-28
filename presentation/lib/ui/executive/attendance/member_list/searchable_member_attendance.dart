@@ -29,12 +29,22 @@ class SearchableMemberAttendance extends StatefulWidget {
 class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
     with ViewModel<AttendanceStatusViewModel> {
   final controller = TextEditingController();
+  final _scrollController = ScrollController();
   final _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      _focusNode.unfocus();
+    });
+  }
 
   @override
   void dispose() {
     _focusNode.dispose();
     controller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -43,6 +53,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
     final theme = Theme.of(context);
     final memberList = widget.detailData.memberStateList;
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () => _focusNode.unfocus(),
       child: Container(
         color: theme.content,
@@ -52,6 +63,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
             Row(
               children: [
                 GestureDetector(
+                  onTapDown: (details) => _focusNode.unfocus(),
                   onTap: () => read(context).toggleTopWidgetVisible(),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -70,6 +82,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                   child: RoundedBorder(
                     radius: 50,
                     color: theme.neutral10,
+                    hasShadow: false,
                     padding: EdgeInsets.symmetric(horizontal: 4),
                     child: DefaultTextField(
                       maxLength: 20,
@@ -87,6 +100,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   margin: EdgeInsets.only(right: 20),
                   color: theme.primary10,
+                  hasShadow: false,
                   radius: 50,
                   onTap: () => _showFilterBottomSheet(),
                   child: Row(
@@ -124,6 +138,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                       (context, totalList) => MemberAttendanceTab(
                         detailData: widget.detailData,
                         userAttendanceList: totalList,
+                        controller: _scrollController,
                       ),
                     ),
                   ),
@@ -134,6 +149,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                       (context, totalList) => MemberAttendanceTab(
                         detailData: widget.detailData,
                         userAttendanceList: totalList,
+                        controller: _scrollController,
                       ),
                       shouldRebuild: (previous, next) {
                         return previous.length != next.length;
@@ -147,6 +163,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                       (context, totalList) => MemberAttendanceTab(
                         detailData: widget.detailData,
                         userAttendanceList: totalList,
+                        controller: _scrollController,
                       ),
                     ),
                   ),
@@ -157,6 +174,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                       (context, totalList) => MemberAttendanceTab(
                         detailData: widget.detailData,
                         userAttendanceList: totalList,
+                        controller: _scrollController,
                       ),
                     ),
                   ),
@@ -170,6 +188,7 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
   }
 
   void _showFilterBottomSheet() {
+    _focusNode.unfocus();
     BottomSheetBuilder().build(
       context,
       MemberFilterBottomSheet(

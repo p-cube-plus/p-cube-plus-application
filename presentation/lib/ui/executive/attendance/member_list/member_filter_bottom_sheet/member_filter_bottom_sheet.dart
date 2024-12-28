@@ -55,6 +55,7 @@ class _MemberFilterBottomSheet extends StatelessWidget
         ),
         DefaultToggleTile(
           title: "활동 회원만 보기",
+          hasShadow: false,
           value: read(context).memberFilter.isShowOnlyActiveMember,
           background: theme.background,
           onChanged: (isOn) {

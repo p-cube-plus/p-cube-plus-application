@@ -9,10 +9,12 @@ class MemberAttendanceTab extends StatelessWidget {
     super.key,
     required this.userAttendanceList,
     required this.detailData,
+    required this.controller,
   });
 
   final List<MemberAttendanceState> userAttendanceList;
   final AttendanceDetailData detailData;
+  final ScrollController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class MemberAttendanceTab extends StatelessWidget {
                 color: theme.neutral40.withOpacity(0.5),
               );
             },
+            controller: controller,
             itemBuilder: (context, index) {
               return MemberAttendanceListItem(
                 data: userAttendanceList[index],
