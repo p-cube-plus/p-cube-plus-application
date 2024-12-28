@@ -58,9 +58,9 @@ class _DefaultTabBarState extends State<DefaultTabBar>
     );
 
     controller.animation?.addListener(() {
-      if (controller.animation!.value != controller.index.toDouble()) {
-        FocusScope.of(context).unfocus();
-      }
+      if ((controller.animation!.value - controller.index.toDouble()).abs() <
+          0.001) return;
+      FocusScope.of(context).unfocus();
     });
 
     tabList = widget.tabs.map((tab) => Text(tab.tabName)).toList();
