@@ -55,7 +55,7 @@ class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
   }
 
   void _setStateListener() {
-    read(context).eventStream.listen((event) {
+    read(context).uiEventStream.listen((event) {
       switch (event) {
         case AttendanceTodayState.showFailedDialog:
           _showFailedDialog();

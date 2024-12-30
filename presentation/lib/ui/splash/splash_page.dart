@@ -6,7 +6,6 @@ import 'package:lottie/lottie.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
-import 'package:presentation/ui/splash/splash_event.dart';
 import 'package:presentation/ui/splash/splash_state.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
@@ -44,7 +43,7 @@ class _SplashPageState extends State<_SplashPage>
     _animationController = AnimationController(vsync: this)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          read(context).triggerUiEvent(SplashEvent.animationComplete);
+          read(context).changeStateBasedOnLogin();
         }
       });
     Future.microtask(() => _setStateListener());
@@ -83,7 +82,7 @@ class _SplashPageState extends State<_SplashPage>
   }
 
   void _setStateListener() {
-    read(context).eventStream.listen((event) {
+    read(context).uiEventStream.listen((event) {
       switch (event) {
         case SplashState.loginSuccess:
           _navigateToMainPage();

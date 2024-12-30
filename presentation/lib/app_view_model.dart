@@ -4,7 +4,7 @@ import 'package:domain/app_configuration/value_objects/theme_type.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class AppViewModel extends BaseViewModel<void, void> {
+class AppViewModel extends BaseViewModel<void> {
   final _fetchThemeTypeUseCase = FetchThemeTypeUseCase();
   final _updateThemeTypeUseCase = UpdateThemeTypeUseCase();
 

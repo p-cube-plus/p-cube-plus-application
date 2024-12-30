@@ -12,8 +12,7 @@ import 'package:presentation/common/base_viewmodel.dart';
 import 'attendance_today_event.dart';
 import 'attendance_today_state.dart';
 
-class AttendanceTodayViewmodel
-    extends BaseViewModel<AttendanceTodayState, AttendanceTodayEvent> {
+class AttendanceTodayViewmodel extends BaseViewModel<AttendanceTodayState> {
   final _fetchAttendanceStateUseCase = FetchAttendanceStateUseCase();
   final _fetchRecentAttendanceUseCase = FetchRecentAttendanceUseCase();
   final _attendUseCase = AttendUseCase();
@@ -26,9 +25,7 @@ class AttendanceTodayViewmodel
 
   AttendanceTodayViewmodel(
     this.selectedAttendance,
-  ) {
-    _setEventListener();
-  }
+  );
 
   Future<List<TodayAttendance>> fetchStateData() {
     return _fetchAttendanceStateUseCase.call(selectedAttendance);
@@ -38,18 +35,7 @@ class AttendanceTodayViewmodel
     return _fetchRecentAttendanceUseCase.call(selectedAttendance.type);
   }
 
-  void _setEventListener() {
-    uiEventStream.listen((event) {
-      switch (event) {
-        case AttendanceTodayEventOnClickAttendance():
-          _checkAttendance(event.data);
-        case CheckTimeToCanAttendance():
-          _startCheckCanAttendanceTimer(event.data);
-      }
-    });
-  }
-
-  void _checkAttendance(TodayAttendance data) {
+  void checkAttendance(TodayAttendance data) {
     _attendUseCase.call(data).then((data) {
       shouldRefresh = true;
       notifyListeners();
@@ -58,7 +44,7 @@ class AttendanceTodayViewmodel
     });
   }
 
-  void _startCheckCanAttendanceTimer(List<TodayAttendance> attendanceList) {
+  void startCheckCanAttendanceTimer(List<TodayAttendance> attendanceList) {
     _timer?.cancel();
     _timer = Stream.periodic(
             const Duration(microseconds: 500), (_) => DateTime.now())

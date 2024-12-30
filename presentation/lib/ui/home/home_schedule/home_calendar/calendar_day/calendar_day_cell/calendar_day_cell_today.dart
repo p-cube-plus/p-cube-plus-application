@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/home/home_schedule/home_schedule_event.dart';
 
 import '../../../home_schedule_viewmodel.dart';
 
@@ -18,8 +17,7 @@ class CalendarDayCellToday extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return InkWell(
-      onTap: () => read(context)
-          .triggerUiEvent(HomeScheduleEventOnClickCell(currentDay)),
+      onTap: () => read(context).changeCurrentDate(currentDay),
       child: Stack(
         alignment: Alignment.center,
         children: [

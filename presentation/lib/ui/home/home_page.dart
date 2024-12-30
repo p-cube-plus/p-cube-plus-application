@@ -50,7 +50,7 @@ class _HomePageState extends State<_HomePage>
   }
 
   void setListener() {
-    read(context).eventStream.listen((event) {
+    read(context).uiEventStream.listen((event) {
       switch (event) {
         case HomePageEventShowToast():
           Fluttertoast.showToast(msg: event.message);

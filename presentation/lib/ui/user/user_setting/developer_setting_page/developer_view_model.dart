@@ -6,7 +6,7 @@ import 'package:domain/debug/usecases/update_is_testing_exception_use_case.dart'
 import 'package:domain/debug/usecases/update_mock_delay_use_case.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class DeveloperViewModel extends BaseViewModel<void, void> {
+class DeveloperViewModel extends BaseViewModel<void> {
   final _fetchIsMockingUseCase = FetchIsMockingUseCase();
   final _updateIsMockingUseCase = UpdateIsMockingUseCase();
   late bool isMocking = _fetchIsMockingUseCase.call();

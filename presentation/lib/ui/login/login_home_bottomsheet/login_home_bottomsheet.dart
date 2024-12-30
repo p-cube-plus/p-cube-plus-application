@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/login/login_home_bottomsheet/login_home_bottomsheet_event.dart';
 import 'package:presentation/ui/login/login_home_bottomsheet/login_home_buttomsheet_viewmodel.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/input_phone_number/login_phone_number_page.dart';
@@ -88,8 +86,7 @@ class _LoginHomeBottomsheet extends StatelessWidget
               ],
             ),
           ),
-          onTap: () => read(context)
-              .triggerUiEvent(LoginHomeBottomSheetEvent.onClickMemberAgree),
+          onTap: () => read(context).toggleIsMemberAgreed(),
         ),
         const SizedBox(height: 16),
         Padding(

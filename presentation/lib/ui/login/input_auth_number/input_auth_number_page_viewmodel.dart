@@ -4,12 +4,10 @@ import 'package:domain/common/extensions/future_extension.dart';
 import 'package:domain/login/usecases/confirm_auth_number_use_case.dart';
 import 'package:domain/login/usecases/send_auth_number_use_case.dart';
 import 'package:presentation/common/base_viewmodel.dart';
-import 'package:presentation/ui/login/input_auth_number/input_auth_number_event.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_state.dart';
 import 'package:presentation/utils/throttler.dart';
 
-class LoginAuthNumberPageViewModel
-    extends BaseViewModel<InputAuthNumberState, InputAuthNumberEvent> {
+class LoginAuthNumberPageViewModel extends BaseViewModel<InputAuthNumberState> {
   final sendAuthNumber = SendAuthNumberUseCase();
   final _confirmAuthNumberUseCase = ConfirmAuthNumberUseCase();
 
@@ -25,19 +23,7 @@ class LoginAuthNumberPageViewModel
   final Throttler _throttler = Throttler(const Duration(milliseconds: 500));
 
   LoginAuthNumberPageViewModel(String phoneNumber) : phoneNumner = phoneNumber {
-    _setEventListener();
-    _requestAuth();
-  }
-
-  void _setEventListener() {
-    uiEventStream.listen((event) {
-      switch (event) {
-        case InputAuthNumberEventRequestAuthNumber():
-          _requestAuth();
-        case InputAuthNumberEventInputAuthNumber():
-          _onChangedInputAuthNumber(event.text);
-      }
-    });
+    requestAuth();
   }
 
   @override
@@ -46,7 +32,7 @@ class LoginAuthNumberPageViewModel
     super.dispose();
   }
 
-  void _requestAuth() {
+  void requestAuth() {
     _throttler.run(() async {
       authText = "";
       timerText = _getTimerText(_timeoutCount);
@@ -67,7 +53,7 @@ class LoginAuthNumberPageViewModel
     });
   }
 
-  void _onChangedInputAuthNumber(String inputText) async {
+  void onChangedInputAuthNumber(String inputText) async {
     if (inputText.length > 6) {
       inputText = inputText.substring(0, 6);
     }

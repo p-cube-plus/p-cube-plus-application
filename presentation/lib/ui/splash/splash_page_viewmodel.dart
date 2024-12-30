@@ -6,7 +6,7 @@ import 'package:presentation/ui/splash/splash_event.dart';
 import 'package:presentation/ui/splash/splash_state.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
+class SplashPageViewModel extends BaseViewModel<SplashState> {
   final _fetchIsUserLoggedIn = FetchIsNeedLoginUseCase();
   final _cachingBeforeStartingUseCase = CachingBeforeStartingUseCase();
 
@@ -15,17 +15,7 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
   String? initErrorMessage;
 
   SplashPageViewModel() {
-    _setEventListener();
     _initializeFuture = _initializeApp();
-  }
-
-  void _setEventListener() {
-    uiEventStream.listen((event) {
-      switch (event) {
-        case SplashEvent.animationComplete:
-          _changeStateBasedOnLogin();
-      }
-    });
   }
 
   Future<void> _initializeApp() async {
@@ -36,7 +26,7 @@ class SplashPageViewModel extends BaseViewModel<SplashState, SplashEvent> {
     ]);
   }
 
-  Future<void> _changeStateBasedOnLogin() async {
+  Future<void> changeStateBasedOnLogin() async {
     if (initErrorMessage != null) return;
 
     await _initializeFuture;

@@ -1,7 +1,7 @@
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class EditAttendanceViewModel extends BaseViewModel<void, void> {
+class EditAttendanceViewModel extends BaseViewModel<void> {
   DateTime firstAttendanceStartTime;
   DateTime firstAttendanceEndTime;
   DateTime? secondAttendanceStartTime;

@@ -197,7 +197,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
   }
 
   void _onClickSaveButton() {
-    read(context).triggerEvent(ExecutiveAlarmSettingEvent.saveSetting);
+    read(context).saveSetting();
   }
 
   void _onPop(bool didPop) {
@@ -215,8 +215,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
           description: "저장되지 않는 변경사항이 있습니다.",
           messageType: MessageType.okCancel,
           onTapOk: () {
-            read(context).triggerEvent(
-                ExecutiveAlarmSettingEvent.saveSettingWithPopPage);
+            read(context).saveSettingWithPopPage();
           },
           onTapCancel: () {
             _popPage();

@@ -3,7 +3,7 @@ import 'package:domain/project/usecase/fetch_trainee_project_use_case.dart';
 import 'package:domain/project/value_objects/project_data.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class ProjectViewModel extends BaseViewModel<void, void> {
+class ProjectViewModel extends BaseViewModel<void> {
   final _fetchMainProjectUseCase = FetchMainProjectUseCase();
   final _fetchTraineeProjectUseCase = FetchTraineeProjectUseCase();
 

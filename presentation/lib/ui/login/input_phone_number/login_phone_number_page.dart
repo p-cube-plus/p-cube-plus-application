@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/login/input_phone_number/input_phone_number_event.dart';
 import 'package:presentation/ui/login/input_phone_number/input_phone_number_state.dart';
 import 'package:presentation/utils/phone_number_formatter.dart';
 import 'package:presentation/common/viewmodel.dart';
@@ -108,7 +107,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
                     PhoneNumberFormatter(),
                   ],
                   onChanged: (inputText) =>
-                      read(context).triggerUiEvent(TextChanged(inputText)),
+                      read(context).checkPhoneNumberState(inputText),
                 ),
               ),
             ],
@@ -146,7 +145,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
   }
 
   void _setStateListener() {
-    read(context).eventStream.listen((event) {
+    read(context).uiEventStream.listen((event) {
       switch (event) {
         case InputPhoneNumberState.navigateToAuth:
           _navigateToInputAuthNumberPage();

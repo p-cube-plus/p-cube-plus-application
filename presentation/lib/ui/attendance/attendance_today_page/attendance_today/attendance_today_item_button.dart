@@ -99,9 +99,7 @@ class AttendanceTodayItemButton extends StatelessWidget
         _showCanNotFoundBeaconDialog(context);
         return;
       }
-      read(context).triggerUiEvent(
-        AttendanceTodayEventOnClickAttendance(data),
-      );
+      read(context).checkAttendance(data);
     };
   }
 

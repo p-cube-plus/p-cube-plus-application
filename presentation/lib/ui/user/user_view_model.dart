@@ -6,7 +6,7 @@ import 'package:domain/user/value_objects/user_project.dart';
 import 'package:domain/user/value_objects/user_warning.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class UserViewModel extends BaseViewModel<void, void> {
+class UserViewModel extends BaseViewModel<void> {
   final _fetchUserProfileUseCase = FetchUserProfileUseCase();
   final _fetchUserWarningUseCase = FetchUserWarningUseCase();
   final _fetchUserProjectUseCase = FetchUserProjectUseCase();

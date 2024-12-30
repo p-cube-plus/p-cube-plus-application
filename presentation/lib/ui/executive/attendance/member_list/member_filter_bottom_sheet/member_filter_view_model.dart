@@ -3,7 +3,7 @@ import 'package:domain/member/usecases/update_member_filter_use_case.dart';
 import 'package:domain/member/value_objects/member_filter.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class MemberFilterViewModel extends BaseViewModel<void, void> {
+class MemberFilterViewModel extends BaseViewModel<void> {
   final _fetchMemberFilterUseCase = FetchMemberFilterUseCase();
   final _updateMemberFilterUseCase = UpdateMemberFilterUseCase();
 

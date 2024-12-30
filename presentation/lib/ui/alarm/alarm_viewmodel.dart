@@ -5,7 +5,7 @@ import 'package:domain/notification/value_objects/notification_data.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/ui/alarm/alarm_event.dart';
 
-class AlarmViewModel extends BaseViewModel<void, AlarmEvent> {
+class AlarmViewModel extends BaseViewModel<AlarmEvent> {
   final _fetchNewNotificationUseCase = FetchNewNotificationUseCase();
   final _fetchReadNotificationUseCase = FetchReadNotificationUseCase();
   final _updateReadNotificationUseCase = UpdateReadNotificationUseCase();
@@ -21,12 +21,12 @@ class AlarmViewModel extends BaseViewModel<void, AlarmEvent> {
       newNotificationList = data.first;
       readNotificationList = data.last;
       notifyListeners();
-      triggerUiEvent(AlarmEvent.dismissProgress);
+      triggerEvent(AlarmEvent.dismissProgress);
     });
   }
 
   void updateReadNotification(int notificationId) async {
-    triggerUiEvent(AlarmEvent.showProgress);
+    triggerEvent(AlarmEvent.showProgress);
     _updateReadNotificationUseCase.call(notificationId).then((readData) {
       List<NotificationData> updatedNewNotificationList =
           List.from(newNotificationList);
@@ -36,7 +36,7 @@ class AlarmViewModel extends BaseViewModel<void, AlarmEvent> {
       newNotificationList = updatedNewNotificationList;
       readNotificationList = [readData, ...readNotificationList];
       notifyListeners();
-      triggerUiEvent(AlarmEvent.dismissProgress);
+      triggerEvent(AlarmEvent.dismissProgress);
     });
   }
 }

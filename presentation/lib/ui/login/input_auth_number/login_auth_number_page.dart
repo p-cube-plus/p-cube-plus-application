@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/login/input_auth_number/input_auth_number_event.dart';
 import 'package:presentation/ui/login/input_auth_number/input_auth_number_state.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/input_user_name/login_name_page.dart';
@@ -131,9 +130,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                             textType: TextInputType.number,
                             inputController: _textEditController,
                             onChanged: (inputText) => read(context)
-                                .triggerUiEvent(
-                                    InputAuthNumberEventInputAuthNumber(
-                                        inputText)),
+                                .onChangedInputAuthNumber(inputText),
                             autofocus: true,
                             enabled: !isNeedToRetry,
                           ),
@@ -145,8 +142,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                         (viewModel) => viewModel.isNeedToRetry,
                         (context, isNeedToRetry) => ElevatedButton(
                             onPressed: isNeedToRetry
-                                ? () => read(context).triggerUiEvent(
-                                    InputAuthNumberEventRequestAuthNumber())
+                                ? () => read(context).requestAuth()
                                 : null,
                             child: const Padding(
                               padding: EdgeInsets.all(10.0),
@@ -163,7 +159,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
   }
 
   void _setStateListener() {
-    read(context).eventStream.listen((event) {
+    read(context).uiEventStream.listen((event) {
       switch (event) {
         case InputAuthNumberState.showSendingAuthNumberToast:
           _showSendingAuthNumberToast();

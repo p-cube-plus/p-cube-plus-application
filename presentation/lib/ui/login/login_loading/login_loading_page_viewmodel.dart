@@ -2,7 +2,7 @@ import 'package:domain/login/usecases/try_login_use_case.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/ui/login/login_loading/login_loading_state.dart';
 
-class LoginLoadingPageViewModel extends BaseViewModel<LoginLoadingState, void> {
+class LoginLoadingPageViewModel extends BaseViewModel<LoginLoadingState> {
   final _tryLoginUseCase = TryLoginUseCase();
   var errorMessage = "";
 

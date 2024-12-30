@@ -4,9 +4,7 @@ import 'package:domain/schedule/value_objects/daily_schedule.dart';
 import 'package:domain/schedule/value_objects/month_schedule.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-import 'home_schedule_event.dart';
-
-class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
+class HomeScheduleViewmodel extends BaseViewModel<void> {
   final _fetchHomeMonthScheduleUseCase = FetchHomeMonthScheduleUseCase();
   final _fetchHomeTodayScheduleUseCase = FetchHomeTodayScheduleUseCase();
 
@@ -15,25 +13,7 @@ class HomeScheduleViewmodel extends BaseViewModel<void, HomeScheduleEvent> {
   DateTime selectedDate = DateTime.now();
 
   HomeScheduleViewmodel() {
-    _setEventListener();
     _fetchHomeSchedule();
-  }
-
-  void _setEventListener() {
-    uiEventStream.listen((event) {
-      switch (event) {
-        case HomeScheduleEventOnClickCell():
-          changeCurrentDate(event.clickedDay);
-        case HomeScheduleEventOnClickPreviousMonth():
-          jumpToOneMonthAgo();
-        case HomeScheduleEventOnClickNextMonth():
-          jumpToOneMonthLater();
-        case HomeScheduleEventScrollPreviousMonth():
-          jumpToOneMonthAgo();
-        case HomeScheduleEventScrollNextMonth():
-          jumpToOneMonthLater();
-      }
-    });
   }
 
   void changeCurrentDate(int selectedDay) async {

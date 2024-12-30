@@ -3,19 +3,14 @@ import 'package:domain/notification/value_objects/notification_setting.dart';
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-enum ExecutiveAlarmSettingEvent {
-  saveSetting,
-  saveSettingWithPopPage,
-}
-
 enum ExecutiveAlarmSettingState {
   showProgressDialog,
   dismissProgressDialog,
   popPage,
 }
 
-class ExecutiveAlarmSettingViewModel extends BaseViewModel<
-    ExecutiveAlarmSettingEvent, ExecutiveAlarmSettingState> {
+class ExecutiveAlarmSettingViewModel
+    extends BaseViewModel<ExecutiveAlarmSettingState> {
   final _fetchNotificationSettingHourUseCase =
       FetchNotificationSettingUseCase();
 
@@ -28,16 +23,7 @@ class ExecutiveAlarmSettingViewModel extends BaseViewModel<
 
   ExecutiveAlarmSettingViewModel({
     required this.notificationType,
-  }) {
-    eventStream.listen((event) {
-      switch (event) {
-        case ExecutiveAlarmSettingEvent.saveSetting:
-          _saveSetting();
-        case ExecutiveAlarmSettingEvent.saveSettingWithPopPage:
-          _saveSettingWithPopPage();
-      }
-    });
-  }
+  });
 
   Future<NotificationSetting> fetchNotificationSetting() =>
       _fetchNotificationSettingHourUseCase(notificationType).then((data) {
@@ -59,19 +45,19 @@ class ExecutiveAlarmSettingViewModel extends BaseViewModel<
     settingHour = hour;
   }
 
-  Future<void> _saveSetting() async {
-    triggerUiEvent(ExecutiveAlarmSettingState.showProgressDialog);
+  Future<void> saveSetting() async {
+    triggerEvent(ExecutiveAlarmSettingState.showProgressDialog);
     // save
     await Future.delayed(Duration(seconds: 2));
 
     //success
     initSettingOn = isSettingOn;
     initSettingHour = settingHour;
-    triggerUiEvent(ExecutiveAlarmSettingState.dismissProgressDialog);
+    triggerEvent(ExecutiveAlarmSettingState.dismissProgressDialog);
   }
 
-  Future<void> _saveSettingWithPopPage() async {
-    await _saveSetting();
-    triggerUiEvent(ExecutiveAlarmSettingState.popPage);
+  Future<void> saveSettingWithPopPage() async {
+    await saveSetting();
+    triggerEvent(ExecutiveAlarmSettingState.popPage);
   }
 }

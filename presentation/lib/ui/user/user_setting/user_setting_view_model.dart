@@ -4,7 +4,7 @@ import 'package:domain/member/value_objects/developer_member.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/ui/user/user_setting/user_setting_event.dart';
 
-class UserSettingViewModel extends BaseViewModel<void, UserSettingEvent> {
+class UserSettingViewModel extends BaseViewModel<UserSettingEvent> {
   final _fetchDevelopmentListUseCase = FetchDevelopmentListUseCase();
   final _logoutUseCase = LogoutUseCase();
 
@@ -13,7 +13,7 @@ class UserSettingViewModel extends BaseViewModel<void, UserSettingEvent> {
 
   void logout() {
     _logoutUseCase.call().then((_) {
-      triggerUiEvent(OnSuccessLogoutEvent());
+      triggerEvent(OnSuccessLogoutEvent());
     });
   }
 }

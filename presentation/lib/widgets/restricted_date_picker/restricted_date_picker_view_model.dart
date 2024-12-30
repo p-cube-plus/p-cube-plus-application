@@ -1,7 +1,7 @@
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class RestrictedDatePickerViewModel extends BaseViewModel<void, void> {
+class RestrictedDatePickerViewModel extends BaseViewModel<void> {
   final Function(DateTime) onDateSelectionComplete;
   final Future<List<int>> Function(DateTime) _fetchRefreshValidDates;
 

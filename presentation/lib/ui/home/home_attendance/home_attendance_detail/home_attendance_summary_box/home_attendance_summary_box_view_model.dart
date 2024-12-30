@@ -4,7 +4,7 @@ import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-class HomeAttendanceSummaryBoxViewModel extends BaseViewModel<void, void> {
+class HomeAttendanceSummaryBoxViewModel extends BaseViewModel<void> {
   final _fetchAttendanceSummaryListUseCase =
       FetchAttendanceSummaryListUseCase();
 

@@ -32,8 +32,7 @@ class AttendanceToday extends StatelessWidget
         DefaultFutureBuilder(
           fetchData: read(context).fetchStateData(),
           showOnLoadedWidget: (_, todayAttendanceList) {
-            read(context)
-                .triggerUiEvent(CheckTimeToCanAttendance(todayAttendanceList));
+            read(context).startCheckCanAttendanceTimer(todayAttendanceList);
             return RoundedBorder(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
               child: Column(

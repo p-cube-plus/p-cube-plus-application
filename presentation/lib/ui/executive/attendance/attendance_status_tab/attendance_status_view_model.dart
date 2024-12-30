@@ -13,7 +13,7 @@ import 'package:presentation/common/base_viewmodel.dart';
 import 'package:presentation/utils/debouncer.dart';
 import 'package:presentation/utils/match_korean.dart';
 
-class AttendanceStatusViewModel extends BaseViewModel<void, void> {
+class AttendanceStatusViewModel extends BaseViewModel<void> {
   final _fetchUserAttendanceListUseCase = FetchUserAttendanceListUseCase();
   final _fetchMonthAttendanceUseCase = FetchMonthAttendanceUseCase();
   final _fetchNextAttendanceScheduleUseCase =
