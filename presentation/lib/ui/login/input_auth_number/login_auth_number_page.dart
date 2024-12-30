@@ -46,6 +46,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
     super.initState();
     Future.microtask(() {
       _setStateListener();
+      read(context).requestAuth();
     });
   }
 
@@ -180,7 +181,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
 
   void _showSendingAuthNumberToast() {
     Fluttertoast.showToast(
-      msg: "인증번호를 발송하고 있어요 :)",
+      msg: "인증번호를 발송하고 있어요.",
       toastLength: Toast.LENGTH_SHORT,
     );
   }
@@ -189,8 +190,8 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
     showDialog(
       context: context,
       builder: (context) => const DefaultAlert(
-        title: "인증번호 발송에 실패했어요 :(",
-        description: "다시 시도해주세요 :)",
+        title: "인증번호 발송에 실패했어요.",
+        description: "다시 시도해주세요.",
         messageType: MessageType.ok,
       ),
     );
@@ -215,7 +216,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
 
   void _showSuccessVerificationToast() {
     Fluttertoast.showToast(
-      msg: "본인 인증에 성공했어요 :)",
+      msg: "본인 인증에 성공했어요.",
       toastLength: Toast.LENGTH_SHORT,
     );
   }

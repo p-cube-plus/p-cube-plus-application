@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/guest/introduce_p_cube_web_page.dart';
 import 'package:presentation/ui/home/home_schedule/home_schedule.dart';
 import 'package:presentation/ui/home/home_upcomming/home_upcomming_schedule.dart';
+import 'package:presentation/ui/webpage/introduce_p_cube_web_page.dart';
+import 'package:presentation/widgets/default_alert.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
@@ -21,6 +22,12 @@ class _GuestHomePageState extends State<GuestHomePage>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => _showIntroDialog());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +58,34 @@ class _GuestHomePageState extends State<GuestHomePage>
         ),
       ),
     );
+  }
+
+  void _showIntroDialog() {
+    DialogBuilder().build(
+      context,
+      DefaultAlert(
+        title: "어서오세요!",
+        description: """PCube+는 세종대학교 게임제작 동아리
+판도라큐브를 지원하는 편의 서비스입니다.
+게스트 모드로 PCube+를 먼저 둘러보세요.""",
+        descriptionColor: Theme.of(context).neutral40,
+        messageType: MessageType.okCancel,
+        cancelString: "소개 바로가기",
+        onTapCancel: () => _navigateToPCubeIntroducePage(),
+        okString: "PCube+둘러보기",
+      ),
+    );
+  }
+
+  void _navigateToPCubeIntroducePage() {
+    Future.microtask(() {
+      if (!mounted) return;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => IntroducePCubeWebPage(),
+        ),
+      );
+    });
   }
 }
 
