@@ -58,10 +58,11 @@ class UserDeleteCompletePage extends StatelessWidget {
   }
 
   void _navigateToLoginPage(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) => LoginHomePage(),
       ),
+      (route) => false,
     );
   }
 }

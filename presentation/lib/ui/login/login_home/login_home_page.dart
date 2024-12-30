@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/guest/guest_main_page.dart';
+import 'package:presentation/ui/guest/introduce_p_cube_web_page.dart';
 import 'package:presentation/ui/login/login_home/login_home_logo_widget.dart';
 import 'package:presentation/ui/login/login_home_bottomsheet/login_home_bottomsheet.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
@@ -92,7 +94,7 @@ class LoginHomePage extends StatelessWidget {
   void _navigateToLoginToGuest(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => Container(),
+        builder: (context) => GuestMainPage(),
       ),
     );
   }
@@ -100,7 +102,7 @@ class LoginHomePage extends StatelessWidget {
   void _navigateToPCubeIntroPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => Container(),
+        builder: (context) => IntroducePCubeWebPage(),
       ),
     );
   }
