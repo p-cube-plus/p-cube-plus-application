@@ -38,50 +38,52 @@ class DefaultAppBar extends StatelessWidget {
           right: 24.0,
           top: statusBarHeight + topPadding,
           bottom: bottomPadding),
-      child: Row(
-        mainAxisAlignment: centerTitle != null
-            ? MainAxisAlignment.spaceBetween
-            : MainAxisAlignment.start,
-        children: [
-          if (hasPrevious)
-            GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20.0,
-                color: contentColor ?? theme.neutral100,
-              ),
-            )
-          else
-            const SizedBox(),
-          if (centerTitle != null)
-            Text(
-              centerTitle!,
-              style: theme.textTheme.displayLarge!.copyWith(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w700,
-                color: contentColor ?? theme.neutral100,
-              ),
-            ),
-          if (leftTitle != null)
-            Row(
-              children: [
-                Text(
-                  leftTitle!,
-                  style: theme.textTheme.displayLarge!.copyWith(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w700,
-                    color: contentColor ?? theme.neutral100,
-                  ),
+      child: Container(
+        child: Row(
+          mainAxisAlignment: centerTitle != null
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.start,
+          children: [
+            if (hasPrevious)
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: Icon(
+                  Icons.arrow_back_ios_new,
+                  size: 20.0,
+                  color: contentColor ?? theme.neutral100,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: leftTitleState,
-                )
-              ],
-            ),
-          SizedBox(width: centerTitle != null ? 20.0 : 0.0)
-        ],
+              )
+            else
+              const SizedBox(),
+            if (centerTitle != null)
+              Text(
+                centerTitle!,
+                style: theme.textTheme.displayLarge!.copyWith(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w700,
+                  color: contentColor ?? theme.neutral100,
+                ),
+              ),
+            if (leftTitle != null)
+              Row(
+                children: [
+                  Text(
+                    leftTitle!,
+                    style: theme.textTheme.displayLarge!.copyWith(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w700,
+                      color: contentColor ?? theme.neutral100,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: leftTitleState,
+                  )
+                ],
+              ),
+            SizedBox(width: centerTitle != null ? 20.0 : 0.0)
+          ],
+        ),
       ),
     );
   }
