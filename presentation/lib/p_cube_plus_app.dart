@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:presentation/app_view_model.dart';
 import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/extensions/brightness_extension.dart';
+import 'package:presentation/extensions/theme_mode_extension.dart';
 import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +24,6 @@ class PCubePlusApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _setPortraitMode();
-    _setStatusBarTransparent();
     return ChangeNotifierProvider(
       create: (_) => AppViewModel(),
       child: _PCubePlusApp(isLoggedIn),
@@ -33,14 +34,6 @@ class PCubePlusApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp],
     );
-  }
-
-  void _setStatusBarTransparent() {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemStatusBarContrastEnforced: false,
-      systemNavigationBarContrastEnforced: false,
-      statusBarColor: Colors.transparent,
-    ));
   }
 }
 
@@ -56,6 +49,7 @@ class _PCubePlusApp extends StatelessWidget with ViewModel<AppViewModel> {
     return watchWidget(
       (viewModel) => viewModel.currentThemeMode,
       (context, currentThemeMode) {
+        _setStatusBarSetting(context, currentThemeMode);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'PCube+',
@@ -69,6 +63,15 @@ class _PCubePlusApp extends StatelessWidget with ViewModel<AppViewModel> {
         );
       },
     );
+  }
+
+  void _setStatusBarSetting(BuildContext context, ThemeMode mode) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemStatusBarContrastEnforced: false,
+      systemNavigationBarContrastEnforced: false,
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: mode.getStatusColor(context),
+    ));
   }
 
   Widget _getHomePage() {
