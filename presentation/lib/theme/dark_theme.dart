@@ -58,6 +58,17 @@ class GetDarkTheme {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
+              overlayColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.pressed)) {
+                    return const Color(0xFFFFFFFF).withOpacity(0.1);
+                  }
+                  if (states.contains(WidgetState.hovered)) {
+                    return const Color(0xFFFFFFFF).withOpacity(0.05);
+                  }
+                  return Colors.transparent; // 기본 Ink 색상
+                },
+              ),
               minimumSize: WidgetStateProperty.all<Size>(
                 const Size(0.0, 35.0),
               ),

@@ -21,7 +21,9 @@ class HomeScheduleViewmodel extends BaseViewModel<void> {
   void changeCurrentDate(int selectedDay) async {
     selectedDate = selectedDate.copyWith(day: selectedDay);
     notifyListeners();
-    todayScheduleList = await _fetchHomeTodayScheduleUseCase.call(selectedDate);
+    todayScheduleList = await _fetchHomeTodayScheduleUseCase
+        .call(selectedDate)
+        .getOrDefault([]);
     notifyListeners();
   }
 
