@@ -3,8 +3,12 @@ extension FutureExtension<T> on Future<T> {
     return catchError((error) => defaultValue);
   }
 
-  Future<T?> getOrNull() {
-    return catchError((error) => null);
+  Future<T?> getOrNull() async {
+    try {
+      return await this;
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<T> getOrThrow() {

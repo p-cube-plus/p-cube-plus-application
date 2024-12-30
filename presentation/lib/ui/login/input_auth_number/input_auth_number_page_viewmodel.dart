@@ -22,9 +22,7 @@ class LoginAuthNumberPageViewModel extends BaseViewModel<InputAuthNumberState> {
   Duration _timeoutCount = const Duration(minutes: 3);
   final Throttler _throttler = Throttler(const Duration(milliseconds: 500));
 
-  LoginAuthNumberPageViewModel(String phoneNumber) : phoneNumner = phoneNumber {
-    requestAuth();
-  }
+  LoginAuthNumberPageViewModel(String phoneNumber) : phoneNumner = phoneNumber;
 
   @override
   void dispose() {

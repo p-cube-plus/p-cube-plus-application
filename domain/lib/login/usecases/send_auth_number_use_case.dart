@@ -6,8 +6,6 @@ class SendAuthNumberUseCase {
   final LoginRepository _loginService = GetIt.I.get<LoginRepository>();
 
   Future<LoginRequestInfoData> call(String phoneNumber) async {
-    return _loginService
-        .sendAuthNumber(phoneNumber)
-        .timeout(Duration(seconds: 10));
+    return await _loginService.sendAuthNumber(phoneNumber);
   }
 }
