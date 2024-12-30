@@ -28,7 +28,7 @@ class SkeletonAnimationState extends State<SkeletonAnimation>
       duration: Duration(seconds: 1),
     );
 
-    _animation = Tween<double>(begin: -0.7, end: 1.7).animate(CurvedAnimation(
+    _animation = Tween<double>(begin: -0.5, end: 1.5).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.linear,
     ));
@@ -55,15 +55,27 @@ class SkeletonAnimationState extends State<SkeletonAnimation>
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(4.0),
-          child: CustomPaint(
-            size: Size(widget.width, widget.height),
-            painter: _SkeletonPainter(
-              baseColor: theme.content,
-              subColor: theme.neutral10,
-              progress: _animation.value,
-              subWidth: widget.width,
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(50.0),
+            boxShadow: [
+              BoxShadow(
+                color: theme.neutral100.withOpacity(0.2),
+                blurRadius: 1.0,
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50.0),
+            child: CustomPaint(
+              size: Size(widget.width, widget.height),
+              painter: _SkeletonPainter(
+                baseColor: theme.content,
+                subColor: theme.neutral10,
+                progress: _animation.value,
+                subWidth: widget.width,
+              ),
             ),
           ),
         );

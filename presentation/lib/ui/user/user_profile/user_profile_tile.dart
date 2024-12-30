@@ -73,7 +73,7 @@ class _UserProfileTileState extends State<UserProfileTile> {
           child: SizedBox(
             width: double.infinity,
             child: Text(
-              "$error로 인해\n데이터 불러오기에 실패했습니다.\n터치해서 새로고침하기",
+              "$error\n터치해서 새로고침하기",
             ),
           ),
         );

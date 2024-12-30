@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:data/firebase/firebase_manager.dart';
 import 'package:data/remote/common/header_builder.dart';
 import 'package:data/remote/common/token_holder.dart';
 import 'package:data/remote/p_cube_api/auth/response/auth_token_response_dto.dart';
 import 'package:data/utils/json_util.dart';
+import 'package:domain/common/exception/app_timeout_exception.dart';
+import 'package:domain/common/exception/refresh_token_exception.dart';
 import 'package:domain/common/extensions/api_exception.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,53 +16,59 @@ class PCubeApi with TokenHolder {
   PCubeApi._internal();
   factory PCubeApi() => _instance;
 
-  final String hostName = "p-cube-plus.com";
+  final timeout = Duration(seconds: 5);
+
+  final String _hostName = "p-cube-plus.com";
   Uri _getUri(String path, {Map<String, String>? queryParameters}) =>
-      Uri.http(hostName, path, queryParameters);
+      Uri.http(_hostName, path, queryParameters);
 
   Future<http.Response> get(String path,
-          {Map<String, String>? headers,
-          Map<String, String>? queryParameters}) async =>
-      _sendRequest(
-        http.Request('GET', _getUri(path, queryParameters: queryParameters)),
-        headers: headers,
-      );
+      {Map<String, String>? headers,
+      Map<String, String>? queryParameters}) async {
+    return await _sendRequest(
+      http.Request('GET', _getUri(path, queryParameters: queryParameters)),
+      headers: headers,
+    );
+  }
 
   Future<http.Response> post(
     String path, {
     Map<String, String>? headers,
     Map<String, String>? queryParameters,
     Object? body,
-  }) async =>
-      _sendRequest(
-        http.Request('POST', _getUri(path, queryParameters: queryParameters)),
-        headers: headers,
-        body: body,
-      );
+  }) async {
+    return await _sendRequest(
+      http.Request('POST', _getUri(path, queryParameters: queryParameters)),
+      headers: headers,
+      body: body,
+    );
+  }
 
   Future<http.Response> put(
     String path, {
     Map<String, String>? headers,
     Map<String, String>? queryParameters,
     Object? body,
-  }) async =>
-      _sendRequest(
-        http.Request('PUT', _getUri(path, queryParameters: queryParameters)),
-        headers: headers,
-        body: body,
-      );
+  }) async {
+    return await _sendRequest(
+      http.Request('PUT', _getUri(path, queryParameters: queryParameters)),
+      headers: headers,
+      body: body,
+    );
+  }
 
   Future<http.Response> delete(
     String path, {
     Map<String, String>? headers,
     Map<String, String>? queryParameters,
     Object? body,
-  }) async =>
-      _sendRequest(
-        http.Request('DELETE', _getUri(path, queryParameters: queryParameters)),
-        headers: headers,
-        body: body,
-      );
+  }) async {
+    return await _sendRequest(
+      http.Request('DELETE', _getUri(path, queryParameters: queryParameters)),
+      headers: headers,
+      body: body,
+    );
+  }
 
   Future<http.Response> _sendRequest(
     http.Request request, {
@@ -75,39 +85,70 @@ class PCubeApi with TokenHolder {
         request.bodyBytes = body.cast<int>();
       } else if (body is Map) {
         request.bodyFields = body.cast<String, String>();
-      } else {
-        throw ArgumentError('Invalid request body "$body".');
       }
     }
 
-    print("http request: $request");
-    var streamedResponse = await request.send().timeout(Duration(seconds: 10));
-    var response = await http.Response.fromStream(streamedResponse);
-    print("http response: $response");
+    try {
+      print("http request: $request");
+      var streamedResponse = await request.send().timeout(timeout);
+      var response = await http.Response.fromStream(streamedResponse);
+      print("http response: $response");
 
-    if (response.statusCode == HttpStatus.ok) {
-      return response;
+      if (response.statusCode == HttpStatus.ok) {
+        return response;
+      }
+
+      if (response.statusCode == HttpStatus.unauthorized) {
+        _resetToken();
+
+        print("http 토큰 재발급 후 request: $request");
+        streamedResponse = await request.send();
+        response = await http.Response.fromStream(streamedResponse);
+        print("http 토큰 재발급 후 response: $response");
+
+        if (response.statusCode == HttpStatus.ok) return response;
+      }
+
+      throw ApiException(
+        mothodType: request.method,
+        inputUri: request.url.toString(),
+        inputHeader: request.headers.toString(),
+        inputBody: request.body,
+        statusCode: response.statusCode,
+        errorBody: response.body,
+      );
+    } catch (e) {
+      if (e is RefreshTokenException) {
+        rethrow;
+      }
+
+      if (e is TimeoutException) {
+        FirebaseManager().sendFirebaseLog("FAILED_API_APP_TIMEOUT", {
+          "mothodType": request.method,
+          "inputUri": request.url.toString(),
+          "inputHeader": request.headers.toString(),
+          "inputBody": request.body,
+          "error": "타임아웃 $timeout",
+        });
+        throw AppTimeoutException();
+      } else if (e is ApiException) {
+        final exception = e;
+        FirebaseManager().sendFirebaseLog("FAILED_API", {
+          "mothodType": exception.mothodType,
+          "inputUri": exception.inputUri,
+          "inputHeader": exception.inputHeader ?? "",
+          "inputBody": exception.inputBody ?? "",
+          "statusCode": exception.statusCode,
+          "errorBody": exception.errorBody,
+        });
+        rethrow;
+      } else {
+        FirebaseManager().sendFirebaseLog("FAILED_API_UNKNOWN", {
+          "error": e.toString(),
+        });
+        rethrow;
+      }
     }
-
-    if (response.statusCode == HttpStatus.unauthorized) {
-      _resetToken();
-
-      print("http 토큰 재발급 후 request: $request");
-      streamedResponse = await request.send();
-      response = await http.Response.fromStream(streamedResponse);
-      print("http 토큰 재발급 후 response: $response");
-
-      if (response.statusCode == HttpStatus.ok) return response;
-    }
-
-    throw ApiException(
-      mothodType: request.method,
-      inputUri: request.url.toString(),
-      inputHeader: request.headers.toString(),
-      inputBody: request.body,
-      statusCode: response.statusCode,
-      errorBody: response.body,
-    );
   }
 
   void _interceptHeader(http.Request request) {
@@ -123,32 +164,67 @@ class PCubeApi with TokenHolder {
   Future<void> _resetToken() async {
     print("http 토큰 재발급 시도");
 
+    FirebaseManager().sendFirebaseLog("REFRESH_TOKEN", {
+      "accessToken": accessToken,
+      "refreshToken": refreshToken,
+    });
+
     Uri refreshTokenUri = _getUri("/auth/token/refresh");
     Map<String, String> refreshheaders = {
       "Content-Type": "application/json",
       "Authorization": refreshToken,
     };
 
-    var refreshResponse =
-        await http.get(refreshTokenUri, headers: refreshheaders);
+    try {
+      var refreshResponse = await http
+          .get(refreshTokenUri, headers: refreshheaders)
+          .timeout(timeout);
 
-    if (refreshResponse.statusCode == HttpStatus.ok) {
-      var tokenData = JsonUtil().convertTo<AuthTokenResponseDTO>(
-          AuthTokenResponseDTO.fromJson, refreshResponse.body);
+      if (refreshResponse.statusCode == HttpStatus.ok) {
+        var tokenData = JsonUtil().convertTo<AuthTokenResponseDTO>(
+            AuthTokenResponseDTO.fromJson, refreshResponse.body);
 
-      setToken(tokenData.accessToken, tokenData.refreshToken);
-      print("http 토큰 재발급 성공");
-      return;
+        setToken(tokenData.accessToken, tokenData.refreshToken);
+        print("http 토큰 재발급 성공");
+
+        FirebaseManager().sendFirebaseLog("SUCCESS_REFRESH_TOKEN", {
+          "newAccessToken": tokenData.accessToken,
+          "newRefreshToken": tokenData.refreshToken,
+        });
+        return;
+      }
+
+      print("http 토큰 재발급 실패");
+      throw ApiException(
+        mothodType: "GET",
+        inputUri: refreshTokenUri.toString(),
+        inputHeader: refreshheaders.toString(),
+        inputBody: null,
+        statusCode: refreshResponse.statusCode,
+        errorBody: refreshResponse.body,
+      );
+    } catch (e) {
+      if (e is TimeoutException) {
+        FirebaseManager().sendFirebaseLog("FAILED_REFRESH_TOKEN_APP_TIMEOUT", {
+          "accessToken": accessToken,
+          "refreshToken": refreshToken,
+          "error": "타임아웃 $timeout",
+        });
+      } else if (e is ApiException) {
+        final exception = e;
+        FirebaseManager().sendFirebaseLog("FAILED_REFRESH_TOKEN", {
+          "mothodType": exception.mothodType,
+          "inputUri": exception.inputUri,
+          "inputHeader": exception.inputHeader ?? "",
+          "inputBody": exception.inputBody ?? "",
+          "statusCode": exception.statusCode,
+          "errorBody": exception.errorBody,
+          "accessToken": accessToken,
+          "refreshToken": refreshToken,
+        });
+      }
+
+      throw RefreshTokenException();
     }
-
-    print("http 토큰 재발급 실패");
-    throw ApiException(
-      mothodType: "GET",
-      inputUri: refreshTokenUri.toString(),
-      inputHeader: refreshheaders.toString(),
-      inputBody: null,
-      statusCode: refreshResponse.statusCode,
-      errorBody: refreshResponse.body,
-    );
   }
 }

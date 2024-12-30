@@ -34,10 +34,9 @@ class SharedPreferenceLocalDatasource {
   bool get isMocking => _pref.getBool(PrefKeyType.isMocking.name) ?? false;
   set isMocking(bool value) => _pref.setBool(PrefKeyType.isMocking.name, value);
 
-  bool get isTestingEmptyData =>
-      _pref.getBool(PrefKeyType.isTestingEmptyData.name) ?? false;
-  set isTestingEmptyData(bool value) =>
-      _pref.setBool(PrefKeyType.isTestingEmptyData.name, value);
+  double get mockDelay => _pref.getDouble(PrefKeyType.mockDelay.name) ?? 1.0;
+  set mockDelay(double value) =>
+      _pref.setDouble(PrefKeyType.mockDelay.name, value);
 
   bool get isTestingException =>
       _pref.getBool(PrefKeyType.isTestingException.name) ?? false;

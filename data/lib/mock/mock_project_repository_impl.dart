@@ -38,6 +38,8 @@ class MockProjectRepositoryImpl implements ProjectRepository {
 
   @override
   Future<List<ProjectData>> getMainProject() async {
+    await MockUtil().applyMockSetting();
+
     final projectList = await _getProjectList();
     return projectList
         .where((value) => value.type == ProjectType.main)
@@ -46,6 +48,8 @@ class MockProjectRepositoryImpl implements ProjectRepository {
 
   @override
   Future<ProjectDetailData> getProjectDetail(int projectId) async {
+    await MockUtil().applyMockSetting();
+
     final projectList = await _getProjectList();
     final targetProject =
         projectList.firstWhere((value) => value.projectId == projectId);
@@ -86,6 +90,8 @@ class MockProjectRepositoryImpl implements ProjectRepository {
 
   @override
   Future<List<ProjectData>> getTraineeProject() async {
+    await MockUtil().applyMockSetting();
+
     final projectList = await _getProjectList();
     return projectList
         .where((value) => value.type == ProjectType.trainee)

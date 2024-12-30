@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:data/local/secure_storage/secure_storage_local_datasource.dart';
 import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:data/firebase/firebase_manager.dart';
 import 'package:data/remote/p_cube_api/p_cube_api.dart';
+import 'package:data/utils/mock_util.dart';
 import 'package:domain/login/repository/login_repository.dart';
 import 'package:domain/login/value_objects/auth_token_data.dart';
 import 'package:domain/login/value_objects/login_confirm_info_data.dart';
@@ -21,7 +20,7 @@ class MockLoginRepositoryImpl implements LoginRepository {
   @override
   Future<LoginUserInfoData> authenticateUser(
       String name, String phoneNumber, String messageToken) async {
-    await Future.delayed(Duration(seconds: 5));
+    await MockUtil().applyMockSetting();
     return LoginUserInfoData(
       isMember: true,
       tokenData: AuthTokenData(accessToken: "mock", refreshToken: "mock"),
@@ -30,7 +29,7 @@ class MockLoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<LoginConfirmInfoData> confirmAuthNumber(String code) async {
-    await Future.delayed(Duration(seconds: Random.secure().nextInt(5)));
+    await MockUtil().applyMockSetting();
     return LoginConfirmInfoData(isVerified: true);
   }
 
@@ -45,8 +44,9 @@ class MockLoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<void> logout() {
-    return Future.wait([
+  Future<void> logout() async {
+    await MockUtil().applyMockSetting();
+    await Future.wait([
       secureStorageLocalDatasource.deleteAccessToken(),
       secureStorageLocalDatasource.deleteRefreshToken(),
     ]);
@@ -54,7 +54,7 @@ class MockLoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<LoginRequestInfoData> sendAuthNumber(String phoneNumber) async {
-    await Future.delayed(Duration(seconds: Random.secure().nextInt(5)));
+    await MockUtil().applyMockSetting();
     return LoginRequestInfoData(isValid: true);
   }
 

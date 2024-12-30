@@ -17,23 +17,27 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: fetchData,
-        builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting ||
-              snapshot.connectionState == ConnectionState.active) {
-            return showOnLoadingWidget?.call(context) ??
-                const Center(
-                  child: CircularProgressIndicator(),
-                );
-          }
+      future: fetchData,
+      builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.connectionState == ConnectionState.active) {
+          return showOnLoadingWidget?.call(context) ??
+              const Center(
+                child: CircularProgressIndicator(),
+              );
+        }
 
-          if (snapshot.hasData) {
-            return showOnLoadedWidget(context, snapshot.requireData);
-          }
+        if (snapshot.hasData) {
+          return showOnLoadedWidget(context, snapshot.requireData);
+        }
 
-          handleError?.call(snapshot.error, snapshot.stackTrace);
-          return showOnErrorWidget?.call(snapshot.error, snapshot.stackTrace) ??
-              const SizedBox();
-        });
+        handleError?.call(snapshot.error, snapshot.stackTrace);
+        return showOnErrorWidget?.call(snapshot.error, snapshot.stackTrace) ??
+            SizedBox(
+              width: double.infinity,
+              child: Text("${snapshot.error}"),
+            );
+      },
+    );
   }
 }

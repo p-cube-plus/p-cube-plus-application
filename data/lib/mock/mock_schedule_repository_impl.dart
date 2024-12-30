@@ -1,3 +1,4 @@
+import 'package:data/utils/mock_util.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:domain/schedule/repository/schedule_repository.dart';
 import 'package:domain/schedule/value_objects/schedule_data.dart';
@@ -6,6 +7,8 @@ import 'package:domain/schedule/value_objects/schedule_type.dart';
 class MockScheduleRepositoryImpl implements ScheduleRepository {
   @override
   Future<List<ScheduleData>> getDailyScheduleDetailList(DateTime date) async {
+    await MockUtil().applyMockSetting();
+
     final result = await _getMockModel();
     final startDate = DateTime(date.year, date.month, date.day);
     final endDate = DateTime(date.year, date.month, date.day + 1);
@@ -18,6 +21,8 @@ class MockScheduleRepositoryImpl implements ScheduleRepository {
 
   @override
   Future<List<ScheduleData>> getScheduleListInMonth(int year, int month) async {
+    await MockUtil().applyMockSetting();
+
     final result = await _getMockModel();
     final startDate = DateTime(year, month, 1);
     final endDate = DateTime(year, month + 1, 1);
@@ -30,6 +35,8 @@ class MockScheduleRepositoryImpl implements ScheduleRepository {
 
   @override
   Future<List<ScheduleData>> getUpcommingScheduleDetailList() async {
+    await MockUtil().applyMockSetting();
+
     final today = DateTime.now();
     final maxDate = DateTime.now().add(Duration(days: 7));
     final result = await _getMockModel();

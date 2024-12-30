@@ -29,6 +29,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<AttendanceCheck?> getLocalAttendanceData(int id) async {
+    await MockUtil().applyMockSetting();
     final localData = await attendanceLocalDatasource.getAttendanceData(id);
     if (localData == null) return null;
     return AttendanceCheck(
@@ -41,6 +42,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<void> insertAttendanceData(AttendanceCheck data) async {
+    await MockUtil().applyMockSetting();
     await attendanceLocalDatasource.insertAttendance(
       AttendanceDao(
         id: data.id,
@@ -61,7 +63,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   @override
   Future<List<AttendanceData>> getAttendanceExistDayListInMonth(
       AttendanceType attendanceType, int year, int month) async {
-    await Future.delayed(Duration(seconds: 1));
+    await MockUtil().applyMockSetting();
     return Future.value([
       AttendanceData(
           id: 1, attendanceDate: DateTime.now(), type: attendanceType),
@@ -89,7 +91,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<List<HomeAttendance>> getHomeAttendanceList() async {
-    //await Future.delayed(Duration(seconds: Random.secure().nextInt(5)));
+    await MockUtil().applyMockSetting();
     return [
       HomeAttendance(
         attendanceData: AttendanceData(
@@ -150,7 +152,8 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<List<TodayAttendance>> getTodayAttendanceList(
-      AttendanceData attendanceData) {
+      AttendanceData attendanceData) async {
+    await MockUtil().applyMockSetting();
     return Future.value([
       TodayAttendance(
           id: 1,
@@ -167,7 +170,8 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<List<RecentAttendance>> getRecentAttendanceStatus(
-      AttendanceType type, int count) {
+      AttendanceType type, int count) async {
+    await MockUtil().applyMockSetting();
     return Future.value([
       RecentAttendance(
         type: AttendanceStatusType.success,
@@ -191,6 +195,8 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   @override
   Future<AttendanceSummary> getAttendanceSummaryList(
       AttendanceType type, int year, int month) async {
+    await MockUtil().applyMockSetting();
+
     final maxWeekNumber = MockUtil().getRandomNumber(4, 5);
     final today = DateTime.now();
     final isPreviousMonth =
@@ -225,7 +231,8 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
   @override
   Future<AttendanceDetailData> getAttendanceDetail(
       AttendanceType attendanceType, DateTime? searchDate) async {
-    await Future.delayed(Duration(milliseconds: 500));
+    await MockUtil().applyMockSetting();
+
     return AttendanceDetailData(
       attendanceScheduleId: 1,
       attendanceDate: searchDate ?? DateTime.now().subtract(Duration(days: 1)),
@@ -264,7 +271,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
     AttendanceType attendanceType,
     DateTime searchDate,
   ) async {
-    await Future.delayed(Duration(milliseconds: 500));
+    await MockUtil().applyMockSetting();
     return AttendanceDetailData(
       attendanceScheduleId: 1,
       attendanceDate: searchDate.add(Duration(days: 7)),
@@ -303,7 +310,7 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
     AttendanceType attendanceType,
     DateTime searchDate,
   ) async {
-    await Future.delayed(Duration(milliseconds: 500));
+    await MockUtil().applyMockSetting();
     return AttendanceDetailData(
       attendanceScheduleId: 1,
       attendanceDate: searchDate.subtract(Duration(days: 7)),

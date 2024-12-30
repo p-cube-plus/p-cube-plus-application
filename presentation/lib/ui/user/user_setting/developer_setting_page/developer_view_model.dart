@@ -1,9 +1,9 @@
 import 'package:domain/debug/usecases/fetch_is_mocking_use_case.dart';
-import 'package:domain/debug/usecases/fetch_is_testing_empty_data_use_case.dart';
 import 'package:domain/debug/usecases/fetch_is_testing_exception_use_case.dart';
+import 'package:domain/debug/usecases/fetch_mock_delay_use_case.dart';
 import 'package:domain/debug/usecases/update_is_mocking_use_case.dart';
-import 'package:domain/debug/usecases/update_is_testing_empty_data_use_case.dart';
 import 'package:domain/debug/usecases/update_is_testing_exception_use_case.dart';
+import 'package:domain/debug/usecases/update_mock_delay_use_case.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 class DeveloperViewModel extends BaseViewModel<void, void> {
@@ -17,13 +17,13 @@ class DeveloperViewModel extends BaseViewModel<void, void> {
     notifyListeners();
   }
 
-  final _fetchIsTestingEmptyDataUseCase = FetchIsTestingEmptyDataUseCase();
-  final _updateIsTestingEmptyDataUseCase = UpdateIsTestingEmptyDataUseCase();
-  late bool isTestingEmptyData = _fetchIsTestingEmptyDataUseCase.call();
+  final _fetchMockDelayUseCase = FetchMockDelayUseCase();
+  final _updateMockDelayUseCase = UpdateMockDelayUseCase();
+  late double mockDelay = _fetchMockDelayUseCase.call();
 
-  void updateIsTestingEmptyData() {
-    isTestingEmptyData = !isTestingEmptyData;
-    _updateIsTestingEmptyDataUseCase(isTestingEmptyData);
+  void updatemockDelay(double newValue) {
+    mockDelay = newValue;
+    _updateMockDelayUseCase(newValue);
     notifyListeners();
   }
 

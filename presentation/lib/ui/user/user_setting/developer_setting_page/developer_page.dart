@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/user/user_setting/developer_setting_page/developer_view_model.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_page.dart';
+import 'package:presentation/widgets/default_text_field.dart';
 import 'package:provider/provider.dart';
 
 class DeveloperPage extends StatelessWidget {
@@ -20,9 +22,28 @@ class DeveloperPage extends StatelessWidget {
   }
 }
 
-class _DeveloperPage extends StatelessWidget
-    with ViewModel<DeveloperViewModel> {
+class _DeveloperPage extends StatefulWidget {
   const _DeveloperPage();
+
+  @override
+  State<_DeveloperPage> createState() => _DeveloperPageState();
+}
+
+class _DeveloperPageState extends State<_DeveloperPage>
+    with ViewModel<DeveloperViewModel> {
+  late TextEditingController _textEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,22 +90,41 @@ class _DeveloperPage extends StatelessWidget
               },
             ),
             watchWidget(
-              (viewModel) => viewModel.isTestingEmptyData,
-              (context, isTestingEmptyData) {
-                return InkWell(
-                  onTap: () => read(context).updateIsTestingEmptyData(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 12,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Empty Data 테스트"),
-                        Text(isTestingEmptyData ? "ON" : "OFF"),
-                      ],
-                    ),
+              (viewModel) => viewModel.mockDelay,
+              (context, mockDelay) {
+                _textEditingController.text = mockDelay.toString();
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 12,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: Text("Mock 데이터 가져오는 시간 (타임아웃: 5초)")),
+                      Container(
+                        color: theme.neutral10,
+                        height: 20,
+                        width: 50,
+                        child: DefaultTextField(
+                          maxLength: 3,
+                          contentPadding: 2,
+                          inputController: _textEditingController,
+                          onChanged: (newValueString) {
+                            final newValue = double.tryParse(newValueString);
+                            if (newValue == null) return;
+                            read(context).updatemockDelay(newValue);
+                          },
+                          textDirection: TextDirection.rtl,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^\d*\.?\d{0,}$'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text("초"),
+                    ],
                   ),
                 );
               },
@@ -102,7 +142,7 @@ class _DeveloperPage extends StatelessWidget
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Exception 테스트"),
+                        Text("Mock Exception 테스트"),
                         Text(isTestingException ? "ON" : "OFF"),
                       ],
                     ),

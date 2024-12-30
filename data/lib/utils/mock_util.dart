@@ -1,12 +1,20 @@
 import 'dart:math';
 
+import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
+import 'package:data/remote/p_cube_api/p_cube_api.dart';
+import 'package:domain/common/exception/app_timeout_exception.dart';
 import 'package:domain/common/exception/mock_exception.dart';
 import 'package:domain/member/value_objects/member_type.dart';
+import 'package:get_it/get_it.dart';
 
 class MockUtil {
   MockUtil._internal();
   static final MockUtil _instance = MockUtil._internal();
   factory MockUtil() => _instance;
+
+  final sharedPreferenceLocalDatasource =
+      GetIt.I.get<SharedPreferenceLocalDatasource>();
+
   final _random = Random.secure();
 
   Future<void> throwMockException() {
@@ -72,5 +80,19 @@ class MockUtil {
     int endSeconds = end.millisecondsSinceEpoch ~/ 1000;
     int randomSeconds = getRandomNumber(startSeconds, endSeconds);
     return DateTime.fromMillisecondsSinceEpoch(randomSeconds * 1000);
+  }
+
+  Future applyMockSetting() async {
+    try {
+      final delay = (sharedPreferenceLocalDatasource.mockDelay * 1000).toInt();
+      await Future.delayed(Duration(milliseconds: delay))
+          .timeout(PCubeApi().timeout);
+    } catch (e) {
+      throw AppTimeoutException();
+    }
+
+    if (sharedPreferenceLocalDatasource.isTestingException) {
+      throw MockException();
+    }
   }
 }

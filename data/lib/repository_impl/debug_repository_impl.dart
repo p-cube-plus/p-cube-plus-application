@@ -17,13 +17,13 @@ class DebugRepositoryImpl implements DebugRepository {
   }
 
   @override
-  bool getIsTestingEmptyData() {
-    return sharedPreferenceLocalDatasource.isTestingEmptyData;
+  double getMockDelay() {
+    return sharedPreferenceLocalDatasource.mockDelay;
   }
 
   @override
-  void setIsTestingEmptyData(bool value) {
-    sharedPreferenceLocalDatasource.isTestingEmptyData = value;
+  void setMockDelay(double value) {
+    sharedPreferenceLocalDatasource.mockDelay = value;
   }
 
   @override

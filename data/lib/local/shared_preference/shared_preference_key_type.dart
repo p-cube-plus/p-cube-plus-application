@@ -20,4 +20,5 @@ enum PrefKeyType {
 
   isShowOnlyActiveMember,
   memberNameSortType,
+  mockDelay,
 }

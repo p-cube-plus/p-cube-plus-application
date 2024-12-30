@@ -1,3 +1,4 @@
+import 'package:data/local/shared_preference/shared_preference_local_datasource.dart';
 import 'package:data/utils/mock_util.dart';
 import 'package:domain/member/value_objects/member_part_type.dart';
 import 'package:domain/member/value_objects/member_type.dart';
@@ -10,11 +11,16 @@ import 'package:domain/user/value_objects/user_project_detail.dart';
 import 'package:domain/user/value_objects/user_warning.dart';
 import 'package:domain/user/value_objects/user_warning_content.dart';
 import 'package:domain/user/value_objects/user_warning_detail.dart';
+import 'package:get_it/get_it.dart';
 
 class MockUserRepositoryImpl implements UserRepository {
+  final sharedPreferenceLocalDatasource =
+      GetIt.I.get<SharedPreferenceLocalDatasource>();
+
   @override
   Future<UserWarning> getUserCumulativeWarning() async {
-    await Future.delayed(Duration(seconds: 1));
+    await MockUtil().applyMockSetting();
+
     return Future.value(
       UserWarning(cumulativeWarningCount: 1.5),
     );
@@ -22,7 +28,8 @@ class MockUserRepositoryImpl implements UserRepository {
 
   @override
   Future<UserProfile> getUserProfile() async {
-    await Future.delayed(Duration(seconds: 1));
+    await MockUtil().applyMockSetting();
+
     return Future.value(UserProfile(
       name: "개발자 테스트",
       partType: MemberPartType.development,
@@ -32,7 +39,8 @@ class MockUserRepositoryImpl implements UserRepository {
 
   @override
   Future<List<UserProject>> getUserProject() async {
-    await Future.delayed(Duration(seconds: 1));
+    await MockUtil().applyMockSetting();
+
     return Future.value(List.generate(15, (index) {
       return UserProject(
         title: "프로젝트 $index",
@@ -43,7 +51,8 @@ class MockUserRepositoryImpl implements UserRepository {
 
   @override
   Future<List<UserProjectDetail>> getUserProjectDetail() async {
-    await Future.delayed(Duration(seconds: 1));
+    await MockUtil().applyMockSetting();
+
     return Future.value(List.generate(10, (index) {
       return UserProjectDetail(
         projectId: index,
@@ -58,7 +67,8 @@ class MockUserRepositoryImpl implements UserRepository {
 
   @override
   Future<UserWarningDetail> getUserWarningDetail() async {
-    await Future.delayed(Duration(seconds: 1));
+    await MockUtil().applyMockSetting();
+
     return Future.value(UserWarningDetail(
       warningHistory: List.generate(
         MockUtil().getRandomNumber(0, 5),
@@ -88,8 +98,7 @@ class MockUserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<void> logout() async {
+    await MockUtil().applyMockSetting();
   }
 }

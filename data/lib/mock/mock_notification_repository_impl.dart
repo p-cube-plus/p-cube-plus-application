@@ -25,7 +25,8 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
 
   @override
   Future<List<NotificationData>> getNotificationList() async {
-    await Future.delayed(MockUtil().getRandomDuration(500, 1500));
+    await MockUtil().applyMockSetting();
+
     return Future.value(mockNotification);
   }
 
@@ -64,7 +65,8 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   @override
   Future<NotificationSetting> fetchNotificationSetting(
       NotificationType type) async {
-    await Future.delayed(Duration(seconds: 1));
+    await MockUtil().applyMockSetting();
+
     return NotificationSetting(
       type: type,
       isOn: true,
@@ -74,7 +76,8 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
 
   @override
   Future<NotificationData> updateNotificationAsRead(int id) async {
-    await Future.delayed(MockUtil().getRandomDuration(200, 1000));
+    await MockUtil().applyMockSetting();
+
     final index = mockNotification.indexWhere((data) => data.id == id);
 
     if (index != -1) {
