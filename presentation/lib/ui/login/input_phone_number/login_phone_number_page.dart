@@ -145,7 +145,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
   }
 
   void _setStateListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
         case InputPhoneNumberState.navigateToAuth:
           _navigateToInputAuthNumberPage();

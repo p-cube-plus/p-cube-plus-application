@@ -6,7 +6,6 @@ import 'package:presentation/ui/home/home_page.dart';
 import 'package:presentation/ui/project/project_page.dart';
 import 'package:presentation/ui/user/user_page.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
-import 'package:presentation/ui/user/user_setting/user_setting_page.dart';
 import 'main_navigation_bar_factory.dart';
 
 class MainPage extends StatefulWidget {

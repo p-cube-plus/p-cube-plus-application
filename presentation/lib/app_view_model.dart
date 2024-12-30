@@ -11,16 +11,12 @@ class AppViewModel extends BaseViewModel<void> {
   late ThemeMode currentThemeMode = _fetchThemeType();
 
   ThemeMode _fetchThemeType() {
-    try {
-      final themeType = _fetchThemeTypeUseCase();
-      return switch (themeType) {
-        ThemeType.system => ThemeMode.system,
-        ThemeType.light => ThemeMode.light,
-        ThemeType.dark => ThemeMode.dark,
-      };
-    } catch (_) {
-      return ThemeMode.system;
-    }
+    final themeType = _fetchThemeTypeUseCase();
+    return switch (themeType) {
+      ThemeType.system => ThemeMode.system,
+      ThemeType.light => ThemeMode.light,
+      ThemeType.dark => ThemeMode.dark,
+    };
   }
 
   void updateThemeType(ThemeType type) {

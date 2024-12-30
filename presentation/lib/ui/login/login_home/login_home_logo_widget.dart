@@ -11,7 +11,11 @@ class LoginHomeLogoWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return Column(
       children: [
-        SvgPicture.asset(path.textLogo),
+        SvgPicture.asset(
+          path.textLogo,
+          width: 240,
+          height: 55,
+        ),
         const SizedBox(height: 16),
         RichText(
           text: TextSpan(

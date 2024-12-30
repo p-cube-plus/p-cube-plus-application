@@ -42,7 +42,7 @@ class _AlarmPageState extends State<_AlarmPage>
   }
 
   void setEventListener() {
-    widget.read(context).uiEventStream.listen((event) {
+    widget.read(context).eventStream.listen((event) {
       switch (event) {
         case AlarmEvent.showProgress:
           _showProgress();

@@ -53,20 +53,22 @@ class _PCubePlusApp extends StatelessWidget with ViewModel<AppViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return watchWidget((viewModel) => viewModel.currentThemeMode,
-        (context, currentThemeMode) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'PCube+',
-        themeMode: currentThemeMode,
-        theme: _getLightTheme(),
-        darkTheme: _getDarkTheme(),
-        scrollBehavior: _RemoveScrollGlowEffect(),
-        navigatorKey: navigatorKey,
-        home: _getHomePage(),
-        routes: getRoute(),
-      );
-    });
+    return watchWidget(
+      (viewModel) => viewModel.currentThemeMode,
+      (context, currentThemeMode) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'PCube+',
+          themeMode: currentThemeMode,
+          theme: _getLightTheme(),
+          darkTheme: _getDarkTheme(),
+          scrollBehavior: _RemoveScrollGlowEffect(),
+          navigatorKey: navigatorKey,
+          home: _getHomePage(),
+          routes: getRoute(),
+        );
+      },
+    );
   }
 
   Widget _getHomePage() {

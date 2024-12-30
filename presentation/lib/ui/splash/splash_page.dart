@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
-import 'package:presentation/ui/splash/splash_state.dart';
+import 'package:presentation/ui/splash/splash_event.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/splash/splash_page_viewmodel.dart';
@@ -82,14 +82,14 @@ class _SplashPageState extends State<_SplashPage>
   }
 
   void _setStateListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
-        case SplashState.loginSuccess:
+        case SplashEventFailedInit():
+          _exitApp(event.errorMessage);
+        case SplashEventNavigateToMainPage():
           _navigateToMainPage();
-        case SplashState.needLogin:
+        case SplashEventNavigateToLoginPage():
           _navigateToLoginPage();
-        case SplashState.failedInit:
-          _exitApp();
       }
     });
   }
@@ -114,8 +114,7 @@ class _SplashPageState extends State<_SplashPage>
     );
   }
 
-  void _exitApp() {
-    final errorMessage = read(context).initErrorMessage;
+  void _exitApp(String errorMessage) {
     DialogBuilder().build(
       context,
       DefaultAlert(

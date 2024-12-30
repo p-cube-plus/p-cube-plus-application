@@ -33,7 +33,7 @@ class _DeleteUserBottomSheetState extends State<_DeleteUserBottomSheet>
   }
 
   void _setEventListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
         case OnSuccessDeleteUserEvent():
           _navigateToDeleteUserCompletePage();

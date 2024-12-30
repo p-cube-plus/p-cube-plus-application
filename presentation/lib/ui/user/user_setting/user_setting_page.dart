@@ -47,7 +47,7 @@ class _UserSettingPageState extends State<_UserSettingPage>
   }
 
   void _setEventListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
         case OnSuccessLogoutEvent():
           _navigateToLogoutCompletePage();

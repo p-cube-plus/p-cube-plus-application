@@ -57,7 +57,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
   }
 
   void _setEventListener() {
-    read(context).uiEventStream.listen((event) {
+    read(context).eventStream.listen((event) {
       switch (event) {
         case ExecutiveAlarmSettingState.popPage:
           _popPage();

@@ -8,15 +8,37 @@ class PushNotificationManager {
   PushNotificationManager._internal();
   factory PushNotificationManager() => _instance;
 
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final _notificationDetails = NotificationDetails(
+    android: AndroidNotificationDetails(
+      'NORMAL_CHANNEL', // Android\app\res\values\notification_channel_string.xml
+      '일반 알림',
+      channelDescription:
+          '앱 내 전반적인 알림을 설정합니다.\n중요도 변경 시 앱 내 설정이 제대로 작동하지 않을 수 있습니다.',
+      importance: Importance.max,
+      priority: Priority.high,
+    ),
+    iOS: DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    ),
+  );
 
   Future<void> initialize() async {
-    final initializationSettings = InitializationSettings(
-      android: AndroidInitializationSettings('mipmap/ic_launcher'),
-      iOS: DarwinInitializationSettings(),
+    final aosInit = AndroidInitializationSettings('mipmap/ic_launcher');
+    final iosInit = DarwinInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
     );
 
-    await flutterLocalNotificationsPlugin.initialize(
+    final initializationSettings = InitializationSettings(
+      android: aosInit,
+      iOS: iosInit,
+    );
+
+    await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onNotificationReceived,
       onDidReceiveBackgroundNotificationResponse: onNotificationReceived,
@@ -27,24 +49,11 @@ class PushNotificationManager {
     PushNotificationData data, {
     String? payload,
   }) async {
-    const androidNotificationDetails = AndroidNotificationDetails(
-      'NORMAL_CHANNEL', // Android\app\res\values\notification_channel_string.xml
-      '일반 알림',
-      channelDescription:
-          '앱 내 전반적인 알림을 설정합니다.\n중요도 변경 시 앱 내 설정이 제대로 작동하지 않을 수 있습니다.',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-
-    const notificationDetails = NotificationDetails(
-      android: androidNotificationDetails,
-    );
-
-    await flutterLocalNotificationsPlugin.show(
+    await _flutterLocalNotificationsPlugin.show(
       data.type.notificationId,
       data.title,
       data.descrption,
-      notificationDetails,
+      _notificationDetails,
       payload: payload,
     );
   }
