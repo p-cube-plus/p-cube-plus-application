@@ -24,6 +24,7 @@ class DefaultTabBar extends StatefulWidget {
     this.labelStyle,
     this.unselectedLabelStyle,
     this.indicatorColor,
+    this.onChangeTab,
   });
 
   final List<DefaultTab> tabs;
@@ -37,6 +38,7 @@ class DefaultTabBar extends StatefulWidget {
   final Color? indicatorColor;
   final TextStyle? unselectedLabelStyle;
   final TextStyle? labelStyle;
+  final Function(int tabIndex)? onChangeTab;
 
   @override
   State<DefaultTabBar> createState() => _DefaultTabBarState();
@@ -62,6 +64,10 @@ class _DefaultTabBarState extends State<DefaultTabBar>
           0.001) return;
       FocusScope.of(context).unfocus();
     });
+
+    if (widget.onChangeTab != null) {
+      controller.addListener(() => widget.onChangeTab!.call(controller.index));
+    }
 
     tabList = widget.tabs.map((tab) => Text(tab.tabName)).toList();
     pageList = widget.tabs.map((tab) => tab.page).toList();

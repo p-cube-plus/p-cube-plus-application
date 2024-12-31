@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
+import 'package:presentation/ui/webpage/introduce_p_cube_web_page.dart';
 import 'package:presentation/widgets/default_page.dart';
 
 class LoginFailedPage extends StatelessWidget {
@@ -60,18 +61,20 @@ class LoginFailedPage extends StatelessWidget {
                   color: theme.neutral40,
                 ),
               ),
-              const SizedBox(height: 6),
               TextButton(
                   onPressed: () => _navigateToPCubeIntroPage(context),
-                  child: Text(
-                    "판도라큐브 소개 바로가기",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: theme.neutral80,
+                  child: Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Text(
+                      "판도라큐브 소개 바로가기",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: theme.neutral80,
+                      ),
                     ),
                   )),
-              const SizedBox(height: 50),
+              const SizedBox(height: 44),
             ],
           ),
         ],
@@ -88,10 +91,10 @@ class LoginFailedPage extends StatelessWidget {
   }
 
   void _navigateToPCubeIntroPage(BuildContext context) {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const LoginHomePage(),
-        ),
-        (route) => false);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const IntroducePCubeWebPage(),
+      ),
+    );
   }
 }

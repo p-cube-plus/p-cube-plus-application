@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/beacon/beacon_scanner.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_event.dart';
-import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_viewmodel.dart';
+import 'package:presentation/ui/attendance/attendance_today_viewmodel.dart';
 import 'package:presentation/widgets/default_alert.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 

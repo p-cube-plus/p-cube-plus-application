@@ -4,8 +4,12 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/home/home_attendance/home_attendance_detail/home_attendance_detail_view_model.dart';
 import 'package:presentation/ui/home/home_attendance/home_attendance_detail/home_attendance_summary_box/attendance_summary_box.dart';
 import 'package:presentation/widgets/default_appbar.dart';
+import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
+import 'package:presentation/widgets/default_refresh_indicator.dart';
+import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeAttendanceDetailPage extends StatelessWidget {
@@ -20,18 +24,31 @@ class HomeAttendanceDetailPage extends StatelessWidget {
   }
 }
 
-class _HomeAttendanceDetailPage extends StatelessWidget
-    with ViewModel<HomeAttendanceDetailViewModel> {
+class _HomeAttendanceDetailPage extends StatefulWidget {
   const _HomeAttendanceDetailPage();
+
+  @override
+  State<_HomeAttendanceDetailPage> createState() =>
+      _HomeAttendanceDetailPageState();
+}
+
+class _HomeAttendanceDetailPageState extends State<_HomeAttendanceDetailPage>
+    with ViewModel<HomeAttendanceDetailViewModel> {
+  var _refreshKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
     return DefaultPage(
+      key: _refreshKey,
       appbar: DefaultAppBar(),
       title: "출석 현황",
-      content: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+      content: DefaultRefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            _refreshKey = UniqueKey();
+          });
+        },
+        child: DefaultContent(
           child: DefaultFutureBuilder(
             fetchData: read(context).fetchMemberAvailableAttendanceType(),
             showOnLoadedWidget:
@@ -45,6 +62,51 @@ class _HomeAttendanceDetailPage extends StatelessWidget
                     (index) {
                       return AttendanceSummaryBox(type: data[index]);
                     },
+                  ),
+                ),
+              );
+            },
+            showOnLoadingWidget: (context) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    2,
+                    (index) {
+                      return RoundedBorder(
+                        padding: EdgeInsets.all(20),
+                        margin: EdgeInsets.only(bottom: 16),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.navigate_before_rounded),
+                                SkeletonAnimation(120, 16, radius: 50),
+                                Icon(Icons.navigate_next_rounded),
+                              ],
+                            ),
+                            SizedBox(height: 18),
+                            SkeletonAnimation(280, 74, radius: 10),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+            showOnErrorWidget: (error, trace) {
+              return GestureDetector(
+                onTap: () => setState(() => _refreshKey = UniqueKey()),
+                child: Container(
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Text(
+                      "데이터 불러오기에 실패했습니다!\n터치해서 새로고침하기",
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               );

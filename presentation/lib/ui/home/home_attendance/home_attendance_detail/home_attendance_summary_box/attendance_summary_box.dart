@@ -8,6 +8,7 @@ import 'package:presentation/widgets/attendance_status_image.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/drag_detector.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class AttendanceSummaryBox extends StatelessWidget {
@@ -148,6 +149,23 @@ class _AttendanceSummaryBoxState extends State<_AttendanceSummaryBox> {
                           ],
                         );
                       }),
+                    );
+                  },
+                  showOnLoadingWidget: (context) {
+                    return SkeletonAnimation(280, 74, radius: 10);
+                  },
+                  showOnErrorWidget: (error, trace) {
+                    return GestureDetector(
+                      onTap: () => setState(() => _refreshKey = UniqueKey()),
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Center(
+                          child: Text(
+                            "데이터 불러오기에 실패했습니다!\n터치해서 새로고침하기",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
                     );
                   },
                 ),

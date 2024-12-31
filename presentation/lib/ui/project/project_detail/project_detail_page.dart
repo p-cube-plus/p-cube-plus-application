@@ -4,12 +4,13 @@ import 'package:domain/project/value_objects/project_detail_member_data.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/project/project_detail_view_model.dart';
+import 'package:presentation/ui/project/project_detail/project_detail_view_model.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_profile.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class ProjectDetailPage extends StatelessWidget {
@@ -60,6 +61,120 @@ class _ProjectDetailPage extends StatelessWidget
                     SizedBox(height: 40),
                     ProjectTeamInfoWidget(dataList: data.memberList),
                     SizedBox(height: 32),
+                  ],
+                );
+              },
+              showOnLoadingWidget: (context) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24),
+                          child: SkeletonAnimation(
+                            120,
+                            32,
+                            radius: 4,
+                            subColor: theme.content,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 24, top: 4, bottom: 20),
+                          child: SkeletonAnimation(
+                            84,
+                            20,
+                            radius: 4,
+                            subColor: theme.content,
+                          ),
+                        ),
+                        RoundedBorder(
+                          width: double.infinity,
+                          color: theme.content,
+                          padding: EdgeInsets.all(20),
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          child: Stack(children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SkeletonAnimation(120, 24, radius: 4),
+                                SizedBox(height: 8),
+                                SkeletonAnimation(160, 12, radius: 4),
+                                SizedBox(height: 16),
+                                SkeletonAnimation(180, 16, radius: 4),
+                              ],
+                            ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: SkeletonAnimation(85, 20, radius: 4),
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 40),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "팀원 정보",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: theme.neutral40,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Column(
+                            children: List.generate(
+                              3,
+                              (index) {
+                                return RoundedBorder(
+                                  padding: const EdgeInsets.all(16.0),
+                                  margin: EdgeInsets.only(bottom: 8),
+                                  color: theme.content,
+                                  child: Stack(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          DefaultProfile(size: 32),
+                                          SizedBox(width: 16),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SkeletonAnimation(72, 16,
+                                                  radius: 4),
+                                              SizedBox(height: 8),
+                                              SkeletonAnimation(120, 14,
+                                                  radius: 4),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        top: 8,
+                                        bottom: 8,
+                                        child: SkeletonAnimation(120, 14,
+                                            radius: 4),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 );
               },

@@ -5,6 +5,8 @@ import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/ca
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_selected.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_today.dart';
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_day/calendar_day_cell/calendar_day_cell_with_schedule.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 
 import '../../home_schedule_viewmodel.dart';
 
@@ -17,66 +19,67 @@ class CalendarDay extends StatelessWidget
     return watchWidget(
       (viewModel) => viewModel.selectedDate,
       (context, currentMonth) {
-        return Column(
-          children: List.generate(
-            currentMonth.numberOfWeeks,
-            growable: false,
-            (columnIndex) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return DefaultFutureBuilder(
+          fetchData: read(context).fetchHomeMonthSchedule(),
+          showOnLoadedWidget: (context, monthSchedule) {
+            return Column(
               children: List.generate(
-                DateTime.daysPerWeek,
+                currentMonth.numberOfWeeks,
                 growable: false,
-                (rowIndex) {
-                  const cellHeight = 42.0;
-                  final createdDay =
-                      _getCreatedDay(currentMonth, columnIndex, rowIndex);
+                (columnIndex) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    DateTime.daysPerWeek,
+                    growable: false,
+                    (rowIndex) {
+                      const cellHeight = 42.0;
+                      final createdDay =
+                          _getCreatedDay(currentMonth, columnIndex, rowIndex);
 
-                  if (_isBlankCell(currentMonth, columnIndex, rowIndex)) {
-                    return const Expanded(child: SizedBox(height: cellHeight));
-                  }
+                      if (_isBlankCell(currentMonth, columnIndex, rowIndex)) {
+                        return const Expanded(
+                            child: SizedBox(height: cellHeight));
+                      }
 
-                  return Expanded(
-                    child: SizedBox(
-                      height: cellHeight,
-                      child: watchWidget(
-                        (viewModel) => (
-                          viewModel.selectedDate.day,
-                          viewModel.monthSchedule[createdDay]
+                      return Expanded(
+                        child: SizedBox(
+                          height: cellHeight,
+                          child: watchWidget(
+                            (viewModel) => viewModel.selectedDate.day,
+                            (context, selectedDay) {
+                              final schedule = monthSchedule[createdDay];
+                              if (createdDay == selectedDay) {
+                                return CalendarDayCellSelected(createdDay);
+                              } else if (_isToday(currentMonth.year,
+                                  currentMonth.month, createdDay)) {
+                                return CalendarDayCellToday(createdDay);
+                              } else if (schedule != null) {
+                                return CalendarDayCellWithSchedule(
+                                  createdDay,
+                                  Color(schedule.type.color.hex),
+                                );
+                              }
+                              return CalendarDayCell(createdDay);
+                            },
+                            shouldRebuild: (previous, next) {
+                              return createdDay == previous ||
+                                  createdDay == next;
+                            },
+                          ),
                         ),
-                        (context, data) {
-                          final selectedDay = data.$1;
-                          final schedule = data.$2;
-                          if (createdDay == selectedDay) {
-                            return CalendarDayCellSelected(createdDay);
-                          } else if (_isToday(currentMonth.year,
-                              currentMonth.month, createdDay)) {
-                            return CalendarDayCellToday(createdDay);
-                          } else if (schedule != null) {
-                            return CalendarDayCellWithSchedule(
-                              createdDay,
-                              Color(schedule.type.color.hex),
-                            );
-                          }
-                          return CalendarDayCell(createdDay);
-                        },
-                        shouldRebuild: (previous, next) {
-                          final previousSelectedDay = previous.$1;
-                          final nextSelectedDay = next.$1;
-                          final isChangeSelectedDay =
-                              createdDay == previousSelectedDay ||
-                                  createdDay == nextSelectedDay;
-                          final isChangeSchedule =
-                              previous.$2?.type.color.hex !=
-                                  next.$2?.type.color.hex;
-                          return isChangeSelectedDay || isChangeSchedule;
-                        },
-                      ),
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
+          showOnLoadingWidget: (context) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SkeletonAnimation(280, 195, radius: 10),
+            );
+          },
         );
       },
       shouldRebuild: (previous, next) {

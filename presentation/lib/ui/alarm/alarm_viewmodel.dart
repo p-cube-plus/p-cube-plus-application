@@ -1,3 +1,4 @@
+import 'package:domain/common/extensions/future_extension.dart';
 import 'package:domain/notification/usecases/fetch_new_notification_use_case.dart';
 import 'package:domain/notification/usecases/fetch_read_notification_use_case.dart';
 import 'package:domain/notification/usecases/update_read_notification_use_case.dart';
@@ -13,30 +14,47 @@ class AlarmViewModel extends BaseViewModel<AlarmEvent> {
   List<NotificationData> newNotificationList = [];
   List<NotificationData> readNotificationList = [];
 
-  AlarmViewModel() {
-    Future.wait([
+  bool isLoading = false;
+
+  void fetchNotificationList() async {
+    isLoading = true;
+    notifyListeners();
+
+    final data = await Future.wait([
       _fetchNewNotificationUseCase(),
       _fetchReadNotificationUseCase(),
-    ]).then((data) {
+    ]).getOrNull();
+
+    isLoading = false;
+
+    if (data == null) {
+      triggerEvent(AlarmEvent.showDataErrorToast);
+    } else {
       newNotificationList = data.first;
       readNotificationList = data.last;
-      notifyListeners();
-      triggerEvent(AlarmEvent.dismissProgress);
-    });
+    }
+
+    notifyListeners();
   }
 
   void updateReadNotification(int notificationId) async {
     triggerEvent(AlarmEvent.showProgress);
-    _updateReadNotificationUseCase.call(notificationId).then((readData) {
-      List<NotificationData> updatedNewNotificationList =
-          List.from(newNotificationList);
-      updatedNewNotificationList
-          .removeWhere((data) => data.id == notificationId);
 
-      newNotificationList = updatedNewNotificationList;
-      readNotificationList = [readData, ...readNotificationList];
-      notifyListeners();
-      triggerEvent(AlarmEvent.dismissProgress);
-    });
+    final readData =
+        await _updateReadNotificationUseCase.call(notificationId).getOrNull();
+    triggerEvent(AlarmEvent.dismissProgress);
+
+    if (readData == null) {
+      triggerEvent(AlarmEvent.showErrorToast);
+      return;
+    }
+
+    final updatedNewNotificationList =
+        List<NotificationData>.from(newNotificationList);
+    updatedNewNotificationList.removeWhere((data) => data.id == notificationId);
+
+    newNotificationList = updatedNewNotificationList;
+    readNotificationList = [readData, ...readNotificationList];
+    notifyListeners();
   }
 }

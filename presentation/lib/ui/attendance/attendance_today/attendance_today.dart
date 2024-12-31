@@ -2,10 +2,10 @@ import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_event.dart';
-import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_viewmodel.dart';
+import 'package:presentation/ui/attendance/attendance_today_viewmodel.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 
 import 'attendance_today_item.dart';
 
@@ -31,7 +31,7 @@ class AttendanceToday extends StatelessWidget
         const SizedBox(height: 8),
         DefaultFutureBuilder(
           fetchData: read(context).fetchStateData(),
-          showOnLoadedWidget: (_, todayAttendanceList) {
+          showOnLoadedWidget: (context, todayAttendanceList) {
             read(context).startCheckCanAttendanceTimer(todayAttendanceList);
             return RoundedBorder(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
@@ -57,6 +57,25 @@ class AttendanceToday extends StatelessWidget
                   ),
                   const SizedBox(height: 24),
                   AttendanceTodayItem(todayAttendanceList[1]),
+                ],
+              ),
+            );
+          },
+          showOnLoadingWidget: (context) {
+            return RoundedBorder(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+              child: Column(
+                children: [
+                  SkeletonAnimation(160, 16, radius: 50),
+                  const SizedBox(height: 16),
+                  SkeletonAnimation(280, 82, radius: 10),
+                  const SizedBox(height: 20),
+                  Divider(
+                    thickness: 1,
+                    color: theme.neutral10,
+                  ),
+                  const SizedBox(height: 16),
+                  SkeletonAnimation(280, 82, radius: 10),
                 ],
               ),
             );

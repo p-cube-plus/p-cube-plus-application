@@ -8,7 +8,6 @@ class TryLoginUseCase {
     final token = await _loginRepository.getFcmToken();
     final result =
         await _loginRepository.authenticateUser(userName, phoneNumber, token!);
-
     if (result.isMember) {
       final accessToken = result.tokenData!.accessToken;
       final refreshToken = result.tokenData!.refreshToken;

@@ -7,6 +7,7 @@ import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/executive/executive_main_page.dart';
 import 'package:presentation/ui/home/home_page_event.dart';
 import 'package:presentation/widgets/default_content.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
 import 'package:provider/provider.dart';
@@ -46,16 +47,6 @@ class _HomePageState extends State<_HomePage>
   void initState() {
     super.initState();
     BeaconScanner().startScanning();
-    Future.microtask(() {});
-  }
-
-  void setListener() {
-    read(context).eventStream.listen((event) {
-      switch (event) {
-        case HomePageEventShowToast():
-          Fluttertoast.showToast(msg: event.message);
-      }
-    });
   }
 
   @override
@@ -65,17 +56,23 @@ class _HomePageState extends State<_HomePage>
     return DefaultPage(
       key: _refreshKey,
       title: "홈",
-      action: watchWidget((viewModel) => viewModel.isExecutive,
-          (context, isExecutive) {
-        if (isExecutive) {
-          return GestureDetector(
-            child: SvgPicture.asset(asset.executiveHome),
-            onTap: () => _navigateToExecutivePage(),
-          );
-        } else {
-          return const SizedBox();
-        }
-      }),
+      action: DefaultFutureBuilder(
+        fetchData: read(context).fetchIsExecutive(),
+        showOnLoadedWidget: (context, isExecutive) {
+          if (isExecutive) {
+            return GestureDetector(
+              child: SvgPicture.asset(asset.executiveHome),
+              onTap: () => _navigateToExecutivePage(),
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+        showOnLoadingWidget: (context) => const SizedBox(),
+        handleError: (error, trace) {
+          Fluttertoast.showToast(msg: "임원진 여부 확인에 실패했습니다!\n새로고침해주세요.");
+        },
+      ),
       content: DefaultRefreshIndicator(
         onRefresh: () async {
           setState(() {

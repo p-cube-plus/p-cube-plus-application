@@ -5,6 +5,7 @@ import 'package:presentation/ui/user/user_view_model.dart';
 import 'package:presentation/ui/user/user_warning/user_warning_page.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 
 class UserWarningTile extends StatefulWidget with ViewModel<UserViewModel> {
   const UserWarningTile({super.key});
@@ -84,13 +85,35 @@ class _UserWarningTileState extends State<UserWarningTile> {
               ),
             );
           },
+          showOnLoadingWidget: (context) {
+            return RoundedBorder(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "누적 경고 횟수",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                  SkeletonAnimation(80, 14, radius: 50),
+                ],
+              ),
+            );
+          },
           showOnErrorWidget: (error, trace) {
             return GestureDetector(
               onTap: () => setState(() => _refreshKey = UniqueKey()),
-              child: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "$error로 인해\n데이터 불러오기에 실패했습니다.\n터치해서 새로고침하기",
+              child: Container(
+                color: Colors.transparent,
+                child: Center(
+                  child: Text(
+                    "데이터 불러오기에 실패했습니다!\n터치해서 새로고침하기",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             );

@@ -9,7 +9,6 @@ import 'package:domain/attendance/value_objects/today_attendance.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
-import 'attendance_today_event.dart';
 import 'attendance_today_state.dart';
 
 class AttendanceTodayViewmodel extends BaseViewModel<AttendanceTodayState> {

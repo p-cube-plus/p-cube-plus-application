@@ -5,7 +5,5 @@ import 'package:presentation/common/base_viewmodel.dart';
 class HomeAttendnaceViewModel extends BaseViewModel<void> {
   final _fetchHomeAttendanceUseCase = FetchHomeAttendanceUseCase();
 
-  Future<List<HomeAttendance>> fetchData() async {
-    return _fetchHomeAttendanceUseCase.call();
-  }
+  Future<List<HomeAttendance>> fetchData() => _fetchHomeAttendanceUseCase();
 }
