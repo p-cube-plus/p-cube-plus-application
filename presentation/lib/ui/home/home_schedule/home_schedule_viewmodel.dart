@@ -4,6 +4,7 @@ import 'package:domain/schedule/usecase/fetch_home_today_schedule_use_case.dart'
 import 'package:domain/schedule/value_objects/daily_schedule.dart';
 import 'package:domain/schedule/value_objects/month_schedule.dart';
 import 'package:presentation/common/base_viewmodel.dart';
+import 'package:presentation/route_handler/route_handler.dart';
 
 class HomeScheduleViewmodel extends BaseViewModel<void> {
   final _fetchHomeMonthScheduleUseCase = FetchHomeMonthScheduleUseCase();
