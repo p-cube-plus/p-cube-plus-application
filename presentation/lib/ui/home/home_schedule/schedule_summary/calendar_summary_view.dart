@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/home/home_schedule/home_schedule_viewmodel.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 
 class CalendarSelectedDateSummaryView extends StatelessWidget
     with ViewModel<HomeScheduleViewmodel> {
@@ -16,9 +18,9 @@ class CalendarSelectedDateSummaryView extends StatelessWidget
     return watchWidget<DateTime>(
       (viewModel) => viewModel.selectedDate,
       (context, selectedDate) {
-        return watchWidget(
-          (viewModel) => viewModel.todayScheduleList,
-          (context, scheduleList) {
+        return DefaultFutureBuilder(
+          fetchData: read(context).fetchHomeTodaySchedule(),
+          showOnLoadedWidget: (context, scheduleList) {
             if (scheduleList.isEmpty) return const SizedBox();
             return RoundedBorder(
               width: double.infinity,
@@ -93,6 +95,20 @@ class CalendarSelectedDateSummaryView extends StatelessWidget
                       )),
                     ],
                   ),
+                ],
+              ),
+            );
+          },
+          showOnLoadingWidget: (context) {
+            return RoundedBorder(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SkeletonAnimation(82, 14, radius: 4),
+                  SizedBox(height: 16),
+                  SkeletonAnimation(270, 14, radius: 4),
                 ],
               ),
             );

@@ -60,15 +60,4 @@ class MemberAttendanceState {
   //     return AttendanceStatusType.failed;
   //   }
   // }
-
-  AttendanceStatusType _getDefaultFirstStatus() {
-    return AttendanceStatusType.pending;
-  }
-
-  AttendanceStatusType _getDefaultSecondStatus() {
-    if (!isExistSecondAttendance) {
-      return AttendanceStatusType.success;
-    }
-    return AttendanceStatusType.pending;
-  }
 }

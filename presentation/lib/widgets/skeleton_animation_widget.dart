@@ -4,11 +4,17 @@ import 'package:presentation/extensions/theme_data_extension.dart';
 class SkeletonAnimation extends StatefulWidget {
   final double width;
   final double height;
+  final double radius;
+  final Color? baseColor;
+  final Color? subColor;
 
   const SkeletonAnimation(
     this.width,
     this.height, {
     super.key,
+    this.radius = 4,
+    this.baseColor,
+    this.subColor,
   });
 
   @override
@@ -39,7 +45,6 @@ class SkeletonAnimationState extends State<SkeletonAnimation>
         _controller.forward();
       }
     });
-
     _controller.forward();
   }
 
@@ -55,27 +60,15 @@ class SkeletonAnimationState extends State<SkeletonAnimation>
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(50.0),
-            boxShadow: [
-              BoxShadow(
-                color: theme.neutral100.withOpacity(0.2),
-                blurRadius: 1.0,
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50.0),
-            child: CustomPaint(
-              size: Size(widget.width, widget.height),
-              painter: _SkeletonPainter(
-                baseColor: theme.content,
-                subColor: theme.neutral10,
-                progress: _animation.value,
-                subWidth: widget.width,
-              ),
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(widget.radius),
+          child: CustomPaint(
+            size: Size(widget.width, widget.height),
+            painter: _SkeletonPainter(
+              baseColor: widget.baseColor ?? theme.neutral10,
+              subColor: widget.subColor ?? theme.neutral10.withOpacity(0.4),
+              progress: _animation.value,
+              subWidth: widget.width,
             ),
           ),
         );

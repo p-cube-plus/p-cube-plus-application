@@ -8,7 +8,7 @@ import 'package:presentation/ui/login/input_auth_number/input_auth_number_state.
 import 'package:presentation/utils/throttler.dart';
 
 class LoginAuthNumberPageViewModel extends BaseViewModel<InputAuthNumberState> {
-  final sendAuthNumber = SendAuthNumberUseCase();
+  final _sendAuthNumber = SendAuthNumberUseCase();
   final _confirmAuthNumberUseCase = ConfirmAuthNumberUseCase();
 
   final String phoneNumner;
@@ -38,7 +38,7 @@ class LoginAuthNumberPageViewModel extends BaseViewModel<InputAuthNumberState> {
 
       triggerEvent(InputAuthNumberState.showSendingAuthNumberToast);
 
-      final result = await sendAuthNumber.call(phoneNumner).getOrNull();
+      final result = await _sendAuthNumber.call(phoneNumner).getOrNull();
       var isSuccess = result?.isValid ?? false;
       if (!isSuccess) {
         _timer?.cancel();
@@ -58,7 +58,8 @@ class LoginAuthNumberPageViewModel extends BaseViewModel<InputAuthNumberState> {
     if (inputText.length == 6) {
       triggerEvent(InputAuthNumberState.checkIsValidAuthNumber);
 
-      final isVerified = await _confirmAuthNumberUseCase.call(inputText);
+      final isVerified =
+          await _confirmAuthNumberUseCase.call(inputText).getOrDefault(false);
       isNeedToRetry = !isVerified;
       notifyListeners();
       triggerEvent(InputAuthNumberState.completeVerification);

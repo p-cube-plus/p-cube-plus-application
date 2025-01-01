@@ -70,10 +70,13 @@ class _UserProfileTileState extends State<UserProfileTile> {
       showOnErrorWidget: (error, trace) {
         return GestureDetector(
           onTap: () => setState(() => _refreshKey = UniqueKey()),
-          child: SizedBox(
-            width: double.infinity,
-            child: Text(
-              "$error\n터치해서 새로고침하기",
+          child: Container(
+            color: Colors.transparent,
+            child: Center(
+              child: Text(
+                "데이터 불러오기에 실패했습니다!\n터치해서 새로고침하기",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         );

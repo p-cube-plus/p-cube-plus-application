@@ -68,5 +68,7 @@ void onNotificationReceived(
   try {
     final routeType = RouteType.values.byName(notificationResponse.payload!);
     routeHandler(routeType);
-  } catch (e) {}
+  } catch (e) {
+    routeHandler(RouteType.home);
+  }
 }

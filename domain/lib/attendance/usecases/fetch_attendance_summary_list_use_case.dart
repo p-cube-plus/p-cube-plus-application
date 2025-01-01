@@ -1,8 +1,6 @@
 import 'package:domain/attendance/repository/attendance_repository.dart';
-import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
-import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:get_it/get_it.dart';
 
 class FetchAttendanceSummaryListUseCase {

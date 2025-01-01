@@ -42,11 +42,11 @@ class UserLogoutCompletePage extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 32),
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 48),
             child: ElevatedButton(
               onPressed: () => _navigateToLoginPage(context),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   "로그인 화면으로 돌아가기",
                   style: TextStyle(

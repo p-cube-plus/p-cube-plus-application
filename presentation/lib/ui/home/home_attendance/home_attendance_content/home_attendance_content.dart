@@ -2,7 +2,7 @@ import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_page.dart';
+import 'package:presentation/ui/attendance/attendance_today_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 class HomeAttendanceContent extends StatelessWidget {

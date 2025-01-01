@@ -48,7 +48,9 @@ Future<void> _onNotificationClicked() async {
     try {
       final routeType = RouteType.values.byName(initialMessage.data["type"]);
       routeHandler(routeType);
-    } catch (e) {}
+    } catch (e) {
+      routeHandler(RouteType.home);
+    }
   }
 
   // 백그라운드 -> FCM 알림 클릭 -> 앱 실행
@@ -56,6 +58,8 @@ Future<void> _onNotificationClicked() async {
     try {
       final routeType = RouteType.values.byName(clickedMessage.data["type"]);
       routeHandler(routeType);
-    } catch (e) {}
+    } catch (e) {
+      routeHandler(RouteType.home);
+    }
   });
 }

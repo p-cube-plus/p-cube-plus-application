@@ -10,45 +10,31 @@ class HomeScheduleViewmodel extends BaseViewModel<void> {
   final _fetchHomeMonthScheduleUseCase = FetchHomeMonthScheduleUseCase();
   final _fetchHomeTodayScheduleUseCase = FetchHomeTodayScheduleUseCase();
 
-  Map<int, MonthSchedule> monthSchedule = {};
-  List<DailySchedule> todayScheduleList = [];
   DateTime selectedDate = DateTime.now();
 
-  HomeScheduleViewmodel() {
-    _fetchHomeSchedule();
-  }
+  Future<Map<int, MonthSchedule>> fetchHomeMonthSchedule() =>
+      _fetchHomeMonthScheduleUseCase
+          .call(
+        selectedDate.year,
+        selectedDate.month,
+      )
+          .getOrDefault({});
+
+  Future<List<DailySchedule>> fetchHomeTodaySchedule() =>
+      _fetchHomeTodayScheduleUseCase.call(selectedDate).getOrDefault([]);
 
   void changeCurrentDate(int selectedDay) async {
     selectedDate = selectedDate.copyWith(day: selectedDay);
-    notifyListeners();
-    todayScheduleList = await _fetchHomeTodayScheduleUseCase
-        .call(selectedDate)
-        .getOrDefault([]);
     notifyListeners();
   }
 
   void jumpToOneMonthLater() {
     selectedDate = DateTime(selectedDate.year, selectedDate.month + 1, 1);
     notifyListeners();
-    _fetchHomeSchedule();
   }
 
   void jumpToOneMonthAgo() {
     selectedDate = DateTime(selectedDate.year, selectedDate.month - 1, 1);
-    notifyListeners();
-    _fetchHomeSchedule();
-  }
-
-  void _fetchHomeSchedule() async {
-    monthSchedule = await _fetchHomeMonthScheduleUseCase
-        .call(
-      selectedDate.year,
-      selectedDate.month,
-    )
-        .getOrDefault({});
-    todayScheduleList = await _fetchHomeTodayScheduleUseCase
-        .call(selectedDate)
-        .getOrDefault([]);
     notifyListeners();
   }
 }

@@ -1,5 +1,4 @@
 import 'package:domain/logging/repository/logging_repository.dart';
-import 'package:domain/project/value_objects/project_type.dart';
 import 'package:get_it/get_it.dart';
 
 class TestLogging {

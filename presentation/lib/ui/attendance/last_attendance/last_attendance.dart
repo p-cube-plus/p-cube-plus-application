@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/attendance/attendance_today_page/attendance_today_viewmodel.dart';
+import 'package:presentation/ui/attendance/attendance_today_viewmodel.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/skeleton_animation_widget.dart';
 import 'last_attendance_item.dart';
 
 class LastAttendance extends StatelessWidget
@@ -30,7 +31,7 @@ class LastAttendance extends StatelessWidget
           showOnErrorWidget: (error, trace) {
             return Text("$error");
           },
-          showOnLoadedWidget: (_, data) {
+          showOnLoadedWidget: (context, data) {
             return RoundedBorder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Row(
@@ -39,6 +40,13 @@ class LastAttendance extends StatelessWidget
                   return LastAttendanceItem(data[index]);
                 }),
               ),
+            );
+          },
+          showOnLoadingWidget: (context) {
+            return RoundedBorder(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: SkeletonAnimation(280, 82, radius: 10),
             );
           },
         )
