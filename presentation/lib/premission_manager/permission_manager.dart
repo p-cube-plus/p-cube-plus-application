@@ -24,15 +24,15 @@ class PermissionManager {
     }
 
     // 주변 블루투스 검색 권한
-    status = await Permission.bluetoothScan.status;
+    status = await Permission.bluetoothConnect.status;
     if (!status.isGranted) {
-      await Permission.bluetoothScan.request();
+      await Permission.bluetoothConnect.request();
     }
 
     return Future.wait([
       Permission.location.status,
       Permission.bluetooth.status,
-      Permission.bluetoothScan.status,
+      Permission.bluetoothConnect.status,
     ]).then((permissionList) =>
         permissionList
             .where((permission) => !permission.isGranted)

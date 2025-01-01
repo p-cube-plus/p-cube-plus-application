@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/user/user_setting/developer_setting_page/developer_view_model.dart';
+import 'package:presentation/ui/user/user_setting/test_beacon/test_beacon_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_text_field.dart';
@@ -115,7 +116,6 @@ class _DeveloperPageState extends State<_DeveloperPage>
                             if (newValue == null) return;
                             read(context).updatemockDelay(newValue);
                           },
-                          textDirection: TextDirection.rtl,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                               RegExp(r'^\d*\.?\d{0,}$'),
@@ -156,37 +156,28 @@ class _DeveloperPageState extends State<_DeveloperPage>
               color: theme.neutral10,
             ),
             InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("알람 테스트"),
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("비콘 테스트"),
-                  ],
+              onTap: () => _navigateToTestBeaconPage(),
+              child: SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 12,
+                  ),
+                  child: Text("비콘 테스트"),
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _navigateToTestBeaconPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => TestBeaconPage(),
       ),
     );
   }
