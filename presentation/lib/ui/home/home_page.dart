@@ -1,3 +1,4 @@
+import 'package:domain/common/extensions/future_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,7 +6,6 @@ import 'package:presentation/beacon/beacon_scanner.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/executive/executive_main_page.dart';
-import 'package:presentation/ui/home/home_page_event.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -46,7 +46,7 @@ class _HomePageState extends State<_HomePage>
   @override
   void initState() {
     super.initState();
-    BeaconScanner().startScanning();
+    BeaconScanner().startScanning().getOrNull();
   }
 
   @override

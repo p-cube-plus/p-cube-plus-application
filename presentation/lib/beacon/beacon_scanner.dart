@@ -14,6 +14,8 @@ class BeaconScanner {
 
   StreamSubscription<BeaconMonitoringState>? _beaconListener;
 
+  Future<bool> isBluetoothEnabled() => _plugin.isBluetoothEnabled;
+
   Future<void> startScanning(
       // String identifier,
       // String uuid,

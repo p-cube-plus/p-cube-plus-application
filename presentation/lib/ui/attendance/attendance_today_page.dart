@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:domain/attendance/value_objects/attendance_data.dart';
+import 'package:domain/common/extensions/future_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:presentation/beacon/beacon_scanner.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/attendance/attendance_today_state.dart';
@@ -91,9 +93,17 @@ class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
 
   void _checkPermission() async {
     _isCheckingPermission = true;
-    final isAvailable = await PermissionManager().checkAttendancePermission();
-    if (!isAvailable) {
+    final isAvailablePermission =
+        await PermissionManager().checkAttendancePermission();
+    if (!isAvailablePermission) {
       _showUnavailablePermissionDialog();
+      return;
+    }
+
+    final isBluetoothEnabled = await BeaconScanner().isBluetoothEnabled();
+    if (!isBluetoothEnabled) {
+      _showRequestBluetoothDialog();
+      return;
     }
   }
 
@@ -124,6 +134,36 @@ class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
               Navigator.pop(dialogContext);
               openAppSettings();
               _isCheckingPermission = false;
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void _showRequestBluetoothDialog() {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return PopScope(
+          canPop: false,
+          child: DefaultAlert(
+            title: "블루투스가 꺼져있습니다.",
+            description: "블루투스를 켜주세요.",
+            messageType: MessageType.ok,
+            onTapOk: () async {
+              final isBluetoothEnabled =
+                  await BeaconScanner().isBluetoothEnabled();
+              if (!isBluetoothEnabled) {
+                if (!dialogContext.mounted) return;
+                Navigator.pop(dialogContext);
+                _showRequestBluetoothDialog();
+                return;
+              }
+
+              if (!dialogContext.mounted) return;
+              Navigator.pop(dialogContext);
+              BeaconScanner().startScanning().getOrNull();
             },
           ),
         );

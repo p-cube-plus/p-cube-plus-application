@@ -45,6 +45,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
   void initState() {
     super.initState();
     Future.microtask(() {
+      if (!mounted) return;
       _setStateListener();
       read(context).requestAuth();
     });

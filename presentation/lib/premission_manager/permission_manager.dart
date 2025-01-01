@@ -41,7 +41,7 @@ class PermissionManager {
   }
 
   Future<void> checkNotificationPermission() async {
-    // 블루투스의 위치 정보를 얻기 위해 사용
+    // 알림 권한 확인
     var status = await Permission.notification.status;
     if (!status.isGranted) {
       await Permission.notification.request();

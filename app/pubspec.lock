@@ -427,7 +427,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8fc3fde5932779e58485affb30cd3ef1e6aa893d"
+      resolved-ref: "95ad5a22305f45a30a310278550d87096247bec2"
       url: "https://github.com/p-cube-plus/ibeacon_plugin.git"
     source: git
     version: "0.0.1"
