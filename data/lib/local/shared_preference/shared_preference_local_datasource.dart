@@ -15,6 +15,11 @@ class SharedPreferenceLocalDatasource {
   set themeIndex(int value) =>
       _pref.setInt(PrefKeyType.themeSetting.name, value);
 
+  bool get canSendNotification =>
+      _pref.getBool(PrefKeyType.canSendNotificationSetting.name) ?? false;
+  set canSendNotification(bool value) =>
+      _pref.setBool(PrefKeyType.canSendNotificationSetting.name, value);
+
   bool isNotificationOn(NotificationType type) {
     return _pref.getBool(_getNotificationSettingOnKey(type).name) ?? true;
   }
@@ -57,17 +62,12 @@ class SharedPreferenceLocalDatasource {
       switch (type) {
         RegularMettingNotification() =>
           PrefKeyType.regularMettingNotificationSettingOn,
-        PartMettingNotification partMetting => switch (partMetting.partType) {
-            MemberPartType.design =>
-              PrefKeyType.designPartMettingNotificationSettingOn,
-            MemberPartType.development =>
-              PrefKeyType.developPartMettingNotificationSettingOn,
-            MemberPartType.art =>
-              PrefKeyType.artPartMettingNotificationSettingOn,
-          },
+        PartMettingNotification() =>
+          PrefKeyType.partMettingNotificationSettingOn,
         FeeNotification() => PrefKeyType.feeNotificationSettingOn,
         CleaningNotification() => PrefKeyType.cleaningNotificationSettingOn,
         RentNotification() => PrefKeyType.rentNotificationSettingOn,
+        TestNotification() => throw UnimplementedError(),
       };
 
   PrefKeyType _getNotificationSettingHourKey(NotificationType type) =>
@@ -81,9 +81,11 @@ class SharedPreferenceLocalDatasource {
               PrefKeyType.developPartMettingNotificationSettingHour,
             MemberPartType.art =>
               PrefKeyType.artPartMettingNotificationSettingHour,
+            null => throw UnimplementedError(),
           },
         FeeNotification() => throw UnimplementedError(),
         CleaningNotification() => throw UnimplementedError(),
         RentNotification() => throw UnimplementedError(),
+        TestNotification() => throw UnimplementedError(),
       };
 }

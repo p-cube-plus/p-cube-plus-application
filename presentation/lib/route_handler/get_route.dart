@@ -7,8 +7,8 @@ import 'package:presentation/ui/main/main_page.dart';
 Map<String, Widget Function(BuildContext)> getRoute() {
   return {
     RouteType.login.routeName: (context) => LoginHomePage(),
-    RouteType.alarm.routeName: (context) =>
-        MainPage(initializeType: MainNavigationType.alarm),
+    RouteType.notification.routeName: (context) =>
+        MainPage(initializeType: MainNavigationType.notification),
     RouteType.home.routeName: (context) =>
         MainPage(initializeType: MainNavigationType.home),
     RouteType.user.routeName: (context) =>

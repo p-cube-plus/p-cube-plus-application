@@ -55,4 +55,28 @@ class NotificationRepositoryImpl implements NotificationRepository {
     // TODO: implement updateNotificationAsRead
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> getNotificationAllEnable() {
+    // TODO: implement getNotificationAllEnable
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> getNotificationEnable(NotificationType type) {
+    // TODO: implement getNotificationEnable
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> getCanSendNotification() {
+    // TODO: implement getCanSendNotification
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> setCanSendNotification(bool canSendNotification) {
+    // TODO: implement setCanSendNotification
+    throw UnimplementedError();
+  }
 }

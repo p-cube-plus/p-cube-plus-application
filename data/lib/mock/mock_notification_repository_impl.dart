@@ -26,7 +26,6 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   @override
   Future<List<NotificationData>> getNotificationList() async {
     await MockUtil().applyMockSetting();
-
     return Future.value(mockNotification);
   }
 
@@ -51,9 +50,14 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<void> setNotificationEnable(NotificationType type, bool isEnable) {
-    // TODO: implement setNotificationEnable
-    throw UnimplementedError();
+  Future<void> setNotificationEnable(
+      NotificationType type, bool isEnable) async {
+    sharedPreferenceLocalDatasource.setNotificationOn(type, isEnable);
+  }
+
+  @override
+  Future<bool> getNotificationEnable(NotificationType type) async {
+    return Future.value(sharedPreferenceLocalDatasource.isNotificationOn(type));
   }
 
   @override
@@ -94,5 +98,21 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
     }
 
     throw Exception("삭제할 알림을 찾지 못했습니다.");
+  }
+
+  @override
+  Future<bool> getNotificationAllEnable() {
+    // TODO: implement getNotificationAllEnable
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> getCanSendNotification() async {
+    return Future.value(sharedPreferenceLocalDatasource.canSendNotification);
+  }
+
+  @override
+  Future<void> setCanSendNotification(bool canSendNotification) async {
+    sharedPreferenceLocalDatasource.canSendNotification = canSendNotification;
   }
 }

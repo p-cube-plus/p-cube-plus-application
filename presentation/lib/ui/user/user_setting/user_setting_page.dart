@@ -11,7 +11,7 @@ import 'package:presentation/ui/user/user_setting/setting_tile/right_arrow_setti
 import 'package:presentation/ui/user/user_setting/setting_tile/setting_tile.dart';
 import 'package:presentation/ui/user/user_setting/setting_tile/theme_setting_tile.dart';
 import 'package:presentation/ui/user/user_setting/setting_tile/version_setting_tile.dart';
-import 'package:presentation/ui/user/user_setting/user_alarm/user_alarm_page.dart';
+import 'package:presentation/ui/user/user_setting/notification_setting/notification_setting_page.dart';
 import 'package:presentation/ui/user/user_setting/user_setting_event.dart';
 import 'package:presentation/ui/user/user_setting/user_setting_view_model.dart';
 import 'package:presentation/widgets/default_alert.dart';
@@ -107,7 +107,7 @@ class _UserSettingPageState extends State<_UserSettingPage>
 
   void navigateToUserAlarmSettingPage() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => UserAlarmPage()));
+        .push(MaterialPageRoute(builder: (_) => NotificationSettingPage()));
   }
 
   void _showDevelopmentList() {

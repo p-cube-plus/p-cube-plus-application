@@ -1,10 +1,9 @@
 enum PrefKeyType {
   themeSetting,
 
+  canSendNotificationSetting,
   regularMettingNotificationSettingOn,
-  designPartMettingNotificationSettingOn,
-  artPartMettingNotificationSettingOn,
-  developPartMettingNotificationSettingOn,
+  partMettingNotificationSettingOn,
   feeNotificationSettingOn,
   cleaningNotificationSettingOn,
   rentNotificationSettingOn,
