@@ -75,18 +75,14 @@ class LoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<void> setToken(String accessToken, String refreshToken) async {
-    PCubeApi().setToken(accessToken, refreshToken);
-    await Future.wait([
-      secureStorageLocalDatasource.saveAccessToken(accessToken),
-      secureStorageLocalDatasource.saveRefreshToken(refreshToken),
-    ]);
+    await PCubeApi().setToken(accessToken, refreshToken);
   }
 
   @override
   Future<String?> getFcmToken() {
     return firebaseDatasource.getFcmToken();
   }
-  
+
   @override
   Future<void> deleteUser() {
     // TODO: implement deleteUser

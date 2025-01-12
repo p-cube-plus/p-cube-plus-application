@@ -208,8 +208,5 @@ class _DeveloperPageState extends State<_DeveloperPage>
 
   void _copyFcm(String data) {
     Clipboard.setData(ClipboardData(text: data));
-    if (kDebugMode) {
-      print("fcm token: $data");
-    }
   }
 }

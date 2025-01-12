@@ -1,4 +1,9 @@
+import 'package:domain/common/exception/login_expired_exception.dart';
+import 'package:domain/common/extensions/future_extension.dart';
+import 'package:domain/login/usecases/logout_use_case.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:presentation/ui/login/login_home/login_home_page.dart';
 
 class DefaultFutureBuilder<T> extends StatelessWidget {
   const DefaultFutureBuilder(
@@ -14,6 +19,7 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
   final Widget Function(BuildContext context)? showOnLoadingWidget;
   final Widget Function(Object? error, StackTrace? trace)? showOnErrorWidget;
   final void Function(Object? error, StackTrace? trace)? handleError;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -31,13 +37,29 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
           return showOnLoadedWidget(context, snapshot.requireData);
         }
 
-        handleError?.call(snapshot.error, snapshot.stackTrace);
+        if (snapshot.error is LoginExpiredException) {
+          Fluttertoast.showToast(msg: "세션이 만료되었습니다.\n다시 로그인해주세요.");
+          LogoutUseCase().call().getOrNull();
+          _goToLoginPage(context);
+        } else {
+          handleError?.call(snapshot.error, snapshot.stackTrace);
+        }
+
         return showOnErrorWidget?.call(snapshot.error, snapshot.stackTrace) ??
             SizedBox(
               width: double.infinity,
               child: Text("${snapshot.error}"),
             );
       },
+    );
+  }
+
+  void _goToLoginPage(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) => LoginHomePage(),
+      ),
+      (route) => false,
     );
   }
 }

@@ -1,0 +1,1 @@
+class LoginExpiredException implements Exception {}

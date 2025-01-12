@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:data/firebase/firebase_manager.dart';
@@ -6,9 +7,10 @@ import 'package:data/remote/common/header_builder.dart';
 import 'package:data/remote/common/token_holder.dart';
 import 'package:data/remote/p_cube_api/auth/response/auth_token_response_dto.dart';
 import 'package:data/utils/json_util.dart';
+import 'package:domain/common/exception/api_exception.dart';
 import 'package:domain/common/exception/app_timeout_exception.dart';
+import 'package:domain/common/exception/login_expired_exception.dart';
 import 'package:domain/common/exception/refresh_token_exception.dart';
-import 'package:domain/common/extensions/api_exception.dart';
 import 'package:http/http.dart' as http;
 
 class PCubeApi with TokenHolder {
@@ -17,6 +19,7 @@ class PCubeApi with TokenHolder {
   factory PCubeApi() => _instance;
 
   final timeout = Duration(seconds: 5);
+  Completer<void>? _refreshCompleter;
 
   final String _hostName = "p-cube-plus.com";
   Uri _getUri(String path, {Map<String, String>? queryParameters}) =>
@@ -89,22 +92,22 @@ class PCubeApi with TokenHolder {
     }
 
     try {
-      print("http request: $request");
+      log("http request: $request");
       var streamedResponse = await request.send().timeout(timeout);
       var response = await http.Response.fromStream(streamedResponse);
-      print("http response: $response");
+      log("http response: $response");
 
       if (response.statusCode == HttpStatus.ok) {
         return response;
       }
 
       if (response.statusCode == HttpStatus.unauthorized) {
-        _resetToken();
+        await _resetToken();
 
-        print("http 토큰 재발급 후 request: $request");
+        log("http 토큰 재발급 후 request: $request");
         streamedResponse = await request.send();
         response = await http.Response.fromStream(streamedResponse);
-        print("http 토큰 재발급 후 response: $response");
+        log("http 토큰 재발급 후 response: $response");
 
         if (response.statusCode == HttpStatus.ok) return response;
       }
@@ -118,7 +121,7 @@ class PCubeApi with TokenHolder {
         errorBody: response.body,
       );
     } catch (e) {
-      if (e is RefreshTokenException) {
+      if (e is RefreshTokenException || e is LoginExpiredException) {
         rethrow;
       }
 
@@ -162,56 +165,79 @@ class PCubeApi with TokenHolder {
   }
 
   Future<void> _resetToken() async {
-    print("http 토큰 재발급 시도");
+    if (_refreshCompleter != null) {
+      log("Refresh Token 갱신 대기 중...");
+      await _refreshCompleter!.future;
+      return;
+    }
+
+    _refreshCompleter = Completer<void>();
+    log("http 토큰 재발급 시도");
 
     FirebaseManager().sendFirebaseLog("REFRESH_TOKEN", {
       "accessToken": accessToken,
       "refreshToken": refreshToken,
     });
 
-    Uri refreshTokenUri = _getUri("/auth/token/refresh");
-    Map<String, String> refreshheaders = {
-      "Content-Type": "application/json",
-      "Authorization": refreshToken,
-    };
-
     try {
-      var refreshResponse = await http
-          .get(refreshTokenUri, headers: refreshheaders)
+      final refreshTokenUri = _getUri("/auth/token/refresh");
+      final refreshHeader =
+          HeaderBuilder().contentTypeJson().withToken(refreshToken).build();
+
+      final refreshResponse = await http
+          .get(refreshTokenUri, headers: refreshHeader)
           .timeout(timeout);
 
       if (refreshResponse.statusCode == HttpStatus.ok) {
-        var tokenData = JsonUtil().convertTo<AuthTokenResponseDTO>(
+        final tokenData = JsonUtil().convertTo<AuthTokenResponseDTO>(
             AuthTokenResponseDTO.fromJson, refreshResponse.body);
 
-        setToken(tokenData.accessToken, tokenData.refreshToken);
-        print("http 토큰 재발급 성공");
+        await setToken(tokenData.accessToken, tokenData.refreshToken);
+        log("http 토큰 재발급 성공");
 
         FirebaseManager().sendFirebaseLog("SUCCESS_REFRESH_TOKEN", {
           "newAccessToken": tokenData.accessToken,
           "newRefreshToken": tokenData.refreshToken,
         });
+
+        _refreshCompleter!.complete();
+        _refreshCompleter = null;
         return;
       }
 
-      print("http 토큰 재발급 실패");
+      log("http 토큰 재발급 실패");
+
       throw ApiException(
         mothodType: "GET",
         inputUri: refreshTokenUri.toString(),
-        inputHeader: refreshheaders.toString(),
+        inputHeader: refreshHeader.toString(),
         inputBody: null,
         statusCode: refreshResponse.statusCode,
         errorBody: refreshResponse.body,
       );
     } catch (e) {
+      _refreshCompleter!.completeError(e);
+      _refreshCompleter = null;
+
       if (e is TimeoutException) {
         FirebaseManager().sendFirebaseLog("FAILED_REFRESH_TOKEN_APP_TIMEOUT", {
           "accessToken": accessToken,
           "refreshToken": refreshToken,
           "error": "타임아웃 $timeout",
         });
+        throw RefreshTokenException();
       } else if (e is ApiException) {
         final exception = e;
+
+        if (exception.statusCode == HttpStatus.unauthorized) {
+          FirebaseManager()
+              .sendFirebaseLog("FAILED_REFRESH_TOKEN_UNAUTHORIZED", {
+            "accessToken": accessToken,
+            "refreshToken": refreshToken,
+          });
+          throw LoginExpiredException();
+        }
+
         FirebaseManager().sendFirebaseLog("FAILED_REFRESH_TOKEN", {
           "mothodType": exception.mothodType,
           "inputUri": exception.inputUri,
@@ -222,9 +248,15 @@ class PCubeApi with TokenHolder {
           "accessToken": accessToken,
           "refreshToken": refreshToken,
         });
+        throw RefreshTokenException();
+      } else {
+        FirebaseManager().sendFirebaseLog("FAILED_REFRESH_TOKEN_UNKNOWN", {
+          "accessToken": accessToken,
+          "refreshToken": refreshToken,
+          "error": "$e",
+        });
+        rethrow;
       }
-
-      throw RefreshTokenException();
     }
   }
 }

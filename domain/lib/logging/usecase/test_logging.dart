@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:domain/logging/repository/logging_repository.dart';
 import 'package:get_it/get_it.dart';
 
@@ -13,9 +15,9 @@ class TestLogging {
         "test6": 9.99,
       },
     ).onError((error, __) {
-      print(error);
+      log("$error");
     }).then((_) {
-      print("");
+      log("");
     });
   }
 }
