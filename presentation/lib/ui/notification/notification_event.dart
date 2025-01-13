@@ -1,4 +1,4 @@
-enum AlarmEvent {
+enum NotificationEvent {
   showProgress,
   dismissProgress,
   showErrorToast,

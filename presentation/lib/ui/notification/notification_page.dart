@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
-import 'package:presentation/ui/alarm/alarm_event.dart';
-import 'package:presentation/ui/alarm/alarm_list_item.dart';
-import 'package:presentation/ui/alarm/alarm_viewmodel.dart';
-import 'package:presentation/ui/user/user_setting/user_alarm/user_alarm_page.dart';
+import 'package:presentation/ui/notification/notification_event.dart';
+import 'package:presentation/ui/notification/notification_list_item.dart';
+import 'package:presentation/ui/notification/notification_viewmodel.dart';
+import 'package:presentation/ui/user/user_setting/notification_setting/notification_setting_page.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
 import 'package:presentation/widgets/default_tabbar.dart';
@@ -15,27 +15,27 @@ import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/widgets/skeleton_animation_widget.dart';
 import 'package:provider/provider.dart';
 
-class AlarmPage extends StatelessWidget {
-  const AlarmPage({super.key});
+class NotificationPage extends StatelessWidget {
+  const NotificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => AlarmViewModel(),
-      child: _AlarmPage(),
+      create: (_) => NotificationViewModel(),
+      child: _NotificationPage(),
     );
   }
 }
 
-class _AlarmPage extends StatefulWidget {
-  const _AlarmPage();
+class _NotificationPage extends StatefulWidget {
+  const _NotificationPage();
 
   @override
-  State<_AlarmPage> createState() => _AlarmPageState();
+  State<_NotificationPage> createState() => _NotificationPageState();
 }
 
-class _AlarmPageState extends State<_AlarmPage>
-    with AutomaticKeepAliveClientMixin, ViewModel<AlarmViewModel> {
+class _NotificationPageState extends State<_NotificationPage>
+    with AutomaticKeepAliveClientMixin, ViewModel<NotificationViewModel> {
   var pageIndex = 0;
 
   @override
@@ -51,13 +51,13 @@ class _AlarmPageState extends State<_AlarmPage>
   void _setEventListener() {
     read(context).eventStream.listen((event) {
       switch (event) {
-        case AlarmEvent.showProgress:
+        case NotificationEvent.showProgress:
           _showProgress();
-        case AlarmEvent.dismissProgress:
+        case NotificationEvent.dismissProgress:
           _dismissProgress();
-        case AlarmEvent.showErrorToast:
+        case NotificationEvent.showErrorToast:
           _showErrorToast();
-        case AlarmEvent.showDataErrorToast:
+        case NotificationEvent.showDataErrorToast:
           _showDataErrorToast();
       }
     });
@@ -69,7 +69,7 @@ class _AlarmPageState extends State<_AlarmPage>
     return DefaultPage(
       title: "알림",
       action: GestureDetector(
-        onTap: () => _navigateToUserAlarmSettingPage(context),
+        onTap: () => _navigateToNotificationSettingPage(context),
         child: SvgPicture.asset(asset.setting),
       ),
       content: DefaultTabBar(
@@ -223,9 +223,9 @@ class _AlarmPageState extends State<_AlarmPage>
     Navigator.of(context, rootNavigator: true).pop();
   }
 
-  void _navigateToUserAlarmSettingPage(BuildContext context) {
+  void _navigateToNotificationSettingPage(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => UserAlarmPage()));
+        .push(MaterialPageRoute(builder: (_) => NotificationSettingPage()));
   }
 
   void _showErrorToast() {

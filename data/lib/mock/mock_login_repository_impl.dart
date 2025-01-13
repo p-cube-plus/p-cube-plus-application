@@ -60,11 +60,7 @@ class MockLoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<void> setToken(String accessToken, String refreshToken) async {
-    PCubeApi().setToken(accessToken, refreshToken);
-    await Future.wait([
-      secureStorageLocalDatasource.saveAccessToken(accessToken),
-      secureStorageLocalDatasource.saveRefreshToken(refreshToken),
-    ]);
+    await PCubeApi().setToken(accessToken, refreshToken);
   }
 
   @override

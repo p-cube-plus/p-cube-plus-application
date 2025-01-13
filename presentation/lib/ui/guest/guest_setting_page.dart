@@ -9,6 +9,7 @@ import 'package:presentation/ui/user/user_setting/setting_tile/right_arrow_setti
 import 'package:presentation/ui/user/user_setting/setting_tile/theme_setting_tile.dart';
 import 'package:presentation/ui/user/user_setting/setting_tile/version_setting_tile.dart';
 import 'package:presentation/ui/user/user_setting/user_setting_view_model.dart';
+import 'package:presentation/ui/webpage/introduce_p_cube_web_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -57,6 +58,10 @@ class _GuestSettingPageState extends State<_GuestSettingPage>
             title: "개발진 목록",
             onTap: (context) => _showDevelopmentList(),
           ),
+          RightArrowSettingTile(
+            title: "판도라큐브 소개 보기",
+            onTap: (context) => _navigateToIntroduceWebPage(),
+          ),
           Divider(
             color: theme.neutral10,
             indent: 20,
@@ -98,6 +103,14 @@ class _GuestSettingPageState extends State<_GuestSettingPage>
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => DeveloperPage(),
+      ),
+    );
+  }
+
+  void _navigateToIntroduceWebPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => IntroducePCubeWebPage(),
       ),
     );
   }

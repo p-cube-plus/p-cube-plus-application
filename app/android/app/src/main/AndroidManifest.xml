@@ -32,12 +32,11 @@
             <data android:scheme="steam" />
         </intent>
     </queries>
-
     
     <application
         android:label="${applicationLabel}"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
@@ -73,9 +72,6 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="steam" />
-                <data android:pathPrefix="/openurl" />
             </intent-filter>
         </activity>
 

@@ -4,9 +4,9 @@ import 'package:domain/notification/usecases/fetch_read_notification_use_case.da
 import 'package:domain/notification/usecases/update_read_notification_use_case.dart';
 import 'package:domain/notification/value_objects/notification_data.dart';
 import 'package:presentation/common/base_viewmodel.dart';
-import 'package:presentation/ui/alarm/alarm_event.dart';
+import 'package:presentation/ui/notification/notification_event.dart';
 
-class AlarmViewModel extends BaseViewModel<AlarmEvent> {
+class NotificationViewModel extends BaseViewModel<NotificationEvent> {
   final _fetchNewNotificationUseCase = FetchNewNotificationUseCase();
   final _fetchReadNotificationUseCase = FetchReadNotificationUseCase();
   final _updateReadNotificationUseCase = UpdateReadNotificationUseCase();
@@ -28,7 +28,7 @@ class AlarmViewModel extends BaseViewModel<AlarmEvent> {
     isLoading = false;
 
     if (data == null) {
-      triggerEvent(AlarmEvent.showDataErrorToast);
+      triggerEvent(NotificationEvent.showDataErrorToast);
     } else {
       newNotificationList = data.first;
       readNotificationList = data.last;
@@ -38,14 +38,14 @@ class AlarmViewModel extends BaseViewModel<AlarmEvent> {
   }
 
   void updateReadNotification(int notificationId) async {
-    triggerEvent(AlarmEvent.showProgress);
+    triggerEvent(NotificationEvent.showProgress);
 
     final readData =
         await _updateReadNotificationUseCase.call(notificationId).getOrNull();
-    triggerEvent(AlarmEvent.dismissProgress);
+    triggerEvent(NotificationEvent.dismissProgress);
 
     if (readData == null) {
-      triggerEvent(AlarmEvent.showErrorToast);
+      triggerEvent(NotificationEvent.showErrorToast);
       return;
     }
 

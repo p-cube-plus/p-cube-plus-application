@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data/common/memory_cache.dart';
 import 'package:test/test.dart';
 import 'dart:async';
@@ -158,9 +160,9 @@ Future<bool> _isCachedValue(
   );
 
   if (result) {
-    print("cache 데이터 반환");
+    log("cache 데이터 반환");
   } else {
-    print("fetch 데이터 반환");
+    log("fetch 데이터 반환");
   }
   return result;
 }

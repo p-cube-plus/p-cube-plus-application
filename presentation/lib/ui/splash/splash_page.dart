@@ -36,6 +36,7 @@ class _SplashPage extends StatefulWidget {
 class _SplashPageState extends State<_SplashPage>
     with SingleTickerProviderStateMixin, ViewModel<SplashPageViewModel> {
   late final AnimationController _animationController;
+  bool _isLogoVisible = false;
 
   @override
   void initState() {
@@ -46,6 +47,11 @@ class _SplashPageState extends State<_SplashPage>
           read(context).changeStateBasedOnLogin();
         }
       });
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _isLogoVisible = true;
+      });
+    });
     Future.microtask(() => _setStateListener());
   }
 
@@ -74,7 +80,12 @@ class _SplashPageState extends State<_SplashPage>
                 ..forward(),
             ),
             const SizedBox(height: 16),
-            SvgPicture.asset(path.textLogo),
+            AnimatedOpacity(
+              curve: Curves.easeInCirc,
+              opacity: _isLogoVisible ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 500),
+              child: SvgPicture.asset(path.textLogo),
+            ),
           ],
         ),
       ),
@@ -96,10 +107,19 @@ class _SplashPageState extends State<_SplashPage>
 
   void _navigateToMainPage() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const MainPage(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => const MainPage(
           initializeType: MainNavigationType.home,
         ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: const MainPage(
+              initializeType: MainNavigationType.home,
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 1000),
       ),
       (route) => false,
     );
@@ -107,8 +127,16 @@ class _SplashPageState extends State<_SplashPage>
 
   void _navigateToLoginPage() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const LoginHomePage(),
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const LoginHomePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: const LoginHomePage(),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 1000),
       ),
       (route) => false,
     );
@@ -125,4 +153,24 @@ class _SplashPageState extends State<_SplashPage>
       ),
     );
   }
+}
+
+class SizeRoute extends PageRouteBuilder {
+  final Widget page;
+  SizeRoute({required this.page})
+      : super(
+          pageBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation) =>
+              page,
+          transitionsBuilder: (BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child) =>
+              Align(
+            child: SizeTransition(
+              sizeFactor: animation,
+              child: child,
+            ),
+          ),
+        );
 }

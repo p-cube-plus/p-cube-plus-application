@@ -22,7 +22,13 @@ abstract interface class NotificationRepository {
   );
 
   Future<void> setNotificationAllEnable(bool isEnable);
+  Future<bool> getNotificationAllEnable();
+
+  Future<bool> getCanSendNotification();
+  Future<void> setCanSendNotification(bool canSendNotification);
+
   Future<void> setNotificationEnable(NotificationType type, bool isEnable);
+  Future<bool> getNotificationEnable(NotificationType type);
 
   Future<NotificationData> updateNotificationAsRead(int id);
 

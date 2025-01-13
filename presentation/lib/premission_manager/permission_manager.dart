@@ -29,10 +29,17 @@ class PermissionManager {
       await Permission.bluetoothConnect.request();
     }
 
+    // 블루투스 스캔 가능 권한
+    status = await Permission.bluetoothScan.status;
+    if (!status.isGranted) {
+      await Permission.bluetoothScan.request();
+    }
+
     return Future.wait([
       Permission.location.status,
       Permission.bluetooth.status,
       Permission.bluetoothConnect.status,
+      Permission.bluetoothScan.status,
     ]).then((permissionList) =>
         permissionList
             .where((permission) => !permission.isGranted)

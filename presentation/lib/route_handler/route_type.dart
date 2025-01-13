@@ -1,6 +1,6 @@
 enum RouteType {
   login("/login"),
-  alarm("/alarm"),
+  notification("/notification"),
   home("/home"),
   user("/user"),
   ;

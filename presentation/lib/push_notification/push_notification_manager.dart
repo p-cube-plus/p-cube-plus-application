@@ -1,3 +1,6 @@
+import 'package:domain/common/extensions/future_extension.dart';
+import 'package:domain/notification/usecases/fetch_can_send_notification_use_case.dart';
+import 'package:domain/notification/usecases/fetch_is_notification_on_use_case.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:presentation/route_handler/route_type.dart';
 import 'push_notification_data.dart';
@@ -26,7 +29,7 @@ class PushNotificationManager {
   );
 
   Future<void> initialize() async {
-    final aosInit = AndroidInitializationSettings('mipmap/ic_launcher');
+    final aosInit = AndroidInitializationSettings('mipmap/launcher_icon');
     final iosInit = DarwinInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
@@ -45,10 +48,32 @@ class PushNotificationManager {
     );
   }
 
+  Future<void> showBackgroundNotification(
+    PushNotificationData data, {
+    String? payload,
+  }) async {
+    await _flutterLocalNotificationsPlugin.show(
+      data.type.notificationId,
+      data.title,
+      data.descrption,
+      _notificationDetails,
+      payload: payload,
+    );
+  }
+
   Future<void> showNotification(
     PushNotificationData data, {
     String? payload,
   }) async {
+    final canSend =
+        await FetchCanSendNotificationUseCase()().getOrDefault(true);
+    if (!canSend) return;
+
+    final isSettingOn =
+        await FetchIsNotificationOnUseCase()(data.type.toNotificationType())
+            .getOrDefault(true);
+    if (!isSettingOn) return;
+
     await _flutterLocalNotificationsPlugin.show(
       data.type.notificationId,
       data.title,

@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/user/user_setting/developer_setting_page/developer_view_model.dart';
 import 'package:presentation/ui/user/user_setting/test_beacon/test_beacon_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_text_field.dart';
 import 'package:provider/provider.dart';
@@ -168,6 +171,27 @@ class _DeveloperPageState extends State<_DeveloperPage>
                 ),
               ),
             ),
+            DefaultFutureBuilder(
+              fetchData: read(context).fetchFcmToken(),
+              showOnLoadedWidget: (context, data) {
+                return InkWell(
+                  onTap: () => _copyFcm(data ?? ""),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 12,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("FCM TOKEN"),
+                        Text(data ?? ""),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -180,5 +204,9 @@ class _DeveloperPageState extends State<_DeveloperPage>
         builder: (_) => TestBeaconPage(),
       ),
     );
+  }
+
+  void _copyFcm(String data) {
+    Clipboard.setData(ClipboardData(text: data));
   }
 }

@@ -5,17 +5,22 @@ sealed class NotificationType {
   NotificationType(this.name);
 }
 
+class TestNotification implements NotificationType {
+  @override
+  String get name => "테스트 알림";
+}
+
 class RegularMettingNotification implements NotificationType {
   @override
   String get name => "정기회의 알림";
 }
 
 class PartMettingNotification implements NotificationType {
-  final MemberPartType partType;
+  final MemberPartType? partType;
   PartMettingNotification(this.partType);
 
   @override
-  String get name => "${partType.name} 파트회의 알림";
+  String get name => "${partType?.name} 파트회의 알림";
 }
 
 class FeeNotification implements NotificationType {
@@ -30,5 +35,5 @@ class CleaningNotification implements NotificationType {
 
 class RentNotification implements NotificationType {
   @override
-  String get name => "기타 알림";
+  String get name => "대여 알림";
 }
