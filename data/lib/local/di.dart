@@ -5,8 +5,8 @@ import 'package:data/local/shared_preference/shared_preference_local_datasource.
 import 'package:get_it/get_it.dart';
 
 Future<void> registLocalDatasource() async {
-  GetIt.I.registerSingleton<LocalDb>(
-    LocalDb(),
+  GetIt.I.registerLazySingleton<LocalDb>(
+    () => LocalDb(),
   );
   GetIt.I.registerLazySingleton<AttendanceLocalDatasource>(
     () => AttendanceLocalDatasource(),
@@ -19,7 +19,6 @@ Future<void> registLocalDatasource() async {
   );
 
   await Future.wait([
-    GetIt.I.get<LocalDb>().initialize(),
     GetIt.I.get<SharedPreferenceLocalDatasource>().initialize(),
   ]);
 }

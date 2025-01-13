@@ -29,7 +29,7 @@ class PushNotificationManager {
   );
 
   Future<void> initialize() async {
-    final aosInit = AndroidInitializationSettings('mipmap/ic_launcher');
+    final aosInit = AndroidInitializationSettings('mipmap/launcher_icon');
     final iosInit = DarwinInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,

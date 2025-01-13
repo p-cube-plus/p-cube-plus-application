@@ -15,6 +15,7 @@ class CachingBeforeStartingUseCase {
       _scheduleRepository.getUpcommingScheduleDetailList(),
       _scheduleRepository.getDailyScheduleDetailList(today),
       _attendanceRepository.getHomeAttendanceList(),
+      //GetIt.I.get<LocalDb>().initialize()
     ]);
   }
 }
