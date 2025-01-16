@@ -107,19 +107,8 @@ class _SplashPageState extends State<_SplashPage>
 
   void _navigateToMainPage() {
     Navigator.of(context).pushAndRemoveUntil(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const MainPage(
-          initializeType: MainNavigationType.home,
-        ),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: const MainPage(
-              initializeType: MainNavigationType.home,
-            ),
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 1000),
+      SplashRouteBuilder(
+        page: const MainPage(initializeType: MainNavigationType.home),
       ),
       (route) => false,
     );
@@ -127,17 +116,7 @@ class _SplashPageState extends State<_SplashPage>
 
   void _navigateToLoginPage() {
     Navigator.of(context).pushAndRemoveUntil(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const LoginHomePage(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: const LoginHomePage(),
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 1000),
-      ),
+      SplashRouteBuilder(page: const LoginHomePage()),
       (route) => false,
     );
   }
@@ -155,22 +134,17 @@ class _SplashPageState extends State<_SplashPage>
   }
 }
 
-class SizeRoute extends PageRouteBuilder {
+class SplashRouteBuilder extends PageRouteBuilder {
   final Widget page;
-  SizeRoute({required this.page})
+  SplashRouteBuilder({required this.page})
       : super(
-          pageBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secondaryAnimation) =>
-              page,
-          transitionsBuilder: (BuildContext context,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                  Widget child) =>
-              Align(
-            child: SizeTransition(
-              sizeFactor: animation,
+          pageBuilder: (context, animation, secondaryAnimation) => page,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
               child: child,
-            ),
-          ),
+            );
+          },
+          transitionDuration: const Duration(milliseconds: 1000),
         );
 }

@@ -155,9 +155,12 @@ class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
               final isBluetoothEnabled =
                   await BeaconScanner().isBluetoothEnabled();
               if (!isBluetoothEnabled) {
-                if (!dialogContext.mounted) return;
-                Navigator.pop(dialogContext);
-                _showRequestBluetoothDialog();
+                if (dialogContext.mounted) {
+                  Navigator.pop(dialogContext);
+                }
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
                 return;
               }
 
