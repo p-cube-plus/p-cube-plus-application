@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/fee/fee_page.dart';
 import 'package:presentation/ui/notification/notification_page.dart';
 import 'package:presentation/ui/home/home_page.dart';
 import 'package:presentation/ui/project/project_page.dart';
@@ -46,8 +47,9 @@ class _MainPageState extends State<MainPage> {
         physics: const NeverScrollableScrollPhysics(),
         children: const [
           ProjectPage(),
-          NotificationPage(),
+          FeePage(),
           HomePage(),
+          NotificationPage(),
           UserPage(),
         ],
       ),
@@ -80,11 +82,11 @@ class _MainPageState extends State<MainPage> {
               asset.projectIconUnselected,
               asset.projectIconSelected,
             ),
-            // getDefaultNavigationBarItem(
-            //   "회비",
-            //   asset.feeIconUnselected,
-            //   asset.feeIconSelected,
-            // ),
+            getDefaultNavigationBarItem(
+              "회비",
+              asset.feeIconUnselected,
+              asset.feeIconSelected,
+            ),
             getDefaultNavigationBarItem(
               "알림",
               asset.alarmIconUnselected,
