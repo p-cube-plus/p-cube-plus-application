@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
+import 'package:presentation/widgets/drag_detector.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/widgets/status_icon/status_blank.dart';
 import 'package:presentation/widgets/status_icon/status_late.dart';
 
 class FeePage extends StatelessWidget {
@@ -87,6 +89,89 @@ class FeePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                ],
+              ),
+            ),
+            SizedBox(height: 40),
+            Text(
+              "연도별 회비 납부",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: theme.neutral100,
+              ),
+            ),
+            SizedBox(height: 8),
+            RoundedBorder(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  DragDetector(
+                    moveLeftContent: () {},
+                    moveRightContent: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.navigate_before_rounded),
+                        Text(
+                          "2025년",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: theme.neutral100,
+                          ),
+                        ),
+                        Icon(Icons.navigate_next_rounded),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(6, (index) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${index + 1}월",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.neutral40,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              StatusBlank(size: 32),
+                            ],
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(6, (index) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${index + 7}월",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.neutral40,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              StatusBlank(size: 32),
+                            ],
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 12),
+                    ],
+                  )
                 ],
               ),
             ),
