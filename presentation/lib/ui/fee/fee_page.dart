@@ -112,7 +112,11 @@ class FeePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(Icons.navigate_before_rounded),
+                        Icon(
+                          Icons.navigate_before_rounded,
+                          size: 20,
+                          color: theme.neutral100,
+                        ),
                         Text(
                           "2025년",
                           style: TextStyle(
@@ -121,7 +125,11 @@ class FeePage extends StatelessWidget {
                             color: theme.neutral100,
                           ),
                         ),
-                        Icon(Icons.navigate_next_rounded),
+                        Icon(
+                          Icons.navigate_next_rounded,
+                          size: 20,
+                          color: theme.neutral100,
+                        ),
                       ],
                     ),
                   ),
@@ -175,6 +183,49 @@ class FeePage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 40),
+            Text(
+              "회비 내역",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: theme.neutral100,
+              ),
+            ),
+            SizedBox(height: 8),
+            RoundedBorder(
+              padding:
+                  EdgeInsets.only(left: 20, top: 16, right: 16, bottom: 16),
+              onTap: () {},
+              child: Row(
+                children: [
+                  Text(
+                    "1,200,340원",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "자세히 보기",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: theme.neutral40,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                  Icon(
+                    Icons.navigate_next_rounded,
+                    size: 24,
+                    color: theme.neutral40,
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
