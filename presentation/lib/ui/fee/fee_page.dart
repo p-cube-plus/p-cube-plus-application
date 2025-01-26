@@ -225,7 +225,7 @@ class FeePage extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

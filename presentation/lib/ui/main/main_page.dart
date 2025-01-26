@@ -88,14 +88,14 @@ class _MainPageState extends State<MainPage> {
               asset.feeIconSelected,
             ),
             getDefaultNavigationBarItem(
-              "알림",
-              asset.alarmIconUnselected,
-              asset.alarmIconSelected,
-            ),
-            getDefaultNavigationBarItem(
               "홈",
               asset.homeIconUnselected,
               asset.homeIconSelected,
+            ),
+            getDefaultNavigationBarItem(
+              "알림",
+              asset.alarmIconUnselected,
+              asset.alarmIconSelected,
             ),
             getDefaultNavigationBarItem(
               "내 정보",
