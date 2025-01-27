@@ -27,7 +27,7 @@ class DefaultBottomsheet extends StatelessWidget {
 }
 
 class BottomSheetBuilder {
-  Future build(BuildContext context, Widget content) {
+  Future<T?> build<T>(BuildContext context, Widget content) {
     return showModalBottomSheet(
       isScrollControlled: true,
       context: context,

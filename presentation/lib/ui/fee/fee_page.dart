@@ -7,7 +7,6 @@ import 'package:presentation/ui/fee/month_fee_status_per_year/month_fee_status_p
 import 'package:presentation/ui/fee/total_fee/total_fee_widget.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
-import 'package:presentation/widgets/rounded_border.dart';
 import 'package:provider/provider.dart';
 
 class FeePage extends StatelessWidget {

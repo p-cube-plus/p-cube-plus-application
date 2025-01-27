@@ -67,8 +67,7 @@ class MockFeeRepositoryImpl implements FeeRepository {
       12,
       (index) => MonthFeeStatus(
         month: index + 1,
-        feeStatusType: MockUtil()
-            .getRandom(FeeStatusType.values, except: [FeeStatusType.blank]),
+        feeStatusType: MockUtil().getRandom(FeeStatusType.values),
       ),
     );
   }

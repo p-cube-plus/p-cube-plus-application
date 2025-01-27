@@ -2,6 +2,7 @@ import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:domain/common/extensions/int_extension.dart';
 import 'package:domain/fee/value_object/current_month_fee.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/status_icon/status_fail.dart';
 
@@ -76,43 +77,53 @@ class CurrentMonthFeeFailed extends StatelessWidget {
           color: theme.neutral10,
         ),
         SizedBox(height: 8),
-        Text(
-          "회비계좌",
-          style: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w400,
-            color: theme.neutral40,
+        SizedBox(
+          width: double.infinity,
+          child: Text(
+            "회비계좌",
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w400,
+              color: theme.neutral40,
+            ),
           ),
         ),
         SizedBox(height: 4),
-        Row(
-          children: [
-            Text(
-              "카카오뱅크",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: theme.neutral80,
+        GestureDetector(
+          onTap: () => _copyAccount("카카오뱅크", "123-4556-90 정성희"),
+          child: Row(
+            children: [
+              Text(
+                "카카오뱅크",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: theme.neutral80,
+                ),
               ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              "123-4556-90 정성희",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: theme.neutral100,
+              SizedBox(width: 8),
+              Text(
+                "123-4556-90 정성희",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: theme.neutral100,
+                ),
               ),
-            ),
-            SizedBox(height: 4),
-            Icon(
-              Icons.content_copy_rounded,
-              color: theme.neutral40,
-              size: 32,
-            ),
-          ],
+              SizedBox(width: 4),
+              Icon(
+                Icons.content_copy_rounded,
+                color: theme.neutral40,
+                size: 16,
+              ),
+            ],
+          ),
         ),
       ],
     );
+  }
+
+  void _copyAccount(String accountBank, String accountNumber) {
+    Clipboard.setData(ClipboardData(text: "$accountBank $accountNumber"));
   }
 }

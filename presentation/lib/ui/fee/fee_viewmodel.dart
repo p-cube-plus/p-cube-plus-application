@@ -25,9 +25,11 @@ class FeeViewModel extends BaseViewModel<void> {
 
   void selectNextYear() {
     ++currentSelectedYear;
+    notifyListeners();
   }
 
   void selectPreviousYear() {
     --currentSelectedYear;
+    notifyListeners();
   }
 }

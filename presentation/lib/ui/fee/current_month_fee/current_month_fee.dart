@@ -20,27 +20,19 @@ class CurrentMonthFeeWidget extends StatelessWidget
       fetchData: read(context).fetchCurrentMonthFee(),
       showOnLoadedWidget: (context, currentMonthFee) {
         return RoundedBorder(
-          padding: EdgeInsets.all(24),
-          child: Column(
-            children: [
-              SizedBox(height: 8),
-              Builder(
-                builder: (context) {
-                  return switch (currentMonthFee.feeStatusType) {
-                    FeeStatusType.success =>
-                      CurrentMonthFeeSuccess(currentMonthFee),
-                    FeeStatusType.late => CurrentMonthFeeLate(currentMonthFee),
-                    FeeStatusType.failed =>
-                      CurrentMonthFeeFailed(currentMonthFee),
-                    FeeStatusType.notDate => CurrentMonthFeePendingNotDate(),
-                    FeeStatusType.notMember =>
-                      CurrentMonthFeePendingNotMember(),
-                    FeeStatusType.blank =>
-                      CurrentMonthFeeFailed(currentMonthFee),
-                  };
-                },
-              ),
-            ],
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: Builder(
+            builder: (context) {
+              return switch (currentMonthFee.feeStatusType) {
+                FeeStatusType.success =>
+                  CurrentMonthFeeSuccess(currentMonthFee),
+                FeeStatusType.late => CurrentMonthFeeLate(currentMonthFee),
+                FeeStatusType.failed => CurrentMonthFeeFailed(currentMonthFee),
+                FeeStatusType.notDate => CurrentMonthFeePendingNotDate(),
+                FeeStatusType.notMember => CurrentMonthFeePendingNotMember(),
+                FeeStatusType.blank => CurrentMonthFeeFailed(currentMonthFee),
+              };
+            },
           ),
         );
       },

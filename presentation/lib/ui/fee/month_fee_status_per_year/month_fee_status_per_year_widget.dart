@@ -22,98 +22,99 @@ class _MonthFeeStatusPerYearWidgetState
     final theme = Theme.of(context);
     return watchWidget((viewModel) => viewModel.currentSelectedYear,
         (context, currentSelectedYear) {
-      return DefaultFutureBuilder(
-        fetchData: read(context).fetchMonthFeeStatusPerYear(),
-        showOnLoadedWidget: (context, data) {
-          return RoundedBorder(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: [
-                DragDetector(
-                  moveLeftContent: () => read(context).selectPreviousYear(),
-                  moveRightContent: () => read(context).selectNextYear(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.navigate_before_rounded,
-                        size: 20,
-                        color: theme.neutral100,
-                      ),
-                      Text(
-                        "$currentSelectedYear년",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: theme.neutral100,
-                        ),
-                      ),
-                      Icon(
-                        Icons.navigate_next_rounded,
-                        size: 20,
-                        color: theme.neutral100,
-                      ),
-                    ],
+      return DragDetector(
+        moveLeftContent: () => read(context).selectPreviousYear(),
+        moveRightContent: () => read(context).selectNextYear(),
+        child: RoundedBorder(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => read(context).selectPreviousYear(),
+                    child: Icon(
+                      Icons.navigate_before_rounded,
+                      size: 20,
+                      color: theme.neutral100,
+                    ),
                   ),
-                ),
-                SizedBox(height: 24),
-                DefaultFutureBuilder(
-                  fetchData: read(context).fetchMonthFeeStatusPerYear(),
-                  showOnLoadedWidget: (context, monthFeeStatusList) {
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: List.generate(6, (index) {
-                            final data = monthFeeStatusList[index];
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${data.month}월",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500,
-                                    color: theme.neutral40,
-                                  ),
+                  Text(
+                    "$currentSelectedYear년",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => read(context).selectNextYear(),
+                    child: Icon(
+                      Icons.navigate_next_rounded,
+                      size: 20,
+                      color: theme.neutral100,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 24),
+              DefaultFutureBuilder(
+                fetchData: read(context).fetchMonthFeeStatusPerYear(),
+                showOnLoadedWidget: (context, monthFeeStatusList) {
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(6, (index) {
+                          final data = monthFeeStatusList[index];
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${data.month}월",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.neutral40,
                                 ),
-                                SizedBox(height: 4),
-                                MonthFeeStatusWidget(data.feeStatusType),
-                              ],
-                            );
-                          }),
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: List.generate(6, (index) {
-                            final data = monthFeeStatusList[index + 6];
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${data.month}월",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500,
-                                    color: theme.neutral40,
-                                  ),
+                              ),
+                              SizedBox(height: 4),
+                              MonthFeeStatusWidget(data.feeStatusType),
+                            ],
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(6, (index) {
+                          final data = monthFeeStatusList[index + 6];
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${data.month}월",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.neutral40,
                                 ),
-                                SizedBox(height: 4),
-                                MonthFeeStatusWidget(data.feeStatusType),
-                              ],
-                            );
-                          }),
-                        ),
-                        SizedBox(height: 12),
-                      ],
-                    );
-                  },
-                )
-              ],
-            ),
-          );
-        },
+                              ),
+                              SizedBox(height: 4),
+                              MonthFeeStatusWidget(data.feeStatusType),
+                            ],
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 12),
+                    ],
+                  );
+                },
+              )
+            ],
+          ),
+        ),
       );
     });
   }

@@ -60,7 +60,6 @@ class DefaultPage extends StatelessWidget {
                   bottom: bottomPadding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

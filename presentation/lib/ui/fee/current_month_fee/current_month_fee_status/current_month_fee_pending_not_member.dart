@@ -9,20 +9,23 @@ class CurrentMonthFeePendingNotMember extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      children: [
-        StatusPending(size: 72),
-        SizedBox(height: 16),
-        Text(
-          "납부 대상이 아닙니다.",
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: theme.neutral40,
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        children: [
+          StatusPending(size: 72),
+          SizedBox(height: 16),
+          Text(
+            "납부 대상이 아닙니다.",
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: theme.neutral40,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
