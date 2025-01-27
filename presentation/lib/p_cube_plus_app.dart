@@ -74,4 +74,9 @@ class _RemoveScrollGlowEffect extends MaterialScrollBehavior {
     ScrollableDetails details,
   ) =>
       child;
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const ClampingScrollPhysics();
+  }
 }
