@@ -102,11 +102,11 @@ class _IntroducePCubeWebPageState extends State<IntroducePCubeWebPage>
   }
 
   bool isAvailableLink(String url) {
-    return url.contains("store.steampowered.com") ||
+    return url.contains("p-cube") ||
+        url.contains("store.steampowered.com") ||
         url.contains("play.google.com") ||
         url.contains("store.onstove.com") ||
         url.contains("kakao.com") ||
-        url.contains("p-cube.kr") ||
         url.contains("docs.google.com/forms");
   }
 
