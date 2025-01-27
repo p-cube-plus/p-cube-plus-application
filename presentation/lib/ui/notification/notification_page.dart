@@ -84,7 +84,7 @@ class _NotificationPageState extends State<_NotificationPage>
       content: DefaultTabBar(
         overLayColor: Colors.transparent,
         tabAlignment: TabAlignment.center,
-        padding: EdgeInsets.only(left: 16, bottom: 16),
+        padding: EdgeInsets.only(left: 16, bottom: 8),
         tabLabelPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         indicatorInsets: EdgeInsets.symmetric(horizontal: 8),
         pageIndex: pageIndex,
