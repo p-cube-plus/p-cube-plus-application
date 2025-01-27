@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
-import 'package:presentation/constants/asset_path.dart' as asset;
 
 class UserDeleteCompletePage extends StatelessWidget {
   const UserDeleteCompletePage({super.key});
@@ -20,7 +19,10 @@ class UserDeleteCompletePage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SvgPicture.asset(asset.textLogo),
+                  SvgPicture.asset(
+                    theme.textLogoPath,
+                    width: 240,
+                  ),
                   SizedBox(height: 16),
                   Text(
                     "회원탈퇴가 완료되었어요.",

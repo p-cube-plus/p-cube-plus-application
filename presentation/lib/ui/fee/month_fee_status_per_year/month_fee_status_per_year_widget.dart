@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_viewmodel.dart';
@@ -7,6 +8,7 @@ import 'package:presentation/ui/fee/skeleton_widget/month_fee_status_per_year_sk
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/drag_detector.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class MonthFeeStatusPerYearWidget extends StatefulWidget {
   const MonthFeeStatusPerYearWidget({super.key});
@@ -35,10 +37,14 @@ class _MonthFeeStatusPerYearWidgetState
                 children: [
                   GestureDetector(
                     onTap: () => read(context).selectPreviousYear(),
-                    child: Icon(
-                      Icons.navigate_before_rounded,
-                      size: 20,
-                      color: theme.neutral100,
+                    child: SvgPicture.asset(
+                      asset.left,
+                      colorFilter: ColorFilter.mode(
+                        theme.neutral60,
+                        BlendMode.srcIn,
+                      ),
+                      width: 12,
+                      height: 12,
                     ),
                   ),
                   Text(
@@ -51,10 +57,14 @@ class _MonthFeeStatusPerYearWidgetState
                   ),
                   GestureDetector(
                     onTap: () => read(context).selectNextYear(),
-                    child: Icon(
-                      Icons.navigate_next_rounded,
-                      size: 20,
-                      color: theme.neutral100,
+                    child: SvgPicture.asset(
+                      asset.right,
+                      colorFilter: ColorFilter.mode(
+                        theme.neutral60,
+                        BlendMode.srcIn,
+                      ),
+                      width: 12,
+                      height: 12,
                     ),
                   ),
                 ],

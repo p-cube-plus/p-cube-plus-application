@@ -6,7 +6,6 @@ import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/login_failed/login_failed_page.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/login/login_loading/login_loading_page_viewmodel.dart';
-import 'package:presentation/constants/asset_path.dart' as path;
 import 'package:presentation/ui/login/login_loading/login_loading_state.dart';
 import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
@@ -70,7 +69,7 @@ class LoginLoadingPageState extends State<_LoginLoadingPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset(path.logoSplash,
+            Lottie.asset(theme.logoSplashPath,
                 controller: _animationController,
                 width: 153,
                 height: 153,

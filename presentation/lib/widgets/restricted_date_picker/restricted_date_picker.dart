@@ -1,5 +1,6 @@
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker_day.dart';
@@ -7,6 +8,7 @@ import 'package:presentation/widgets/restricted_date_picker/restricted_date_pick
 import 'package:presentation/ui/home/home_schedule/home_calendar/calendar_week_row.dart/calendar_week_row.dart';
 import 'package:presentation/widgets/drag_detector.dart';
 import 'package:provider/provider.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class RestrictedDatePicker extends StatelessWidget {
   const RestrictedDatePicker({
@@ -73,10 +75,14 @@ class _RestrictedDatePickerState extends State<_RestrictedDatePicker> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () => _movePreviousMonth(),
-                    child: Icon(
-                      Icons.chevron_left,
-                      color: theme.neutral40,
-                      size: 24,
+                    child: SvgPicture.asset(
+                      asset.left,
+                      colorFilter: ColorFilter.mode(
+                        theme.neutral60,
+                        BlendMode.srcIn,
+                      ),
+                      width: 12,
+                      height: 12,
                     ),
                   ),
                 ),
@@ -94,10 +100,14 @@ class _RestrictedDatePickerState extends State<_RestrictedDatePicker> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () => _moveNextMonth(),
-                    child: Icon(
-                      Icons.chevron_right,
-                      color: theme.neutral40,
-                      size: 24,
+                    child: SvgPicture.asset(
+                      asset.right,
+                      colorFilter: ColorFilter.mode(
+                        theme.neutral60,
+                        BlendMode.srcIn,
+                      ),
+                      width: 12,
+                      height: 12,
                     ),
                   ),
                 ),

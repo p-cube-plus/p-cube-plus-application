@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class DefaultAppBar extends StatelessWidget {
   const DefaultAppBar({
@@ -46,10 +48,14 @@ class DefaultAppBar extends StatelessWidget {
           if (hasPrevious)
             GestureDetector(
               onTap: () => Navigator.of(context).pop(),
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20.0,
-                color: contentColor ?? theme.neutral100,
+              child: SvgPicture.asset(
+                asset.left,
+                colorFilter: ColorFilter.mode(
+                  contentColor ?? theme.neutral100,
+                  BlendMode.srcIn,
+                ),
+                width: 16,
+                height: 16,
               ),
             )
           else

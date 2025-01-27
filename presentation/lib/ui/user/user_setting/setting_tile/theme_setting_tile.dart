@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/app_view_model.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/user/user_setting/bottom_sheet/theme_setting_bottom_sheet.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class ThemeSettingTile extends StatefulWidget with ViewModel<AppViewModel> {
   const ThemeSettingTile({super.key});
@@ -52,10 +54,15 @@ class _ThemeSettingTileState extends State<ThemeSettingTile> {
                 );
               }),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: theme.neutral40,
-              size: 24,
+            SizedBox(width: 4),
+            SvgPicture.asset(
+              asset.right,
+              colorFilter: ColorFilter.mode(
+                theme.neutral40,
+                BlendMode.srcIn,
+              ),
+              width: 12,
+              height: 12,
             ),
           ],
         ),

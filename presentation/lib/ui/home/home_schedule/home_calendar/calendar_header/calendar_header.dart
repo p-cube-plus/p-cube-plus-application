@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import '../../home_schedule_viewmodel.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class CalendarHeader extends StatelessWidget
     with ViewModel<HomeScheduleViewmodel> {
@@ -15,16 +17,21 @@ class CalendarHeader extends StatelessWidget
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap: () => read(context).jumpToOneMonthAgo(),
-            child: SizedBox(
-              height: double.infinity,
-              child: AspectRatio(
-                aspectRatio: 1.0,
-                child: Icon(
-                  Icons.chevron_left,
-                  color: theme.neutral40,
-                  size: 24,
+          Expanded(
+            child: GestureDetector(
+              onTap: () => read(context).jumpToOneMonthAgo(),
+              child: Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.only(left: 16),
+                child: SvgPicture.asset(
+                  asset.left,
+                  colorFilter: ColorFilter.mode(
+                    theme.neutral60,
+                    BlendMode.srcIn,
+                  ),
+                  width: 12,
+                  height: 12,
+                  alignment: Alignment.centerLeft,
                 ),
               ),
             ),
@@ -60,14 +67,22 @@ class CalendarHeader extends StatelessWidget
               ),
             ],
           ),
-          GestureDetector(
-            onTap: () => read(context).jumpToOneMonthLater(),
-            child: AspectRatio(
-              aspectRatio: 1.0,
-              child: Icon(
-                Icons.chevron_right,
-                color: theme.neutral40,
-                size: 24,
+          Expanded(
+            child: GestureDetector(
+              onTap: () => read(context).jumpToOneMonthLater(),
+              child: Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.only(right: 16),
+                child: SvgPicture.asset(
+                  asset.right,
+                  colorFilter: ColorFilter.mode(
+                    theme.neutral60,
+                    BlendMode.srcIn,
+                  ),
+                  width: 12,
+                  height: 12,
+                  alignment: Alignment.centerRight,
+                ),
               ),
             ),
           ),

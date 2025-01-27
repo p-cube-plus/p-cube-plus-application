@@ -66,11 +66,20 @@ class _NotificationPageState extends State<_NotificationPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final theme = Theme.of(context);
     return DefaultPage(
       title: "알림",
       action: GestureDetector(
         onTap: () => _navigateToNotificationSettingPage(context),
-        child: SvgPicture.asset(asset.setting),
+        child: SvgPicture.asset(
+          asset.setting,
+          colorFilter: ColorFilter.mode(
+            theme.neutral40,
+            BlendMode.srcIn,
+          ),
+          width: 16,
+          height: 16,
+        ),
       ),
       content: DefaultTabBar(
         overLayColor: Colors.transparent,

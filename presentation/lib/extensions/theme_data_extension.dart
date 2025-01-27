@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/constants/app_color.dart' as color;
+import 'package:presentation/constants/asset_path.dart' as asset;
+
+extension AssetThemeDataExtension on ThemeData {
+  String get logoSplashPath => (brightness == Brightness.light)
+      ? asset.logoSplash
+      : asset.logoSplashDark;
+
+  String get textLogoPath =>
+      (brightness == Brightness.light) ? asset.textLogo : asset.textLogoDark;
+
+  String get mainLogoPath =>
+      (brightness == Brightness.light) ? asset.mainLogo : asset.mainLogoDark;
+}
 
 extension TextThemeExtension on ThemeData {
   Color get neutral100 =>

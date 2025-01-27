@@ -95,18 +95,27 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SvgPicture.asset(path.timeoutWatch),
+                    SvgPicture.asset(
+                      path.watch,
+                      width: 10,
+                      height: 10,
+                      colorFilter: ColorFilter.mode(
+                        theme.primary80,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                     const SizedBox(width: 4),
                     watchWidget<String>(
-                        (viewModel) => viewModel.timerText,
-                        (context, timerText) => Text(
-                              timerText,
-                              style: TextStyle(
-                                color: theme.primary80,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ))
+                      (viewModel) => viewModel.timerText,
+                      (context, timerText) => Text(
+                        timerText,
+                        style: TextStyle(
+                          color: theme.primary80,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
