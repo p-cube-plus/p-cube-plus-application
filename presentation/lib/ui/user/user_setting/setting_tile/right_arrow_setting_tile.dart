@@ -19,7 +19,7 @@ class RightArrowSettingTile extends StatelessWidget {
     return InkWell(
       onTap: () => onTap?.call(context),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
