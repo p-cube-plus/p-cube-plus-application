@@ -22,7 +22,7 @@ class FeePage extends StatelessWidget {
 }
 
 class _FeePage extends StatelessWidget with ViewModel<FeeViewModel> {
-  const _FeePage({super.key});
+  const _FeePage();
 
   @override
   Widget build(BuildContext context) {

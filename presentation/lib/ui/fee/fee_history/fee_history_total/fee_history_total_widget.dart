@@ -1,13 +1,17 @@
 import 'package:domain/common/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/fee/fee_history/fee_history_viewmodel.dart';
+import 'package:presentation/ui/fee/fee_history/skeleton_widget/fee_history_account_text_skeleton.dart';
+import 'package:presentation/ui/fee/fee_history/skeleton_widget/fee_history_total_text_skeleton.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
-class FeeHistoryTotalWidget extends StatelessWidget {
-  const FeeHistoryTotalWidget(this.totalAmount, {super.key});
-
-  final int totalAmount;
+class FeeHistoryTotalWidget extends StatelessWidget
+    with ViewModel<FeeHistoryViewmodel> {
+  const FeeHistoryTotalWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +23,19 @@ class FeeHistoryTotalWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Text(
-              "${totalAmount.toCommaSeparated()}원",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                color: theme.neutral100,
-              ),
+            child: DefaultFutureBuilder(
+              fetchData: read(context).fetchCurrentTotalFeeAmount(),
+              showOnLoadedWidget: (context, data) {
+                return Text(
+                  "${data.toCommaSeparated()}원",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    color: theme.neutral100,
+                  ),
+                );
+              },
+              showOnLoadingWidget: (context) => FeeHistoryTotalTextSkeleton(),
             ),
           ),
           SizedBox(height: 32),
@@ -43,35 +53,41 @@ class FeeHistoryTotalWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: 4),
-          GestureDetector(
-            onTap: () => _copyAccount("카카오뱅크", "1234-5678-90 정성희"),
-            child: Row(
-              children: [
-                Text(
-                  "카카오뱅크",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: theme.neutral80,
-                  ),
+          DefaultFutureBuilder(
+            fetchData: read(context).fetchAccountInformation(),
+            showOnLoadedWidget: (context, data) {
+              return GestureDetector(
+                onTap: () => _copyAccount(data.accountBank, data.accountNumber),
+                child: Row(
+                  children: [
+                    Text(
+                      data.accountBank,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: theme.neutral80,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "${data.accountNumber} ${data.accountOwnerName}",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: theme.neutral100,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Icon(
+                      Icons.content_copy_rounded,
+                      color: theme.neutral40,
+                      size: 16,
+                    ),
+                  ],
                 ),
-                SizedBox(width: 8),
-                Text(
-                  "1234-5678-90 정성희",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: theme.neutral100,
-                  ),
-                ),
-                SizedBox(width: 4),
-                Icon(
-                  Icons.content_copy_rounded,
-                  color: theme.neutral40,
-                  size: 16,
-                ),
-              ],
-            ),
+              );
+            },
+            showOnLoadingWidget: (context) => FeeHistoryAccountTextSkeleton(),
           )
         ],
       ),

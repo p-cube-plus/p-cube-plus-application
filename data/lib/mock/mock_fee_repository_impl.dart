@@ -1,5 +1,6 @@
 import 'package:data/utils/mock_util.dart';
 import 'package:domain/fee/repository/fee_repository.dart';
+import 'package:domain/fee/value_object/account_information.dart';
 import 'package:domain/fee/value_object/current_month_fee.dart';
 import 'package:domain/fee/value_object/fee_history.dart';
 import 'package:domain/fee/value_object/fee_status_type.dart';
@@ -69,6 +70,16 @@ class MockFeeRepositoryImpl implements FeeRepository {
         month: index + 1,
         feeStatusType: MockUtil().getRandom(FeeStatusType.values),
       ),
+    );
+  }
+
+  @override
+  Future<AccountInformation> getAccountInformation() async {
+    await MockUtil().applyMockSetting();
+    return AccountInformation(
+      accountBank: "카카오뱅크",
+      accountNumber: "1234-5678-90",
+      accountOwnerName: "정성희",
     );
   }
 }

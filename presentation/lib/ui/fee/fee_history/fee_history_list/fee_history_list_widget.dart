@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_history/fee_history_viewmodel.dart';
+import 'package:presentation/ui/fee/fee_history/skeleton_widget/fee_history_list_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
@@ -72,6 +73,7 @@ class FeeHistoryListWidget extends StatelessWidget
             }),
           );
         },
+        showOnLoadingWidget: (context) => FeeHistoryListSkeleton(),
       );
     });
   }

@@ -1,11 +1,17 @@
 import 'package:domain/common/extensions/future_extension.dart';
+import 'package:domain/fee/usecases/fetch_account_information_use_case.dart';
+import 'package:domain/fee/usecases/fetch_current_total_fee_amount_use_case.dart';
 import 'package:domain/fee/usecases/fetch_fee_history_use_case.dart';
+import 'package:domain/fee/value_object/account_information.dart';
 import 'package:domain/fee/value_object/fee_filter_type.dart';
 import 'package:domain/fee/value_object/fee_history.dart';
 import 'package:presentation/common/base_viewmodel.dart';
 
 class FeeHistoryViewmodel extends BaseViewModel<void> {
   final _fetchFeeHistoryUseCase = FetchFeeHistoryUseCase();
+  final _fetchCurrentTotalFeeAmountUseCase =
+      FetchCurrentTotalFeeAmountUseCase();
+  final _fetchAccountInformationUseCase = FetchAccountInformationUseCase();
 
   FeeFilterType currentFeeFilterType = FeeFilterType.total;
 
@@ -28,6 +34,12 @@ class FeeHistoryViewmodel extends BaseViewModel<void> {
           .toList(),
     };
   }
+
+  Future<int> fetchCurrentTotalFeeAmount() =>
+      _fetchCurrentTotalFeeAmountUseCase();
+
+  Future<AccountInformation> fetchAccountInformation() =>
+      _fetchAccountInformationUseCase();
 
   void updateFeeFilterType(FeeFilterType newType) {
     currentFeeFilterType = newType;

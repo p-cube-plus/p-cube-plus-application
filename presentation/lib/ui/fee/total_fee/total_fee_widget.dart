@@ -4,6 +4,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_history/fee_history_page.dart';
 import 'package:presentation/ui/fee/fee_viewmodel.dart';
+import 'package:presentation/ui/fee/skeleton_widget/total_fee_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
@@ -50,13 +51,14 @@ class TotalFeeWidget extends StatelessWidget with ViewModel<FeeViewModel> {
           ),
         );
       },
+      showOnLoadingWidget: (context) => TotalFeeSkeleton(),
     );
   }
 
   void _navigateToFeeHistoryPage(BuildContext context, int totalFeeAmount) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => FeeHistoryPage(totalAmount: totalFeeAmount),
+        builder: (_) => FeeHistoryPage(),
       ),
     );
   }

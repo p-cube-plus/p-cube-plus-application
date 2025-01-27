@@ -13,25 +13,19 @@ import 'package:presentation/widgets/default_page.dart';
 import 'package:provider/provider.dart';
 
 class FeeHistoryPage extends StatelessWidget {
-  const FeeHistoryPage({super.key, required this.totalAmount});
-
-  final int totalAmount;
+  const FeeHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => FeeHistoryViewmodel(),
-      child: _FeeHistoryPage(totalAmount),
+      child: _FeeHistoryPage(),
     );
   }
 }
 
 class _FeeHistoryPage extends StatelessWidget
     with ViewModel<FeeHistoryViewmodel> {
-  const _FeeHistoryPage(this.totalAmount);
-
-  final int totalAmount;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -64,7 +58,7 @@ class _FeeHistoryPage extends StatelessWidget
       content: DefaultContent(
         child: Column(
           children: [
-            FeeHistoryTotalWidget(totalAmount),
+            FeeHistoryTotalWidget(),
             FeeHistoryListWidget(),
           ],
         ),

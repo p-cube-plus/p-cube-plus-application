@@ -7,6 +7,7 @@ import 'package:presentation/ui/fee/current_month_fee/current_month_fee_status/c
 import 'package:presentation/ui/fee/current_month_fee/current_month_fee_status/current_month_fee_pending_not_member.dart';
 import 'package:presentation/ui/fee/current_month_fee/current_month_fee_status/current_month_fee_success.dart';
 import 'package:presentation/ui/fee/fee_viewmodel.dart';
+import 'package:presentation/ui/fee/skeleton_widget/current_month_fee_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
@@ -36,6 +37,7 @@ class CurrentMonthFeeWidget extends StatelessWidget
           ),
         );
       },
+      showOnLoadingWidget: (context) => CurrentMonthFeeSkeleton(),
     );
   }
 }

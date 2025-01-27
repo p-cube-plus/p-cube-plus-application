@@ -3,6 +3,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_viewmodel.dart';
 import 'package:presentation/ui/fee/month_fee_status_per_year/month_fee_status_widget.dart';
+import 'package:presentation/ui/fee/skeleton_widget/month_fee_status_per_year_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/drag_detector.dart';
 import 'package:presentation/widgets/rounded_border.dart';
@@ -111,6 +112,8 @@ class _MonthFeeStatusPerYearWidgetState
                     ],
                   );
                 },
+                showOnLoadingWidget: (context) =>
+                    MonthFeeStatusPerYearSkeleton(),
               )
             ],
           ),
