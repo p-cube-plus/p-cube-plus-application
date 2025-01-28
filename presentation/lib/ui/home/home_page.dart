@@ -9,6 +9,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/executive/executive_main_page.dart';
+import 'package:presentation/ui/home/home_rent/home_rent_widget.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -100,6 +101,9 @@ class _HomePageState extends State<_HomePage>
               SizedBox(height: 40),
               HomeUpcommingSchedule(),
               HomeSchedule(),
+              SizedBox(height: 48),
+              HomeRentWidget(),
+              SizedBox(height: 56),
             ],
           ),
         ),
