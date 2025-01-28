@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/product/barcode_reader/floating_barcode_button.dart';
 import 'package:presentation/ui/product/product_search/product_search_page.dart';
 import 'package:presentation/ui/product/product_view_model.dart';
 import 'package:presentation/ui/product/total_product_tab/total_product_tab.dart';
@@ -33,6 +34,7 @@ class _ProductPage extends StatelessWidget with ViewModel<ProductViewModel> {
     return DefaultPage(
       title: "물품",
       appbar: DefaultAppBar(),
+      floatingActionButton: FloatingBarcodeButton(),
       action: GestureDetector(
         onTap: () => _navigateToProductSearchPage(context),
         child: SvgPicture.asset(

@@ -2,6 +2,8 @@ import 'package:data/utils/mock_util.dart';
 import 'package:domain/product/repository/product_repository.dart';
 import 'package:domain/product/value_objects/product.dart';
 import 'package:domain/product/value_objects/product_detail.dart';
+import 'package:domain/product/value_objects/product_type.dart';
+import 'package:domain/product/value_objects/search_result_product.dart';
 import 'package:domain/product/value_objects/user_rent_product.dart';
 
 class MockProductRepositoryImpl implements ProductRepository {
@@ -94,5 +96,25 @@ class MockProductRepositoryImpl implements ProductRepository {
         ],
       },
     );
+  }
+
+  @override
+  Future<SearchResultProduct> getProductByBarcode(String barcode) async {
+    await MockUtil().applyMockSetting();
+    return SearchResultProduct(
+        barCode: barcode,
+        productName: "테스트 물품",
+        productType: MockUtil().getRandom(ProductType.values),
+        rentUserName: MockUtil().getRandomKoreanName());
+  }
+
+  @override
+  Future<void> returnProduct() async {
+    await MockUtil().applyMockSetting();
+  }
+
+  @override
+  Future<void> rentProduct(String barcode) async {
+    await MockUtil().applyMockSetting();
   }
 }

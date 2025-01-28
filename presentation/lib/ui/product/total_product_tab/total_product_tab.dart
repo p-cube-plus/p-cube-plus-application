@@ -94,7 +94,7 @@ class TotalProductTab extends StatelessWidget with ViewModel<ProductViewModel> {
               }
 
               return ListView.builder(
-                padding: EdgeInsets.zero,
+                padding: EdgeInsets.only(bottom: 72),
                 itemCount: productList.length,
                 itemBuilder: (context, index) {
                   final data = productList[index];

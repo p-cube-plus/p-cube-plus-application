@@ -23,7 +23,7 @@ class _UserRentTabState extends State<UserRentTab>
         fetchData: read(context).fetchUserRentProductList(),
         showOnLoadedWidget: (context, rentProductList) {
           return ListView.builder(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(bottom: 72),
             itemCount: rentProductList.length,
             itemBuilder: (context, index) {
               final data = rentProductList[index];
