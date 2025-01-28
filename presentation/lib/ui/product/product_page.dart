@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/product/product_search/product_search_page.dart';
 import 'package:presentation/ui/product/product_view_model.dart';
 import 'package:presentation/ui/product/total_product_tab/total_product_tab.dart';
 import 'package:presentation/ui/product/user_rent_tab/user_rent_tab.dart';
@@ -22,7 +24,7 @@ class ProductPage extends StatelessWidget {
   }
 }
 
-class _ProductPage extends StatelessWidget {
+class _ProductPage extends StatelessWidget with ViewModel<ProductViewModel> {
   const _ProductPage();
 
   @override
@@ -32,7 +34,7 @@ class _ProductPage extends StatelessWidget {
       title: "물품",
       appbar: DefaultAppBar(),
       action: GestureDetector(
-        onTap: () {},
+        onTap: () => _navigateToProductSearchPage(context),
         child: SvgPicture.asset(
           asset.search,
           width: 20,
@@ -52,6 +54,14 @@ class _ProductPage extends StatelessWidget {
             DefaultTab(tabName: "물품 현황", page: TotalProductTab()),
             DefaultTab(tabName: "내가 대여한", page: UserRentTab()),
           ]),
+    );
+  }
+
+  void _navigateToProductSearchPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ProductSearchPage(read(context).totalList),
+      ),
     );
   }
 }
