@@ -3,6 +3,7 @@ import 'package:domain/product/value_objects/user_rent_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/product/product_detail/product_detail_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
 
@@ -23,6 +24,7 @@ class UserRentListItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 8),
       width: double.infinity,
       padding: EdgeInsets.all(16),
+      onTap: () => _navigateToProductDetailPage(context),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -82,6 +84,14 @@ class UserRentListItem extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _navigateToProductDetailPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ProductDetailPage(),
       ),
     );
   }

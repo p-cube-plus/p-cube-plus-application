@@ -3,7 +3,7 @@ class Product {
   final String typeName; // 도서, etc
   final String location; // 책상1-책장2-A1
 
-  Product({
+  const Product({
     required this.name,
     required this.typeName,
     required this.location,
@@ -11,11 +11,11 @@ class Product {
 }
 
 class RentedProduct extends Product {
-  String rentUserName;
-  DateTime rentStartDate;
-  DateTime rentEndDate;
+  final String rentUserName;
+  final DateTime rentStartDate;
+  final DateTime rentEndDate;
 
-  RentedProduct({
+  const RentedProduct({
     required super.name,
     required super.typeName,
     required super.location,
@@ -28,7 +28,7 @@ class RentedProduct extends Product {
 }
 
 class RentableProduct extends Product {
-  RentableProduct({
+  const RentableProduct({
     required super.name,
     required super.typeName,
     required super.location,

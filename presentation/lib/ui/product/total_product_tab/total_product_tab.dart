@@ -3,6 +3,7 @@ import 'package:domain/product/value_objects/product.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/product/product_detail/product_detail_page.dart';
 import 'package:presentation/ui/product/product_view_model.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
@@ -96,6 +97,7 @@ class TotalProductTab extends StatelessWidget with ViewModel<ProductViewModel> {
                     return RoundedBorder(
                       padding: EdgeInsets.all(16),
                       margin: EdgeInsets.only(bottom: 8),
+                      onTap: () => _navigateToProductDetailPage(context),
                       child: Column(
                         children: [
                           Row(
@@ -180,6 +182,7 @@ class TotalProductTab extends StatelessWidget with ViewModel<ProductViewModel> {
                     return RoundedBorder(
                       padding: EdgeInsets.all(16),
                       margin: EdgeInsets.only(bottom: 8),
+                      onTap: () => _navigateToProductDetailPage(context),
                       child: Row(
                         children: [
                           Text(
@@ -218,6 +221,14 @@ class TotalProductTab extends StatelessWidget with ViewModel<ProductViewModel> {
             }),
           ),
         ],
+      ),
+    );
+  }
+
+  void _navigateToProductDetailPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ProductDetailPage(),
       ),
     );
   }
