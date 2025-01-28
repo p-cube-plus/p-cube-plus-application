@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/product/barcode_reader/floating_barcode_button.dart';
 import 'package:presentation/ui/product/product_detail/product_detail_rent/product_detail_rent_widget.dart';
 import 'package:presentation/ui/product/product_detail/product_detail_viewmodel.dart';
 import 'package:presentation/ui/product/skeleton_widget/product_detail_skeleton.dart';
@@ -34,6 +35,7 @@ class _ProductDetailPage extends StatelessWidget
       appbar: DefaultAppBar(
         centerTitle: "물품 세부정보",
       ),
+      floatingActionButton: FloatingBarcodeButton(),
       content: DefaultContent(
         child: DefaultFutureBuilder(
           fetchData: read(context).fetchProductDetail(),
@@ -108,6 +110,7 @@ class _ProductDetailPage extends StatelessWidget
                     },
                   ),
                 ),
+                SizedBox(height: 72),
               ],
             );
           },
