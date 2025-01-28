@@ -6,8 +6,6 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.0.0'
 
-
-
 dependencies:
   flutter:
     sdk: flutter
@@ -16,8 +14,10 @@ dependencies:
   data:
     path: ../data
 
+  # 스플래시 지정
   flutter_native_splash: ^2.4.4
 
+  # 파이어베이스 서비스
   firebase_core: ^3.4.0
   firebase_crashlytics: ^4.1.0
   firebase_analytics: ^11.3.0
@@ -35,7 +35,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/symbol.png"
+  image_path: "assets/archive/symbol.png"
   min_ask_android: 21
 
 # 앱 시작 시 로딩 화면
@@ -50,13 +50,13 @@ flutter_native_splash:
   android_12:
     color: "#FBFBFB"
     color_dark: "#141414"
-    image: "assets/images/transparent_image.png"
+    image: "assets/archive/transparent_image.png"
 
 flutter:
   uses-material-design: true
   assets:
-     - assets/images/
-     - assets/images/icons/
+     - assets/image/
+     - assets/svg/
      - assets/lottie/
   fonts:
     - family: SpoqaHanSansNeo

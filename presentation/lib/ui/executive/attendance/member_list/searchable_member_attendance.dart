@@ -66,14 +66,52 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                   onTapDown: (details) => _focusNode.unfocus(),
                   onTap: () => read(context).toggleTopWidgetVisible(),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.only(left: 16, right: 8),
                     child:
                         watchWidget((viewModel) => viewModel.isVisibleTopWidget,
                             (context, isVisibleTopWidget) {
                       if (isVisibleTopWidget) {
-                        return Text("▲");
+                        return Container(
+                          width: 24,
+                          height: 24,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: theme.neutral10,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()..scale(1.0, -1.0),
+                            child: SvgPicture.asset(
+                              asset.down,
+                              width: 12,
+                              height: 12,
+                              colorFilter: ColorFilter.mode(
+                                theme.neutral40,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                        );
                       } else {
-                        return Text("▼");
+                        return Container(
+                          width: 24,
+                          height: 24,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: theme.neutral10,
+                            shape: BoxShape.circle,
+                          ),
+                          child: SvgPicture.asset(
+                            asset.down,
+                            width: 12,
+                            height: 12,
+                            colorFilter: ColorFilter.mode(
+                              theme.neutral40,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        );
                       }
                     }),
                   ),
@@ -83,15 +121,30 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                     radius: 50,
                     color: theme.neutral10,
                     hasShadow: false,
-                    padding: EdgeInsets.symmetric(horizontal: 4),
-                    child: DefaultTextField(
-                      maxLength: 20,
-                      inputController: controller,
-                      focusNode: _focusNode,
-                      hintText: "회원 이름을 검색해보세요",
-                      onChanged: (inputText) {
-                        read(context).setFilterText(inputText);
-                      },
+                    padding: EdgeInsets.only(left: 4, right: 12),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: DefaultTextField(
+                            maxLength: 20,
+                            inputController: controller,
+                            focusNode: _focusNode,
+                            hintText: "회원 이름을 검색해보세요",
+                            onChanged: (inputText) {
+                              read(context).setFilterText(inputText);
+                            },
+                          ),
+                        ),
+                        SvgPicture.asset(
+                          asset.search,
+                          width: 12,
+                          height: 12,
+                          colorFilter: ColorFilter.mode(
+                            theme.neutral40,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -109,6 +162,10 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                         asset.filter,
                         width: 10,
                         height: 10,
+                        colorFilter: ColorFilter.mode(
+                          theme.primary80,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       SizedBox(width: 8),
                       Text(

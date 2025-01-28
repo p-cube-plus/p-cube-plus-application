@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/home/home_attendance/home_attendance_detail/home_attendance_detail_page.dart';
@@ -6,7 +7,7 @@ import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/widgets/skeleton_animation_widget.dart';
 import 'package:provider/provider.dart';
-
+import 'package:presentation/constants/asset_path.dart' as asset;
 import 'home_attendance_content/home_attendance_content.dart';
 import 'home_attendnace_viewmodel.dart';
 
@@ -64,10 +65,15 @@ class _HomeAttendenceState extends State<_HomeAttendence>
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Icon(
-                    Icons.chevron_right,
-                    color: theme.neutral40,
-                    size: 20.0,
+                  SizedBox(width: 4),
+                  SvgPicture.asset(
+                    asset.right,
+                    colorFilter: ColorFilter.mode(
+                      theme.neutral40,
+                      BlendMode.srcIn,
+                    ),
+                    width: 10,
+                    height: 10,
                   ),
                 ],
               ),

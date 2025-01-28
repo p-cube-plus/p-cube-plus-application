@@ -66,16 +66,25 @@ class _NotificationPageState extends State<_NotificationPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final theme = Theme.of(context);
     return DefaultPage(
       title: "알림",
       action: GestureDetector(
         onTap: () => _navigateToNotificationSettingPage(context),
-        child: SvgPicture.asset(asset.setting),
+        child: SvgPicture.asset(
+          asset.setting,
+          colorFilter: ColorFilter.mode(
+            theme.neutral40,
+            BlendMode.srcIn,
+          ),
+          width: 16,
+          height: 16,
+        ),
       ),
       content: DefaultTabBar(
         overLayColor: Colors.transparent,
         tabAlignment: TabAlignment.center,
-        padding: EdgeInsets.only(left: 16, bottom: 16),
+        padding: EdgeInsets.only(left: 16, bottom: 8),
         tabLabelPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         indicatorInsets: EdgeInsets.symmetric(horizontal: 8),
         pageIndex: pageIndex,
@@ -123,10 +132,41 @@ class _NotificationPageState extends State<_NotificationPage>
                         padding: EdgeInsets.only(bottom: 8),
                         itemCount: list.length,
                         itemBuilder: (context, index) {
-                          return AlarmListItem(
-                            data: list[index],
-                            onTap: () => read(context)
-                                .updateReadNotification(list[index].id),
+                          return watchWidget(
+                            (viewModel) =>
+                                viewModel.newNotificationList[index].$1,
+                            (context, isReading) {
+                              if (isReading) {
+                                return RoundedBorder(
+                                  padding: EdgeInsets.all(16),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 4),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SkeletonAnimation(80, 14, radius: 50),
+                                          SizedBox(height: 4),
+                                          SkeletonAnimation(160, 14,
+                                              radius: 50),
+                                        ],
+                                      ),
+                                      SkeletonAnimation(80, 12, radius: 50),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return AlarmListItem(
+                                  data: list[index].$2,
+                                  onTap: () => read(context)
+                                      .updateReadNotification(index),
+                                );
+                              }
+                            },
                           );
                         },
                       );
@@ -205,23 +245,9 @@ class _NotificationPageState extends State<_NotificationPage>
     read(context).fetchNotificationList();
   }
 
-  void _showProgress() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.transparent,
-      builder: (context) => const PopScope(
-        canPop: false,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-    );
-  }
+  void _showProgress() {}
 
-  void _dismissProgress() {
-    Navigator.of(context, rootNavigator: true).pop();
-  }
+  void _dismissProgress() {}
 
   void _navigateToNotificationSettingPage(BuildContext context) {
     Navigator.of(context)

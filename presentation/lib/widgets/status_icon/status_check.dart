@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class StatusCheck extends StatelessWidget {
   final bool isChecked;
@@ -17,10 +19,15 @@ class StatusCheck extends StatelessWidget {
           color: theme.primary80,
           shape: BoxShape.circle,
         ),
-        child: Icon(
-          Icons.check_rounded,
-          color: Colors.white,
-          size: size * 0.7,
+        alignment: Alignment.center,
+        child: SvgPicture.asset(
+          asset.check,
+          colorFilter: ColorFilter.mode(
+            Colors.white,
+            BlendMode.srcIn,
+          ),
+          width: size * 0.5,
+          height: size * 0.5,
         ),
       );
     } else {
@@ -35,10 +42,17 @@ class StatusCheck extends StatelessWidget {
             width: 1.5,
           ),
         ),
-        child: Icon(
-          Icons.check_rounded,
-          color: theme.neutral20,
-          size: size * 0.7,
+        alignment: Alignment.center,
+        child: SizedBox(
+          child: SvgPicture.asset(
+            asset.check,
+            colorFilter: ColorFilter.mode(
+              theme.neutral20,
+              BlendMode.srcIn,
+            ),
+            width: size * 0.5,
+            height: size * 0.5,
+          ),
         ),
       );
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class RightArrowSettingTile extends StatelessWidget {
   const RightArrowSettingTile({
@@ -17,7 +19,7 @@ class RightArrowSettingTile extends StatelessWidget {
     return InkWell(
       onTap: () => onTap?.call(context),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -29,10 +31,14 @@ class RightArrowSettingTile extends StatelessWidget {
                 color: theme.neutral100,
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: theme.neutral40,
-              size: 24,
+            SvgPicture.asset(
+              asset.right,
+              colorFilter: ColorFilter.mode(
+                theme.neutral40,
+                BlendMode.srcIn,
+              ),
+              width: 12,
+              height: 12,
             ),
           ],
         ),

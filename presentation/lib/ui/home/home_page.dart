@@ -2,8 +2,11 @@ import 'package:domain/common/extensions/future_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:presentation/beacon/beacon_scanner.dart';
 import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/executive/executive_main_page.dart';
 import 'package:presentation/widgets/default_content.dart';
@@ -51,6 +54,7 @@ class _HomePageState extends State<_HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     PermissionManager().checkOnBoardingPermission();
     super.build(context);
     return DefaultPage(
@@ -61,7 +65,15 @@ class _HomePageState extends State<_HomePage>
         showOnLoadedWidget: (context, isExecutive) {
           if (isExecutive) {
             return GestureDetector(
-              child: SvgPicture.asset(asset.executiveHome),
+              child: SvgPicture.asset(
+                asset.executiveHome,
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  theme.neutral40,
+                  BlendMode.srcIn,
+                ),
+              ),
               onTap: () => _navigateToExecutivePage(),
             );
           } else {
@@ -69,6 +81,7 @@ class _HomePageState extends State<_HomePage>
           }
         },
         showOnLoadingWidget: (context) => const SizedBox(),
+        showOnErrorWidget: (error, trace) => const SizedBox(),
         handleError: (error, trace) {
           Fluttertoast.showToast(msg: "임원진 여부 확인에 실패했습니다!\n새로고침해주세요.");
         },
@@ -91,7 +104,7 @@ class _HomePageState extends State<_HomePage>
           ),
         ),
       ),
-      //floatingActionButton: FloatingBarcodeButton(),
+      floatingActionButton: FloatingBarcodeButton(),
     );
   }
 
@@ -105,60 +118,51 @@ class _HomePageState extends State<_HomePage>
   }
 }
 
-// class FloatingBarcodeButton extends StatefulWidget {
-//   @override
-//   _FloatingBarcodeButton createState() => _FloatingBarcodeButton();
-// }
+class FloatingBarcodeButton extends StatelessWidget {
+  FloatingBarcodeButton({super.key});
 
-// class _FloatingBarcodeButton extends State<FloatingBarcodeButton> {
-//   String _platformVersion = 'Unknown';
-//   String qrcode = 'Unknown';
+  final imagePicker = ImagePicker();
+  final barcodeScanner =
+      BarcodeScanner(formats: [BarcodeFormat.ean13, BarcodeFormat.ean8]);
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     initPlatformState();
-//   }
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return GestureDetector(
+      onTap: () => startBarcodeScan(),
+      child: Container(
+        width: 64,
+        height: 64,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: theme.primary80.withOpacity(0.8),
+          shape: BoxShape.circle,
+        ),
+        child: SvgPicture.asset(
+          asset.scan,
+          colorFilter: ColorFilter.mode(
+            Colors.white,
+            BlendMode.srcIn,
+          ),
+          width: 36,
+          height: 36,
+        ),
+      ),
+    );
+  }
 
-//   Future<void> initPlatformState() async {
-//     String platformVersion;
-//     try {
-//       platformVersion = await Scan.platformVersion;
-//     } on PlatformException {
-//       platformVersion = 'Failed to get platform version.';
-//     }
-//     if (!mounted) return;
+  Future startBarcodeScan() async {
+    Fluttertoast.showToast(msg: "바코드를 찍어주세요.");
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
+    if (pickedFile == null) return;
 
-//     setState(() {
-//       _platformVersion = platformVersion;
-//     });
-//   }
+    final inputImage = InputImage.fromFilePath(pickedFile.path);
+    final barcode = (await barcodeScanner.processImage(inputImage)).firstOrNull;
+    if (barcode == null) {
+      Fluttertoast.showToast(msg: "바코드 인식에 실패했습니다.");
+      return;
+    }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     print("code: $qrcode");
-//     return SizedBox(
-//       width: 64,
-//       height: 64,
-//       child: FloatingActionButton(
-//         onPressed: () {
-//           Navigator.push(context, MaterialPageRoute(builder: (_) {
-//             return ScanPage();
-//           }));
-//         },
-//         elevation: 7.68,
-//         focusElevation: 7.68,
-//         hoverElevation: 7.68,
-//         disabledElevation: 7.68,
-//         highlightElevation: 7.68,
-//         child: Padding(
-//           padding: EdgeInsets.all(14),
-//           child: Image.asset(
-//             "assets/images/scan.png",
-//           ),
-//         ),
-//         backgroundColor: Theme.of(context).primaryColor,
-//       ),
-//     );
-//   }
-// }
+    Fluttertoast.showToast(msg: "${barcode.rawValue}");
+  }
+}

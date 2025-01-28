@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:presentation/constants/asset_path.dart' as path;
 import 'package:presentation/extensions/theme_data_extension.dart';
 
 class LoginHomeLogoWidget extends StatelessWidget {
@@ -12,9 +11,8 @@ class LoginHomeLogoWidget extends StatelessWidget {
     return Column(
       children: [
         SvgPicture.asset(
-          path.textLogo,
+          theme.textLogoPath,
           width: 240,
-          height: 55,
         ),
         const SizedBox(height: 16),
         RichText(

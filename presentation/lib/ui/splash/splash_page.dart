@@ -10,7 +10,6 @@ import 'package:presentation/ui/splash/splash_event.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/login/login_home/login_home_page.dart';
 import 'package:presentation/ui/splash/splash_page_viewmodel.dart';
-import 'package:presentation/constants/asset_path.dart' as path;
 import 'package:presentation/widgets/default_alert.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +70,7 @@ class _SplashPageState extends State<_SplashPage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset(
-              path.logoSplash,
+              theme.logoSplashPath,
               controller: _animationController,
               width: 160,
               height: 160,
@@ -84,7 +83,10 @@ class _SplashPageState extends State<_SplashPage>
               curve: Curves.easeInCirc,
               opacity: _isLogoVisible ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
-              child: SvgPicture.asset(path.textLogo),
+              child: SvgPicture.asset(
+                theme.textLogoPath,
+                width: 240,
+              ),
             ),
           ],
         ),

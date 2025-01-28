@@ -47,7 +47,6 @@ class DefaultFutureBuilder<T> extends StatelessWidget {
 
         return showOnErrorWidget?.call(snapshot.error, snapshot.stackTrace) ??
             SizedBox(
-              width: double.infinity,
               child: Text("${snapshot.error}"),
             );
       },

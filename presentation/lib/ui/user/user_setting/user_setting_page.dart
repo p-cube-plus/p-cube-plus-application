@@ -19,6 +19,7 @@ import 'package:presentation/widgets/default_alert.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_page.dart';
+import 'package:presentation/widgets/default_progress_indicator_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -52,6 +53,10 @@ class _UserSettingPageState extends State<_UserSettingPage>
       switch (event) {
         case OnSuccessLogoutEvent():
           _navigateToLogoutCompletePage();
+        case ShowToastMessage():
+          Fluttertoast.showToast(msg: event.message);
+        case DismissLoadingDialog():
+          _dismissLoadingDialog();
       }
     });
   }
@@ -133,9 +138,19 @@ class _UserSettingPageState extends State<_UserSettingPage>
         messageType: MessageType.okCancel,
         onTapOk: () {
           read(context).logout();
+          Future.microtask(() {
+            if (context.mounted) {
+              DefaultProgressIndicatorBuilder().build(context);
+            }
+          });
         },
+        okString: "로그아웃",
       ),
     );
+  }
+
+  void _dismissLoadingDialog() {
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   void _navigateToLogoutCompletePage() {

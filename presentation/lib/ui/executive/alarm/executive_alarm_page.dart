@@ -1,5 +1,6 @@
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/alarm/executive_alarm_setting_page.dart';
 import 'package:presentation/ui/executive/alarm/executive_part_alarm_page.dart';
@@ -7,6 +8,7 @@ import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class ExecutiveAlarmPage extends StatelessWidget {
   const ExecutiveAlarmPage({super.key});
@@ -46,10 +48,14 @@ class ExecutiveAlarmPage extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Icon(
-                    Icons.chevron_right,
-                    color: theme.neutral40,
-                    size: 24,
+                  SvgPicture.asset(
+                    asset.right,
+                    colorFilter: ColorFilter.mode(
+                      theme.neutral40,
+                      BlendMode.srcIn,
+                    ),
+                    width: 16,
+                    height: 16,
                   ),
                 ],
               ),
@@ -69,10 +75,14 @@ class ExecutiveAlarmPage extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Icon(
-                    Icons.chevron_right,
-                    color: theme.neutral40,
-                    size: 24,
+                  SvgPicture.asset(
+                    asset.right,
+                    colorFilter: ColorFilter.mode(
+                      theme.neutral40,
+                      BlendMode.srcIn,
+                    ),
+                    width: 16,
+                    height: 16,
                   ),
                 ],
               ),

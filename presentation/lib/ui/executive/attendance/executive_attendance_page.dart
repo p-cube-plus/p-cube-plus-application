@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/attendance/part_metting/part_metting_edit_page.dart';
 import 'package:presentation/ui/executive/attendance/regular_metting/regular_metting_edit_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class ExecutiveAttendancePage extends StatelessWidget {
   const ExecutiveAttendancePage({super.key});
@@ -88,10 +90,14 @@ class _AttendanceSettingTile extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Icon(
-            Icons.chevron_right,
-            color: theme.neutral40,
-            size: 24,
+          SvgPicture.asset(
+            asset.right,
+            colorFilter: ColorFilter.mode(
+              theme.neutral40,
+              BlendMode.srcIn,
+            ),
+            width: 16,
+            height: 16,
           ),
         ],
       ),

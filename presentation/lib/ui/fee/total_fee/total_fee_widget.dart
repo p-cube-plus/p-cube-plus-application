@@ -1,5 +1,6 @@
 import 'package:domain/common/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_history/fee_history_page.dart';
@@ -7,6 +8,7 @@ import 'package:presentation/ui/fee/fee_viewmodel.dart';
 import 'package:presentation/ui/fee/skeleton_widget/total_fee_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class TotalFeeWidget extends StatelessWidget with ViewModel<FeeViewModel> {
   const TotalFeeWidget({super.key});
@@ -42,10 +44,15 @@ class TotalFeeWidget extends StatelessWidget with ViewModel<FeeViewModel> {
                   textAlign: TextAlign.right,
                 ),
               ),
-              Icon(
-                Icons.navigate_next_rounded,
-                size: 24,
-                color: theme.neutral40,
+              SizedBox(width: 4),
+              SvgPicture.asset(
+                asset.right,
+                colorFilter: ColorFilter.mode(
+                  theme.neutral40,
+                  BlendMode.srcIn,
+                ),
+                width: 12,
+                height: 12,
               ),
             ],
           ),

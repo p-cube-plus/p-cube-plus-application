@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_history/fee_history_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/widgets/skeleton_animation_widget.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class TotalFeeSkeleton extends StatelessWidget {
   const TotalFeeSkeleton({super.key});
@@ -27,10 +29,14 @@ class TotalFeeSkeleton extends StatelessWidget {
               textAlign: TextAlign.right,
             ),
           ),
-          Icon(
-            Icons.navigate_next_rounded,
-            size: 24,
-            color: theme.neutral40,
+          SvgPicture.asset(
+            asset.right,
+            colorFilter: ColorFilter.mode(
+              theme.neutral60,
+              BlendMode.srcIn,
+            ),
+            width: 12,
+            height: 12,
           ),
         ],
       ),

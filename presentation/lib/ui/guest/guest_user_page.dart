@@ -29,7 +29,15 @@ class _UserPageState extends State<GuestUserPage>
       title: "내 정보",
       action: GestureDetector(
         onTap: () => _navigateToUserSettingPage(context),
-        child: SvgPicture.asset(asset.setting),
+        child: SvgPicture.asset(
+          asset.setting,
+          colorFilter: ColorFilter.mode(
+            theme.neutral40,
+            BlendMode.srcIn,
+          ),
+          width: 16,
+          height: 16,
+        ),
       ),
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),

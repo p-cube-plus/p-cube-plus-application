@@ -17,7 +17,7 @@ class DefaultTextField extends StatelessWidget {
     this.contentPadding = 8.0,
     this.textType,
     required this.inputController,
-    this.textDirection = TextDirection.ltr,
+    this.textAlign = TextAlign.start,
     this.inputFormatters,
     this.autofocus = false,
     this.readOnly = false,
@@ -36,7 +36,7 @@ class DefaultTextField extends StatelessWidget {
   final double fontSize;
   final double contentPadding;
   final TextInputType? textType;
-  final TextDirection textDirection;
+  final TextAlign textAlign;
   final TextEditingController inputController;
   final List<TextInputFormatter>? inputFormatters;
   final bool autofocus;
@@ -53,13 +53,13 @@ class DefaultTextField extends StatelessWidget {
     final theme = Theme.of(context);
     return TextField(
       textAlignVertical: TextAlignVertical.bottom,
-      textDirection: textDirection,
       focusNode: focusNode,
       minLines: minLine ?? 1,
       maxLines: maxLine ?? minLine ?? 1,
       maxLength: maxLength,
       keyboardType: textType,
       cursorColor: theme.neutral100,
+      textAlign: textAlign,
       style: TextStyle(
         color: theme.neutral100,
         fontWeight: FontWeight.w500,

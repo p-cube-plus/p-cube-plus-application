@@ -77,27 +77,27 @@ class _MainPageState extends State<MainPage> {
             color: theme.neutral40,
           ),
           items: [
-            getDefaultNavigationBarItem(
+            _getDefaultNavigationBarItem(
               "프로젝트",
               asset.projectIconUnselected,
               asset.projectIconSelected,
             ),
-            getDefaultNavigationBarItem(
+            _getDefaultNavigationBarItem(
               "회비",
               asset.feeIconUnselected,
               asset.feeIconSelected,
             ),
-            getDefaultNavigationBarItem(
+            _getDefaultNavigationBarItem(
               "홈",
               asset.homeIconUnselected,
               asset.homeIconSelected,
             ),
-            getDefaultNavigationBarItem(
+            _getDefaultNavigationBarItem(
               "알림",
               asset.alarmIconUnselected,
               asset.alarmIconSelected,
             ),
-            getDefaultNavigationBarItem(
+            _getDefaultNavigationBarItem(
               "내 정보",
               asset.userIconUnselected,
               asset.userIconSelected,
@@ -112,7 +112,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  BottomNavigationBarItem getDefaultNavigationBarItem(
+  BottomNavigationBarItem _getDefaultNavigationBarItem(
     String label,
     String unselectedSvgAssetName,
     String selectedSvgAssetName,
@@ -124,6 +124,8 @@ class _MainPageState extends State<MainPage> {
         child: SvgPicture.asset(
           unselectedSvgAssetName,
           colorFilter: ColorFilter.mode(theme.neutral40, BlendMode.srcIn),
+          width: 20,
+          height: 20,
         ),
       ),
       activeIcon: Container(
@@ -131,6 +133,8 @@ class _MainPageState extends State<MainPage> {
         child: SvgPicture.asset(
           selectedSvgAssetName,
           colorFilter: ColorFilter.mode(theme.primary80, BlendMode.srcIn),
+          width: 20,
+          height: 20,
         ),
       ),
       label: label,
