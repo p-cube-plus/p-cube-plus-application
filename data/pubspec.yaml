@@ -17,10 +17,8 @@ dependencies:
   http: ^1.2.2
 
   # firebase
-  firebase_core: ^3.4.0
   firebase_messaging: ^15.1.0
   firebase_analytics: ^11.3.0
-  firebase_performance: ^0.10.0+5
 
   # local
   flutter_secure_storage: ^9.2.2

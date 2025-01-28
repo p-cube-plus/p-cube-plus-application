@@ -38,6 +38,7 @@ class _FeeHistoryPage extends StatelessWidget
       ),
       title: "회비 내역",
       backgroundColor: theme.primary80,
+      textColor: Colors.white,
       action: GestureDetector(
         onTap: () => _showFilterTypeBottomSheet(context),
         child: Row(
@@ -49,7 +50,7 @@ class _FeeHistoryPage extends StatelessWidget
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: theme.neutral100,
+                  color: Colors.white,
                 ),
               );
             }),
@@ -57,7 +58,7 @@ class _FeeHistoryPage extends StatelessWidget
             SvgPicture.asset(
               asset.down,
               colorFilter: ColorFilter.mode(
-                theme.neutral100,
+                Colors.white,
                 BlendMode.srcIn,
               ),
               width: 20,

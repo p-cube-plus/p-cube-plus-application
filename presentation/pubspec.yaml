@@ -30,8 +30,6 @@ dependencies:
 
   # 알림 처리
   flutter_local_notifications: ^18.0.1
-  # FCM
-  firebase_messaging: ^15.1.0 
 
   # 웹뷰
   webview_flutter: ^4.10.0
