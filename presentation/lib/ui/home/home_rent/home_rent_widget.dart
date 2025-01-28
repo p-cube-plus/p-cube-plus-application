@@ -5,6 +5,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/constants/asset_path.dart' as asset;
 import 'package:presentation/ui/home/home_rent/home_rent_viewmodel.dart';
+import 'package:presentation/ui/home/home_rent/skeleton_widget/home_rent_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:provider/provider.dart';
@@ -142,6 +143,7 @@ class _HomeRentWidget extends StatelessWidget
               }),
             );
           },
+          showOnLoadingWidget: (context) => HomeRentSkeleton(),
         )
       ],
     );
