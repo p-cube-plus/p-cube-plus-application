@@ -4,11 +4,18 @@ import 'package:presentation/ui/product/product_view_model.dart';
 import 'package:presentation/ui/product/user_rent_tab/user_rent_list_item.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 
-class UserRentTab extends StatelessWidget with ViewModel<ProductViewModel> {
+class UserRentTab extends StatefulWidget {
   const UserRentTab({super.key});
 
   @override
+  State<UserRentTab> createState() => _UserRentTabState();
+}
+
+class _UserRentTabState extends State<UserRentTab>
+    with ViewModel<ProductViewModel>, AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: DefaultFutureBuilder(
@@ -29,4 +36,7 @@ class UserRentTab extends StatelessWidget with ViewModel<ProductViewModel> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
