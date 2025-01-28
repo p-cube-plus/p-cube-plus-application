@@ -46,14 +46,15 @@ class _ProductPage extends StatelessWidget with ViewModel<ProductViewModel> {
         ),
       ),
       content: DefaultTabBar(
-          overLayColor: Colors.transparent,
-          padding: EdgeInsets.only(left: 16, bottom: 8),
-          tabLabelPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          indicatorInsets: EdgeInsets.symmetric(horizontal: 4),
-          tabs: [
-            DefaultTab(tabName: "물품 현황", page: TotalProductTab()),
-            DefaultTab(tabName: "내가 대여한", page: UserRentTab()),
-          ]),
+        overLayColor: Colors.transparent,
+        padding: EdgeInsets.only(left: 16, bottom: 8),
+        tabLabelPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        indicatorInsets: EdgeInsets.symmetric(horizontal: 4),
+        tabs: [
+          DefaultTab(tabName: "물품 현황", page: TotalProductTab()),
+          DefaultTab(tabName: "내가 대여한", page: UserRentTab()),
+        ],
+      ),
     );
   }
 

@@ -5,6 +5,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/product/product_detail/product_detail_page.dart';
 import 'package:presentation/ui/product/product_view_model.dart';
+import 'package:presentation/ui/product/skeleton_widget/total_product_tab_skeleton.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 class TotalProductTab extends StatelessWidget with ViewModel<ProductViewModel> {
@@ -88,6 +89,10 @@ class TotalProductTab extends StatelessWidget with ViewModel<ProductViewModel> {
           Expanded(
             child: watchWidget((viewModel) => viewModel.currentTargetList,
                 (context, productList) {
+              if (productList == null) {
+                return TotalProductTabSkeleton();
+              }
+
               return ListView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: productList.length,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/product/product_view_model.dart';
+import 'package:presentation/ui/product/skeleton_widget/user_rent_tab_skeleton.dart';
 import 'package:presentation/ui/product/user_rent_tab/user_rent_list_item.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 
@@ -33,6 +34,7 @@ class _UserRentTabState extends State<UserRentTab>
             },
           );
         },
+        showOnLoadingWidget: (context) => UserRentTabSkeleton(),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
@@ -9,7 +8,6 @@ import 'package:presentation/ui/home/home_rent/skeleton_widget/home_rent_skeleto
 import 'package:presentation/ui/product/product_page.dart';
 import 'package:presentation/ui/product/user_rent_tab/user_rent_list_item.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
-import 'package:presentation/widgets/rounded_border.dart';
 import 'package:provider/provider.dart';
 
 class HomeRentWidget extends StatelessWidget {

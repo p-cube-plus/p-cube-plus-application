@@ -19,13 +19,15 @@ class ProductViewModel extends BaseViewModel<void> {
   List<Product> totalList = [];
   bool isLoadingTotalProductList = true;
 
-  List<Product> get currentTargetList => switch (filterType) {
-        ProductFilterType.total => totalList,
-        ProductFilterType.rentable =>
-          totalList.whereType<RentableProduct>().toList(),
-        ProductFilterType.rented =>
-          totalList.whereType<RentedProduct>().toList(),
-      };
+  List<Product>? get currentTargetList {
+    if (isLoadingTotalProductList) return null;
+    return switch (filterType) {
+      ProductFilterType.total => totalList,
+      ProductFilterType.rentable =>
+        totalList.whereType<RentableProduct>().toList(),
+      ProductFilterType.rented => totalList.whereType<RentedProduct>().toList(),
+    };
+  }
 
   Future<List<UserRentProduct>> fetchUserRentProductList() =>
       _fetchUserRentProductListUseCase();

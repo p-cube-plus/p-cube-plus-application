@@ -3,6 +3,7 @@ import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/product/product_detail/product_detail_rent/product_detail_rent_widget.dart';
 import 'package:presentation/ui/product/product_detail/product_detail_viewmodel.dart';
+import 'package:presentation/ui/product/skeleton_widget/product_detail_skeleton.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
@@ -110,6 +111,7 @@ class _ProductDetailPage extends StatelessWidget
               ],
             );
           },
+          showOnLoadingWidget: (context) => ProductDetailSkeleton(),
         ),
       ),
     );
