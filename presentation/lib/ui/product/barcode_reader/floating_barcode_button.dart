@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:domain/common/extensions/future_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -35,17 +37,28 @@ class _FloatingBarcodeButton extends StatefulWidget {
 
 class _FloatingBarcodeButtonState extends State<_FloatingBarcodeButton>
     with ViewModel<FloatingBarcodeButtonViewModel> {
-  final imagePicker = ImagePicker();
-
-  final barcodeScanner =
-      BarcodeScanner(formats: [BarcodeFormat.ean13, BarcodeFormat.ean8]);
-
-  final beaconScanner = BeaconScanner();
+  late ImagePicker imagePicker;
+  late BarcodeScanner barcodeScanner;
+  late BeaconScanner beaconScanner;
 
   @override
   void initState() {
     super.initState();
+    imagePicker = ImagePicker();
+    barcodeScanner = BarcodeScanner(formats: [
+      BarcodeFormat.ean13,
+      BarcodeFormat.ean8,
+    ]);
+    beaconScanner = BeaconScanner();
     Future.microtask(() => _setStateListener());
+  }
+
+  @override
+  void dispose() {
+    barcodeScanner.close();
+    imageCache.clear();
+    imageCache.clearLiveImages();
+    super.dispose();
   }
 
   void _setStateListener() {
@@ -99,13 +112,21 @@ class _FloatingBarcodeButtonState extends State<_FloatingBarcodeButton>
       toastLength: Toast.LENGTH_LONG,
     );
 
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
+    final pickedFile = await imagePicker
+        .pickImage(
+          source: ImageSource.camera,
+          requestFullMetadata: false,
+        )
+        .getOrNull();
     if (pickedFile == null) return;
 
     _showLoadingDialog();
 
     final inputImage = InputImage.fromFilePath(pickedFile.path);
     final barcode = (await barcodeScanner.processImage(inputImage)).firstOrNull;
+    final file = File(pickedFile.path);
+    await file.delete().getOrNull();
+
     if (barcode == null) {
       Fluttertoast.showToast(msg: "바코드 인식에 실패했습니다.");
       _dismissLoadingDialog();
