@@ -81,6 +81,7 @@ class _HomePageState extends State<_HomePage>
           }
         },
         showOnLoadingWidget: (context) => const SizedBox(),
+        showOnErrorWidget: (error, trace) => const SizedBox(),
         handleError: (error, trace) {
           Fluttertoast.showToast(msg: "임원진 여부 확인에 실패했습니다!\n새로고침해주세요.");
         },

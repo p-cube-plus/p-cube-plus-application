@@ -10,6 +10,7 @@ import 'package:presentation/ui/login/input_user_name/login_name_page.dart';
 import 'package:presentation/widgets/default_alert.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_page.dart';
+import 'package:presentation/widgets/default_progress_indicator_builder.dart';
 import 'package:presentation/widgets/default_text_field.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:provider/provider.dart';
@@ -208,16 +209,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
   }
 
   void _showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const PopScope(
-        canPop: false,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-    );
+    DefaultProgressIndicatorBuilder().build(context);
   }
 
   void _closeLoadingDialog() {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lottie/lottie.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/login/login_failed/login_failed_page.dart';
@@ -9,6 +8,7 @@ import 'package:presentation/ui/login/login_loading/login_loading_page_viewmodel
 import 'package:presentation/ui/login/login_loading/login_loading_state.dart';
 import 'package:presentation/ui/main/main_navigation_bar_factory.dart';
 import 'package:presentation/ui/main/main_page.dart';
+import 'package:presentation/widgets/logo_splash_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginLoadingPage extends StatelessWidget {
@@ -35,28 +35,13 @@ class _LoginLoadingPage extends StatefulWidget {
 }
 
 class LoginLoadingPageState extends State<_LoginLoadingPage>
-    with SingleTickerProviderStateMixin, ViewModel<LoginLoadingPageViewModel> {
-  late final AnimationController _animationController;
-
+    with ViewModel<LoginLoadingPageViewModel> {
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _animationController.repeat();
-        }
-      });
-
     Future.microtask(() {
       _setStateListener();
     });
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override
@@ -69,14 +54,7 @@ class LoginLoadingPageState extends State<_LoginLoadingPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset(theme.logoSplashPath,
-                controller: _animationController,
-                width: 153,
-                height: 153,
-                repeat: true,
-                onLoaded: (composition) => _animationController
-                  ..duration = composition.duration
-                  ..forward()),
+            LogoSplashWidget(size: 153),
             const SizedBox(height: 40),
             Text(
               "회원 정보를 조회하고 있어요.",
