@@ -30,6 +30,7 @@ class _HomeRentWidget extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,10 +70,21 @@ class _HomeRentWidget extends StatelessWidget
             )
           ],
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 16),
         DefaultFutureBuilder(
           fetchData: read(context).fetchUserRentProductList(),
           showOnLoadedWidget: (context, rentList) {
+            if (rentList.isEmpty) {
+              return Text(
+                "대여한 물품이 없습니다.",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: theme.neutral60,
+                ),
+              );
+            }
+
             return Column(
               children: List.generate(
                 rentList.length,
