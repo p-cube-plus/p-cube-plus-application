@@ -21,7 +21,7 @@ class VersionSettingTile extends StatelessWidget {
             ),
           ),
           Text(
-            "v0.2",
+            "v1.0.0",
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,

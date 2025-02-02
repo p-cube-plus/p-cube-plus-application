@@ -3,12 +3,14 @@ import 'package:domain/common/extensions/int_extension.dart';
 import 'package:domain/fee/value_object/current_month_fee.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_viewmodel.dart';
 import 'package:presentation/ui/fee/skeleton_widget/current_month_fee_account_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/status_icon/status_fail.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class CurrentMonthFeeFailed extends StatelessWidget
     with ViewModel<FeeViewModel> {
@@ -118,11 +120,15 @@ class CurrentMonthFeeFailed extends StatelessWidget
                       color: theme.neutral100,
                     ),
                   ),
-                  SizedBox(width: 4),
-                  Icon(
-                    Icons.content_copy_rounded,
-                    color: theme.neutral40,
-                    size: 16,
+                  SizedBox(width: 8),
+                  SvgPicture.asset(
+                    asset.copy,
+                    colorFilter: ColorFilter.mode(
+                      theme.neutral40,
+                      BlendMode.srcIn,
+                    ),
+                    width: 16,
+                    height: 16,
                   ),
                 ],
               ),

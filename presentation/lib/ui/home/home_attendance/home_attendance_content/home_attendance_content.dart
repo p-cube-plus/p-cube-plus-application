@@ -1,9 +1,11 @@
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/attendance/attendance_today_page.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class HomeAttendanceContent extends StatelessWidget {
   const HomeAttendanceContent(
@@ -52,10 +54,14 @@ class HomeAttendanceContent extends StatelessWidget {
             ),
           ),
           const Expanded(child: SizedBox()),
-          Icon(
-            Icons.chevron_right,
-            color: theme.neutral40,
-            size: 24,
+          SvgPicture.asset(
+            asset.right,
+            colorFilter: ColorFilter.mode(
+              theme.neutral40,
+              BlendMode.srcIn,
+            ),
+            width: 12,
+            height: 12,
           ),
           const SizedBox(width: 16),
         ],

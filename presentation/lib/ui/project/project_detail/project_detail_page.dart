@@ -72,25 +72,7 @@ class _ProjectDetailPage extends StatelessWidget
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24),
-                          child: SkeletonAnimation(
-                            120,
-                            32,
-                            radius: 4,
-                            subColor: theme.content,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 24, top: 4, bottom: 20),
-                          child: SkeletonAnimation(
-                            84,
-                            20,
-                            radius: 4,
-                            subColor: theme.content,
-                          ),
-                        ),
+                        SizedBox(height: 80),
                         RoundedBorder(
                           width: double.infinity,
                           color: theme.content,

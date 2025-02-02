@@ -22,4 +22,13 @@ extension FutureExtension<T> on Future<T> {
       rethrow;
     }
   }
+
+  Future<void> onFailure(
+      void Function(Object error) errorHandleFunction) async {
+    try {
+      await this;
+    } catch (error) {
+      errorHandleFunction(error);
+    }
+  }
 }

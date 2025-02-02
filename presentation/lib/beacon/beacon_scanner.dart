@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:domain/attendance/usecases/fetch_beacon_information_use_case.dart';
+import 'package:domain/common/extensions/future_extension.dart';
 import 'package:ibeacon_plugin/beacon_monitoring_state.dart';
 import 'package:ibeacon_plugin/ibeacon_plugin.dart';
 import 'package:ibeacon_plugin/region.dart';
@@ -10,6 +12,7 @@ class BeaconScanner {
   factory BeaconScanner() => _instance;
 
   final _plugin = IBeaconPlugin();
+  final _fetchBeaconInformationUseCase = FetchBeaconInformationUseCase();
 
   Future<bool> isBluetoothEnabled() => _plugin.isBluetoothEnabled;
   bool isBeaconDetected = false;
@@ -17,21 +20,22 @@ class BeaconScanner {
   bool _isStarting = false;
   StreamSubscription<BeaconMonitoringState>? _beaconListener;
 
-  Future<void> startScanning(
-      // String identifier,
-      // String uuid,
-      // int major,
-      // int minor,
-      ) async {
+  Future<void> startScanning() async {
     if (_isStarting) return;
 
     _isStarting = true;
 
+    final beaconInfo = await _fetchBeaconInformationUseCase().getOrNull();
+    if (beaconInfo == null) {
+      _isStarting = false;
+      return;
+    }
+
     await _plugin.setRegion(Region(
-      identifier: "Pcube",
-      uuid: "e2c56db5-dffb-48d2-b060-d0f5a71096e0",
-      major: 40011,
-      minor: 32023,
+      identifier: beaconInfo.identifier,
+      uuid: beaconInfo.uuid,
+      major: beaconInfo.major,
+      minor: beaconInfo.minor,
     ));
 
     _beaconListener = _beaconListener ??

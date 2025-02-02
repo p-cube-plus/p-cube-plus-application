@@ -38,7 +38,7 @@ class _ToggleSettingTileState extends State<ToggleSettingTile> {
         });
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

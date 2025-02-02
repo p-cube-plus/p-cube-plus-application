@@ -4,6 +4,7 @@ import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
+import 'package:domain/attendance/value_objects/beacon_information.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
@@ -37,10 +38,6 @@ abstract interface class AttendanceRepository {
     int year,
     int month,
   );
-
-  //
-  // 아래부터는 임원진 데이터
-  //
 
   // DateTime이 null이면 화면에 첫 진입할 때 어떤 데이터 보여줄 지 결정
   Future<AttendanceDetailData> getAttendanceDetail(
@@ -77,4 +74,7 @@ abstract interface class AttendanceRepository {
     DateTime firstCheckedTime,
     DateTime? secondCheckedTime,
   );
+
+  Future<BeaconInformation> getBeaconInformation();
+  Future<void> setBeaconInformation(BeaconInformation newData);
 }

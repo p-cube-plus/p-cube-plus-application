@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/user/user_participated_project/user_participated_project_page.dart';
@@ -6,6 +7,7 @@ import 'package:presentation/ui/user/user_view_model.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/widgets/skeleton_animation_widget.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class UserParticipatedProjectListTile extends StatefulWidget
     with ViewModel<UserViewModel> {
@@ -47,10 +49,15 @@ class _UserParticipatedProjectListTileState
                       color: theme.neutral60,
                     ),
                   ),
-                  Icon(
-                    Icons.chevron_right,
-                    color: theme.neutral60,
-                    size: 20,
+                  SizedBox(width: 4),
+                  SvgPicture.asset(
+                    asset.right,
+                    colorFilter: ColorFilter.mode(
+                      theme.neutral60,
+                      BlendMode.srcIn,
+                    ),
+                    width: 10,
+                    height: 10,
                   ),
                 ],
               ),

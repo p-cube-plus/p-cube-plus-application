@@ -9,6 +9,8 @@ class AppConfigurationRepositoryImpl implements AppConfigurationRepository {
       GetIt.I.get<SharedPreferenceLocalDatasource>();
   final firebaseDatasource = GetIt.I.get<FirebaseManager>();
 
+  var url = "https://p-cube.notion.site/1629ed2459954343a62ea49d0d284f00";
+
   @override
   ThemeType getTheme() {
     return ThemeType.values[sharedPreferenceLocalDatasource.themeIndex];
@@ -17,5 +19,15 @@ class AppConfigurationRepositoryImpl implements AppConfigurationRepository {
   @override
   void setTheme(ThemeType themeType) {
     sharedPreferenceLocalDatasource.themeIndex = themeType.index;
+  }
+
+  @override
+  Future<String> getWebViewUrl() async {
+    return url;
+  }
+
+  @override
+  Future<void> setWebViewUrl(String newUrl) async {
+    url = newUrl;
   }
 }

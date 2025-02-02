@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/home/home_schedule/home_schedule.dart';
 import 'package:presentation/ui/home/home_upcomming/home_upcomming_schedule.dart';
@@ -8,6 +9,7 @@ import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_refresh_indicator.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class GuestHomePage extends StatefulWidget {
   const GuestHomePage({super.key});
@@ -121,11 +123,15 @@ class IntroducePCubeTile extends StatelessWidget {
                   color: theme.neutral100,
                 ),
               ),
-              Icon(
-                Icons.navigate_next_rounded,
-                color: theme.neutral40,
-                size: 24,
-              )
+              SvgPicture.asset(
+                asset.right,
+                colorFilter: ColorFilter.mode(
+                  theme.neutral40,
+                  BlendMode.srcIn,
+                ),
+                width: 12,
+                height: 12,
+              ),
             ],
           ),
         )

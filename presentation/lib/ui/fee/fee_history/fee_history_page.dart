@@ -1,5 +1,6 @@
 import 'package:domain/fee/value_object/fee_filter_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_history/fee_history_filter_bottom_sheet/fee_history_filter_bottom_sheet.dart';
@@ -11,6 +12,7 @@ import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:provider/provider.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class FeeHistoryPage extends StatelessWidget {
   const FeeHistoryPage({super.key});
@@ -36,6 +38,7 @@ class _FeeHistoryPage extends StatelessWidget
       ),
       title: "회비 내역",
       backgroundColor: theme.primary80,
+      textColor: Colors.white,
       action: GestureDetector(
         onTap: () => _showFilterTypeBottomSheet(context),
         child: Row(
@@ -47,11 +50,20 @@ class _FeeHistoryPage extends StatelessWidget
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: theme.neutral100,
+                  color: Colors.white,
                 ),
               );
             }),
-            Icon(Icons.keyboard_arrow_down_rounded),
+            SizedBox(width: 4),
+            SvgPicture.asset(
+              asset.down,
+              colorFilter: ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
+              width: 20,
+              height: 20,
+            ),
           ],
         ),
       ),

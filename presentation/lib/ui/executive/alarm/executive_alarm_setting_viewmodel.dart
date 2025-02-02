@@ -7,6 +7,7 @@ enum ExecutiveAlarmSettingState {
   showProgressDialog,
   dismissProgressDialog,
   popPage,
+  setSettingText,
 }
 
 class ExecutiveAlarmSettingViewModel
@@ -15,25 +16,32 @@ class ExecutiveAlarmSettingViewModel
       FetchNotificationSettingUseCase();
 
   final NotificationType notificationType;
+  late NotificationSetting setting;
 
-  var initSettingOn = false;
+  var _initSettingOn = false;
   var isSettingOn = false;
-  var initSettingHour = 0;
+  var _initSettingHour = 0;
   var settingHour = 0;
 
   ExecutiveAlarmSettingViewModel({
     required this.notificationType,
-  });
+  }) {
+    fetchNotificationSetting();
+  }
 
-  Future<NotificationSetting> fetchNotificationSetting() =>
-      _fetchNotificationSettingHourUseCase(notificationType).then((data) {
-        initSettingOn = isSettingOn = data.isOn;
-        initSettingHour = settingHour = data.reminderHours;
-        return data;
-      });
+  void fetchNotificationSetting() async {
+    setting = await _fetchNotificationSettingHourUseCase(notificationType)
+        .then((data) {
+      _initSettingOn = isSettingOn = data.isOn;
+      _initSettingHour = settingHour = data.reminderHours;
+      return data;
+    });
+    triggerEvent(ExecutiveAlarmSettingState.setSettingText);
+    notifyListeners();
+  }
 
   bool isEdited(int inputHour) {
-    return initSettingOn != isSettingOn || initSettingHour != inputHour;
+    return _initSettingOn != isSettingOn || _initSettingHour != inputHour;
   }
 
   void setSettingOn(bool isOn) {
@@ -51,8 +59,8 @@ class ExecutiveAlarmSettingViewModel
     await Future.delayed(Duration(seconds: 2));
 
     //success
-    initSettingOn = isSettingOn;
-    initSettingHour = settingHour;
+    _initSettingOn = isSettingOn;
+    _initSettingHour = settingHour;
     triggerEvent(ExecutiveAlarmSettingState.dismissProgressDialog);
   }
 

@@ -93,7 +93,7 @@ class _LoginNamePageState extends State<_LoginNamePage>
                   minLine: 1,
                   maxLine: 1,
                   fontSize: 16.0,
-                  contentPadding: 16,
+                  contentPadding: EdgeInsets.all(16),
                   hintText: "이름을 입력해주세요.",
                   inputController: _textEditingcontroller,
                   autofocus: true,

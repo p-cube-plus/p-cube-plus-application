@@ -37,6 +37,7 @@ class _DefaultToggleTileState extends State<DefaultToggleTile> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return RoundedBorder(
       onTap: () {
         setState(() {

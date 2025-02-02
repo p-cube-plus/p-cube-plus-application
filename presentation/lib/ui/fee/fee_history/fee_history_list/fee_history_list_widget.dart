@@ -6,6 +6,7 @@ import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/fee/fee_history/fee_history_viewmodel.dart';
 import 'package:presentation/ui/fee/fee_history/skeleton_widget/fee_history_list_skeleton.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
+import 'package:presentation/widgets/logo_widget.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
 class FeeHistoryListWidget extends StatelessWidget
@@ -40,10 +41,13 @@ class FeeHistoryListWidget extends StatelessWidget
                     child: Column(
                       children: List.generate(historyList.length, (index) {
                         final history = historyList[index];
+                        final isIncome = history.amount > 0;
                         return Padding(
                           padding: const EdgeInsets.all(10),
                           child: Row(
                             children: [
+                              LogoWidget(32),
+                              SizedBox(width: 16),
                               Expanded(
                                 child: Text(
                                   history.title,
@@ -58,8 +62,12 @@ class FeeHistoryListWidget extends StatelessWidget
                                 "${history.amount.toCommaSeparated()}원",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: theme.neutral100,
+                                  fontWeight: isIncome
+                                      ? FontWeight.w700
+                                      : FontWeight.w500,
+                                  color: isIncome
+                                      ? theme.secondary120
+                                      : theme.neutral100,
                                 ),
                               ),
                             ],

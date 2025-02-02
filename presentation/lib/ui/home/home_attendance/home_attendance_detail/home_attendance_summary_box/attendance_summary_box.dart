@@ -1,6 +1,7 @@
 import 'package:domain/attendance/value_objects/attendance_type.dart';
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/home/home_attendance/home_attendance_detail/home_attendance_summary_box/home_attendance_summary_box_view_model.dart';
@@ -10,6 +11,7 @@ import 'package:presentation/widgets/drag_detector.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:presentation/widgets/skeleton_animation_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class AttendanceSummaryBox extends StatelessWidget {
   const AttendanceSummaryBox({
@@ -88,10 +90,15 @@ class _AttendanceSummaryBoxState extends State<_AttendanceSummaryBox> {
                           widget.read(context).movePreviousMonth();
                           setState(() => _refreshKey = UniqueKey());
                         },
-                        child: Icon(
-                          Icons.chevron_left,
-                          color: theme.neutral40,
-                          size: 24,
+                        child: SvgPicture.asset(
+                          asset.left,
+                          colorFilter: ColorFilter.mode(
+                            theme.neutral40,
+                            BlendMode.srcIn,
+                          ),
+                          width: 12,
+                          height: 12,
+                          alignment: Alignment.centerLeft,
                         ),
                       ),
                     ),
@@ -113,10 +120,15 @@ class _AttendanceSummaryBoxState extends State<_AttendanceSummaryBox> {
                           widget.read(context).moveNextMonth();
                           setState(() => _refreshKey = UniqueKey());
                         },
-                        child: Icon(
-                          Icons.chevron_right,
-                          color: theme.neutral40,
-                          size: 24,
+                        child: SvgPicture.asset(
+                          asset.right,
+                          colorFilter: ColorFilter.mode(
+                            theme.neutral40,
+                            BlendMode.srcIn,
+                          ),
+                          width: 12,
+                          height: 12,
+                          alignment: Alignment.centerRight,
                         ),
                       ),
                     ),

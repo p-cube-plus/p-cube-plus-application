@@ -11,7 +11,7 @@ class NotificationViewModel extends BaseViewModel<NotificationEvent> {
   final _fetchReadNotificationUseCase = FetchReadNotificationUseCase();
   final _updateReadNotificationUseCase = UpdateReadNotificationUseCase();
 
-  List<NotificationData> newNotificationList = [];
+  List<(bool isReading, NotificationData)> newNotificationList = [];
   List<NotificationData> readNotificationList = [];
 
   bool isLoading = false;
@@ -30,19 +30,23 @@ class NotificationViewModel extends BaseViewModel<NotificationEvent> {
     if (data == null) {
       triggerEvent(NotificationEvent.showDataErrorToast);
     } else {
-      newNotificationList = data.first;
+      newNotificationList = data.first.map((e) => (false, e)).toList();
       readNotificationList = data.last;
     }
 
     notifyListeners();
   }
 
-  void updateReadNotification(int notificationId) async {
-    triggerEvent(NotificationEvent.showProgress);
+  void updateReadNotification(int index) async {
+    final notificationId = newNotificationList[index].$2.id;
+
+    newNotificationList = newNotificationList
+        .map((item) => item.$2.id == notificationId ? (true, item.$2) : item)
+        .toList();
+    notifyListeners();
 
     final readData =
         await _updateReadNotificationUseCase.call(notificationId).getOrNull();
-    triggerEvent(NotificationEvent.dismissProgress);
 
     if (readData == null) {
       triggerEvent(NotificationEvent.showErrorToast);
@@ -50,8 +54,9 @@ class NotificationViewModel extends BaseViewModel<NotificationEvent> {
     }
 
     final updatedNewNotificationList =
-        List<NotificationData>.from(newNotificationList);
-    updatedNewNotificationList.removeWhere((data) => data.id == notificationId);
+        List<(bool, NotificationData)>.from(newNotificationList);
+    updatedNewNotificationList
+        .removeWhere((data) => data.$2.id == notificationId);
 
     newNotificationList = updatedNewNotificationList;
     readNotificationList = [readData, ...readNotificationList];

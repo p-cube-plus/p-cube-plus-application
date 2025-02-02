@@ -9,4 +9,5 @@ abstract interface class FeeRepository {
   Future<int> getCurrentTotalFeeAmount();
   Future<List<FeeHistory>> getFeeHistoryList();
   Future<AccountInformation> getAccountInformation();
+  Future<void> setAccountInformation(AccountInformation newData);
 }

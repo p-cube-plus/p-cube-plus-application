@@ -1,5 +1,6 @@
 import 'package:domain/common/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/attendance/attendance_status_tab/attendance_status_view_model.dart';
@@ -7,6 +8,7 @@ import 'package:presentation/widgets/default_bottomsheet.dart';
 import 'package:presentation/widgets/drag_detector.dart';
 import 'package:presentation/widgets/restricted_date_picker/restricted_date_picker.dart';
 import 'package:presentation/widgets/rounded_border.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class AttendanceScheduleBox extends StatelessWidget
     with ViewModel<AttendanceStatusViewModel> {
@@ -57,10 +59,14 @@ class AttendanceScheduleBox extends StatelessWidget
                 children: [
                   GestureDetector(
                     onTap: _movePreviousValidDate(context),
-                    child: Icon(
-                      Icons.chevron_left,
-                      color: theme.neutral40,
-                      size: 24,
+                    child: SvgPicture.asset(
+                      asset.left,
+                      colorFilter: ColorFilter.mode(
+                        theme.neutral40,
+                        BlendMode.srcIn,
+                      ),
+                      width: 10,
+                      height: 10,
                     ),
                   ),
                   GestureDetector(
@@ -76,10 +82,14 @@ class AttendanceScheduleBox extends StatelessWidget
                   ),
                   GestureDetector(
                     onTap: _moveNextValidDate(context),
-                    child: Icon(
-                      Icons.chevron_right,
-                      color: theme.neutral40,
-                      size: 24,
+                    child: SvgPicture.asset(
+                      asset.right,
+                      colorFilter: ColorFilter.mode(
+                        theme.neutral40,
+                        BlendMode.srcIn,
+                      ),
+                      width: 10,
+                      height: 10,
                     ),
                   ),
                 ],

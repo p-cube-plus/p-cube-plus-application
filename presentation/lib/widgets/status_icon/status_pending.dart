@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class StatusPending extends StatelessWidget {
   final double size;
@@ -9,6 +11,7 @@ class StatusPending extends StatelessWidget {
     return Container(
       height: size,
       width: size,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Color(0xFFABABAB),
         shape: BoxShape.circle,
@@ -20,10 +23,13 @@ class StatusPending extends StatelessWidget {
           ),
         ],
       ),
-      child: Icon(
-        Icons.remove_rounded,
-        color: Colors.white,
-        size: size * 0.7,
+      child: SvgPicture.asset(
+        asset.minus,
+        colorFilter: ColorFilter.mode(
+          Colors.white,
+          BlendMode.srcIn,
+        ),
+        width: size * 0.5,
       ),
     );
   }

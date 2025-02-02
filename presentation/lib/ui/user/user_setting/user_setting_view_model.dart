@@ -14,6 +14,9 @@ class UserSettingViewModel extends BaseViewModel<UserSettingEvent> {
   void logout() {
     _logoutUseCase.call().then((_) {
       triggerEvent(OnSuccessLogoutEvent());
+    }).onError((e, trace) {
+      triggerEvent(DismissLoadingDialog());
+      triggerEvent(ShowToastMessage("잠시 후 다시 시도해주세요."));
     });
   }
 }

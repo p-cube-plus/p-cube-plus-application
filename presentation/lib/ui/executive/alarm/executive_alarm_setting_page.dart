@@ -1,5 +1,6 @@
 import 'package:domain/notification/value_objects/notification_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
@@ -8,11 +9,11 @@ import 'package:presentation/widgets/defauilt_toggle_tile.dart';
 import 'package:presentation/widgets/default_alert.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_content.dart';
-import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
 import 'package:presentation/widgets/default_text_field.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:provider/provider.dart';
+import 'package:presentation/constants/asset_path.dart' as asset;
 
 class ExecutiveAlarmSettingPage extends StatelessWidget {
   final NotificationType notificationType;
@@ -40,12 +41,15 @@ class _ExecutiveAlarmSettingPage extends StatefulWidget {
 
 class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
     with ViewModel<ExecutiveAlarmSettingViewModel> {
-  final _textEditingContoller = TextEditingController();
-  final _focusNode = FocusNode();
+  late TextEditingController _textEditingContoller;
+  late FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
+
+    _focusNode = FocusNode();
+    _textEditingContoller = TextEditingController();
     Future.microtask(() => _setEventListener());
   }
 
@@ -65,13 +69,16 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
           _showProgressDialog();
         case ExecutiveAlarmSettingState.dismissProgressDialog:
           _dismissProgressDialog();
+        case ExecutiveAlarmSettingState.setSettingText:
+          _setSettingText();
       }
     });
   }
 
+  /// FutureBuilder 내부에 TextField가 있을 때 재빌드되는 오류 참고
+  /// https://stackoverflow.com/questions/56326263/textfield-reloads-futurebuilder-when-pressed-left-in-flutter/56334027
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) => _onPop(didPop),
@@ -82,92 +89,92 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
         content: GestureDetector(
           onTap: () => _unfocusTextField(),
           child: DefaultContent(
-            child: DefaultFutureBuilder(
-              fetchData: read(context).fetchNotificationSetting(),
-              showOnLoadedWidget: (context, data) {
-                _textEditingContoller.text = data.reminderHours.toString();
-                return Column(
-                  children: [
-                    DefaultToggleTile(
-                      title: "알림 켜짐",
-                      value: data.isOn,
-                      onChanged: (bool isOn) {
-                        read(context).setSettingOn(isOn);
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    watchWidget(
-                      (viewModel) => viewModel.isSettingOn,
-                      (context, isOn) {
-                        if (isOn) {
-                          return GestureDetector(
-                            onTap: () => _onTapTextField(),
-                            child: RoundedBorder(
-                              padding: EdgeInsetsDirectional.symmetric(
-                                  horizontal: 20, vertical: 8),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "회의",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: theme.neutral60,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: DefaultTextField(
-                                      inputController: _textEditingContoller,
-                                      focusNode: _focusNode,
-                                      textDirection: TextDirection.rtl,
-                                      textType: TextInputType.number,
-                                      fontSize: 22,
-                                      maxLine: 1,
-                                      maxLength: 3,
-                                      showCursor: false,
-                                      enableInteractiveSelection: false,
-                                      onChanged: (newText) =>
-                                          _onChangedText(newText),
-                                    ),
-                                  ),
-                                  Text(
-                                    "시간 전",
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      color: theme.neutral100,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(width: 16),
-                                  Icon(
-                                    Icons.keyboard_arrow_down_outlined,
-                                    color: theme.neutral40,
-                                    size: 32,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else {
-                          return RoundedBorder(
-                            padding: EdgeInsets.all(20),
-                            width: double.infinity,
-                            color: theme.neutral10,
-                            child: Text(
-                              "알림이 꺼져있어요.",
+            child: Column(
+              children: [
+                watchWidget((viewModel) => viewModel.isSettingOn,
+                    (context, isSettingOn) {
+                  return DefaultToggleTile(
+                    title: "알림 켜짐",
+                    key: UniqueKey(),
+                    value: isSettingOn,
+                    onChanged: (bool isOn) {
+                      read(context).setSettingOn(isOn);
+                    },
+                  );
+                }),
+                const SizedBox(height: 16),
+                watchWidget((viewModel) => viewModel.isSettingOn,
+                    (context, isSettingOn) {
+                  if (isSettingOn) {
+                    return GestureDetector(
+                      onTap: () => _onTapTextField(),
+                      child: RoundedBorder(
+                        padding: EdgeInsetsDirectional.symmetric(
+                            horizontal: 20, vertical: 16),
+                        child: Row(
+                          children: [
+                            Text(
+                              "회의",
                               style: TextStyle(
                                 fontSize: 14,
+                                color: Theme.of(context).neutral60,
                                 fontWeight: FontWeight.w500,
-                                color: theme.neutral40,
                               ),
                             ),
-                          );
-                        }
-                      },
-                    ),
-                  ],
-                );
-              },
+                            Expanded(
+                              child: DefaultTextField(
+                                inputController: _textEditingContoller,
+                                focusNode: _focusNode,
+                                textType: TextInputType.number,
+                                textAlign: TextAlign.end,
+                                fontSize: 22,
+                                maxLine: 1,
+                                maxLength: 3,
+                                contentPadding: EdgeInsets.zero,
+                                showCursor: false,
+                                enableInteractiveSelection: false,
+                                onChanged: (newText) => _onChangedText(newText),
+                              ),
+                            ),
+                            Text(
+                              "시간 전",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Theme.of(context).neutral100,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            SvgPicture.asset(
+                              asset.down,
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).neutral40,
+                                BlendMode.srcIn,
+                              ),
+                              width: 20,
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return RoundedBorder(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      color: Theme.of(context).neutral10,
+                      child: Text(
+                        "알림이 꺼져있어요.",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).neutral40,
+                        ),
+                      ),
+                    );
+                  }
+                }),
+              ],
             ),
           ),
         ),
@@ -176,7 +183,6 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
           child: ElevatedButton(
             onPressed: () => _onClickSaveButton(),
             child: SizedBox(
-              width: double.infinity,
               height: 48,
               child: Center(
                 child: Text(
@@ -234,7 +240,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
   }
 
   void _unfocusTextField() {
-    _focusNode.unfocus(disposition: UnfocusDisposition.scope);
+    _focusNode.unfocus();
     if (_textEditingContoller.text.isEmpty) {
       _textEditingContoller.text = "0";
     }
@@ -276,5 +282,9 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
 
   void _dismissProgressDialog() {
     Navigator.of(context, rootNavigator: true).pop();
+  }
+
+  void _setSettingText() {
+    _textEditingContoller.text = read(context).setting.reminderHours.toString();
   }
 }

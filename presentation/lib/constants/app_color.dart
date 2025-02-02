@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// 투명도를 적용하지 않은 raw color 를 지정한다.
+
 const Color white = Color(0xFFFFFFFF);
 const Color black = Color(0xFF000000);
 
@@ -9,14 +11,14 @@ const Color lightGray60 = Color(0xFF818181);
 const Color lightGray40 = Color(0xFFABABAB);
 const Color lightGray20 = Color(0xFFD5D5D5);
 const Color lightGray10 = Color(0xFFE9E9E9);
-const Color lightGray5 = Color(0xFFf7f7f7);
+const Color lightGray5 = Color(0xFFF7F7F7);
 
 const Color darkGray100 = Color(0xFFF5F5F5);
-const Color darkGray80 = Color(0xFFd3d3d3);
-const Color darkGray60 = Color(0xFFaeaeae);
+const Color darkGray80 = Color(0xFFD3D3D3);
+const Color darkGray60 = Color(0xFFAEAEAE);
 const Color darkGray40 = Color(0xFF838383);
 const Color darkGray20 = Color(0xFF505050);
-const Color darkGray10 = Color(0xFF2f2f2f);
+const Color darkGray10 = Color(0xFF2F2F2F);
 const Color darkGray5 = Color(0xFF191919);
 
 const Color lightPrimary80 = Color(0xFFE55542);

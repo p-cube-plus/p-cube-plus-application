@@ -4,8 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/beacon/beacon_scanner.dart';
 import 'package:presentation/common/viewmodel.dart';
+import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/premission_manager/permission_manager.dart';
 import 'package:presentation/ui/executive/executive_main_page.dart';
+import 'package:presentation/ui/home/home_rent/home_rent_widget.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -51,6 +53,7 @@ class _HomePageState extends State<_HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     PermissionManager().checkOnBoardingPermission();
     super.build(context);
     return DefaultPage(
@@ -61,7 +64,15 @@ class _HomePageState extends State<_HomePage>
         showOnLoadedWidget: (context, isExecutive) {
           if (isExecutive) {
             return GestureDetector(
-              child: SvgPicture.asset(asset.executiveHome),
+              child: SvgPicture.asset(
+                asset.executiveHome,
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  theme.neutral40,
+                  BlendMode.srcIn,
+                ),
+              ),
               onTap: () => _navigateToExecutivePage(),
             );
           } else {
@@ -69,6 +80,7 @@ class _HomePageState extends State<_HomePage>
           }
         },
         showOnLoadingWidget: (context) => const SizedBox(),
+        showOnErrorWidget: (error, trace) => const SizedBox(),
         handleError: (error, trace) {
           Fluttertoast.showToast(msg: "임원진 여부 확인에 실패했습니다!\n새로고침해주세요.");
         },
@@ -87,11 +99,12 @@ class _HomePageState extends State<_HomePage>
               SizedBox(height: 40),
               HomeUpcommingSchedule(),
               HomeSchedule(),
+              SizedBox(height: 48),
+              HomeRentWidget(),
             ],
           ),
         ),
       ),
-      //floatingActionButton: FloatingBarcodeButton(),
     );
   }
 
@@ -104,61 +117,3 @@ class _HomePageState extends State<_HomePage>
     );
   }
 }
-
-// class FloatingBarcodeButton extends StatefulWidget {
-//   @override
-//   _FloatingBarcodeButton createState() => _FloatingBarcodeButton();
-// }
-
-// class _FloatingBarcodeButton extends State<FloatingBarcodeButton> {
-//   String _platformVersion = 'Unknown';
-//   String qrcode = 'Unknown';
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     initPlatformState();
-//   }
-
-//   Future<void> initPlatformState() async {
-//     String platformVersion;
-//     try {
-//       platformVersion = await Scan.platformVersion;
-//     } on PlatformException {
-//       platformVersion = 'Failed to get platform version.';
-//     }
-//     if (!mounted) return;
-
-//     setState(() {
-//       _platformVersion = platformVersion;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     print("code: $qrcode");
-//     return SizedBox(
-//       width: 64,
-//       height: 64,
-//       child: FloatingActionButton(
-//         onPressed: () {
-//           Navigator.push(context, MaterialPageRoute(builder: (_) {
-//             return ScanPage();
-//           }));
-//         },
-//         elevation: 7.68,
-//         focusElevation: 7.68,
-//         hoverElevation: 7.68,
-//         disabledElevation: 7.68,
-//         highlightElevation: 7.68,
-//         child: Padding(
-//           padding: EdgeInsets.all(14),
-//           child: Image.asset(
-//             "assets/images/scan.png",
-//           ),
-//         ),
-//         backgroundColor: Theme.of(context).primaryColor,
-//       ),
-//     );
-//   }
-// }
