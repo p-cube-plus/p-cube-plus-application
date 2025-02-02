@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/ui/executive/setting/expandable_setting_widget/beacon_setting/expandable_beacon_setting_widget.dart';
+import 'package:presentation/ui/executive/setting/expandable_setting_widget/fee_setting/expandable_fee_setting_widget.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -18,6 +19,8 @@ class ExecutiveSettingPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ExpandableBeaconSettingWidget(),
+            SizedBox(height: 8),
+            ExpandableFeeSettingWidget(),
           ],
         ),
       ),

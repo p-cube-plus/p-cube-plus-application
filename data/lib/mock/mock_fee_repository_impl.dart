@@ -7,6 +7,12 @@ import 'package:domain/fee/value_object/fee_status_type.dart';
 import 'package:domain/fee/value_object/month_fee_status.dart';
 
 class MockFeeRepositoryImpl implements FeeRepository {
+  var accountInfo = AccountInformation(
+    accountBank: "카카오뱅크",
+    accountNumber: "1234-5678-90",
+    accountOwnerName: "정성희",
+  );
+
   @override
   Future<CurrentMonthFee> getCurrentMonthFee(DateTime now) async {
     await MockUtil().applyMockSetting();
@@ -76,10 +82,12 @@ class MockFeeRepositoryImpl implements FeeRepository {
   @override
   Future<AccountInformation> getAccountInformation() async {
     await MockUtil().applyMockSetting();
-    return AccountInformation(
-      accountBank: "카카오뱅크",
-      accountNumber: "1234-5678-90",
-      accountOwnerName: "정성희",
-    );
+    return accountInfo;
+  }
+
+  @override
+  Future<void> setAccountInformation(AccountInformation newData) async {
+    await MockUtil().applyMockSetting();
+    accountInfo = newData;
   }
 }
