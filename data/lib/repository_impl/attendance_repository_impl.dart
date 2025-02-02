@@ -9,6 +9,7 @@ import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
+import 'package:domain/attendance/value_objects/beacon_information.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
 import 'package:domain/attendance/value_objects/today_attendance.dart';
@@ -127,6 +128,18 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   Future<AttendanceDetailData> getPreviousAttendanceDetail(
       AttendanceType attendanceType, DateTime searchDate) {
     // TODO: implement getPreviousAttendanceDetail
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<BeaconInformation> getBeaconInformation() {
+    // TODO: implement getBeaconInformation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> setBeaconInformation(BeaconInformation newData) {
+    // TODO: implement setBeaconInformation
     throw UnimplementedError();
   }
 }

@@ -20,9 +20,10 @@ const String alarmIconUnselected = "assets/svg/bell.svg";
 const String userIconSelected = "assets/svg/user_selected.svg";
 const String userIconUnselected = "assets/svg/user.svg";
 
-// default
+// default icon
 const String cancel = "assets/svg/cancel.svg";
 const String check = "assets/svg/check.svg";
+const String up = "assets/svg/up.svg";
 const String down = "assets/svg/down.svg";
 const String left = "assets/svg/left.svg";
 const String right = "assets/svg/right.svg";
@@ -37,5 +38,5 @@ const String copy = "assets/svg/copy.svg";
 
 // executive main
 const String executiveHome = "assets/svg/executive.svg";
-const String executiveAlarm = "assets/image/executive_alarm.png";
-const String executiveAttendance = "assets/image/executive_attendance.png";
+const String executiveAlarm = "assets/image/executive_alarm.webp";
+const String executiveAttendance = "assets/image/executive_attendance.webp";

@@ -25,6 +25,7 @@ class _LogoSplashWidgetState extends State<LogoSplashWidget>
       ..addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           await Future.delayed(Duration(milliseconds: 500));
+          if (!mounted) return;
           _animationController.forward(from: 0);
         }
       });
