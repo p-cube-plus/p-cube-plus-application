@@ -3,8 +3,8 @@ import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/widgets/default_text_field.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 
-class ExpandableBeaconSettingTileWidget extends StatelessWidget {
-  const ExpandableBeaconSettingTileWidget({
+class ExpandableContentTextInputItem extends StatelessWidget {
+  const ExpandableContentTextInputItem({
     super.key,
     required this.keyText,
     required this.textController,

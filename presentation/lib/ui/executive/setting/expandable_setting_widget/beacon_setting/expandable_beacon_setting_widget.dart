@@ -4,12 +4,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/ui/executive/setting/expandable_setting_widget/beacon_setting/beacon_setting_event.dart';
 import 'package:presentation/ui/executive/setting/expandable_setting_widget/beacon_setting/beacon_setting_view_model.dart';
-import 'package:presentation/ui/executive/setting/expandable_setting_widget/beacon_setting/expandable_beacon_setting_tile_widget.dart';
 import 'package:presentation/widgets/default_progress_indicator_builder.dart';
 import 'package:presentation/widgets/expandable_content.dart';
+import 'package:presentation/widgets/expandable_content_text_input_item.dart';
 import 'package:provider/provider.dart';
 
 class ExpandableBeaconSettingWidget extends StatelessWidget {
+  const ExpandableBeaconSettingWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -83,23 +85,23 @@ class _ExpandableBeaconSettingWidgetState
               } else {
                 return Column(
                   children: [
-                    ExpandableBeaconSettingTileWidget(
+                    ExpandableContentTextInputItem(
                       keyText: "identifier",
                       textController: _idTextController,
                     ),
                     SizedBox(height: 8),
-                    ExpandableBeaconSettingTileWidget(
+                    ExpandableContentTextInputItem(
                       keyText: "uuid",
                       textController: _uuidTextController,
                     ),
                     SizedBox(height: 8),
-                    ExpandableBeaconSettingTileWidget(
+                    ExpandableContentTextInputItem(
                       keyText: "major",
                       textController: _majorTextController,
                       textInputType: TextInputType.number,
                     ),
                     SizedBox(height: 8),
-                    ExpandableBeaconSettingTileWidget(
+                    ExpandableContentTextInputItem(
                       keyText: "minor",
                       textController: _minorTextController,
                       textInputType: TextInputType.number,
