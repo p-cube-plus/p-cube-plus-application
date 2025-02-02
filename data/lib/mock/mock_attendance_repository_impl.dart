@@ -11,6 +11,7 @@ import 'package:domain/attendance/value_objects/attendance_detail_data.dart';
 import 'package:domain/attendance/value_objects/attendance_status_type.dart';
 import 'package:domain/attendance/value_objects/attendance_summary.dart';
 import 'package:domain/attendance/value_objects/attendance_type.dart';
+import 'package:domain/attendance/value_objects/beacon_information.dart';
 import 'package:domain/attendance/value_objects/home_attendance.dart';
 import 'package:domain/attendance/value_objects/member_attendance_state.dart';
 import 'package:domain/attendance/value_objects/recent_attendance.dart';
@@ -26,6 +27,13 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
 
   MemoryCache<List<MemberAttendanceState>> cachedMemberAttendanceList =
       MemoryCache(Duration(minutes: 5));
+
+  BeaconInformation beaconInfo = BeaconInformation(
+    identifier: "Pcube+",
+    uuid: "e2c56db5-dffb-48d2-b060-d0f5a71096e0",
+    major: 40011,
+    minor: 32023,
+  );
 
   @override
   Future<AttendanceCheck?> getLocalAttendanceData(int id) async {
@@ -342,5 +350,17 @@ class MockAttendanceRepositoryImpl implements AttendanceRepository {
       firstAttendanceStartTime: DateTime.now(),
       firstAttendanceEndTime: DateTime.now().add(Duration(minutes: 30)),
     );
+  }
+
+  @override
+  Future<BeaconInformation> getBeaconInformation() async {
+    await MockUtil().applyMockSetting();
+    return beaconInfo;
+  }
+
+  @override
+  Future<void> setBeaconInformation(BeaconInformation newData) async {
+    await MockUtil().applyMockSetting();
+    beaconInfo = newData;
   }
 }

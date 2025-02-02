@@ -110,7 +110,7 @@ class _DeveloperPageState extends State<_DeveloperPage>
                         width: 50,
                         child: DefaultTextField(
                           maxLength: 3,
-                          contentPadding: 2,
+                          contentPadding: EdgeInsets.all(2),
                           inputController: _textEditingController,
                           onChanged: (newValueString) {
                             final newValue = double.tryParse(newValueString);

@@ -130,7 +130,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
                                 fontSize: 22,
                                 maxLine: 1,
                                 maxLength: 3,
-                                contentPadding: 0,
+                                contentPadding: EdgeInsets.zero,
                                 showCursor: false,
                                 enableInteractiveSelection: false,
                                 onChanged: (newText) => _onChangedText(newText),

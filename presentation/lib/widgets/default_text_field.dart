@@ -14,7 +14,7 @@ class DefaultTextField extends StatelessWidget {
     required this.maxLength,
     this.hintText,
     this.fontSize = 10.0,
-    this.contentPadding = 8.0,
+    this.contentPadding = const EdgeInsets.all(8),
     this.textType,
     required this.inputController,
     this.textAlign = TextAlign.start,
@@ -34,7 +34,7 @@ class DefaultTextField extends StatelessWidget {
   final int maxLength;
   final String? hintText;
   final double fontSize;
-  final double contentPadding;
+  final EdgeInsetsGeometry contentPadding;
   final TextInputType? textType;
   final TextAlign textAlign;
   final TextEditingController inputController;
@@ -70,7 +70,7 @@ class DefaultTextField extends StatelessWidget {
         floatingLabelBehavior: FloatingLabelBehavior.never,
         helperMaxLines: 0,
         errorMaxLines: 0,
-        contentPadding: EdgeInsets.all(contentPadding),
+        contentPadding: contentPadding,
         counterText: "",
         hintText: hintText,
         hintStyle: TextStyle(

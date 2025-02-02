@@ -137,7 +137,7 @@ class _LoginAuthNumberPageState extends State<_LoginAuthNumberPage>
                             minLine: 1,
                             maxLine: 1,
                             fontSize: 16.0,
-                            contentPadding: 16,
+                            contentPadding: EdgeInsets.all(16),
                             hintText: "인증번호 입력",
                             textType: TextInputType.number,
                             inputController: _textEditController,

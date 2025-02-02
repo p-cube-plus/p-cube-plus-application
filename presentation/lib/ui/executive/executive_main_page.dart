@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
 import 'package:presentation/ui/executive/alarm/executive_alarm_page.dart';
 import 'package:presentation/ui/executive/attendance/executive_attendance_page.dart';
+import 'package:presentation/ui/executive/setting/executive_setting_page.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
@@ -90,7 +92,40 @@ class ExecutiveMainPage extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: RoundedBorder(
+                    onTap: () => _navigateToExecutiveSetting(context),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(
+                          asset.setting,
+                          width: 32,
+                          height: 32,
+                          colorFilter: ColorFilter.mode(
+                            theme.neutral60,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          "설정",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: theme.neutral100,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -111,6 +146,15 @@ class ExecutiveMainPage extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => ExecutiveAttendancePage(),
+      ),
+    );
+  }
+
+  void _navigateToExecutiveSetting(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ExecutiveSettingPage(),
       ),
     );
   }

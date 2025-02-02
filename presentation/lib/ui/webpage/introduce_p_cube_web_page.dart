@@ -22,8 +22,7 @@ class _IntroducePCubeWebPageState extends State<IntroducePCubeWebPage>
   final url = "https://p-cube.notion.site/1629ed2459954343a62ea49d0d284f00";
   late final WebViewController controller;
   Brightness? prevBrightness;
-
-  @override
+@override
   void initState() {
     super.initState();
     controller = WebViewController()

@@ -79,17 +79,13 @@ class _SearchableMemberAttendance extends State<SearchableMemberAttendance>
                             color: theme.neutral10,
                             shape: BoxShape.circle,
                           ),
-                          child: Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.identity()..scale(1.0, -1.0),
-                            child: SvgPicture.asset(
-                              asset.down,
-                              width: 12,
-                              height: 12,
-                              colorFilter: ColorFilter.mode(
-                                theme.neutral40,
-                                BlendMode.srcIn,
-                              ),
+                          child: SvgPicture.asset(
+                            asset.up,
+                            width: 12,
+                            height: 12,
+                            colorFilter: ColorFilter.mode(
+                              theme.neutral40,
+                              BlendMode.srcIn,
                             ),
                           ),
                         );

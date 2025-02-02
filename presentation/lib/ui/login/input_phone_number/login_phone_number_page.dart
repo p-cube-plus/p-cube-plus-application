@@ -97,7 +97,7 @@ class _LoginPhoneNumberPageState extends State<_LoginPhoneNumberPage>
                   minLine: 1,
                   maxLine: 1,
                   fontSize: 16.0,
-                  contentPadding: 16,
+                  contentPadding: EdgeInsets.all(16),
                   hintText: "전화번호를 입력해주세요.",
                   textType: TextInputType.number,
                   autofocus: true,
