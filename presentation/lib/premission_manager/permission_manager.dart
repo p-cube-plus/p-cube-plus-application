@@ -12,9 +12,9 @@ class PermissionManager {
 
   Future<bool> checkAttendancePermission() async {
     // 블루투스의 위치 정보를 얻기 위해 사용
-    var status = await Permission.location.status;
+    var status = await Permission.locationWhenInUse.status;
     if (!status.isGranted) {
-      await Permission.location.request();
+      await Permission.locationWhenInUse.request();
     }
 
     // 블루투스 모듈에 접근 권한
@@ -36,8 +36,8 @@ class PermissionManager {
     }
 
     return Future.wait([
-      Permission.location.status,
-      Permission.bluetooth.status,
+      Permission.locationWhenInUse.status,
+      Permission.bluetooth.request(),
       Permission.bluetoothConnect.status,
       Permission.bluetoothScan.status,
     ]).then((permissionList) =>

@@ -125,6 +125,7 @@ class _TestBeaconPageState extends State<TestBeaconPage> {
             onTapOk: () {
               Navigator.pop(dialogContext);
               openAppSettings();
+              Navigator.pop(context);
             },
           ),
         );
