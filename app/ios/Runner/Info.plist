@@ -30,6 +30,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
 	<key>NSCameraUsageDescription</key>
 	<string>물품 대여 및 반납에 바코드 스캔을 위해 카메라를 사용합니다.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
