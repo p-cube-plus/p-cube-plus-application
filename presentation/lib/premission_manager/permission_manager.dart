@@ -12,45 +12,41 @@ class PermissionManager {
 
   Future<bool> checkAttendancePermission() async {
     // 블루투스의 위치 정보를 얻기 위해 사용
-    var status = await Permission.locationWhenInUse.status;
-    if (!status.isGranted) {
-      await Permission.locationWhenInUse.request();
+    var isGrantedLocationWhenInUse = true;
+    if (!(await Permission.locationWhenInUse.isGranted)) {
+      isGrantedLocationWhenInUse =
+          await Permission.locationWhenInUse.request().isGranted;
     }
 
     // 블루투스 모듈에 접근 권한
-    status = await Permission.bluetooth.status;
-    if (!status.isGranted) {
-      await Permission.bluetooth.request();
+    var isGrantedBluetooth = true;
+    if (!(await Permission.bluetooth.isGranted)) {
+      isGrantedBluetooth = await Permission.bluetooth.request().isGranted;
     }
 
     // 주변 블루투스 검색 권한
-    status = await Permission.bluetoothConnect.status;
-    if (!status.isGranted) {
-      await Permission.bluetoothConnect.request();
+    var isGrantedBluetoothConnect = true;
+    if (!(await Permission.bluetoothConnect.isGranted)) {
+      isGrantedBluetoothConnect =
+          await Permission.bluetoothConnect.request().isGranted;
     }
 
     // 블루투스 스캔 가능 권한
-    status = await Permission.bluetoothScan.status;
-    if (!status.isGranted) {
-      await Permission.bluetoothScan.request();
+    var isGrantedBluetoothScan = true;
+    if (!(await Permission.bluetoothScan.isGranted)) {
+      isGrantedBluetoothScan =
+          await Permission.bluetoothScan.request().isGranted;
     }
 
-    return Future.wait([
-      Permission.locationWhenInUse.status,
-      Permission.bluetooth.request(),
-      Permission.bluetoothConnect.status,
-      Permission.bluetoothScan.status,
-    ]).then((permissionList) =>
-        permissionList
-            .where((permission) => !permission.isGranted)
-            .firstOrNull ==
-        null);
+    return isGrantedLocationWhenInUse &&
+        isGrantedBluetooth &&
+        isGrantedBluetoothConnect &&
+        isGrantedBluetoothScan;
   }
 
   Future<void> checkNotificationPermission() async {
     // 알림 권한 확인
-    var status = await Permission.notification.status;
-    if (!status.isGranted) {
+    if (!(await Permission.notification.isGranted)) {
       await Permission.notification.request();
     }
   }

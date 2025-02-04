@@ -31,15 +31,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>물품 대여 및 반납에 바코드 스캔을 위해 카메라 사용합니다.</string>
+	<string>물품 대여 및 반납에 바코드 스캔을 위해 카메라를 사용합니다.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>출석체크 시 비콘 탐지를 위해 블루투스 사용합니다.</string>
+	<string>출석체크 시 비콘 탐지를 위해 블루투스를 사용합니다.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>출석체크 시 비콘 탐지를 위해 블루투스 사용합니다.</string>
+	<string>출석체크 시 비콘 탐지를 위해 블루투스를 사용합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>출석체크 시 비콘 탐지를 위해 위치 사용합니다.</string>
-	<key>NSLocationDefaultAccuracyReduced</key>
-	<true/>
+	<string>출석체크 시 비콘 탐지를 위해 위치를 사용합니다.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
