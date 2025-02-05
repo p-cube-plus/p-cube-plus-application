@@ -44,13 +44,15 @@ class _IntroducePCubeWebPageState extends State<_IntroducePCubeWebPage>
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) async {
-            final availableUrl = Uri.parse(request.url);
-            final canLaunch = await canLaunchUrl(availableUrl);
-
-            if (canLaunch) {
-              await launchUrl(availableUrl);
-              return NavigationDecision.prevent;
+            if (isAppLink(request.url)) {
+              final appLinkUrl = Uri.parse(request.url);
+              final canLaunch = await canLaunchUrl(appLinkUrl);
+              if (canLaunch) {
+                await launchUrl(appLinkUrl);
+                return NavigationDecision.prevent;
+              }
             }
+
             return NavigationDecision.navigate;
           },
         ),
@@ -114,5 +116,12 @@ class _IntroducePCubeWebPageState extends State<_IntroducePCubeWebPage>
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: ThemeMode.system.getStatusColor(context),
     ));
+  }
+
+  bool isAppLink(String url) {
+    return url.contains("store.steampowered.com") ||
+        url.contains("play.google.com") ||
+        url.contains("store.onstove.com") ||
+        url.contains("kakao.com");
   }
 }
