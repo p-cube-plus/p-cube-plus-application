@@ -98,7 +98,7 @@ class DefaultTextField extends StatelessWidget {
 
 class CustomTextSelectionControls extends TextSelectionControls {
   final double _kHandleSize = 22;
-  late bool isCollapsed;
+  bool isCollapsed = false;
 
   @override
   Widget buildHandle(
