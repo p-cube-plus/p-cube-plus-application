@@ -31,6 +31,7 @@ class ExecutiveSettingPage extends StatelessWidget {
           ),
         ),
       ),
+      resizeToAvoidBottomInset: true,
     );
   }
 }
