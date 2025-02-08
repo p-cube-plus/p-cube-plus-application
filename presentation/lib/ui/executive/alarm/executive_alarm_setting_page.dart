@@ -4,12 +4,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_data_extension.dart';
+import 'package:presentation/ui/executive/alarm/executive_alarm_setting_event.dart';
 import 'package:presentation/ui/executive/alarm/executive_alarm_setting_viewmodel.dart';
+import 'package:presentation/ui/executive/alarm/skeleton_widget/executive_alarm_setting_skeleton.dart';
 import 'package:presentation/widgets/defauilt_toggle_tile.dart';
 import 'package:presentation/widgets/default_alert.dart';
 import 'package:presentation/widgets/default_appbar.dart';
 import 'package:presentation/widgets/default_content.dart';
 import 'package:presentation/widgets/default_page.dart';
+import 'package:presentation/widgets/default_progress_indicator_builder.dart';
 import 'package:presentation/widgets/default_text_field.dart';
 import 'package:presentation/widgets/rounded_border.dart';
 import 'package:provider/provider.dart';
@@ -63,14 +66,16 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
   void _setEventListener() {
     read(context).eventStream.listen((event) {
       switch (event) {
-        case ExecutiveAlarmSettingState.popPage:
-          _popPage();
-        case ExecutiveAlarmSettingState.showProgressDialog:
-          _showProgressDialog();
-        case ExecutiveAlarmSettingState.dismissProgressDialog:
+        case ShowProgressDialogExecutiveAlarmSettingEvent():
+          _showLoadingDialog();
+        case DismissProgressDialogExecutiveAlarmSettingEvent():
           _dismissProgressDialog();
-        case ExecutiveAlarmSettingState.setSettingText:
-          _setSettingText();
+        case PopPageExecutiveAlarmSettingEvent():
+          _popPage();
+        case SetSettingTextExecutiveAlarmSettingEvent():
+          _setSettingText(event.reminderHours);
+        case ShowToastExecutiveAlarmSettingEvent():
+          Fluttertoast.showToast(msg: event.message);
       }
     });
   }
@@ -89,93 +94,101 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
         content: GestureDetector(
           onTap: () => _unfocusTextField(),
           child: DefaultContent(
-            child: Column(
-              children: [
-                watchWidget((viewModel) => viewModel.isSettingOn,
-                    (context, isSettingOn) {
-                  return DefaultToggleTile(
-                    title: "알림 켜짐",
-                    key: UniqueKey(),
-                    value: isSettingOn,
-                    onChanged: (bool isOn) {
-                      read(context).setSettingOn(isOn);
-                    },
-                  );
-                }),
-                const SizedBox(height: 16),
-                watchWidget((viewModel) => viewModel.isSettingOn,
-                    (context, isSettingOn) {
-                  if (isSettingOn) {
-                    return GestureDetector(
-                      onTap: () => _onTapTextField(),
-                      child: RoundedBorder(
-                        padding: EdgeInsetsDirectional.symmetric(
-                            horizontal: 20, vertical: 16),
-                        child: Row(
-                          children: [
-                            Text(
-                              "회의",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).neutral60,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Expanded(
-                              child: DefaultTextField(
-                                inputController: _textEditingContoller,
-                                focusNode: _focusNode,
-                                textType: TextInputType.number,
-                                textAlign: TextAlign.end,
-                                fontSize: 22,
-                                maxLine: 1,
-                                maxLength: 3,
-                                contentPadding: EdgeInsets.zero,
-                                showCursor: false,
-                                enableInteractiveSelection: false,
-                                onChanged: (newText) => _onChangedText(newText),
-                              ),
-                            ),
-                            Text(
-                              "시간 전",
-                              style: TextStyle(
-                                fontSize: 22,
-                                color: Theme.of(context).neutral100,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            SvgPicture.asset(
-                              asset.down,
-                              colorFilter: ColorFilter.mode(
-                                Theme.of(context).neutral40,
-                                BlendMode.srcIn,
-                              ),
-                              width: 20,
-                              height: 20,
-                            ),
-                          ],
-                        ),
-                      ),
+            child: watchWidget((viewModel) => viewModel.isLoading,
+                (context, isLoading) {
+              if (isLoading) {
+                return ExecutiveAlarmSettingSkeleton();
+              }
+
+              return Column(
+                children: [
+                  watchWidget((viewModel) => viewModel.isSettingOn,
+                      (context, isSettingOn) {
+                    return DefaultToggleTile(
+                      title: "알림 켜짐",
+                      key: UniqueKey(),
+                      value: isSettingOn,
+                      onChanged: (bool isOn) {
+                        read(context).setSettingOn(isOn);
+                      },
                     );
-                  } else {
-                    return RoundedBorder(
-                      padding: EdgeInsets.all(20),
-                      width: double.infinity,
-                      color: Theme.of(context).neutral10,
-                      child: Text(
-                        "알림이 꺼져있어요.",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).neutral40,
+                  }),
+                  const SizedBox(height: 16),
+                  watchWidget((viewModel) => viewModel.isSettingOn,
+                      (context, isSettingOn) {
+                    if (isSettingOn) {
+                      return GestureDetector(
+                        onTap: () => _onTapTextField(),
+                        child: RoundedBorder(
+                          padding: EdgeInsetsDirectional.symmetric(
+                              horizontal: 20, vertical: 16),
+                          child: Row(
+                            children: [
+                              Text(
+                                "회의",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).neutral60,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Expanded(
+                                child: DefaultTextField(
+                                  inputController: _textEditingContoller,
+                                  focusNode: _focusNode,
+                                  textType: TextInputType.number,
+                                  textAlign: TextAlign.end,
+                                  fontSize: 22,
+                                  maxLine: 1,
+                                  maxLength: 3,
+                                  contentPadding: EdgeInsets.zero,
+                                  showCursor: false,
+                                  enableInteractiveSelection: false,
+                                  onChanged: (newText) =>
+                                      _onChangedText(newText),
+                                ),
+                              ),
+                              Text(
+                                "시간 전",
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  color: Theme.of(context).neutral100,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(width: 16),
+                              SvgPicture.asset(
+                                asset.down,
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).neutral40,
+                                  BlendMode.srcIn,
+                                ),
+                                width: 20,
+                                height: 20,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                }),
-              ],
-            ),
+                      );
+                    } else {
+                      return RoundedBorder(
+                        padding: EdgeInsets.all(20),
+                        width: double.infinity,
+                        color: Theme.of(context).neutral10,
+                        child: Text(
+                          "알림이 꺼져있어요.",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).neutral40,
+                          ),
+                        ),
+                      );
+                    }
+                  }),
+                ],
+              );
+            }),
           ),
         ),
         bottomContent: Padding(
@@ -203,7 +216,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
   }
 
   void _onClickSaveButton() {
-    read(context).saveSetting();
+    read(context).saveSetting(_textEditingContoller.text);
   }
 
   void _onPop(bool didPop) {
@@ -221,7 +234,7 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
           description: "저장되지 않는 변경사항이 있습니다.",
           messageType: MessageType.okCancel,
           onTapOk: () {
-            read(context).saveSettingWithPopPage();
+            read(context).saveSettingWithPopPage(_textEditingContoller.text);
           },
           onTapCancel: () {
             _popPage();
@@ -267,24 +280,15 @@ class _ExecutiveAlarmSettingPageState extends State<_ExecutiveAlarmSettingPage>
     if (mounted) Navigator.pop(context);
   }
 
-  void _showProgressDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const PopScope(
-        canPop: false,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-    );
+  void _showLoadingDialog() {
+    DefaultProgressIndicatorBuilder().build(context);
   }
 
   void _dismissProgressDialog() {
     Navigator.of(context, rootNavigator: true).pop();
   }
 
-  void _setSettingText() {
-    _textEditingContoller.text = read(context).setting.reminderHours.toString();
+  void _setSettingText(String newText) {
+    _textEditingContoller.text = newText;
   }
 }

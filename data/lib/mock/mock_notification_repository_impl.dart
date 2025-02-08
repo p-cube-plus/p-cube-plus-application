@@ -23,6 +23,8 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
     );
   });
 
+  NotificationSetting? setting;
+
   @override
   Future<List<NotificationData>> getNotificationList() async {
     await MockUtil().applyMockSetting();
@@ -71,11 +73,12 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
       NotificationType type) async {
     await MockUtil().applyMockSetting();
 
-    return NotificationSetting(
-      type: type,
-      isOn: true,
-      reminderHours: 2,
-    );
+    return setting ??
+        NotificationSetting(
+          type: type,
+          isOn: true,
+          reminderHours: 2,
+        );
   }
 
   @override
@@ -114,5 +117,11 @@ class MockNotificationRepositoryImpl implements NotificationRepository {
   @override
   Future<void> setCanSendNotification(bool canSendNotification) async {
     sharedPreferenceLocalDatasource.canSendNotification = canSendNotification;
+  }
+
+  @override
+  Future<void> setNotificationSetting(NotificationSetting setting) async {
+    await MockUtil().applyMockSetting();
+    this.setting = setting;
   }
 }

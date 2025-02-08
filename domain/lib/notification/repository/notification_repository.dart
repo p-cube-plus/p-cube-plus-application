@@ -33,4 +33,5 @@ abstract interface class NotificationRepository {
   Future<NotificationData> updateNotificationAsRead(int id);
 
   Future<NotificationSetting> fetchNotificationSetting(NotificationType type);
+  Future<void> setNotificationSetting(NotificationSetting setting);
 }

@@ -79,4 +79,10 @@ class NotificationRepositoryImpl implements NotificationRepository {
     // TODO: implement setCanSendNotification
     throw UnimplementedError();
   }
+  
+  @override
+  Future<void> setNotificationSetting(NotificationSetting setting) {
+    // TODO: implement setNotificationSetting
+    throw UnimplementedError();
+  }
 }
