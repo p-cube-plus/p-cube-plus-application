@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '13.0'
+platform :ios, '15.5'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -42,5 +42,18 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    target.build_configurations.each do |config|
+      # ios 세팅 참고
+      # https://pub.dev/packages/permission_handler
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+
+        'PERMISSION_NOTIFICATIONS=1',
+        'PERMISSION_BLUETOOTH=1',
+        'PERMISSION_LOCATION_WHENINUSE=1',
+        'PERMISSION_CAMERA=1',
+      ]
+    end
   end
 end

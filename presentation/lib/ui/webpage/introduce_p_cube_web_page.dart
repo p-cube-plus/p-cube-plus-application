@@ -1,56 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:presentation/app_view_model.dart';
 import 'package:presentation/common/viewmodel.dart';
 import 'package:presentation/extensions/theme_mode_extension.dart';
+import 'package:presentation/ui/webpage/introduce_p_cube_view_model.dart';
 import 'package:presentation/widgets/default_appbar.dart';
+import 'package:presentation/widgets/default_future_builder.dart';
 import 'package:presentation/widgets/default_page.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:presentation/constants/app_color.dart' as color;
 import 'package:url_launcher/url_launcher.dart';
 
-class IntroducePCubeWebPage extends StatefulWidget {
+class IntroducePCubeWebPage extends StatelessWidget {
   const IntroducePCubeWebPage({super.key});
 
   @override
-  State<IntroducePCubeWebPage> createState() => _IntroducePCubeWebPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => IntroducePCubeViewModel(),
+      child: _IntroducePCubeWebPage(),
+    );
+  }
 }
 
-class _IntroducePCubeWebPageState extends State<IntroducePCubeWebPage>
-    with ViewModel<AppViewModel> {
-  final url = "https://p-cube.notion.site/1629ed2459954343a62ea49d0d284f00";
+class _IntroducePCubeWebPage extends StatefulWidget {
+  const _IntroducePCubeWebPage();
+
+  @override
+  State<_IntroducePCubeWebPage> createState() => _IntroducePCubeWebPageState();
+}
+
+class _IntroducePCubeWebPageState extends State<_IntroducePCubeWebPage>
+    with ViewModel<IntroducePCubeViewModel> {
   late final WebViewController controller;
   Brightness? prevBrightness;
-@override
+
+  @override
   void initState() {
     super.initState();
+
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) async {
-            if (isAvailableLink(request.url)) {
-              final availableUrl = Uri.parse(request.url);
-              final canLaunch = await canLaunchUrl(availableUrl);
-
+            if (isAppLink(request.url)) {
+              final appLinkUrl = Uri.parse(request.url);
+              final canLaunch = await canLaunchUrl(appLinkUrl);
               if (canLaunch) {
-                await launchUrl(availableUrl);
+                await launchUrl(appLinkUrl);
                 return NavigationDecision.prevent;
-              } else {
-                return NavigationDecision.navigate;
               }
             }
 
-            Fluttertoast.showToast(msg: "해당 주소로 접근할 수 없습니다.");
-            return NavigationDecision.prevent;
+            return NavigationDecision.navigate;
           },
         ),
       );
-
-    Future.microtask(() {
-      controller.loadRequest(Uri.parse(url));
-    });
   }
 
   @override
@@ -66,11 +72,8 @@ class _IntroducePCubeWebPageState extends State<IntroducePCubeWebPage>
         ? color.lightGray100
         : color.darkGray100;
 
-    if (prevBrightness == null) {
-      _setWebViewStatusBarSetting(context);
-      controller.setBackgroundColor(backgroundColor);
-      prevBrightness = systemBrightMode;
-    } else if (prevBrightness != systemBrightMode) {
+    final isChangedSystemBrightness = prevBrightness != systemBrightMode;
+    if (isChangedSystemBrightness) {
       controller.reload();
       _setWebViewStatusBarSetting(context);
       controller.setBackgroundColor(backgroundColor);
@@ -81,32 +84,29 @@ class _IntroducePCubeWebPageState extends State<IntroducePCubeWebPage>
       onPopInvokedWithResult: (_, __) async {
         if (await controller.canGoBack()) {
           controller.goBack();
-        } else {
-          if (!context.mounted) return;
-          _setOriginStatusBarSetting(context);
         }
       },
       child: DefaultPage(
-        resizeToAvoidBottomInset: true,
         appbar: DefaultAppBar(
           backgroundColor: backgroundColor,
           contentColor: contentColor,
+          centerTitle: "판도라큐브 소개",
         ),
         bottomPadding: 0,
         backgroundColor: backgroundColor,
         contentColor: contentColor,
-        content: WebViewWidget(controller: controller),
+        content: Container(
+          color: backgroundColor,
+          child: DefaultFutureBuilder(
+            fetchData: read(context).fetchWebViewUrl(),
+            showOnLoadedWidget: (context, url) {
+              controller.loadRequest(Uri.parse(url));
+              return WebViewWidget(controller: controller);
+            },
+          ),
+        ),
       ),
     );
-  }
-
-  bool isAvailableLink(String url) {
-    return url.contains("store.steampowered.com") ||
-        url.contains("play.google.com") ||
-        url.contains("store.onstove.com") ||
-        url.contains("kakao.com") ||
-        url.contains("p-cube.kr") ||
-        url.contains("docs.google.com/forms");
   }
 
   void _setWebViewStatusBarSetting(BuildContext context) {
@@ -118,13 +118,10 @@ class _IntroducePCubeWebPageState extends State<IntroducePCubeWebPage>
     ));
   }
 
-  void _setOriginStatusBarSetting(BuildContext context) {
-    final themeMode = read(context).currentThemeMode;
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemStatusBarContrastEnforced: false,
-      systemNavigationBarContrastEnforced: false,
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: themeMode.getStatusColor(context),
-    ));
+  bool isAppLink(String url) {
+    return url.contains("store.steampowered.com") ||
+        url.contains("play.google.com") ||
+        url.contains("store.onstove.com") ||
+        url.contains("kakao.com");
   }
 }

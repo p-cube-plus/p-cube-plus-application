@@ -74,7 +74,7 @@ class _ExpandableWebViewSettingWidgetState
                 return Column(
                   children: [
                     ExpandableContentTextInputItem(
-                      keyText: "웹주소",
+                      keyText: "웹주소\n(UTF8 인코딩 형식 필수)",
                       textController: _urlTextController,
                     ),
                     SizedBox(height: 16),

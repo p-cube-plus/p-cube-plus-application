@@ -134,6 +134,7 @@ class _AttendanceTodayPageState extends State<_AttendanceTodayPage>
               Navigator.pop(dialogContext);
               openAppSettings();
               _isCheckingPermission = false;
+              Navigator.pop(context);
             },
           ),
         );

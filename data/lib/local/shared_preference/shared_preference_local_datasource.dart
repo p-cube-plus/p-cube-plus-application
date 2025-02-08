@@ -16,7 +16,7 @@ class SharedPreferenceLocalDatasource {
       _pref.setInt(PrefKeyType.themeSetting.name, value);
 
   bool get canSendNotification =>
-      _pref.getBool(PrefKeyType.canSendNotificationSetting.name) ?? false;
+      _pref.getBool(PrefKeyType.canSendNotificationSetting.name) ?? true;
   set canSendNotification(bool value) =>
       _pref.setBool(PrefKeyType.canSendNotificationSetting.name, value);
 
