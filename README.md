@@ -28,8 +28,7 @@
   - presentation은 domain에 의존, domain은 독립적, data는 domain에 의존합니다.<br>
   IoC는 get_it을 통해 관리중입니다. flutter에 Hilt같은 DI 프레임워크가 나오면 변경하는 걸 추천합니다.
 - 도메인 주도 설계
-  - 앱은 UI가 곧 도메인입니다.<br>
-  data 모듈은 raw data (기본 자료형 기반 DTO, DAO 클래스),<br>
+  - data 모듈은 raw data (기본 자료형 기반 DTO, DAO 클래스),<br>
   domain 모듈은 value object(UI에 필요한 가공된 형태의 데이터)를 사용합니다.
 - 테스트 주도 설계
   - 한 모듈 내에 전역적으로 쓰이는 핵심 클래스는 테스트 코드가 작성되어 있습니다.
