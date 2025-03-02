@@ -12,7 +12,7 @@
 **App**: 앱 진입, foreground, background 설정을 하는 모듈<br>
 **Presentation**: UI, ViewModel을 관리하는 모듈<br>
 **Domain**: UseCase, value object (Entity) 를 관리하는 모듈<br>
-**Data**: 데이터를 직접 가져오는데 관리하는 모듈<br>
+**Data**: 데이터 CRUD를 관리하고 데이터 캐싱 로직을 관리하는 모듈<br>
 
 - MVVM
   - UI는 ViewModel이 가지는 데이터를 관찰하고 보여줍니다.<br>
